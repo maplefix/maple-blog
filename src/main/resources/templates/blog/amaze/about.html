@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="blog/amaze/header::head-fragment"></head>
+<body>
+<div th:replace="blog/amaze/header::nav-fragment"></div>
+<header th:fragment="header-fragment" class="intro-header"
+        th:style="'background-image:url(' + @{/blog/amaze/images/header.jpg} + ');'">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="site-heading">
+          <span class="subheading">
+              我不怕千万人阻挡，只怕自己投降
+          </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <div class="am-g am-g-fixed blog-fixed">
+        <b>About me.</b>
+        <p style=" text-indent:2em">
+            永远年轻，永远热泪盈眶。<br/>
+        </p>
+        <br/>
+        <b>Contact me.</b   >
+        <ul>
+            <li>邮箱地址：<a title="技术支持" href="mailto:wjgmaple@gmail.com?subject='maple-blog 帮助'" target="_blank">
+                <th:block th:text="${dict['email']}"></th:block></a>
+            </li>
+            <li>网站链接：<a href="https://www.maplefix.top" target="_blank">https://www.maplefix.top</a></li>
+            <li>GitHub：<a href="https://github.com/maplefix" target="_blank">https://github.com/maplefix</a></li>
+            <li>Gogs：<a href="https://gogs.maplefix.top/" target="_blank">https://gogs.maplefix.top</a></li>
+        </ul>
+        <br/>
+        <b>Update Notes.</b>
+        <ul>
+            <li>
+                <a href="https://www.maplefix.top/blog/3bcb3f4f52894622990c3b53e08ffc78.html" target="_blank">&radic;&nbsp;2019-12-9 maple-blog v2.1-release 版本发布</a><br>
+                <a >&radic;&nbsp;2019-12-6 新增文章目录</a><br>
+                <a >&radic;&nbsp;2019-11-25 新增书单功能</a><br>
+                <a >&radic;&nbsp;2019-11-20 首页体验优化</a><br>
+                <a class="todo-title">TODO:持续优化.</a><br>
+            </li>
+            <li>
+                <a >&radic;&nbsp;2019-11-21 优化后台主体架构设计/优化查询速度/优化前端页面体验</a><br>
+                <a class="todo-title">TODO:文章侧边目录自动生成.</a><br>
+            </li>
+            <li>
+                <a href="https://www.maplefix.top/blog/db8a7690518e4982b4cd0c3a049870f4.html" target="_blank">&radic;&nbsp;2019-10-30 maple-blog v2.1-release 版本发布</a><br>
+            </li>
+            <li>
+                <a >&radic;&nbsp;2019-10-25 解决标签关联查询BUG/优化友链逻辑</a><br>
+                <a class="todo-title">TODO:优化标签和分类逻辑.</a><br>
+                <a class="todo-title">TODO:文章侧边目录自动生成.</a><br>
+            </li>
+            <li>
+                <a >&radic;&nbsp;2019-10-7 优化首页样式/优化后台访客日志/优化缓存加载提高查询速度</a><br>
+                <a class="todo-title">TODO:解决标签关联查询BUG.</a><br>
+                <a class="todo-title">TODO:文章侧边目录自动生成.</a><br>
+            </li>
+            <li>
+                <a href="https://www.maplefix.top/blog/235999781da846b9b47f531b8f01a7c2.html" target="_blank">&radic;&nbsp;2019-9-25 maple-blog v1.0-release 版本发布</a><br>
+                <a class="todo-title">TODO:首页样式优化.</a><br>
+                <a class="todo-title">TODO:解决标签关联查询BUG.</a><br>
+                <a class="todo-title">TODO:文章侧边目录自动生成.</a><br>
+            </li>
+        </ul>
+    </div>
+    <br/>
+    <aside class="comments" id="comments">
+        <div id="vcomments"></div>
+        <script>
+            new Valine({
+                el: '#vcomments',
+                appId: '1qkxgxkpCs1goMHhxRzKogz3-gzGzoHsz',
+                appKey: 'fLqf1AnyQK1loxltigm0q3GY',
+                notify:false,
+                verify:false,
+                avatar:'retro',
+                /**
+                 * 空字符串''	 	Gravatar官方图形
+                 mp	                神秘人(一个灰白头像)
+                 identicon          抽象几何图形
+                 monsterid          小怪物
+                 wavata             用不同面孔和背景组合生成的头像
+                 retro              八位像素复古头像
+                 robohash           一种具有不同颜色、面部等的机器人
+                 hide               不显示头像
+                 *
+                 */
+                placeholder: 'just go go!'
+            })
+        </script>
+
+    </aside>
+
+    <p class="back-top" id="back-top" style="display:none">
+        <a href="#top"><span></span></a>
+    </p>
+</div>
+<footer th:replace="blog/amaze/footer::footer-fragment"></footer>
+</body>
+
+</html>

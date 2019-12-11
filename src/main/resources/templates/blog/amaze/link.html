@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="blog/amaze/header::head-fragment"></head>
+    <body id="blog">
+        <div th:replace="blog/amaze/header::nav-fragment"></div>
+        <header th:fragment="header-fragment" class="intro-header"
+                th:style="'background-image:url(' + @{/blog/amaze/images/header.jpg} + ');'">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                        <div class="site-heading">
+                          <span class="subheading">
+                              永远年轻，永远热泪盈眶
+                          </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="am-g am-g-fixed blog-fixed">
+            <div class="am-u-lg-8 am-u-sm-12">
+                <main class="links-list">
+                    <th:block th:unless="${#lists.isEmpty(favoriteLinks)}">
+                        <div class="title">
+                            <h3>友链</h3>
+                        </div>
+                        <div class="list">
+                            <ul>
+                                <th:block th:each="favoriteLink : ${favoriteLinks}">
+                                    <li>
+                                        <img th:src="@{${favoriteLink.headerImg}}" alt="" style="height: 32px;width: 32px;border-radius:50%;">
+                                        <a th:href="@{${favoriteLink.linksUrl}}"
+                                           th:text="${favoriteLink.linksName}" target="_blank">友链</a>
+                                        -
+                                        <th:block th:text="${favoriteLink.description}"></th:block>
+                                    </li><br>
+                                </th:block>
+                            </ul>
+                        </div>
+                    </th:block>
+                    <th:block th:unless="${#lists.isEmpty(recommendLinks)}">
+                        <div class="title">
+                            <h3>推荐网站</h3>
+                        </div>
+                        <div class="list">
+                            <ul>
+                                <th:block th:each="recommendLink : ${recommendLinks}">
+                                    <li>
+                                        <img th:src="@{${recommendLink.headerImg}}" alt="" class="circle-square" >
+                                        <a th:href="@{${recommendLink.linksUrl}}" th:text="${recommendLink.linksName}" target="_blank">推荐网站</a>
+                                        -
+                                        <th:block th:text="${recommendLink.description}"></th:block>
+                                    </li>
+                                </th:block>
+                            </ul>
+                        </div>
+                    </th:block>
+                    <h2 id="个人链接">链接须知</h2>
+                    <p>欢迎友链,评论即可.</p>
+                    <p> 格式要求如下:</p>
+                    <ul>
+                        <li>网站名称：Maple person blog</li>
+                        <li>网站链接：https://www.maplefix.top</li>
+                        <li>网站描述：Maple的个人博客</li>
+                        <li>网站favicon(如有)：https://www.maplefix.top/favicon.ico</li>
+                    </ul>
+
+                    <p>请保证自己的链接长期有效,系统会自动清理无法访问的站点.</p>
+
+                </main>
+                <aside class="comments" id="comments">
+                    <div id="vcomments"></div>
+                    <script>
+                        new Valine({
+                            el: '#vcomments',
+                            appId: '1qkxgxkpCs1goMHhxRzKogz3-gzGzoHsz',
+                            appKey: 'fLqf1AnyQK1loxltigm0q3GY',
+                            notify:false,
+                            verify:false,
+                            visitor: true, // 阅读量统计
+                            avatar:'retro',
+                            /**
+                             * 空字符串''	 	Gravatar官方图形
+                             mp	                神秘人(一个灰白头像)
+                             identicon          抽象几何图形
+                             monsterid          小怪物
+                             wavata             用不同面孔和背景组合生成的头像
+                             retro              八位像素复古头像
+                             robohash           一种具有不同颜色、面部等的机器人
+                             hide               不显示头像
+                             *
+                             */
+                            placeholder: '欢迎友链,评论即可.'
+                        })
+                    </script>
+
+                </aside>
+            </div>
+            <p class="back-top" id="back-top" style="display:none">
+                <a href="#top"><span></span></a>
+            </p>
+
+        </div>
+        <!-- 引入页脚footer-fragment -->
+        <footer th:replace="blog/amaze/footer::footer-fragment"></footer>
+    </body>
+</html>
