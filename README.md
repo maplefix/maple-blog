@@ -96,7 +96,3 @@
 | 12 |  spring-session | 统一session管理  |  [spring-session](https://spring.io/projects/spring-session "spring-session") |
 | 13 |  pagehelper | 分页插件  |  [pagehelper](https://pagehelper.github.io/ "pagehelper") |
 | 14 |  pagehelper | Swagger  |  [API接口工具](https://swagger.io/ "API接口工具") |
-## 4.pdm设计
->pdm设计图
-
-![](https://qny.maplefix.top/pd-20190925110724.png)
