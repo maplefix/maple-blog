@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="blog/amaze/header::head-fragment"></head>
+    <body>
+        <div th:replace="blog/amaze/header::nav-fragment"></div>
+        <header th:fragment="header-fragment" class="intro-header"
+                th:style="'background-image:url(' + @{/blog/amaze/images/header.jpg} + ');'">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                        <div class="site-heading">
+                          <span class="subheading">
+                              永远年轻，永远热泪盈眶
+                          </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="container">
+            <section class="am-g am-g-fixed blog-fixed">
+                <div class="page-content">
+                    <div class="mod-archive">
+                        <div th:each="archive:${archive}">
+                            <div class="archive-time-title" th:text="${archive.createDate}">2019</div>
+                            <ul class="mod-archive-list">
+                                <li th:each="item:${archive.blogList}">
+                                    <time class="archive-time" th:text="${item.createDate}"> 01.06 </time>
+                                    <a class="archive-title" th:href="@{'/blog/' + ${item.blogId} +'.html'}" th:title="${item.title}" th:text="${item.title}"></a>
+                                    <span>阅读数：<span th:text="${item.hits}" th:title="阅读数"></span></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <aside class="comments" id="comments">
+                <div id="vcomments"></div>
+                <script>
+                    new Valine({
+                        el: '#vcomments',
+                        appId: '1qkxgxkpCs1goMHhxRzKogz3-gzGzoHsz',
+                        appKey: 'fLqf1AnyQK1loxltigm0q3GY',
+                        notify:false,
+                        verify:false,
+                        visitor: true, // 阅读量统计
+                        avatar:'retro',
+                        /**
+                         * 空字符串''	 	Gravatar官方图形
+                         mp	                神秘人(一个灰白头像)
+                         identicon          抽象几何图形
+                         monsterid          小怪物
+                         wavata             用不同面孔和背景组合生成的头像
+                         retro              八位像素复古头像
+                         robohash           一种具有不同颜色、面部等的机器人
+                         hide               不显示头像
+                         *
+                         */
+                        placeholder: 'just go go!'
+                    })
+                </script>
+
+            </aside>
+
+            <p class="back-top" id="back-top" style="display:none">
+                <a href="#top"><span></span></a>
+            </p>
+        </div>
+        <footer th:replace="blog/amaze/footer::footer-fragment"></footer>
+    </body>
+</html>

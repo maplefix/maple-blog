@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.maplefix.mapper.BlogMapper">
+
+    <!--查询前台首页博客列表-->
+    <select id="getBlogForIndexPage" resultType="top.maplefix.model.Blog">
+        select b.*,c.categoryName
+        from t_blog b
+        LEFT JOIN t_category c on b.categoryId = c.categoryId
+        <where>
+            <if test="categoryId != '' and categoryId != null">
+                AND b.categoryId = #{categoryId}
+            </if>
+            <if test="title != '' and title != null">
+                AND b.title = #{title}
+            </if>
+            <if test="label != '' and label != null">
+                <bind name="search" value="'%' + label + '%'"/>
+                AND b.label like #{search}
+            </if>
+            <if test="keyword != '' and keyword != null">
+                <bind name="search" value="'%' + keyword + '%'"/>
+                AND (b.title like #{search} or b.label like #{search})
+            </if>
+            <if test="beginDate != '' and beginDate != null">
+                <bind name="beginDate" value="beginDate +' 00:00:00'"/>
+                <![CDATA[ AND b.createDate >=  #{beginDate}]]>
+            </if>
+            <if test="endDate != '' and endDate != null">
+                <bind name="endDate" value="endDate +' 23:59:59'"/>
+                <![CDATA[ AND b.createDate <=  #{beginDate}]]>
+            </if>
+            <if test="isAll == '' and isAll == null">
+                AND b.delFlag = '0'
+                AND b.status = '1'
+            </if>
+        </where>
+        order by b.support desc, b.createDate desc
+    </select>
+
+
+
+    <!--获取归档的Date和count-->
+    <select id="selectArchiveDateAndCount" resultType="top.maplefix.vo.Archive">
+        select date_format(createDate, '%Y-%m') as createDate,count(*) as count from t_blog
+        where delFlag = "0"
+        group by date_format(createDate,'%Y-%m')
+        order by date_format(createDate, '%Y-%m') desc
+    </select>
+
+    <!-- 根据createTime获取blog信息-->
+    <select id="selectBlogByCreateTime" resultType="top.maplefix.model.Blog">
+        select blogId,title,hits,createDate from t_blog
+        where date_format(createDate, '%Y-%m') =#{createDate}
+        and delFlag = "0"
+        order by createDate desc
+    </select>
+
+    <!--获取最热分类名称以及对应的博客数量-->
+    <select id="getBlogForHotCategory" resultType="top.maplefix.vo.CategoryBlog">
+        select b.categoryId categoryId,c.categoryName categoryName,count(b.categoryId) blogCount
+        from t_blog b
+        LEFT JOIN t_category c on b.categoryId = c.categoryId
+        group by b.categoryId
+    </select>
+</mapper>

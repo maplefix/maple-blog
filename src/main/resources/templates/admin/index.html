@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<header th:replace="admin/header::header-fragment">
+    <link th:href="@{/admin/dist/css/style.min862f.css}" rel="stylesheet"/>
+</header>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- 引入页面头header-fragment -->
+    <div th:replace="admin/header::header-nav"></div>
+    <!-- 引入工具栏sidebar-fragment -->
+    <div th:replace="admin/sidebar::sidebar-fragment(${path})"></div>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="card-header">
+                    <h3 class="card-title">管理首页</h3>
+                </div> <!-- /.card-body -->
+                <div class="row" style="margin-top: 40px;border-top:0px;">
+                    <div class="col-lg-4 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-info">
+                            <div class="inner">
+                                <h3>新增博客</h3>
+
+                                <p>记心中所想</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-pencil-square-o"></i>
+                            </div>
+                            <a th:href="@{/api/admin/blog/edit}" class="small-box-footer">let's go <i
+                                    class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-4 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-success">
+                            <div class="inner">
+                                <h3 th:text="${blogCount}">65</h3>
+
+                                <p>总文章数</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-list-alt"></i>
+                            </div>
+                            <a th:href="@{/api/admin/blog}" class="small-box-footer">More info <i
+                                    class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-4 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-primary">
+                            <div class="inner">
+                                <h3 th:text="${dictCount}">65</h3>
+
+                                <p>字典配置项</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-comments"></i>
+                            </div>
+                            <a th:href="@{/api/admin/dict}" class="small-box-footer">More info <i
+                                    class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-4 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-warning">
+                            <div class="inner">
+                                <h3 th:text="${categoryCount}">65</h3>
+
+                                <p>分类数量</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-bookmark"></i>
+                            </div>
+                            <a th:href="@{/api/admin/category}" class="small-box-footer">More info <i
+                                    class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-4 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-danger">
+                            <div class="inner">
+                                <h3 th:text="${labelCount}">65</h3>
+
+                                <p>标签总量</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-tags"></i>
+                            </div>
+                            <a th:href="@{/api/admin/label}" class="small-box-footer">More info <i
+                                    class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-4 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-dark">
+                            <div class="inner">
+                                <h3 th:text="${linksCount}">65</h3>
+
+                                <p>友情链接</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-heart"></i>
+                            </div>
+                            <a th:href="@{/api/admin/links}" class="small-box-footer">More info <i
+                                    class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 40px;border-top:0px;">
+                    <div class="col-6">
+                        <div class="ibox-title">
+                            <h5 >最新动态</h5><br/><br/>
+                        </div>
+                        <div class="ibox-content">
+                            <ul>
+                                <li th:each="item:${logMessages}" style="margin-bottom:10px ;list-style-type: none">
+                                    <span class="badge badge-info" th:text="${item.dateStr}" style="font-size: 16px"></span>&ensp;&ensp;&ensp;
+                                    <span th:text="${item.message}"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5 >系统状态仪表盘</h5><br/><br/>
+                            </div>
+                            <div class="ibox-content">
+                                <div id="echarts_gauge_percent" style="width: 100%;height: 400px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- 引入页脚footer-fragment -->
+    <div th:replace="admin/footer::footer-fragment"></div>
+</div>
+<!-- jQuery -->
+<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script th:src="@{/admin/plugins/jQueryUI/jquery-ui.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/admin/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/admin/dist/js/adminlte.min.js}"></script>
+<!-- echarts图标js -->
+<script th:src="@{/admin/plugins/echarts/echarts.min.js}"></script>
+<script>
+    let echarts_gauge_percent;
+    $(function () {
+
+        //初始化系统信息仪表盘
+        initEchartsGauge();
+        //填充数据到仪表盘
+        fixDataGauge();
+        // setInterval(fixDataGauge, 15000);
+
+        window.onresize = function () {
+            echarts_gauge_percent.resize();
+        };
+    });
+
+
+
+    function fixDataGauge() {
+        $.ajax({
+            url: "/api/admin/dashboard",
+            type: "get",
+            success: function (result) {
+                result=eval("("+result+")");
+                console.log(result)
+                if (result.code == 0) {
+                    echarts_gauge_percent.hideLoading();
+                    let option = echarts_gauge_percent.getOption();
+                    //mem
+                    option.series[0].data[0].value = result.data[0];
+                    //cpu
+                    option.series[1].data[0].value = result.data[1];
+                    //jvm
+                    option.series[2].data[0].value = result.data[2];
+                    echarts_gauge_percent.setOption(option, true);
+                }
+            }
+        })
+
+    }
+
+    function initEchartsGauge() {
+        echarts_gauge_percent = echarts.init(document.getElementById('echarts_gauge_percent'));
+
+        option = {
+
+            backgroundColor: 'rgba(255,255,255,0)',
+            tooltip: {
+                formatter: "{a} <br/>{c} {b}"
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    dataView: {show: true, readOnly: false},
+                    restore: {show: true},
+                    saveAsImage: {show: true}
+                }
+            },
+            grid: {
+                top: "1px",
+                left: "1px",
+                right: "1px",
+                bottom: "1px",
+                backgroundColor: '#fff',
+                width: "auto", //图例宽度
+                height: "100%", //图例高度
+            },
+            series: [
+                {
+                    name: '内存使用率',
+                    type: 'gauge',
+                    z: 3,
+                    min: 0,
+                    max: 100,
+                    splitNumber: 10,
+                    radius: '100%',
+                    axisLine: {            // 坐标轴线
+                        lineStyle: {       // 属性lineStyle控制线条样式
+                            width: 10
+                        }
+                    },
+                    axisTick: {            // 坐标轴小标记
+                        length: 15,        // 属性length控制线长
+                        lineStyle: {       // 属性lineStyle控制线条样式
+                            color: 'auto'
+                        }
+                    },
+                    splitLine: {           // 分隔线
+                        length: 20,         // 属性length控制线长
+                        lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                            color: 'auto'
+                        }
+                    },
+                    title: {
+                        textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                            fontWeight: 'bolder',
+                            fontSize: 20,
+                            fontStyle: 'italic'
+                        }
+                    },
+                    detail: {
+                        textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                            fontWeight: 'bolder'
+                        }
+                    },
+                    data: [{value: 40, name: '内存使用率（%）'}]
+                },
+                {
+                    name: 'CPU使用率',
+                    type: 'gauge',
+                    center: ['22%', '55%'],    // 默认全局居中
+                    radius: '85%',
+                    min: 0,
+                    max: 100,
+                    endAngle: 45,
+                    splitNumber: 10,
+                    axisLine: {            // 坐标轴线
+                        lineStyle: {       // 属性lineStyle控制线条样式
+                            width: 8
+                        }
+                    },
+                    axisTick: {            // 坐标轴小标记
+                        length: 12,        // 属性length控制线长
+                        lineStyle: {       // 属性lineStyle控制线条样式
+                            color: 'auto'
+                        }
+                    },
+                    splitLine: {           // 分隔线
+                        length: 20,         // 属性length控制线长
+                        lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                            color: 'auto'
+                        }
+                    },
+                    pointer: {
+                        width: 5
+                    },
+                    title: {
+                        offsetCenter: [0, '-30%'],       // x, y，单位px
+                    },
+                    detail: {
+                        textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                            fontWeight: 'bolder'
+                        }
+                    },
+                    data: [{value: 50, name: 'CPU使用率（%）'}]
+                },
+                {
+                    name: 'JVM使用率',
+                    type: 'gauge',
+                    center: ['79%', '55%'],    // 默认全局居中
+                    radius: '85%',
+                    min: 0,
+                    max: 100,
+                    startAngle: 140,
+                    endAngle: -45,
+                    splitNumber: 10,
+                    axisLine: {            // 坐标轴线
+                        lineStyle: {       // 属性lineStyle控制线条样式
+                            width: 8
+                        }
+                    },
+                    axisTick: {            // 坐标轴小标记
+                        length: 12,        // 属性length控制线长
+                        lineStyle: {       // 属性lineStyle控制线条样式
+                            color: 'auto'
+                        }
+                    },
+                    splitLine: {           // 分隔线
+                        length: 20,         // 属性length控制线长
+                        lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                            color: 'auto'
+                        }
+                    },
+                    pointer: {
+                        width: 5
+                    },
+                    title: {
+                        offsetCenter: [0, '-30%'],       // x, y，单位px
+                    },
+                    detail: {
+                        textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                            fontWeight: 'bolder'
+                        }
+                    },
+                    data: [{value: 50, name: 'JVM使用率（%）'}]
+                }
+            ]
+        };
+        echarts_gauge_percent.showLoading();
+        echarts_gauge_percent.setOption(option);
+
+    }
+</script>
+</body>
+</html>

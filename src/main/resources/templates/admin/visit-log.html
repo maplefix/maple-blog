@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<header th:replace="admin/header::header-fragment"></header>
+<body class="hold-transition sidebar-mini">
+<style>
+    .ui-jqgrid tr.jqgrow td {
+        white-space: normal !important;
+        height: auto;
+        vertical-align: text-top;
+        padding-top: 2px;
+    }
+</style>
+<div class="wrapper">
+    <!-- 引入页面头header-fragment -->
+    <div th:replace="admin/header::header-nav"></div>
+    <!-- 引入工具栏sidebar-fragment -->
+    <div th:replace="admin/sidebar::sidebar-fragment(${path})"></div>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+            </div><!-- /.container-fluid -->
+        </div>
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">访问日志</h3>
+                    </div> <!-- /.card-body -->
+                    <div class="card-body">
+                        <div class="grid-btn">
+                            <input type="text" placeholder="访问IP" id="visitIp" class="form-control col-2">&nbsp;
+                            <select class="form-control col-2 select2"
+                                    id="module" name="module" data-placeholder="模块名称">
+                                <option value="">模块名称</option>
+                                <option value="首页">首页</option>
+                                <option value="分类">分类</option>
+                                <option value="博客">博客</option>
+                                <option value="标签">标签</option>
+                                <option value="友链">友链</option>
+                                <option value="友链">归档</option>
+                                <option value="关于">关于</option>
+                                <option value="书单">书单</option>
+                            </select>&nbsp;&nbsp;&nbsp;
+                            <input type="text" placeholder="开始时间" id="beginDate" class="form-control col-2 form_datetime">~
+                            <input type="text" placeholder="结束时间" id="endDate" class="form-control col-2 form_datetime">&nbsp;&nbsp;&nbsp;&nbsp;
+                            <select class="form-control col-2 select2"
+                                    id="status" name="status" data-placeholder="操作状态">
+                                <option value="">操作状态</option>
+                                <option value="0">成功</option>
+                                <option value="1">失败</option>
+                            </select>&nbsp;
+                            <button class="btn btn-info" onclick="searchLog()"><i
+                                    class="fa fa-search"></i>&nbsp;搜索
+                            </button>
+                            <button class="btn btn-info" onclick="resetLog()"><i
+                                    class="glyphicon glyphicon-refresh"></i>&nbsp;重置
+                            </button>
+                        </div>
+                        <div class="grid-btn">
+                            <button class="btn btn-danger" onclick="deleteLog()"><i
+                                    class="fa fa-trash-o"></i>&nbsp;删除
+                            </button>
+                            <button class="btn btn-info" onclick="logExport()"><i
+                                    class="fa fa-plus"></i>&nbsp;导出
+                            </button>
+                        </div>
+                        <table id="jqGrid" class="table table-bordered">
+                        </table>
+                        <div id="jqGridPager"></div>
+                    </div><!-- /.card-body -->
+                </div>
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- 引入页脚footer-fragment -->
+    <div th:replace="admin/footer::footer-fragment"></div>
+</div>
+<!-- jQuery -->
+<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script th:src="@{/admin/plugins/jQueryUI/jquery-ui.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/admin/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/admin/dist/js/adminlte.min.js}"></script>
+<script th:src="@{/admin/plugins/jqgrid-5.3.0/jquery.jqGrid.min.js}"></script>
+<script th:src="@{/admin/plugins/jqgrid-5.3.0/grid.locale-cn.js}"></script>
+<!-- sweetalert -->
+<script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
+<!-- datatimepicker-->
+<script th:src="@{/admin/plugins/datetimepicker/js/bootstrap-datetimepicker.js}"></script>
+<script th:src="@{/admin/plugins/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js}"></script>
+<script th:src="@{/admin/dist/js/public.js}"></script>
+<script th:src="@{/admin/dist/js/visitlog.js}"></script>
+</body>
+</html>

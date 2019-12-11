@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="side-fragment" class="am-u-lg-4 am-u-sm-12 am-u-lg-offset-0 am-u-sm-offset-0 sidebar-container">
+    <section>
+        <section>
+            <div class="sidebar-header">
+                <span class="sidebar-header-title">
+                    搜索文章
+                </span>
+            </div>
+            <div class="sidebar-search">
+                <form method="get" onsubmit="return false;" accept-charset="utf-8">
+                    <div class="search-input">
+                        <input type="text" name="keyword" id="searchbox" placeholder="输入关键字搜索">
+                        <button type="submit" class="search-submit" onclick="search()"></button>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <section>
+            <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86
+                    src="//music.163.com/outchain/player?type=2&id=27571865&auto=0&height=66"></iframe>
+        </section>
+
+        <section>
+            <div class="sidebar-header">
+                <span class="sidebar-header-title">
+                    热门标签
+                </span>
+            </div>
+            <div class="tags ">
+                <th:block th:if="${null != hotLabel}">
+                    <th:block th:each="label : ${hotLabel}">
+                        <a rel="tag" th:href="@{'/label/' + ${label.labelName} + '.html'}">
+                            <th:block th:text="${label.labelName}+'('+${label.count}+')'"></th:block>
+                        </a>
+                    </th:block>
+                </th:block>
+            </div>
+        </section>
+        <section>
+            <div class="sidebar-header">
+                <span class="sidebar-header-title">
+                    热门分类
+                </span>
+            </div>
+            <div class="sidebar-list">
+                <ul class="sidebar-list-body sidebar-list-items">
+                    <th:block th:if="${null != hotCategories}">
+                        <th:block th:each="hotCategory : ${hotCategories}">
+                            <li class="sidebar-list-item"><a th:href="@{'/category/' + ${hotCategory.categoryName} + '.html'}">
+                                <th:block th:text="${hotCategory.categoryName}+'('+${hotCategory.blogCount}+')'"></th:block>
+                            </a></li>
+                        </th:block>
+                    </th:block>
+                </ul>
+            </div>
+        </section>
+        <section>
+            <div class="sidebar-header">
+                <span class="sidebar-header-title">
+                    热门博客
+                </span>
+            </div>
+            <main class="sidebar-lists">
+                <ul>
+                    <th:block th:if="${null != hotBlog}">
+                        <th:block th:each="blog : ${hotBlog}">
+                            <li class="sidebar-list-item"><a class="tag tooltipped tooltipped-n"
+                                                             th:href="@{'/blog/' + ${blog.blogId} + '.html'}">
+                                <th:block th:text="${blog.title}"></th:block>
+                            </a></li>
+                        </th:block>
+                    </th:block>
+                </ul>
+            </main>
+        </section>
+    </section>
+</div>
+</html>
