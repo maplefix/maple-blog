@@ -1,7 +1,6 @@
 package top.maplefix.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -14,13 +13,14 @@ import java.util.Map;
 
 /**
  * @author : Maple
- * @description :
+ * @description :通用controller，所有controller类都继承它
  * @date : Created in 2019/7/24 23:20
  * @editor:
  * @version: v2.1
  */
+@Slf4j
 public class BaseController {
-    private static Logger logger = LoggerFactory.getLogger(BaseController.class);
+
     @Autowired
     private MessageSource messageSource;
 
