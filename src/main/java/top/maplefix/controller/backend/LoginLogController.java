@@ -13,6 +13,7 @@ import top.maplefix.enums.OperationType;
 import top.maplefix.enums.ResultCode;
 import top.maplefix.model.LoginLog;
 import top.maplefix.service.ILoginLogService;
+import top.maplefix.utils.ExcelUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -125,6 +126,28 @@ public class LoginLogController extends BaseController {
             return new BaseResult();
         }catch (Exception e){
             log.error("登录日志删除操作异常,异常信息:{},异常堆栈:{}",e.getMessage(),e);
+            return BaseResult.failResult(ResultCode.SYSTEM_ERROR_CODE.getCode());
+        }
+    }
+
+    /**
+     * 导出登陆日志列表
+     * @param ids 登录日志ids
+     * @return BaseResult
+     */
+    @PostMapping("/export")
+    @OLog(module = "登录日志", businessType = OperationType.EXPORT)
+    @ResponseBody
+    public BaseResult export(@RequestBody String[] ids) {
+        log.info("登录日志导出操作开始...");
+        try {
+            List<LoginLog> loginLogList = loginLogService.selectLoginLogByIds(ids);
+            ExcelUtil<LoginLog> util = new ExcelUtil<>(LoginLog.class);
+            BaseResult baseResult = util.exportExcel(loginLogList,"登录日志列表");
+            log.info("登录日志导出操作成功...");
+            return baseResult;
+        }catch (Exception e){
+            log.error("登录日志导出操作异常,异常信息:{},异常堆栈:{}",e.getMessage(),e);
             return BaseResult.failResult(ResultCode.SYSTEM_ERROR_CODE.getCode());
         }
     }

@@ -79,11 +79,11 @@ public class BlogFrontController extends BaseController {
     private void setCommonMessage(HttpServletRequest request) {
 
         //查询点击最多博客列表
-        request.setAttribute("hotBlog", blogService.getBlogForNewestOrHottest(BlogConstant.BLOG_HOTTEST));
+        request.setAttribute("hotBlog", blogService.selectBlogForNewestOrHottest(BlogConstant.BLOG_HOTTEST));
         //查询最热博客标签
         request.setAttribute("hotLabel", labelService.getBlogTagForIndex());
         //查询首页最热分类
-        request.setAttribute("hotCategories", blogService.getBlogForHotCategory());
+        request.setAttribute("hotCategories", blogService.selectBlogForHotCategory());
     }
 
     /**
@@ -125,7 +125,7 @@ public class BlogFrontController extends BaseController {
         params.put(PageConstant.PAGESIZE,pageSize);
         //这里将isAll置为null或者不复制，表明是前端查询，只查出delFlag为0且blogStatus为1的文章
         params.put("isAll",null);
-        List<Blog> blogList = blogService.getBlogForIndexPage(params);
+        List<Blog> blogList = blogService.selectBlogForIndexPage(params);
         PageInfo<Blog> pageInfo = new PageInfo<Blog>(blogList);
         PageData page = new PageData(pageInfo);
         if (blogList == null || blogList.size() <1) {
@@ -223,7 +223,7 @@ public class BlogFrontController extends BaseController {
         log.info("博客标签查询页面访问开始...");
         Map<String, Object> params = setPageParams(page);
         params.put("labelName", labelName);
-        List<Blog> blogList = blogService.getBlogForIndexPage(params);
+        List<Blog> blogList = blogService.selectBlogForIndexPage(params);
         PageInfo<Blog> pageInfo = new PageInfo<>(blogList);
         PageData pageData = new PageData(pageInfo);
         request.setAttribute("blogPageResult", pageData);
@@ -266,7 +266,7 @@ public class BlogFrontController extends BaseController {
             return "error/error_404";
         }
         params.put("categoryId",categories.get(0).getCategoryId());
-        List<Blog> blogList = blogService.getBlogForIndexPage(params);
+        List<Blog> blogList = blogService.selectBlogForIndexPage(params);
         PageInfo<Blog> pageInfo = new PageInfo<>(blogList);
         PageData pageData = new PageData(pageInfo);
         request.setAttribute("blogPageResult", pageData);
@@ -301,7 +301,7 @@ public class BlogFrontController extends BaseController {
         log.info("博客查询页面访问开始...");
         Map<String, Object> params = setPageParams(page);
         params.put("keyword", keyword);
-        List<Blog> blogList = blogService.getBlogForIndexPage(params);
+        List<Blog> blogList = blogService.selectBlogForIndexPage(params);
         PageInfo<Blog> pageInfo = new PageInfo<>(blogList);
         PageData pageData = new PageData(pageInfo);
         request.setAttribute("blogPageResult", pageData);

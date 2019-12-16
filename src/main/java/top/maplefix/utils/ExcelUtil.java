@@ -285,7 +285,7 @@ public class ExcelUtil<T> {
             wb.write(out);
             return new BaseResult();
         } catch (Exception e) {
-            log.error("导出Excel异常{}", e.getMessage());
+            log.error("导出Excel失败,异常信息为：{}，异常堆栈为：{}", e.getMessage(),e);
             throw new BusinessException("导出Excel失败，请联系网站管理员！");
         } finally {
             if (wb != null) {
@@ -358,7 +358,7 @@ public class ExcelUtil<T> {
                         }
                     }
                 } catch (Exception e) {
-                    log.error("导出Excel失败{}", e);
+                    log.error("导出Excel失败,异常信息为：{}，异常堆栈为：{}", e.getMessage(),e);
                 }
             }
         }
@@ -465,7 +465,7 @@ public class ExcelUtil<T> {
      * @return
      */
     public String encodingFilename(String filename) {
-        filename = UUID.randomUUID().toString() + "_" + filename + ".xlsx";
+        filename = UuidUtils.getRandomUuidWithoutSeparator() + filename + ".xlsx";
         return filename;
     }
 
@@ -556,9 +556,6 @@ public class ExcelUtil<T> {
     /**
      * 创建一个工作簿
      */
-
-
-
     public void createWorkbook() {
         this.wb = new SXSSFWorkbook(500);
     }
@@ -569,7 +566,6 @@ public class ExcelUtil<T> {
      * @param sheetNo sheet数量
      * @param index   序号
      */
-
     public void createSheet(double sheetNo, int index) {
         this.sheet = wb.createSheet();
         // 设置工作表的名称.
@@ -596,7 +592,7 @@ public class ExcelUtil<T> {
         try {
             Cell cell = row.getCell(column);
             if (cell != null) {
-                if (cell.getCellTypeEnum() == CellType.NUMERIC) {
+                if (cell.getCellType() == CellType.NUMERIC) {
                     val = cell.getNumericCellValue();
                     if (HSSFDateUtil.isCellDateFormatted(cell)) {
                         // POI Excel 日期格式转换
@@ -608,11 +604,11 @@ public class ExcelUtil<T> {
                             val = new DecimalFormat("0").format(val);
                         }
                     }
-                } else if (cell.getCellTypeEnum() == CellType.STRING) {
+                } else if (cell.getCellType() == CellType.STRING) {
                     val = cell.getStringCellValue();
-                } else if (cell.getCellTypeEnum() == CellType.BOOLEAN) {
+                } else if (cell.getCellType() == CellType.BOOLEAN) {
                     val = cell.getBooleanCellValue();
-                } else if (cell.getCellTypeEnum() == CellType.ERROR) {
+                } else if (cell.getCellType() == CellType.ERROR) {
                     val = cell.getErrorCellValue();
                 }
 

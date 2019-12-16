@@ -229,3 +229,41 @@ function deleteBlog() {
         }
     );
 }
+
+/**
+ * 博客列表数据导出，没选中则导出全部
+ */
+function exportBlog() {
+    //获取选中数据
+    let ids = getSelectedRows();
+    swal({
+        title: "确认弹框",
+        text: "确认要导出数据吗?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((flag) => {
+            if (flag) {
+                $.ajax({
+                    type: "POST",
+                    url: "/api/admin/blog/export",
+                    contentType: "application/json",
+                    data: JSON.stringify(ids),
+                    success: function (result) {
+                        result=eval("("+result+")");
+                        if (result.code == 0) {
+                            swal("导出成功", {
+                                icon: "success",
+                            });
+                            $("#jqGrid").trigger("reloadGrid");
+                        } else {
+                            swal(result.message, {
+                                icon: "error",
+                            });
+                        }
+                    }
+                });
+            }
+        }
+    );
+}

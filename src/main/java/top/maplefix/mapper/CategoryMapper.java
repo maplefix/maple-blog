@@ -2,6 +2,7 @@ package top.maplefix.mapper;
 
 import org.apache.ibatis.annotations.CacheNamespace;
 import tk.mybatis.mapper.common.Mapper;
+import tk.mybatis.mapper.common.ids.SelectByIdsMapper;
 import top.maplefix.model.Category;
 
 /**
@@ -12,6 +13,6 @@ import top.maplefix.model.Category;
  * @version: v2.1
  */
 @CacheNamespace
-public interface CategoryMapper extends Mapper<Category> {
+public interface CategoryMapper extends Mapper<Category>, SelectByIdsMapper<Category> {
 
 }

@@ -13,6 +13,7 @@ import top.maplefix.enums.OperationType;
 import top.maplefix.enums.ResultCode;
 import top.maplefix.model.Dict;
 import top.maplefix.service.IDictService;
+import top.maplefix.utils.ExcelUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -149,4 +150,25 @@ public class DictController extends BaseController {
         }
     }
 
+    /**
+     * 导出字典列表
+     * @param ids 字典ids
+     * @return BaseResult
+     */
+    @PostMapping("/export")
+    @OLog(module = "字典管理", businessType = OperationType.EXPORT)
+    @ResponseBody
+    public BaseResult export(@RequestBody String[] ids) {
+        log.info("字典导出操作开始...");
+        try {
+            List<Dict> dictList = dictService.selectDictByIds(ids);
+            ExcelUtil<Dict> util = new ExcelUtil<>(Dict.class);
+            BaseResult baseResult = util.exportExcel(dictList,"字典列表");
+            log.info("字典导出操作成功...");
+            return baseResult;
+        }catch (Exception e){
+            log.error("字典导出操作异常,异常信息:{},异常堆栈:{}",e.getMessage(),e);
+            return BaseResult.failResult(ResultCode.SYSTEM_ERROR_CODE.getCode());
+        }
+    }
 }

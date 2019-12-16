@@ -88,6 +88,18 @@ public class LoginLogServiceImpl implements ILoginLogService {
             loginLog.setLoginLogId(loginLogId);
             loginLogMapper.delete(loginLog);
         }
+    }
 
+    @Override
+    public List<LoginLog> selectLoginLogByIds(String[] ids) {
+        //如果前端没选中列表数据则全部导出
+        if(null == ids || ids.length == 0){
+            Example example = new Example(LoginLog.class);
+            example.setOrderByClause("loginDate desc");
+            return loginLogMapper.selectByExample(example);
+        }
+        //将数组转成字符串，用逗号隔开
+        String idsStr = StringUtils.join(ids,",");
+        return loginLogMapper.selectByIds(idsStr);
     }
 }

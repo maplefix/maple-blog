@@ -89,4 +89,17 @@ public class OperationLogServiceImpl implements IOperationLogService {
             operationLogMapper.delete(operationLog);
         }
     }
+
+    @Override
+    public List<OperationLog> selectOperationLogByIds(String[] ids) {
+        //如果前端没选中列表数据则全部导出
+        if(null == ids || ids.length == 0){
+            Example example = new Example(OperationLog.class);
+            example.setOrderByClause("operDate desc");
+            return operationLogMapper.selectByExample(example);
+        }
+        //将数组转成字符串，用逗号隔开
+        String idsStr = StringUtils.join(ids,",");
+        return operationLogMapper.selectByIds(idsStr);
+    }
 }

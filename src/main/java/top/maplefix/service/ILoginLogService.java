@@ -45,4 +45,11 @@ public interface ILoginLogService {
      * @param loginLogIds
      */
     void deleteBatch(String[] loginLogIds);
+
+    /**
+     * 根据id查登陆日志列表
+     * @param ids 登陆日志id数据
+     * @return list
+     */
+    List<LoginLog> selectLoginLogByIds(String[] ids);
 }

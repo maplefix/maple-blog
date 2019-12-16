@@ -123,4 +123,19 @@ public class CategoryServiceImpl implements ICategoryService {
         }
     }
 
+    @Override
+    public List<Category> selectCategoryByIds(String[] ids) {
+        //如果前端没选中列表数据则全部导出
+        if(null == ids || ids.length == 0){
+            Example example = new Example(Category.class);
+            example.setOrderByClause("createDate desc");
+            Example.Criteria criteria = example.createCriteria();
+            //未删除
+            criteria.andEqualTo("delFlag", Constant.NORMAL);
+            return categoryMapper.selectByExample(example);
+        }
+        //将数组转成字符串，用逗号隔开
+        String idsStr = StringUtils.join(ids,",");
+        return categoryMapper.selectByIds(idsStr);
+    }
 }

@@ -2,6 +2,7 @@ package top.maplefix.mapper;
 
 import org.apache.ibatis.annotations.CacheNamespace;
 import tk.mybatis.mapper.common.Mapper;
+import tk.mybatis.mapper.common.ids.SelectByIdsMapper;
 import top.maplefix.model.Links;
 
 /**
@@ -12,6 +13,6 @@ import top.maplefix.model.Links;
  * @version: v2.1
  */
 @CacheNamespace
-public interface LinksMapper extends Mapper<Links> {
+public interface LinksMapper extends Mapper<Links> , SelectByIdsMapper<Links> {
 
 }

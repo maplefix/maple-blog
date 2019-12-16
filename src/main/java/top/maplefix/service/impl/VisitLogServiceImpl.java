@@ -87,4 +87,17 @@ public class VisitLogServiceImpl implements IVisitLogService {
             visitLogMapper.delete(visitLog);
         }
     }
+
+    @Override
+    public List<VisitLog> selectVisitLogByIds(String[] ids) {
+        //如果前端没选中列表数据则全部导出
+        if(null == ids || ids.length == 0){
+            Example example = new Example(VisitLog.class);
+            example.setOrderByClause("visitDate desc");
+            return visitLogMapper.selectByExample(example);
+        }
+        //将数组转成字符串，用逗号隔开
+        String idsStr = StringUtils.join(ids,",");
+        return visitLogMapper.selectByIds(idsStr);
+    }
 }

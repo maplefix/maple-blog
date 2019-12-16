@@ -45,4 +45,11 @@ public interface IVisitLogService {
      * @param visitLogIds
      */
     void deleteBatch(String[] visitLogIds);
+
+    /**
+     * 根据id查访问日志列表
+     * @param ids 访问日志id数据
+     * @return list
+     */
+    List<VisitLog> selectVisitLogByIds(String[] ids);
 }

@@ -14,6 +14,7 @@ import top.maplefix.enums.ResultCode;
 import top.maplefix.model.Label;
 import top.maplefix.service.IBlogLabelService;
 import top.maplefix.service.ILabelService;
+import top.maplefix.utils.ExcelUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -138,6 +139,28 @@ public class LabelController extends BaseController {
             }
         }catch (Exception e){
             log.error("博客标签删除操作异常,异常信息:{},异常堆栈:{}",e.getMessage(),e);
+            return BaseResult.failResult(ResultCode.SYSTEM_ERROR_CODE.getCode());
+        }
+    }
+
+    /**
+     * 导出标签列表
+     * @param ids 标签ids
+     * @return BaseResult
+     */
+    @PostMapping("/export")
+    @OLog(module = "标签管理", businessType = OperationType.EXPORT)
+    @ResponseBody
+    public BaseResult export(@RequestBody String[] ids) {
+        log.info("标签导出操作开始...");
+        try {
+            List<Label> labelList = labelService.selectLabelByIds(ids);
+            ExcelUtil<Label> util = new ExcelUtil<>(Label.class);
+            BaseResult baseResult = util.exportExcel(labelList,"标签列表");
+            log.info("标签导出操作成功...");
+            return baseResult;
+        }catch (Exception e){
+            log.error("标签导出操作异常,异常信息:{},异常堆栈:{}",e.getMessage(),e);
             return BaseResult.failResult(ResultCode.SYSTEM_ERROR_CODE.getCode());
         }
     }

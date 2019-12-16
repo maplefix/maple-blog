@@ -13,6 +13,7 @@ import top.maplefix.enums.OperationType;
 import top.maplefix.enums.ResultCode;
 import top.maplefix.model.OperationLog;
 import top.maplefix.service.IOperationLogService;
+import top.maplefix.utils.ExcelUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -125,6 +126,28 @@ public class OperationLogController extends BaseController {
             return new BaseResult();
         }catch (Exception e){
             log.error("操作日志删除操作异常,异常信息:{},异常堆栈:{}",e.getMessage(),e);
+            return BaseResult.failResult(ResultCode.SYSTEM_ERROR_CODE.getCode());
+        }
+    }
+
+    /**
+     * 导出操作日志列表
+     * @param ids 登录日志ids
+     * @return BaseResult
+     */
+    @PostMapping("/export")
+    @OLog(module = "操作日志", businessType = OperationType.EXPORT)
+    @ResponseBody
+    public BaseResult export(@RequestBody String[] ids) {
+        log.info("操作日志导出操作开始...");
+        try {
+            List<OperationLog> operationLogList = operationLogService.selectOperationLogByIds(ids);
+            ExcelUtil<OperationLog> util = new ExcelUtil<>(OperationLog.class);
+            BaseResult baseResult = util.exportExcel(operationLogList,"操作日志列表");
+            log.info("操作日志导出操作成功...");
+            return baseResult;
+        }catch (Exception e){
+            log.error("操作日志导出操作异常,异常信息:{},异常堆栈:{}",e.getMessage(),e);
             return BaseResult.failResult(ResultCode.SYSTEM_ERROR_CODE.getCode());
         }
     }

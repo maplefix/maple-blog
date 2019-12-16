@@ -13,6 +13,7 @@ import top.maplefix.enums.OperationType;
 import top.maplefix.enums.ResultCode;
 import top.maplefix.model.VisitLog;
 import top.maplefix.service.IVisitLogService;
+import top.maplefix.utils.ExcelUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -125,6 +126,28 @@ public class VisitLogController extends BaseController {
             return new BaseResult();
         }catch (Exception e){
             log.error("访问日志删除操作异常,异常信息:{},异常堆栈:{}",e.getMessage(),e);
+            return BaseResult.failResult(ResultCode.SYSTEM_ERROR_CODE.getCode());
+        }
+    }
+
+    /**
+     * 导出访问日志列表
+     * @param ids 访问日志ids
+     * @return BaseResult
+     */
+    @PostMapping("/export")
+    @OLog(module = "访问日志", businessType = OperationType.EXPORT)
+    @ResponseBody
+    public BaseResult export(@RequestBody String[] ids) {
+        log.info("访问日志导出操作开始...");
+        try {
+            List<VisitLog> visitLogList = visitLogService.selectVisitLogByIds(ids);
+            ExcelUtil<VisitLog> util = new ExcelUtil<>(VisitLog.class);
+            BaseResult baseResult = util.exportExcel(visitLogList,"访问日志列表");
+            log.info("访问日志导出操作成功...");
+            return baseResult;
+        }catch (Exception e){
+            log.error("访问日志导出操作异常,异常信息:{},异常堆栈:{}",e.getMessage(),e);
             return BaseResult.failResult(ResultCode.SYSTEM_ERROR_CODE.getCode());
         }
     }

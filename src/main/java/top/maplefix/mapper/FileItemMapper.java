@@ -3,6 +3,7 @@ package top.maplefix.mapper;
 import org.apache.ibatis.annotations.CacheNamespace;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
+import tk.mybatis.mapper.common.ids.SelectByIdsMapper;
 import top.maplefix.vo.FileItem;
 import top.maplefix.vo.FileItemVo;
 
@@ -16,7 +17,7 @@ import java.util.List;
  * @version: v2.1
  */
 @CacheNamespace
-public interface FileItemMapper extends Mapper<FileItem> {
+public interface FileItemMapper extends Mapper<FileItem>, SelectByIdsMapper<FileItem> {
 
     /**
      * 查询列表
