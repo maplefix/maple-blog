@@ -14,6 +14,7 @@ import top.maplefix.enums.OperationType;
 import top.maplefix.enums.ResultCode;
 import top.maplefix.model.BookList;
 import top.maplefix.service.IBookListService;
+import top.maplefix.utils.ExcelUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -206,6 +207,28 @@ public class BookListController extends BaseController {
             return new BaseResult();
         }catch (Exception e){
             log.error("书单写书评操作异常,异常信息:{},异常堆栈:{}",e.getMessage(),e);
+            return BaseResult.failResult(ResultCode.SYSTEM_ERROR_CODE.getCode());
+        }
+    }
+
+    /**
+     * 导出书单列表
+     * @param ids 书单ids
+     * @return
+     */
+    @PostMapping("/export")
+    @OLog(module = "书单管理", businessType = OperationType.EXPORT)
+    @ResponseBody
+    public BaseResult export(String[] ids) {
+        log.info("书单导出操作开始...");
+        try {
+            List<BookList> bookList = bookListService.selectBookListByIds(ids);
+            ExcelUtil<BookList> util = new ExcelUtil<>(BookList.class);
+            BaseResult baseResult = util.exportExcel(bookList,"书单列表");
+            log.info("书单导出操作成功...");
+            return baseResult;
+        }catch (Exception e){
+            log.error("书单导出操作异常,异常信息:{},异常堆栈:{}",e.getMessage(),e);
             return BaseResult.failResult(ResultCode.SYSTEM_ERROR_CODE.getCode());
         }
     }

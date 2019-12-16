@@ -19,6 +19,7 @@ import top.maplefix.controller.BaseController;
 import top.maplefix.enums.OperationType;
 import top.maplefix.enums.ResultCode;
 import top.maplefix.service.IFileItemService;
+import top.maplefix.utils.ExcelUtil;
 import top.maplefix.utils.StringUtils;
 import top.maplefix.vo.FileItem;
 
@@ -163,5 +164,27 @@ public class FileItemController extends BaseController {
         baseResult.setMsg(Constant.SUCCESS_MSG);
         log.info("文件删除操作成功...");
         return baseResult;
+    }
+
+    /**
+     * 导出文件列表
+     * @param ids 文件ids
+     * @return BaseResult
+     */
+    @PostMapping("/export")
+    @OLog(module = "文件管理", businessType = OperationType.EXPORT)
+    @ResponseBody
+    public BaseResult export(@RequestBody String[] ids) {
+        log.info("文件导出操作开始...");
+        try {
+            List<FileItem> fileItemList = fileItemService.selectFileItemByIds(ids);
+            ExcelUtil<FileItem> util = new ExcelUtil<>(FileItem.class);
+            BaseResult baseResult = util.exportExcel(fileItemList,"文件列表");
+            log.info("文件导出操作成功...");
+            return baseResult;
+        }catch (Exception e){
+            log.error("文件导出操作异常,异常信息:{},异常堆栈:{}",e.getMessage(),e);
+            return BaseResult.failResult(ResultCode.SYSTEM_ERROR_CODE.getCode());
+        }
     }
 }

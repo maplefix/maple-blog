@@ -12,6 +12,7 @@ import top.maplefix.enums.OperationType;
 import top.maplefix.enums.ResultCode;
 import top.maplefix.model.Links;
 import top.maplefix.service.ILinksService;
+import top.maplefix.utils.ExcelUtil;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -150,4 +151,25 @@ public class LinksController extends BaseController {
         }
     }
 
+    /**
+     * 导出友链列表
+     * @param ids 友链ids
+     * @return BaseResult
+     */
+    @PostMapping("/export")
+    @OLog(module = "友链管理", businessType = OperationType.EXPORT)
+    @ResponseBody
+    public BaseResult export(@RequestBody String[] ids) {
+        log.info("友链导出操作开始...");
+        try {
+            List<Links> linksList = linksService.selectLinksByIds(ids);
+            ExcelUtil<Links> util = new ExcelUtil<>(Links.class);
+            BaseResult baseResult = util.exportExcel(linksList,"友链列表");
+            log.info("友链导出操作成功...");
+            return baseResult;
+        }catch (Exception e){
+            log.error("友链导出操作异常,异常信息:{},异常堆栈:{}",e.getMessage(),e);
+            return BaseResult.failResult(ResultCode.SYSTEM_ERROR_CODE.getCode());
+        }
+    }
 }

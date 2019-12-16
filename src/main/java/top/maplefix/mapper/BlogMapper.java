@@ -31,11 +31,17 @@ public interface BlogMapper extends Mapper<Blog>, AggregationMapper<Blog> {
      * @param isAll 是否查出所有状态的文章
      * @return 博客列表
      */
-    List<Blog> getBlogForIndexPage(@Param("title") String title, @Param("categoryId") String categoryId,
+    List<Blog> selectBlogForIndexPage(@Param("title") String title, @Param("categoryId") String categoryId,
                                    @Param("label") String label, @Param("keyword") String keyword,
                                    @Param("beginDate") String beginDate, @Param("endDate") String endDate,
                                    @Param("isAll") String isAll);
 
+    /**
+     * 根据id批量查询博客列表
+     * @param blogIds 博客id集合
+     * @return Blog
+     */
+    List<Blog> selectBlogByIds(@Param("blogIds") String[] blogIds);
     /**
      * 获取归档的Date和count
      *
@@ -55,5 +61,5 @@ public interface BlogMapper extends Mapper<Blog>, AggregationMapper<Blog> {
      * 首页最热门分类查询
      * @return
      */
-    List<CategoryBlog> getBlogForHotCategory();
+    List<CategoryBlog> selectBlogForHotCategory();
 }

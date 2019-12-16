@@ -43,7 +43,7 @@ public interface IFileItemService {
 
     /**
      * 查询列表
-     * @param fileItemVo
+     * @param params
      * @return
      */
     List<FileItem> selectFileItemImageList(Map<String, Object> params);
@@ -71,4 +71,11 @@ public interface IFileItemService {
      * @return 受影响的行数
      */
     int deleteLocalImageFile(String name);
+
+    /**
+     * 根据id查询文件列表
+     * @param ids 文件id数据
+     * @return list
+     */
+    List<FileItem> selectFileItemByIds(String[] ids);
 }

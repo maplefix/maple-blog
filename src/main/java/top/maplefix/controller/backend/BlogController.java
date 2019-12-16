@@ -21,6 +21,7 @@ import top.maplefix.service.IBlogService;
 import top.maplefix.service.ICategoryService;
 import top.maplefix.service.IFileItemService;
 import top.maplefix.utils.DateUtils;
+import top.maplefix.utils.ExcelUtil;
 import top.maplefix.utils.StringUtils;
 import top.maplefix.utils.file.FileSuffixUtils;
 
@@ -84,7 +85,7 @@ public class BlogController extends BaseController {
         }
         //后端查询查出所有状态的文章，包括删除和草稿箱的文章
         params.put("isAll","true");
-        List<Blog> blogList = blogService.getBlogForIndexPage(params);
+        List<Blog> blogList = blogService.selectBlogForIndexPage(params);
         PageInfo<Blog> pageInfo = new PageInfo<>(blogList);
         baseResult.setMsg(Constant.SUCCESS_MSG);
         baseResult.setCode(ResultCode.SUCCESS_CODE.getCode());
@@ -153,7 +154,8 @@ public class BlogController extends BaseController {
         Blog blog = new Blog();
         blog.setBlogId(blogId);
         blog.setTitle(title);
-        blog.setLabel(label);
+        //此处修改标签时应该先判断是否有修改，如有则先删除原本的博客和标签关系再重新插入数据
+        blog.setLabel(blogService.parseLabel(blogId,label));
         blog.setCoverImg(coverImg);
         blog.setContent(content);
         int index = content.length();
@@ -179,6 +181,7 @@ public class BlogController extends BaseController {
             return BaseResult.failResult(ResultCode.SYSTEM_ERROR_CODE.getCode());
         }
     }
+
     /**
      * 新增博客
      * @param blog
@@ -229,8 +232,8 @@ public class BlogController extends BaseController {
             return BaseResult.failResult(ResultCode.LACK_PARAM_CODE.getCode());
         }
         try {
-            log.info("博客删除操作成功...");
             blogService.deleteBatch(ids);
+            log.info("博客删除操作成功...");
             return baseResult;
         }catch (Exception e){
             log.error("博客删除操作异常,异常信息:{},异常堆栈:{}",e.getMessage(),e);
@@ -292,5 +295,27 @@ public class BlogController extends BaseController {
         response.setHeader("Content-Type","application/json;charset=UTF-8");
         response.addHeader("Access-Control-Allow-Origin", "*");
         return result;
+    }
+
+    /**
+     * 导出博客列表
+     * @param ids 博客ids
+     * @return
+     */
+    @PostMapping("/export")
+    @OLog(module = "博客管理", businessType = OperationType.EXPORT)
+    @ResponseBody
+    public BaseResult export(String[] ids) {
+        log.info("博客导出操作开始...");
+        try {
+            List<Blog> blogList = blogService.selectBlogByIds(ids);
+            ExcelUtil<Blog> util = new ExcelUtil<>(Blog.class);
+            BaseResult baseResult = util.exportExcel(blogList,"博客列表");
+            log.info("博客导出操作成功...");
+            return baseResult;
+        }catch (Exception e){
+            log.error("博客导出操作异常,异常信息:{},异常堆栈:{}",e.getMessage(),e);
+            return BaseResult.failResult(ResultCode.SYSTEM_ERROR_CODE.getCode());
+        }
     }
 }

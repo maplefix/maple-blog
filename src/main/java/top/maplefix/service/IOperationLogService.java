@@ -46,4 +46,11 @@ public interface IOperationLogService {
      * @param operationLogIds
      */
     void deleteBatch(String[] operationLogIds);
+
+    /**
+     * 根据id查操作日志列表
+     * @param ids 操作日志id数据
+     * @return list
+     */
+    List<OperationLog> selectOperationLogByIds(String[] ids);
 }

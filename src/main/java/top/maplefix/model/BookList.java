@@ -4,6 +4,7 @@ import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
 import tk.mybatis.mapper.annotation.NameStyle;
 import tk.mybatis.mapper.code.Style;
+import top.maplefix.annotation.Excel;
 import top.maplefix.component.UuIdGenId;
 
 import javax.persistence.Id;
@@ -26,26 +27,31 @@ public class BookList implements Serializable {
      */
     @Id
     @KeySql(genId = UuIdGenId.class)
+    @Excel(name = "编号")
     private String bookListId;
 
     /**
      * 书名
      */
+    @Excel(name = "书名")
     private String bookName;
 
     /**
      * 作者
      */
+    @Excel(name = "作者")
     private String bookAuthor;
 
     /**
      * 阅读开始时间
      */
+    @Excel(name = "阅读开始时间")
     private String readBeginDate;
 
     /**
      * 阅读结束时间
      */
+    @Excel(name = "阅读结束时间")
     private String readEndDate;
 
     /**
@@ -61,12 +67,15 @@ public class BookList implements Serializable {
     /**
      * 书评
      */
+    @Excel(name = "书评")
     private String reviews;
 
     /**
      * 阅读状态，0:未开始，1:阅读中,2:已结束
      */
+    @Excel(name = "阅读状态" ,readConverterExp = "0=未开始,1=阅读中,2=已结束")
     private String readStatus;
+
     /**
      *备注说明
      */

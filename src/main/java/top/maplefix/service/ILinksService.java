@@ -58,4 +58,11 @@ public interface ILinksService {
      * @param linksIds
      */
     void deleteBatch(String[] linksIds);
+
+    /**
+     * 根据id查友联列表
+     * @param ids 友链id数据
+     * @return list
+     */
+    List<Links> selectLinksByIds(String[] ids);
 }
