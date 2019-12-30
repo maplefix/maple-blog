@@ -162,8 +162,9 @@ public class CategoryController extends BaseController {
         try {
             List<Category> categoryList = categoryService.selectCategoryByIds(ids);
             ExcelUtil<Category> util = new ExcelUtil<>(Category.class);
+            BaseResult baseResult = util.exportExcel(categoryList, "blogCategoryList", response);
             log.info("分类导出操作成功...");
-            return util.exportExcel(categoryList,"分类列表",response);
+            return baseResult;
         }catch (Exception e){
             log.error("分类导出操作异常,异常信息:{},异常堆栈:{}",e.getMessage(),e);
             return BaseResult.failResult(ResultCode.SYSTEM_ERROR_CODE.getCode());
