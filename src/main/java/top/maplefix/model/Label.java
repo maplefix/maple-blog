@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import tk.mybatis.mapper.annotation.KeySql;
 import tk.mybatis.mapper.annotation.NameStyle;
+import top.maplefix.annotation.Excel;
 import top.maplefix.component.UuIdGenId;
 
 import javax.persistence.Id;
@@ -29,26 +30,32 @@ public class Label implements Serializable {
      */
     @Id
     @KeySql(genId = UuIdGenId.class)
+    @Excel(name = "编号")
     public String labelId;
     /**
      * 标签名
      */
+    @Excel(name = "标签名")
     public String labelName;
     /**
      * 删除标识（1：删除，0：正常）
      */
+    @Excel(name = "删除标识",readConverterExp = "1=删除,0=正常")
     public String delFlag;
     /**
      * 创建时间
      */
+    @Excel(name = "创建时间")
     public String createDate;
     /**
      * 更新时间
      */
+    @Excel(name = "更新时间")
     public String updateDate;
     /**
      * 备注
      */
+    @Excel(name = "备注")
     public String remark;
 
     /**
@@ -62,5 +69,6 @@ public class Label implements Serializable {
      * 该标签关联博客数
      */
     @Transient
+    @Excel(name = "关联博客数")
     public Integer blogCount;
 }

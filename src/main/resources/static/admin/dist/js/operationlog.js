@@ -194,8 +194,11 @@ function exportOperationLog() {
                         if (result.code === 0) {
                             swal("导出成功", {
                                 icon: "success",
+                                //两秒自动关闭
+                                timer:2000
                             });
-                            $("#jqGrid").trigger("reloadGrid");
+                            //下载excel操作
+                            window.location.href = "common/download?fileName=" + result.msg + "&deleteFlag=" + true;
                         } else {
                             swal(result.msg, {
                                 icon: "error",

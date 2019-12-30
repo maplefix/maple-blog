@@ -3,6 +3,7 @@ package top.maplefix.model;
 import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
 import tk.mybatis.mapper.annotation.NameStyle;
+import top.maplefix.annotation.Excel;
 import top.maplefix.component.UuIdGenId;
 
 import javax.persistence.Id;
@@ -27,34 +28,42 @@ public class Category implements Serializable {
      */
     @Id
     @KeySql(genId = UuIdGenId.class)
+    @Excel(name = "编号")
     private String categoryId;
     /**
      * 分类名称
      */
+    @Excel(name = "分类名称")
     private String categoryName;
     /**
      * 分类图标相对地址
      */
+    @Excel(name = "图标地址")
     private String categoryIcon;
     /**
      * 权重
      */
+    @Excel(name = "权重")
     private Integer height;
     /**
      * 删除标识（1：删除，0：正常）
      */
+    @Excel(name = "删除标识",readConverterExp = "1=删除,0=正常")
     private String delFlag;
     /**
      * 创建时间
      */
+    @Excel(name = "创建时间")
     private String createDate;
     /**
      * 更新时间
      */
+    @Excel(name = "更新时间")
     private String updateDate;
     /**
      * 描述信息
      */
+    @Excel(name = "描述")
     private String description;
 
     /**
@@ -62,6 +71,7 @@ public class Category implements Serializable {
      * @Transient注解表明该字段不与数据库字段相对应
      */
     @Transient
+    @Excel(name = "关联博客数")
     public Integer count;
 
 }
