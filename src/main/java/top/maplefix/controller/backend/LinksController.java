@@ -16,6 +16,7 @@ import top.maplefix.utils.ExcelUtil;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -159,14 +160,13 @@ public class LinksController extends BaseController {
     @PostMapping("/export")
     @OLog(module = "友链管理", businessType = OperationType.EXPORT)
     @ResponseBody
-    public BaseResult export(@RequestBody String[] ids) {
+    public BaseResult export(String[] ids, HttpServletResponse response) {
         log.info("友链导出操作开始...");
         try {
             List<Links> linksList = linksService.selectLinksByIds(ids);
             ExcelUtil<Links> util = new ExcelUtil<>(Links.class);
-            BaseResult baseResult = util.exportExcel(linksList,"友链列表");
             log.info("友链导出操作成功...");
-            return baseResult;
+            return util.exportExcel(linksList,"友链列表",response);
         }catch (Exception e){
             log.error("友链导出操作异常,异常信息:{},异常堆栈:{}",e.getMessage(),e);
             return BaseResult.failResult(ResultCode.SYSTEM_ERROR_CODE.getCode());

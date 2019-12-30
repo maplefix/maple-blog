@@ -305,14 +305,13 @@ public class BlogController extends BaseController {
     @PostMapping("/export")
     @OLog(module = "博客管理", businessType = OperationType.EXPORT)
     @ResponseBody
-    public BaseResult export(String[] ids) {
+    public BaseResult export(String[] ids, HttpServletResponse response) {
         log.info("博客导出操作开始...");
         try {
             List<Blog> blogList = blogService.selectBlogByIds(ids);
             ExcelUtil<Blog> util = new ExcelUtil<>(Blog.class);
-            BaseResult baseResult = util.exportExcel(blogList,"博客列表");
             log.info("博客导出操作成功...");
-            return baseResult;
+            return util.exportExcel(blogList,"博客列表",response);
         }catch (Exception e){
             log.error("博客导出操作异常,异常信息:{},异常堆栈:{}",e.getMessage(),e);
             return BaseResult.failResult(ResultCode.SYSTEM_ERROR_CODE.getCode());

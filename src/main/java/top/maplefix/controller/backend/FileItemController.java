@@ -174,14 +174,13 @@ public class FileItemController extends BaseController {
     @PostMapping("/export")
     @OLog(module = "文件管理", businessType = OperationType.EXPORT)
     @ResponseBody
-    public BaseResult export(@RequestBody String[] ids) {
+    public BaseResult export(String[] ids, HttpServletResponse response) {
         log.info("文件导出操作开始...");
         try {
             List<FileItem> fileItemList = fileItemService.selectFileItemByIds(ids);
             ExcelUtil<FileItem> util = new ExcelUtil<>(FileItem.class);
-            BaseResult baseResult = util.exportExcel(fileItemList,"文件列表");
             log.info("文件导出操作成功...");
-            return baseResult;
+            return util.exportExcel(fileItemList,"文件列表",response);
         }catch (Exception e){
             log.error("文件导出操作异常,异常信息:{},异常堆栈:{}",e.getMessage(),e);
             return BaseResult.failResult(ResultCode.SYSTEM_ERROR_CODE.getCode());

@@ -17,6 +17,7 @@ import top.maplefix.service.IBookListService;
 import top.maplefix.utils.ExcelUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -216,15 +217,15 @@ public class BookListController extends BaseController {
      * @param ids 书单ids
      * @return
      */
-    @PostMapping("/export")
+    @RequestMapping("/export")
     @OLog(module = "书单管理", businessType = OperationType.EXPORT)
     @ResponseBody
-    public BaseResult export(String[] ids) {
+    public BaseResult export(String[] ids, HttpServletResponse response) {
         log.info("书单导出操作开始...");
         try {
             List<BookList> bookList = bookListService.selectBookListByIds(ids);
             ExcelUtil<BookList> util = new ExcelUtil<>(BookList.class);
-            BaseResult baseResult = util.exportExcel(bookList,"书单列表");
+            BaseResult baseResult = util.exportExcel(bookList, "bookList", response);
             log.info("书单导出操作成功...");
             return baseResult;
         }catch (Exception e){

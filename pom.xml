@@ -284,6 +284,7 @@
                     <excludes>
                         <exclude>**/*.properties</exclude>
                         <exclude>**/*.yml</exclude>
+                        <exclude>db/**</exclude>
                         <exclude>i18n/**</exclude>
                         <exclude>logback/*.xml</exclude>
                         <exclude>mapper/*.xml</exclude>
