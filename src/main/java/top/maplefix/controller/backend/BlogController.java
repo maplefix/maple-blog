@@ -310,8 +310,9 @@ public class BlogController extends BaseController {
         try {
             List<Blog> blogList = blogService.selectBlogByIds(ids);
             ExcelUtil<Blog> util = new ExcelUtil<>(Blog.class);
+            BaseResult baseResult = util.exportExcel(blogList, "blogList", response);
             log.info("博客导出操作成功...");
-            return util.exportExcel(blogList,"博客列表",response);
+            return baseResult;
         }catch (Exception e){
             log.error("博客导出操作异常,异常信息:{},异常堆栈:{}",e.getMessage(),e);
             return BaseResult.failResult(ResultCode.SYSTEM_ERROR_CODE.getCode());
