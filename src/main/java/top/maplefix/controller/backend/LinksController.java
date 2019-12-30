@@ -165,8 +165,9 @@ public class LinksController extends BaseController {
         try {
             List<Links> linksList = linksService.selectLinksByIds(ids);
             ExcelUtil<Links> util = new ExcelUtil<>(Links.class);
+            BaseResult baseResult = util.exportExcel(linksList, "linksList列表", response);
             log.info("友链导出操作成功...");
-            return util.exportExcel(linksList,"友链列表",response);
+            return baseResult;
         }catch (Exception e){
             log.error("友链导出操作异常,异常信息:{},异常堆栈:{}",e.getMessage(),e);
             return BaseResult.failResult(ResultCode.SYSTEM_ERROR_CODE.getCode());

@@ -179,8 +179,9 @@ public class FileItemController extends BaseController {
         try {
             List<FileItem> fileItemList = fileItemService.selectFileItemByIds(ids);
             ExcelUtil<FileItem> util = new ExcelUtil<>(FileItem.class);
+            BaseResult baseResult = util.exportExcel(fileItemList, "fileItemList", response);
             log.info("文件导出操作成功...");
-            return util.exportExcel(fileItemList,"文件列表",response);
+            return baseResult;
         }catch (Exception e){
             log.error("文件导出操作异常,异常信息:{},异常堆栈:{}",e.getMessage(),e);
             return BaseResult.failResult(ResultCode.SYSTEM_ERROR_CODE.getCode());

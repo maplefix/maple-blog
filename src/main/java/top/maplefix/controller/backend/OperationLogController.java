@@ -144,8 +144,9 @@ public class OperationLogController extends BaseController {
         try {
             List<OperationLog> operationLogList = operationLogService.selectOperationLogByIds(ids);
             ExcelUtil<OperationLog> util = new ExcelUtil<>(OperationLog.class);
+            BaseResult baseResult = util.exportExcel(operationLogList, "operationLogList", response);
             log.info("操作日志导出操作成功...");
-            return util.exportExcel(operationLogList,"操作日志列表",response);
+            return baseResult;
         }catch (Exception e){
             log.error("操作日志导出操作异常,异常信息:{},异常堆栈:{}",e.getMessage(),e);
             return BaseResult.failResult(ResultCode.SYSTEM_ERROR_CODE.getCode());

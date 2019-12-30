@@ -144,8 +144,9 @@ public class LoginLogController extends BaseController {
         try {
             List<LoginLog> loginLogList = loginLogService.selectLoginLogByIds(ids);
             ExcelUtil<LoginLog> util = new ExcelUtil<>(LoginLog.class);
+            BaseResult baseResult = util.exportExcel(loginLogList, "loginLogList", response);
             log.info("登录日志导出操作成功...");
-            return util.exportExcel(loginLogList,"登录日志列表",response);
+            return baseResult;
         }catch (Exception e){
             log.error("登录日志导出操作异常,异常信息:{},异常堆栈:{}",e.getMessage(),e);
             return BaseResult.failResult(ResultCode.SYSTEM_ERROR_CODE.getCode());

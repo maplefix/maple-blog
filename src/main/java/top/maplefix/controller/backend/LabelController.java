@@ -157,8 +157,9 @@ public class LabelController extends BaseController {
         try {
             List<Label> labelList = labelService.selectLabelByIds(ids);
             ExcelUtil<Label> util = new ExcelUtil<>(Label.class);
+            BaseResult baseResult = util.exportExcel(labelList, "blogLabelList", response);
             log.info("标签导出操作成功...");
-            return util.exportExcel(labelList,"标签列表",response);
+            return baseResult;
         }catch (Exception e){
             log.error("标签导出操作异常,异常信息:{},异常堆栈:{}",e.getMessage(),e);
             return BaseResult.failResult(ResultCode.SYSTEM_ERROR_CODE.getCode());

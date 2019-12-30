@@ -164,8 +164,9 @@ public class DictController extends BaseController {
         try {
             List<Dict> dictList = dictService.selectDictByIds(ids);
             ExcelUtil<Dict> util = new ExcelUtil<>(Dict.class);
+            BaseResult baseResult = util.exportExcel(dictList, "dictList", response);
             log.info("字典导出操作成功...");
-            return util.exportExcel(dictList,"字典列表",response);
+            return baseResult;
         }catch (Exception e){
             log.error("字典导出操作异常,异常信息:{},异常堆栈:{}",e.getMessage(),e);
             return BaseResult.failResult(ResultCode.SYSTEM_ERROR_CODE.getCode());

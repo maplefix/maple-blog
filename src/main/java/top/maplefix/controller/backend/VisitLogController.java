@@ -144,8 +144,9 @@ public class VisitLogController extends BaseController {
         try {
             List<VisitLog> visitLogList = visitLogService.selectVisitLogByIds(ids);
             ExcelUtil<VisitLog> util = new ExcelUtil<>(VisitLog.class);
+            BaseResult baseResult = util.exportExcel(visitLogList, "visitLogList", response);
             log.info("访问日志导出操作成功...");
-            return util.exportExcel(visitLogList,"访问日志列表",response);
+            return baseResult;
         }catch (Exception e){
             log.error("访问日志导出操作异常,异常信息:{},异常堆栈:{}",e.getMessage(),e);
             return BaseResult.failResult(ResultCode.SYSTEM_ERROR_CODE.getCode());
