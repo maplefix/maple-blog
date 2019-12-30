@@ -13,6 +13,7 @@ import top.maplefix.utils.DateUtils;
 import top.maplefix.utils.StringUtils;
 import top.maplefix.utils.UuidUtils;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -128,6 +129,6 @@ public class BookListServiceImpl implements IBookListService {
         }
         //将数组转成字符串，用逗号隔开
         String idsStr = StringUtils.join(ids,",");
-        return bookListMapper.selectByIds(idsStr);
+        return bookListMapper.selectByIdList(Arrays.asList(ids));
     }
 }

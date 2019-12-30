@@ -12,8 +12,10 @@ import top.maplefix.annotation.Excel;
 import top.maplefix.annotation.Excel.Type;
 import top.maplefix.common.BaseResult;
 import top.maplefix.config.SystemConfig;
+import top.maplefix.constant.Constant;
 import top.maplefix.exception.BusinessException;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -71,17 +73,23 @@ public class ExcelUtil<T> {
      */
     public Class<T> clazz;
 
+    /**
+     * 响应对象
+     */
+    private HttpServletResponse response;
+
     public ExcelUtil(Class<T> clazz) {
         this.clazz = clazz;
     }
 
-    public void init(List<T> list, String sheetName, Type type) {
+    public void init(List<T> list, String sheetName, Type type,HttpServletResponse response) {
         if (list == null) {
             list = new ArrayList<T>();
         }
         this.list = list;
         this.sheetName = sheetName;
         this.type = type;
+        this.response = response;
         createExcelField();
         createWorkbook();
     }
@@ -199,9 +207,9 @@ public class ExcelUtil<T> {
      * @param sheetName
      * @return
      */
-    public BaseResult exportExcel(List<T> list, String sheetName) {
-        this.init(list, sheetName, Type.EXPORT);
-        return exportExcel();
+    public BaseResult exportExcel(List<T> list, String sheetName,HttpServletResponse response) {
+        this.init(list, sheetName, Type.EXPORT,response);
+        return exportExcel(response);
     }
 
     /**
@@ -209,16 +217,16 @@ public class ExcelUtil<T> {
      * @param sheetName
      * @return
      */
-    public BaseResult importTemplateExcel(String sheetName) {
-        this.init(null, sheetName, Type.IMPORT);
-        return exportExcel();
+    public void importTemplateExcel(String sheetName,HttpServletResponse response) {
+        this.init(null, sheetName, Type.IMPORT,response);
+        exportExcel(response);
     }
 
     /**
      * 对list数据源将其里面的数据导入到excel表单
      * @return
      */
-    public BaseResult exportExcel() {
+    public BaseResult exportExcel(HttpServletResponse response) {
         OutputStream out = null;
         try {
             // 取出一共有多少个sheet.
@@ -281,9 +289,10 @@ public class ExcelUtil<T> {
                 }
             }
             String filename = encodingFilename(sheetName);
-            out = new FileOutputStream(getAbsoluteFile(filename));
+            String filePath = getAbsoluteFile(filename);
+            out = new FileOutputStream(filePath);
             wb.write(out);
-            return new BaseResult();
+            return new BaseResult(filename);
         } catch (Exception e) {
             log.error("导出Excel失败,异常信息为：{}，异常堆栈为：{}", e.getMessage(),e);
             throw new BusinessException("导出Excel失败，请联系网站管理员！");
@@ -292,14 +301,14 @@ public class ExcelUtil<T> {
                 try {
                     wb.close();
                 } catch (IOException e1) {
-                    e1.printStackTrace();
+                    log.error("导出Excel失败,异常信息为：{}，异常堆栈为：{}", e1.getMessage(),e1);
                 }
             }
             if (out != null) {
                 try {
                     out.close();
                 } catch (IOException e1) {
-                    e1.printStackTrace();
+                    log.error("导出Excel失败,异常信息为：{}，异常堆栈为：{}", e1.getMessage(),e1);
                 }
             }
         }
@@ -461,21 +470,22 @@ public class ExcelUtil<T> {
 
     /**
      * 编码文件名
-     * @param filename
-     * @return
+     * @param filename sheetName
+     * @return 新增文件名
      */
     public String encodingFilename(String filename) {
-        filename = UuidUtils.getRandomUuidWithoutSeparator() + filename + ".xlsx";
-        return filename;
+        return filename + Constant.POINT +"xlsx";
     }
 
     /**
      * 获取下载路径
-     * @param filename
+     * @param filename 文件名
      * @return
      */
-    public String getAbsoluteFile(String filename) {
-        String downloadPath = SystemConfig.getProfile() + filename;
+    public String getAbsoluteFile(String filename){
+        String path = SystemConfig.getProfile();
+        //String path = ResourceUtils.getURL("classpath:/file/").getPath();
+        String downloadPath = path + filename;
         File desc = new File(downloadPath);
         if (!desc.getParentFile().exists()) {
             desc.getParentFile().mkdirs();
@@ -495,7 +505,7 @@ public class ExcelUtil<T> {
         Object o = field.get(vo);
         if (StringUtils.isNotEmpty(excel.targetAttr())) {
             String target = excel.targetAttr();
-            if (target.indexOf(point) > -1) {
+            if (target.contains(point)) {
                 String[] targets = target.split("[.]");
                 for (String name : targets) {
                     o = getValue(o, name);

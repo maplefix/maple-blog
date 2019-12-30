@@ -408,21 +408,44 @@ function exportBookList() {
                     url: "/api/admin/bookList/export",
                     contentType: "application/json",
                     data: JSON.stringify(ids),
-                    /*success: function (result) {
+                    success: function (result) {
                         result = eval("("+result+")");
                         if (result.code === 0) {
                             swal("导出成功", {
                                 icon: "success",
+                                //两秒自动关闭
+                                timer:2000
                             });
-                            $("#jqGrid").trigger("reloadGrid");
+                            //下载excel操作
+                            window.location.href = "common/download?fileName=" + result.msg + "&deleteFlag=" + true;
                         } else {
                             swal(result.msg, {
                                 icon: "error",
                             });
                         }
-                    }*/
+                    }
                 });
+            //formSubmit(ids);
             }
         }
     );
+}
+
+/**
+ * 构建表单提交
+ * @param ids
+ */
+function formSubmit(ids) {
+    var form=$("<form>");//定义一个form表单
+    form.attr("style","display:none");
+    form.attr("target","");
+    form.attr("method","post");
+    form.attr("action","bookList/export");
+    var input1=$("<input>");
+    input1.attr("type","hidden");
+    input1.attr("name","ids");
+    input1.attr("value",ids);
+    $("body").append(form);//将表单放置在web中
+    form.append(input1);
+    form.submit();
 }

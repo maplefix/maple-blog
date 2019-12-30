@@ -16,6 +16,7 @@ import top.maplefix.service.IOperationLogService;
 import top.maplefix.utils.ExcelUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -138,14 +139,13 @@ public class OperationLogController extends BaseController {
     @PostMapping("/export")
     @OLog(module = "操作日志", businessType = OperationType.EXPORT)
     @ResponseBody
-    public BaseResult export(@RequestBody String[] ids) {
+    public BaseResult export(String[] ids, HttpServletResponse response) {
         log.info("操作日志导出操作开始...");
         try {
             List<OperationLog> operationLogList = operationLogService.selectOperationLogByIds(ids);
             ExcelUtil<OperationLog> util = new ExcelUtil<>(OperationLog.class);
-            BaseResult baseResult = util.exportExcel(operationLogList,"操作日志列表");
             log.info("操作日志导出操作成功...");
-            return baseResult;
+            return util.exportExcel(operationLogList,"操作日志列表",response);
         }catch (Exception e){
             log.error("操作日志导出操作异常,异常信息:{},异常堆栈:{}",e.getMessage(),e);
             return BaseResult.failResult(ResultCode.SYSTEM_ERROR_CODE.getCode());
