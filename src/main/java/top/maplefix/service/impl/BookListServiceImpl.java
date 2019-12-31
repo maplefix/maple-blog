@@ -13,6 +13,7 @@ import top.maplefix.utils.DateUtils;
 import top.maplefix.utils.StringUtils;
 import top.maplefix.utils.UuidUtils;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -116,5 +117,18 @@ public class BookListServiceImpl implements IBookListService {
         bookList.setReviews(reviews);
         bookList.setUpdateDate(DateUtils.getCurrDate());
         bookListMapper.updateByPrimaryKeySelective(bookList);
+    }
+
+    @Override
+    public List<BookList> selectBookListByIds(String[] ids) {
+        //如果前端没选中列表数据则全部导出
+        if(null == ids || ids.length == 0){
+            Example example = new Example(BookList.class);
+            example.setOrderByClause ("readStatus desc , createDate desc");
+            return bookListMapper.selectByExample(example);
+        }
+        //将数组转成字符串，用逗号隔开
+        String idsStr = StringUtils.join(ids,",");
+        return bookListMapper.selectByIdList(Arrays.asList(ids));
     }
 }

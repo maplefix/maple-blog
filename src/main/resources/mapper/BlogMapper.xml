@@ -3,7 +3,7 @@
 <mapper namespace="top.maplefix.mapper.BlogMapper">
 
     <!--查询前台首页博客列表-->
-    <select id="getBlogForIndexPage" resultType="top.maplefix.model.Blog">
+    <select id="selectBlogForIndexPage" resultType="top.maplefix.model.Blog">
         select b.*,c.categoryName
         from t_blog b
         LEFT JOIN t_category c on b.categoryId = c.categoryId
@@ -57,10 +57,27 @@
     </select>
 
     <!--获取最热分类名称以及对应的博客数量-->
-    <select id="getBlogForHotCategory" resultType="top.maplefix.vo.CategoryBlog">
+    <select id="selectBlogForHotCategory" resultType="top.maplefix.vo.CategoryBlog">
         select b.categoryId categoryId,c.categoryName categoryName,count(b.categoryId) blogCount
         from t_blog b
         LEFT JOIN t_category c on b.categoryId = c.categoryId
         group by b.categoryId
+    </select>
+    <!-- 根据id批量查询博客列表 -->
+    <select id="selectBlogByIds" resultType="top.maplefix.model.Blog">
+        select b.*,c.categoryName
+        from t_blog b
+        LEFT JOIN t_category c on b.categoryId = c.categoryId
+        <where>
+            <if test="blogIds != null">
+                AND b.blogId IN
+                <foreach collection="blogIds" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            AND b.delFlag = '0'
+            AND b.status = '1'
+        </where>
+        order by b.support desc, b.createDate desc
     </select>
 </mapper>

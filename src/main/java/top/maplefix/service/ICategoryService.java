@@ -56,4 +56,11 @@ public interface ICategoryService {
      * @param catIds
      */
     void deleteBatch(String[] catIds);
+
+    /**
+     * 根据id查询分类列表
+     * @param ids 分类id数据
+     * @return list
+     */
+    List<Category> selectCategoryByIds(String[] ids);
 }

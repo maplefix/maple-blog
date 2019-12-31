@@ -72,4 +72,11 @@ public interface IBookListService {
      * @param reviews 书评内容
      */
     void writeReviews(String bookListIds,String reviews);
+
+    /**
+     * 根据id查询书列表
+     * @param ids 书单ids
+     * @return
+     */
+    List<BookList> selectBookListByIds(String[] ids);
 }

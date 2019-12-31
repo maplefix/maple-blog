@@ -57,4 +57,11 @@ public interface ILabelService {
      * @param label
      */
     void updateLabel(Label label);
+
+    /**
+     * 根据id查询标签列表
+     * @param ids 标签id数据
+     * @return list
+     */
+    List<Label> selectLabelByIds(String[] ids);
 }

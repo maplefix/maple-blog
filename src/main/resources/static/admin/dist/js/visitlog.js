@@ -169,8 +169,41 @@ function deleteLog() {
 }
 
 /**
- * 导出访问日志 TODO
+ * 导出访问日志
  */
-function logExport() {
-
+function exportVisitLog() {
+    let ids = getSelectedRows();
+    swal({
+        title: "确认弹框",
+        text: "确认要导出选择的日志项吗?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((flag) => {
+            if (flag) {
+                $.ajax({
+                    type: "POST",
+                    url: "/api/admin/visitLog/export",
+                    contentType: "application/json",
+                    data: JSON.stringify(ids),
+                    success: function (result) {
+                        result = eval("("+result+")");
+                        if (result.code === 0) {
+                            swal("导出成功", {
+                                icon: "success",
+                                //两秒自动关闭
+                                timer:2000
+                            });
+                            //下载excel操作
+                            window.location.href = "common/download?fileName=" + result.msg + "&deleteFlag=" + true;
+                        } else {
+                            swal(result.msg, {
+                                icon: "error",
+                            });
+                        }
+                    }
+                });
+            }
+        }
+    );
 }

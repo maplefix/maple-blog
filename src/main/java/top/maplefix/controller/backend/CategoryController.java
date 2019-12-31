@@ -14,8 +14,10 @@ import top.maplefix.enums.ResultCode;
 import top.maplefix.model.Category;
 import top.maplefix.service.IBlogService;
 import top.maplefix.service.ICategoryService;
+import top.maplefix.utils.ExcelUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -120,11 +122,10 @@ public class CategoryController extends BaseController {
 
     }
 
-
     /**
      * 分类删除
-     * @param ids
-     * @return
+     * @param ids  分类id
+     * @return BaseResult
      */
     @PostMapping("/delete")
     @OLog(module = "分类管理", businessType = OperationType.DELETE)
@@ -148,4 +149,25 @@ public class CategoryController extends BaseController {
         }
     }
 
+    /**
+     * 导出分类列表
+     * @param ids 分类ids
+     * @return excel文件名
+     */
+    @PostMapping("/export")
+    @OLog(module = "分类管理", businessType = OperationType.EXPORT)
+    @ResponseBody
+    public BaseResult export(String[] ids, HttpServletResponse response) {
+        log.info("分类导出操作开始...");
+        try {
+            List<Category> categoryList = categoryService.selectCategoryByIds(ids);
+            ExcelUtil<Category> util = new ExcelUtil<>(Category.class);
+            BaseResult baseResult = util.exportExcel(categoryList, "blogCategoryList", response);
+            log.info("分类导出操作成功...");
+            return baseResult;
+        }catch (Exception e){
+            log.error("分类导出操作异常,异常信息:{},异常堆栈:{}",e.getMessage(),e);
+            return BaseResult.failResult(ResultCode.SYSTEM_ERROR_CODE.getCode());
+        }
+    }
 }

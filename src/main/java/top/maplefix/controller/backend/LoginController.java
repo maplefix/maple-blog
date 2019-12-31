@@ -105,7 +105,7 @@ public class LoginController {
         //分类总数
         request.setAttribute("categoryCount", categoryService.getTotalCategory());
         //博客总数
-        request.setAttribute("blogCount", blogService.getTotalBlog());
+        request.setAttribute("blogCount", blogService.selectTotalBlog());
         //友链总数
         request.setAttribute("linksCount", linksService.getTotalLinks());
         //标签总数

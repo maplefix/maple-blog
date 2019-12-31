@@ -229,5 +229,47 @@ function reset() {
     $("#sort").val('');
     $("#remark").val('');
     $('#edit-error-msg').css("display", "none");
+}
 
+/**
+ * 导出字典列表数据
+ */
+function exportDict() {
+    let ids = getSelectedRows();
+    if (ids == null) {
+        return;
+    }
+    swal({
+        title: "确认弹框",
+        text: "确认要导出选择的字典项吗?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((flag) => {
+            if (flag) {
+                $.ajax({
+                    type: "POST",
+                    url: "/api/admin/dict/export",
+                    contentType: "application/json",
+                    data: JSON.stringify(ids),
+                    success: function (result) {
+                        result = eval("("+result+")");
+                        if (result.code === 0) {
+                            swal("导出成功", {
+                                icon: "success",
+                                //两秒自动关闭
+                                timer:2000
+                            });
+                            //下载excel操作
+                            window.location.href = "common/download?fileName=" + result.msg + "&deleteFlag=" + true;
+                        } else {
+                            swal(result.msg, {
+                                icon: "error",
+                            });
+                        }
+                    }
+                });
+            }
+        }
+    );
 }

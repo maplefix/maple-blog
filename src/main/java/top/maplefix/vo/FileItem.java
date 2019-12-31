@@ -3,6 +3,7 @@ package top.maplefix.vo;
 import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
 import tk.mybatis.mapper.annotation.NameStyle;
+import top.maplefix.annotation.Excel;
 import top.maplefix.component.UuIdGenId;
 import top.maplefix.utils.UuidUtils;
 
@@ -44,6 +45,7 @@ public class FileItem implements Serializable {
     /**
      * 图床保存的文件的类型（1表示在本地存储，2表示存储在七牛云）
      */
+    @Excel(name = "删除标识",readConverterExp = "1=删除,0=正常")
     private String serverType;
     /**
      * 访问路径

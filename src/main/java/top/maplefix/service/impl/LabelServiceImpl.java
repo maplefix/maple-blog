@@ -130,4 +130,20 @@ public class LabelServiceImpl implements ILabelService {
         label.setUpdateDate(DateUtils.getCurrDate());
         labelMapper.updateByPrimaryKeySelective(label);
     }
+
+    @Override
+    public List<Label> selectLabelByIds(String[] ids) {
+        //如果前端没选中列表数据则全部导出
+        if(null == ids || ids.length == 0){
+            Example example = new Example(Label.class);
+            example.setOrderByClause("createDate desc");
+            Example.Criteria criteria = example.createCriteria();
+            //未删除
+            criteria.andEqualTo("delFlag", Constant.NORMAL);
+            return labelMapper.selectByExample(example);
+        }
+        //将数组转成字符串，用逗号隔开
+        String idsStr = StringUtils.join(ids,",");
+        return labelMapper.selectByIds(idsStr);
+    }
 }

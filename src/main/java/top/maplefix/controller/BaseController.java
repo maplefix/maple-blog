@@ -4,10 +4,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
+import top.maplefix.config.SystemConfig;
+import top.maplefix.constant.Constant;
 import top.maplefix.constant.PageConstant;
 import top.maplefix.utils.StringUtils;
+import top.maplefix.utils.file.FileUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Locale;
 import java.util.Map;
 
@@ -59,4 +66,6 @@ public class BaseController {
         int pageSize = top.maplefix.utils.StringUtils.getObjInt(params.get(PageConstant.PAGESIZE));
         return !org.springframework.util.StringUtils.isEmpty(currPage) && !org.springframework.util.StringUtils.isEmpty(pageSize);
     }
+
+
 }

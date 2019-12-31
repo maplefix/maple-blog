@@ -42,7 +42,7 @@ public class BlogServiceImpl implements IBlogService {
     private BlogLabelMapper blogLabelMapper;
 
     @Override
-    public List<Blog> getBlogForIndexPage(Map<String, Object> params) {
+    public List<Blog> selectBlogForIndexPage(Map<String, Object> params) {
         int currPage = top.maplefix.utils.StringUtils.getObjInt(params.get(PageConstant.PAGENUM));
         int pageSize = top.maplefix.utils.StringUtils.getObjInt(params.get(PageConstant.PAGESIZE));
         //分类id
@@ -60,12 +60,48 @@ public class BlogServiceImpl implements IBlogService {
         //后端查询查出所有状态的文章，包括删除和草稿箱的文章
         String isAll = top.maplefix.utils.StringUtils.getObjStr(params.get("isAll"));
         PageHelper.startPage(currPage, pageSize);
-        List<Blog> blogList = blogMapper.getBlogForIndexPage(title, categoryId, labelName, keyword, beginDate, endDate,isAll);
+        List<Blog> blogList = blogMapper.selectBlogForIndexPage(title, categoryId, labelName, keyword, beginDate, endDate,isAll);
         return blogList;
     }
 
+    /**
+     * 博客修改时判断标签是否有修改
+     * @param blogId 博客名称
+     * @param labelName 标签名
+     * @return 标签名
+     */
     @Override
-    public List<Blog> getBlogForNewestOrHottest(int type) {
+    public String parseLabel(String blogId,String labelName){
+        Blog tmp = new Blog();
+        tmp.setBlogId(blogId);
+        Blog blog = getBlog(tmp);
+        //标签有修改，则先删除原本的博客和标签关系再重新插入数据
+        if(!blog.getLabel().equals(labelName)){
+            //1.删除t_lable表数据
+            BlogLabel blogLabel = new BlogLabel();
+            blogLabel.setBlogId(blogId);
+            List<BlogLabel> list = blogLabelMapper.select(blogLabel);
+            for(BlogLabel bl: list){
+                Label label = new Label();
+                label.setLabelId(bl.getLabelId());
+                label.setDelFlag(Constant.DELETED);
+                labelMapper.updateByPrimaryKeySelective(label);
+            }
+            //2.删除t_blog_label表数据
+            blogLabelMapper.delete(blogLabel);
+            //3.重新插入新数据到t_lable和t_blog_label表
+            handlerBlogTag(blogId,labelName.split(","));
+        }
+        //标签未修改直接返回.
+        return labelName;
+    }
+    @Override
+    public List<Blog> selectBlogByIds(String[] ids) {
+        return blogMapper.selectBlogByIds(ids);
+    }
+
+    @Override
+    public List<Blog> selectBlogForNewestOrHottest(int type) {
         Example example = new Example(Blog.class);
         Example.Criteria criteria = example.createCriteria();
         if(type == BlogConstant.BLOG_NEWEST){
@@ -84,12 +120,12 @@ public class BlogServiceImpl implements IBlogService {
     }
 
     @Override
-    public List<CategoryBlog> getBlogForHotCategory() {
-        return blogMapper.getBlogForHotCategory();
+    public List<CategoryBlog> selectBlogForHotCategory() {
+        return blogMapper.selectBlogForHotCategory();
     }
 
     @Override
-    public int getTotalBlog() {
+    public int selectTotalBlog() {
         Example example = new Example(Blog.class);
         Example.Criteria criteria = example.createCriteria();
         //博客状态未已发布且未删除

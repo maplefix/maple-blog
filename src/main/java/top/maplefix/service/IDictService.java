@@ -72,4 +72,11 @@ public interface IDictService {
      * @param dictIds
      */
     void deleteBatch(String[] dictIds);
+
+    /**
+     * 根据id查询字典列表
+     * @param ids 字典id数据
+     * @return list
+     */
+    List<Dict> selectDictByIds(String[] ids);
 }
