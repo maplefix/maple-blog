@@ -154,7 +154,7 @@ public class DictController extends BaseController {
     /**
      * 导出字典列表
      * @param ids 字典ids
-     * @return BaseResult
+     * @return BaseResult excel文件名
      */
     @PostMapping("/export")
     @OLog(module = "字典管理", businessType = OperationType.EXPORT)

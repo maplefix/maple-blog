@@ -152,7 +152,7 @@ public class CategoryController extends BaseController {
     /**
      * 导出分类列表
      * @param ids 分类ids
-     * @return BaseResult
+     * @return excel文件名
      */
     @PostMapping("/export")
     @OLog(module = "分类管理", businessType = OperationType.EXPORT)

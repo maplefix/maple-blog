@@ -300,7 +300,7 @@ public class BlogController extends BaseController {
     /**
      * 导出博客列表
      * @param ids 博客ids
-     * @return
+     * @return excel文件名
      */
     @PostMapping("/export")
     @OLog(module = "博客管理", businessType = OperationType.EXPORT)

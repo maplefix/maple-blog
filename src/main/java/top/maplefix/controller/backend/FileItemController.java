@@ -169,7 +169,7 @@ public class FileItemController extends BaseController {
     /**
      * 导出文件列表
      * @param ids 文件ids
-     * @return BaseResult
+     * @return BaseResult excel文件名
      */
     @PostMapping("/export")
     @OLog(module = "文件管理", businessType = OperationType.EXPORT)

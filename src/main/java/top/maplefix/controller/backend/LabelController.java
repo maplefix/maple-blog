@@ -147,7 +147,7 @@ public class LabelController extends BaseController {
     /**
      * 导出标签列表
      * @param ids 标签ids
-     * @return BaseResult
+     * @return BaseResult excel文件名
      */
     @PostMapping("/export")
     @OLog(module = "标签管理", businessType = OperationType.EXPORT)

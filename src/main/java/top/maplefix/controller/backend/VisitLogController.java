@@ -134,7 +134,7 @@ public class VisitLogController extends BaseController {
     /**
      * 导出访问日志列表
      * @param ids 访问日志ids
-     * @return BaseResult
+     * @return BaseResult excel文件名
      */
     @PostMapping("/export")
     @OLog(module = "访问日志", businessType = OperationType.EXPORT)

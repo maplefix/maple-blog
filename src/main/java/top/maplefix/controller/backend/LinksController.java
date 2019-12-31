@@ -155,7 +155,7 @@ public class LinksController extends BaseController {
     /**
      * 导出友链列表
      * @param ids 友链ids
-     * @return BaseResult
+     * @return BaseResult excel文件名
      */
     @PostMapping("/export")
     @OLog(module = "友链管理", businessType = OperationType.EXPORT)

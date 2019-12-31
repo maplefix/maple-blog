@@ -215,7 +215,7 @@ public class BookListController extends BaseController {
     /**
      * 导出书单列表
      * @param ids 书单ids
-     * @return
+     * @return excel文件名
      */
     @RequestMapping("/export")
     @OLog(module = "书单管理", businessType = OperationType.EXPORT)

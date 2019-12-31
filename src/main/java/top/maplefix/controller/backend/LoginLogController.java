@@ -134,7 +134,7 @@ public class LoginLogController extends BaseController {
     /**
      * 导出登陆日志列表
      * @param ids 登录日志ids
-     * @return BaseResult
+     * @return BaseResult excel文件名
      */
     @PostMapping("/export")
     @OLog(module = "登录日志", businessType = OperationType.EXPORT)

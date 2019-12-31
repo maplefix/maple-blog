@@ -134,7 +134,7 @@ public class OperationLogController extends BaseController {
     /**
      * 导出操作日志列表
      * @param ids 登录日志ids
-     * @return BaseResult
+     * @return BaseResult excel文件名
      */
     @PostMapping("/export")
     @OLog(module = "操作日志", businessType = OperationType.EXPORT)
