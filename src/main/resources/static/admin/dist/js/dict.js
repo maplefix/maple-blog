@@ -236,9 +236,6 @@ function reset() {
  */
 function exportDict() {
     let ids = getSelectedRows();
-    if (ids == null) {
-        return;
-    }
     swal({
         title: "确认弹框",
         text: "确认要导出选择的字典项吗?",

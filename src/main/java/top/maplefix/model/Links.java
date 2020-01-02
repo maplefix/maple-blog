@@ -36,7 +36,7 @@ public class Links implements Serializable {
     /**
      * 友链类型(友链类别 0-友链 1-推荐网站)
      */
-    @Excel(name = "删除标识",readConverterExp = "1=删除,0=正常")
+    @Excel(name = "友链类别",readConverterExp = "1=推荐网站,0=友链")
     private String linksType;
     /**
      * 描述

@@ -68,6 +68,5 @@ public class Label implements Serializable {
      * 该标签关联博客数
      */
     @Transient
-    @Excel(name = "关联博客数")
     public Integer blogCount;
 }

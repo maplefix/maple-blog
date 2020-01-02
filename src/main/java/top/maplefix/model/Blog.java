@@ -86,7 +86,7 @@ public class Blog implements Serializable {
     /**
      * 是否推荐(置顶)，1表示推荐，0表示不推荐
      */
-    @Excel(name = "是否推荐",readConverterExp = "1=推荐,2=普通")
+    @Excel(name = "是否推荐",readConverterExp = "1=推荐,0=普通")
     private String support;
     /**
      * 删除标识(1:删除,0:正常)
@@ -96,7 +96,7 @@ public class Blog implements Serializable {
     /**
      * 原创标识(1:原创,0:转载)
      */
-    @Excel(name = "是否原创",readConverterExp = "1=原创,2=转载")
+    @Excel(name = "是否原创",readConverterExp = "1=原创,0=转载")
     private String originalFlag;
     /**
      * 创建时间

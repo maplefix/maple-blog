@@ -68,10 +68,9 @@ public class Category implements Serializable {
 
     /**
      * 关联博客数
-     * @Transient注解表明该字段不与数据库字段相对应
+     * @Transient 注解表明该字段不与数据库字段相对应
      */
     @Transient
-    @Excel(name = "关联博客数")
     public Integer count;
 
 }

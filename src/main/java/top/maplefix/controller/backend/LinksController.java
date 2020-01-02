@@ -164,7 +164,7 @@ public class LinksController extends BaseController {
         try {
             List<Links> linksList = linksService.selectLinksByIds(ids);
             ExcelUtil<Links> util = new ExcelUtil<>(Links.class);
-            BaseResult baseResult = util.exportExcel(linksList, "linksList列表", response);
+            BaseResult baseResult = util.exportExcel(linksList, "linksList", response);
             log.info("友链导出操作成功...");
             return baseResult;
         }catch (Exception e){
