@@ -26,8 +26,8 @@ import java.util.Map;
  * @author : Maple
  * @description : 博客接口实现类
  * @date : Created in 2019/7/24 22:37
- * @editor: Edited in 2019/10/28 14:15
- * @version: v2.1
+           Edited in 2019/10/28 14:15
+ * @version : v2.1
  */
 @Service
 public class BlogServiceImpl implements IBlogService {

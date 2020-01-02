@@ -19,8 +19,7 @@ import java.util.Hashtable;
  * @author : Maple
  * @description : 二维码生成工具类
  * @date : Created in 2019/11/15 14:17
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 @Slf4j
 public class QrCodeUtils {

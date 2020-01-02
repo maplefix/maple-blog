@@ -12,10 +12,10 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
- * @author: wangjg on 2019/12/2 10:48
+ * @author : Maple
  * @description: 书单表
- * @editored:
- * @version v 2.0
+ * @date : 2019/12/2 10:48
+ * @version : v2.1
  */
 @Data
 @Table(name = "t_book_list")

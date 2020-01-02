@@ -36,8 +36,8 @@ import java.util.Objects;
  * @author : Maple
  * @description : 后端博客管理controller
  * @date : Created in 2019/7/27 16:33
- * @editor: Edited in 2019/10/28 16:47
- * @version: v2.1
+           Edited in 2019/10/28 16:47
+ * @version : v2.1
  */
 @Controller
 @RequestMapping("/api/admin/blog")

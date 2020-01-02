@@ -4,8 +4,7 @@ package top.maplefix.constant;
  * @author : Maple
  * @description : 缓存前缀
  * @date : Created in 2019/7/24 11:15
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 public class CachePrefix {
     /**

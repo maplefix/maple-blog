@@ -11,8 +11,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
  * @description : redis存储session配置
  *  将session信息保存到redis中，spring中的session不在生效。设置超时时间为20分钟
  * @date : Created in 2019/9/8 23:37
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 @EnableCaching
 @EnableRedisHttpSession(maxInactiveIntervalInSeconds = 60*60)

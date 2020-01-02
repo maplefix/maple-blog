@@ -22,8 +22,7 @@ import java.util.Map;
  * @author : Maple
  * @description : 博客标签接口实现类
  * @date : Created in 2019/7/24 22:55
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 @Service
 public class LabelServiceImpl implements ILabelService {

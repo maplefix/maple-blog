@@ -6,9 +6,8 @@ import top.maplefix.utils.MessageUtils;
 /**
  * @author : Maple
  * @description : 基础异常类
- * @Date : Created in 2019/3/31 21:31
- * @editor:
- * @version: v2.1
+ * @date : Created in 2019/3/31 21:31
+ * @version : v2.1
  */
 public class BaseException extends RuntimeException {
     private static final long serialVersionUID = 1L;

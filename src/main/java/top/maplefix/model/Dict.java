@@ -14,8 +14,7 @@ import java.io.Serializable;
  * @author : Maple
  * @description : 博客字典实体
  * @date : Created in 2019/7/24 0:04
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 @Data
 @Table(name = "t_dict")

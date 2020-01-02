@@ -6,8 +6,7 @@ import top.maplefix.model.Label;
  * @author : Maple
  * @description : 博客标签关联接口
  * @date : Created in 2019/7/25 17:15
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 public interface IBlogLabelService {
 

@@ -9,8 +9,7 @@ import java.util.Map;
  * @author : Maple
  * @description : 字典表接口
  * @date : Created in 2019/7/24 22:54
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 public interface IDictService {
 

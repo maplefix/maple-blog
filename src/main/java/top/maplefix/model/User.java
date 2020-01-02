@@ -13,8 +13,7 @@ import java.io.Serializable;
  * @author : Maple
  * @description : 用户表实体
  * @date : Created in 2019/7/24 0:05
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 @Data
 @Table(name = "t_user")

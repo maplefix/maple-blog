@@ -4,8 +4,7 @@ package top.maplefix.constant;
  * @author : Maple
  * @description : 分页参数常量
  * @date : Created in 2019/7/27 17:06
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 public class PageConstant {
     /**

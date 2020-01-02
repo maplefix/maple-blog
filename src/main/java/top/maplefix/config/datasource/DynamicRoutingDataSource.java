@@ -8,8 +8,8 @@ import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
  * @description : 该类继承自 AbstractRoutingDataSource 类，
  *                在访问数据库时会调用该类的 determineCurrentLookupKey() 方法获取数据库实例的 key
  * @date : Created in 2019/7/24 13：10
- * @editor: Edited in 2019/1120 14:17
- * @version: v2.1
+           Edited in 2019/1120 14:17
+ * @version : v2.1
  */
 @Slf4j
 public class DynamicRoutingDataSource extends AbstractRoutingDataSource {

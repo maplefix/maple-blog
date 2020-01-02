@@ -9,8 +9,7 @@ import top.maplefix.model.OperationLog;
  * @author : Maple
  * @description : 操作日志mapper
  * @date : Created in 2019/7/25 0:33
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 @CacheNamespace
 public interface OperationLogMapper extends Mapper<OperationLog>, SelectByIdsMapper<OperationLog> {

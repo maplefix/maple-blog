@@ -25,8 +25,7 @@ import java.util.Optional;
  * @author : Maple
  * @description : 七牛云操作工具类
  * @date : Created in 2019/8/8 16:01
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 @Slf4j
 public class QiNiuUtils {

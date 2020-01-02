@@ -6,8 +6,7 @@ import top.maplefix.model.User;
  * @author : Maple
  * @description : 用户操作接口
  * @date : Created in 2019/7/24 22:59
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 public interface IUserService {
 

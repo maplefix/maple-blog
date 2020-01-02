@@ -1,11 +1,10 @@
 package top.maplefix.enums;
 
 /**
- * @author : wangjg
+ * @author : Maple
  * @description : 接口返回码
  * @date : Created in 2019/7/29 22:31
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 public enum ResultCode {
     /**

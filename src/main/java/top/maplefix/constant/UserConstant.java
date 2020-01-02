@@ -4,8 +4,7 @@ package top.maplefix.constant;
  * @author : Maple
  * @description : 用户常量
  * @date : Created in 2019/7/24 10:51
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 public class UserConstant {
 

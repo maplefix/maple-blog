@@ -8,8 +8,7 @@ import java.util.Random;
  * @author : Maple
  * @description : 自定义验证码文本生成器
  * @date : Created in 2019/9/10 15:17
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 public class CaptchaTextCreator extends DefaultTextCreator {
 

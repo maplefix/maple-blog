@@ -21,8 +21,7 @@ import java.util.Map;
  * @author : Maple
  * @description :
  * @date : Created in 2019/7/24 22:56
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 @Service
 public class LinksServiceImpl implements ILinksService {

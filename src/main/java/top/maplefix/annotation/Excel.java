@@ -9,8 +9,7 @@ import java.lang.annotation.Target;
  * @author : Maple
  * @description : 自定义excel注解
  * @date : Created in 2019/7/27 14:43
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)

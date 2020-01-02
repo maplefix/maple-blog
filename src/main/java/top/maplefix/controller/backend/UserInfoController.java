@@ -27,8 +27,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author : Maple
  * @description : 后端登录授权操作
  * @date : Created in 2019/7/27 14:43
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 @Controller
 @RequestMapping("/api/admin/userInfo")

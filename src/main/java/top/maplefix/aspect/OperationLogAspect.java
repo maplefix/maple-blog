@@ -36,8 +36,7 @@ import java.util.Map;
  * @author : Maple
  * @description : 操作日志切面
  * @date : Created in 2019/9/12 23:42
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 @Aspect
 @Component

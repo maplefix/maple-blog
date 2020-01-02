@@ -4,8 +4,7 @@ package top.maplefix.constant;
  * @author : Maple
  * @description : 登录模块常量
  * @date : Created in 2019/9/12 16:04
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 public class LoginConstant {
 

@@ -9,8 +9,7 @@ import java.util.Map;
  * @author : Maple
  * @description : 登录日志接口
  * @date : Created in 2019/7/24 22:57
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 public interface ILoginLogService {
 

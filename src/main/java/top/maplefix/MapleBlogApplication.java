@@ -13,8 +13,7 @@ import tk.mybatis.spring.annotation.MapperScan;
  * @description : maple-blog starter
  *  由于多数据动态切换，需要排除DataSourceAutoConfiguration
  * @date : Created in 2019/7/23 23:38
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 @MapperScan( basePackages = {"top.maplefix.mapper"})

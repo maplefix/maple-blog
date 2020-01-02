@@ -7,9 +7,8 @@ import java.security.MessageDigest;
 /**
  * @author : Maple
  * @description : MD5加密方法
- * @Date : Created in 2019/3/31 21:19
- * @editor:
- * @version: v2.1
+ * @date : Created in 2019/3/31 21:19
+ * @version : v2.1
  */
 @Slf4j
 public class Md5Utils {

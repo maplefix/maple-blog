@@ -30,8 +30,7 @@ import java.lang.reflect.Method;
  * @author : Maple
  * @description : 访客日志处理
  * @date : Created in 2019/7/24 23:13
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 
 @Aspect

@@ -7,8 +7,7 @@ import org.springframework.stereotype.Component;
  * @author : Maple
  * @description : 项目相关配置
  * @date : Created in 2019/8/1 20：09
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 @Component
 @ConfigurationProperties(prefix = "maple")

@@ -15,8 +15,8 @@ import java.io.Serializable;
  * @author : Maple
  * @description : 博客分类实体
  * @date : Created in 2019/7/24 0:04
- * @editor: Edited in 2019/10/30 14：24
- * @version: v2.1
+           Edited in 2019/10/30 14：24
+ * @version : v2.1
  */
 @Data
 @Table(name = "t_category")

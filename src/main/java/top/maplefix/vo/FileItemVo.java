@@ -7,8 +7,7 @@ import lombok.EqualsAndHashCode;
  * @author : Maple
  * @description :
  * @date : Created in 2019/8/22 22:55
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 @Data
 @EqualsAndHashCode

@@ -24,8 +24,7 @@ import java.util.Map;
  * @author : Maple
  * @description : 操作日志控制类
  * @date : Created in 2019/7/28 16:37
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 @Controller
 @RequestMapping("/api/admin/operationLog")

@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author: wangjg on 2019/12/2 10:59
+ * @author : Maple
  * @description: 书单接口service
- * @editored:
+ * @date : on 2019/12/2 10:59
  * @version v2.1
  */
 public interface IBookListService {

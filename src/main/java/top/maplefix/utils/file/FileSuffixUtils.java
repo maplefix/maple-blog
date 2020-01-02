@@ -4,8 +4,7 @@ package top.maplefix.utils.file;
  * @author : Maple
  * @description : 文件后缀判断工具类
  * @date : Created in 2019/8/31 19:47
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 public class FileSuffixUtils {
 

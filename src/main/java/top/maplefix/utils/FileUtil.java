@@ -8,9 +8,8 @@ import java.io.*;
 /**
  * @author : Maple
  * @description : 文件处理工具类
- * @Date : Created in 2019/3/31 21:25
- * @editor:
- * @version: v2.1
+ * @date : Created in 2019/3/31 21:25
+ * @version : v2.1
  */
 @Slf4j
 public class FileUtil {

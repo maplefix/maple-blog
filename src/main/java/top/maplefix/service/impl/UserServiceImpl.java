@@ -13,8 +13,7 @@ import top.maplefix.utils.Md5Utils;
  * @author : Maple
  * @description :用户操作接口实现类
  * @date : Created in 2019/7/24 23:00
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 @Service
 public class UserServiceImpl implements IUserService {

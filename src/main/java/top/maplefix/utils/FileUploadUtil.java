@@ -13,8 +13,7 @@ import java.io.IOException;
  * @author : Maple
  * @description : 文件上传工具类
  * @Date : Created in 2019/3/31 21:23
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 @Slf4j
 public class FileUploadUtil {
@@ -56,7 +55,7 @@ public class FileUploadUtil {
      * @return 文件名称
      * @throws Exception
      */
-    public static final String upload(MultipartFile file) throws IOException {
+    public static String upload(MultipartFile file) throws IOException {
         try {
             return upload(getDefaultBaseDir(), file, FileUploadUtil.IMAGE_JPG_EXTENSION);
         } catch (Exception e) {
@@ -72,7 +71,7 @@ public class FileUploadUtil {
      * @return 文件名称
      * @throws IOException
      */
-    public static final String upload(String baseDir, MultipartFile file) throws IOException {
+    public static String upload(String baseDir, MultipartFile file) throws IOException {
         try {
             return upload(baseDir, file, FileUploadUtil.IMAGE_JPG_EXTENSION);
         } catch (Exception e) {
@@ -91,7 +90,7 @@ public class FileUploadUtil {
      * @throws FileNameLengthLimitExceededException 文件名太长
      * @throws IOException                          比如读写文件出错时
      */
-    public static final String upload(String baseDir, MultipartFile file, String extension)
+    public static String upload(String baseDir, MultipartFile file, String extension)
             throws FileSizeLimitExceededException, IOException, FileNameLengthLimitExceededException {
 
         int fileNamelength = file.getOriginalFilename().length();
@@ -108,14 +107,14 @@ public class FileUploadUtil {
         return fileName;
     }
 
-    public static final String extractFilename(MultipartFile file, String extension) {
+    public static String extractFilename(MultipartFile file, String extension) {
         String filename = file.getOriginalFilename();
         //返回格式：2019/4/16/xxx.jpg
         filename = DateUtils.datePath() + "/" + filename + extension;
         return filename;
     }
 
-    private static final File getAbsoluteFile(String uploadDir, String filename) throws IOException {
+    private static File getAbsoluteFile(String uploadDir, String filename) throws IOException {
         File desc = new File(File.separator + filename);
 
         if (!desc.getParentFile().exists()) {
@@ -135,7 +134,7 @@ public class FileUploadUtil {
      * @return
      * @throws FileSizeLimitExceededException 如果超出最大大小
      */
-    public static final void assertAllowed(MultipartFile file) throws FileSizeLimitExceededException {
+    public static void assertAllowed(MultipartFile file) throws FileSizeLimitExceededException {
         long size = file.getSize();
         if (DEFAULT_MAX_SIZE != -1 && size > DEFAULT_MAX_SIZE) {
             throw new FileSizeLimitExceededException(DEFAULT_MAX_SIZE / 1024 / 1024);

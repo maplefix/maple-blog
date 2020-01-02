@@ -24,8 +24,7 @@ import java.util.Map;
  * @author : Maple
  * @description : 博客字典项控制类
  * @date : Created in 2019/7/28 16:36
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 @Controller
 @RequestMapping("/api/admin/dict")

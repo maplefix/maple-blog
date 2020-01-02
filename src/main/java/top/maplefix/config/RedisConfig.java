@@ -23,8 +23,7 @@ import java.time.Duration;
  * @author : Maple
  * @description : redis相关配置
  * @date : Created in 2019/9/11 23:37
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 @Configuration
 @EnableCaching

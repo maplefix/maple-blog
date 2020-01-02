@@ -7,10 +7,10 @@ import tk.mybatis.mapper.common.ids.SelectByIdsMapper;
 import top.maplefix.model.BookList;
 
 /**
- * @author: wangjg on 2019/12/2 10:57
+ * @author : Maple
  * @description: 书单mapper
- * @editored:
- * @version v 2.0
+ * @date : 2019/12/2 10:57
+ * @version : v2.1
  */
 @CacheNamespace
 public interface BookListMapper extends Mapper<BookList>, SelectByIdsMapper<BookList>, SelectByIdListMapper<BookList, String> {

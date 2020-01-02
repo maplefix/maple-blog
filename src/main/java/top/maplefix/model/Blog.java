@@ -16,8 +16,7 @@ import java.util.List;
  * @author : Maple
  * @description : 博客表实体
  * @date : Created in 2019/7/23 22:14
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 @Data
 @Table(name = "t_blog")

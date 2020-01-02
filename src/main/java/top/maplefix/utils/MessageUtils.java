@@ -5,9 +5,8 @@ import org.springframework.context.MessageSource;
 /**
  * @author : Maple
  * @description : 获取i18n资源文件
- * @Date : Created in 2019/3/31 21:20
- * @editor:
- * @version: v2.1
+ * @date : Created in 2019/3/31 21:20
+ * @version : v2.1
  */
 public class MessageUtils {
     /**

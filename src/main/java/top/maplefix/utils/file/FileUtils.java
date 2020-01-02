@@ -17,9 +17,8 @@ import java.util.stream.Collectors;
 /**
  * @author : Maple
  * @description : 文件处理工具类
- * @Date : Created in 2019/3/31 21:23
- * @editor:
- * @version: v2.1
+ * @date : Created in 2019/3/31 21:23
+ * @version : v2.1
  */
 public class FileUtils {
     public static String FILENAME_PATTERN = "[a-zA-Z0-9_\\-\\|\\.\\u4e00-\\u9fa5]+";

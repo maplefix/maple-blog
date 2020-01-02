@@ -10,8 +10,8 @@ import java.util.List;
  * @author : Maple
  * @description : 数据源切换处理
  * @date : Created in 2019/7/25 13：10
- * @editor: Edited in 2019/1120 14:17
- * @version: v2.1
+           Edited in 2019/1120 14:17
+ * @version : v2.1
  */
 public class DynamicDataSourceContextHolder {
 

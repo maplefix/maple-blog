@@ -4,8 +4,7 @@ package top.maplefix.enums;
  * @author : Maple
  * @description : 操作类型
  * @date : Created in 2019/9/15 19:23
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 public enum OperationType {
     /**

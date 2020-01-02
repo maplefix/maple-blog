@@ -13,8 +13,7 @@ import java.io.Serializable;
  * @author : Maple
  * @description : 博客标签关联表
  * @date : Created in 2019/7/25 17:03
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 @Data
 @Table(name = "t_blog_label")

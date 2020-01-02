@@ -18,9 +18,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author: wangjg on 2019/12/2 11:02
+ * @author : Maple
  * @description: 书单接口service实现类
- * @editored:
+ * @date : 2019/12/2 11:02
  * @version v2.1
  */
 @Service

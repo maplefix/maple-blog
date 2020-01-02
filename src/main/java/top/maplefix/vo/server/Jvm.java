@@ -9,8 +9,7 @@ import java.lang.management.ManagementFactory;
  * @author : Maple
  * @description : Jvm相关信息
  * @date : Created in 2019/9/15 16:14
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 public class Jvm {
     /**

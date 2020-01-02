@@ -24,8 +24,8 @@ import java.util.Map;
  * @author : Maple
  * @description : druid多数据源配置,在该类中生成多个数据源实例并将其注入到 ApplicationContext 中
  * @date : Created in 2019/7/25 18：01
- * @editor: Edited in 2019/1120 14:17
- * @version: v2.1
+           Edited in 2019/1120 14:17
+ * @version : v2.1
  */
 @Configuration
 public class DataSourceConfigurer {

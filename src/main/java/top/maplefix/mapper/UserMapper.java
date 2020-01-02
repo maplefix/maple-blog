@@ -8,8 +8,7 @@ import top.maplefix.model.User;
  * @author : Maple
  * @description : 用户mapper
  * @date : Created in 2019/7/25 0:33
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 @CacheNamespace
 public interface UserMapper extends Mapper<User> {

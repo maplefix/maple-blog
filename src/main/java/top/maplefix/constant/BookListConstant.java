@@ -1,9 +1,9 @@
 package top.maplefix.constant;
 
 /**
- * @author: wangjg on 2019/12/2 11:41
- * @description: 书单常量
- * @editored:
+ * @author : Maple on 2019/12/2 11:41
+ * @description : 书单常量
+ * @version : v2.1
  */
 public class BookListConstant {
 

@@ -23,8 +23,7 @@ import java.util.Properties;
  * @author : Maple
  * @description : 服务器相关信息
  * @date : Created in 2019/9/15 16:15
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 public class Server {
     private static final int OSHI_WAIT_SECOND = 1000;

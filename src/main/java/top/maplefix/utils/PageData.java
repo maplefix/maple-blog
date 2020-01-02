@@ -10,8 +10,8 @@ import java.util.List;
  * @author : Maple
  * @description : 重写github的分页实体
  * @date : Created in 2019/7/24 23:07
- * @editor: Edited in 2019/10/30 17:17
- * @version: v2.1
+           Edited in 2019/10/30 17:17
+ * @version : v2.1
  */
 @Data
 public class PageData implements Serializable {

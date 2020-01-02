@@ -6,8 +6,7 @@ import lombok.Data;
  * @author : Maple
  * @description : 查询首页分类和博客数量bean
  * @date : Created in 2019/10/25 17:32
- * @editor:
- * @version: v2.1
+ * @version : v2.1
  */
 @Data
 public class CategoryBlog {
