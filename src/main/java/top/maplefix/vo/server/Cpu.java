@@ -5,7 +5,7 @@ import top.maplefix.utils.ArithUtils;
  * @author : Maple
  * @description : cpu相关信息
  * @date : Created in 2019/9/15 16:11
- * @version : v2.1
+ * @version : v1.0
  */
 public class Cpu {
     /**

@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
  * @author : Maple
  * @description : 登录操作控制类
  * @date : Created in 2019/7/28 16:37
- * @version : v2.1
+ * @version : v1.0
  */
 @Controller
 @RequestMapping("/api/admin")

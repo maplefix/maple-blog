@@ -11,7 +11,7 @@ import java.util.List;
  * @description : 重写github的分页实体
  * @date : Created in 2019/7/24 23:07
            Edited in 2019/10/30 17:17
- * @version : v2.1
+ * @version : v1.0
  */
 @Data
 public class PageData implements Serializable {

@@ -51,9 +51,9 @@ spring:
       # 热部署开关
       enabled: true
   redis:
-    host: 127.0.0.1
+    host: 47.101.178.49
     port: 6379
-    password: 123456
+    password: Maple822
     database: 1
     timeout: 3000
   # 数据源配置
@@ -63,18 +63,18 @@ spring:
       master:
         type: com.alibaba.druid.pool.DruidDataSource
         driverClassName: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://127.0.0.1:3306/maple_blog?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        url: jdbc:mysql://47.101.178.49:3306/maple_blog?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
         username: root
-        password: 123456
+        password: Maple822
       # 从库数据源
       slave:
         type: com.alibaba.druid.pool.DruidDataSource
         driverClassName: com.mysql.cj.jdbc.Driver
         # 从数据源开关/默认关闭
         enabled: false
-        url: jdbc:mysql://127.0.0.1:3306/maple_blog?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        url: jdbc:mysql://47.101.178.49:3306/maple_blog?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
         username: root
-        password: 123456
+        password: Maple822
       # 初始连接数
       initialSize: 5
       # 最小连接池数量

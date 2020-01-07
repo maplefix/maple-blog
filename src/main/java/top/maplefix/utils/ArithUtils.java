@@ -6,7 +6,7 @@ import java.math.BigDecimal;
  * @author : Maple
  * @description : 精确的浮点运算
  * @date : Created in 2019/9/15 16:12
- * @version : v2.1
+ * @version : v1.0
  */
 public class ArithUtils {
     /**

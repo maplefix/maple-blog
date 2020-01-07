@@ -11,7 +11,7 @@ import java.util.Properties;
  * @author : Maple
  * @description : 验证码属性配置
  * @date : Created in 2019/7/24 19:40
- * @version : v2.1
+ * @version : v1.0
  */
 @Configuration
 public class CaptchaConfig {

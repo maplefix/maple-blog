@@ -10,7 +10,7 @@ import top.maplefix.interceptor.LoginInterceptor;
  * @author : Maple
  * @description : 自定义web拦截器
  * @date : Created in 2019/7/24 22:17
- * @version : v2.1
+ * @version : v1.0
  */
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {

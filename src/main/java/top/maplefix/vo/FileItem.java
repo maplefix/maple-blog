@@ -15,7 +15,7 @@ import java.io.Serializable;
  * @author : 16558
  * @description : 文件相关属性
  * @date : Created in 2019/8/8 16:55
- * @version : v2.1
+ * @version : v1.0
  */
 @Data
 @Table(name = "t_file_item")

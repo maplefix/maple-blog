@@ -1,7 +1,7 @@
 /**
  * @author Maple created on 2019/7/25
  * @description 友链管理模块
- * @version v2.1
+ * @version v1.0
  */
 $(function () {
     //加载友链数据列表

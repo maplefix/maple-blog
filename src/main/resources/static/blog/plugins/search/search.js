@@ -1,7 +1,7 @@
 /**
  * @author Maple created on 2019/9/25
  * @description 页面内容加载完后加载底部的网站运行时间
- * @version v2.1
+ * @version v1.0
  */
 $(function () {
     $('#searchbox').keypress(function (e) {

@@ -19,7 +19,7 @@ import java.net.URLEncoder;
  * @author Maple
  * @description 通用控制类，处理文件下载
  * @date 2019/12/25 14:46
- * @version v2.1
+ * @version v1.0
  */
 @RestController
 @RequestMapping("/api/admin")

@@ -1,7 +1,7 @@
 /**
  * @author Maple created on 2019/7/25
  * @description 登录日志理模块
- * @version v2.1
+ * @version v1.0
  */
 $(function () {
     //加载登录日志数据列表

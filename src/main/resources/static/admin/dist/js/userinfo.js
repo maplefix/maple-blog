@@ -2,7 +2,7 @@
 /**
  * @author Maple created on 2019/7/25
  * @description 个人信息管理模块
- * @version v2.1
+ * @version v1.0
  */
 $(function () {
     //修改个人信息

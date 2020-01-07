@@ -15,7 +15,7 @@ import java.util.List;
  * @author : Maple
  * @description : 自定义rest template
  * @date : Created in 2019/7/24 12:21
- * @version : v2.1
+ * @version : v1.0
  */
 @Configuration
 public class RestTemplateConfig {

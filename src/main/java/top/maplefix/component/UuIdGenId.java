@@ -8,7 +8,7 @@ import java.util.UUID;
  * @author : Maple
  * @description : 实现tk的id生成策略（tk只提供接口未实现）
  * @date : Created in 2019/7/24 10:00
- * @version : v2.1
+ * @version : v1.0
  */
 public class UuIdGenId implements GenId<String> {
 

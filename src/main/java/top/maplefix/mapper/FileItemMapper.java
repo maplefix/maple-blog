@@ -13,7 +13,7 @@ import java.util.List;
  * @author : Maple
  * @description :
  * @date : Created in 2019/8/22 22:35
- * @version : v2.1
+ * @version : v1.0
  */
 @CacheNamespace
 public interface FileItemMapper extends Mapper<FileItem>, SelectByIdsMapper<FileItem> {

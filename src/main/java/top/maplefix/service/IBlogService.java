@@ -12,7 +12,7 @@ import java.util.Map;
  * @description : 博客表操作接口
  * @date : Created in 2019/7/24 22:37
            Edited in 2019/10/28 15:20
- * @version : v2.1
+ * @version : v1.0
  */
 public interface IBlogService {
 

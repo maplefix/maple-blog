@@ -9,7 +9,7 @@ import top.maplefix.model.Category;
  * @author : Maple
  * @description : 博客分类mapper
  * @date : Created in 2019/7/25 0:30
- * @version : v2.1
+ * @version : v1.0
  */
 @CacheNamespace
 public interface CategoryMapper extends Mapper<Category>, SelectByIdsMapper<Category> {

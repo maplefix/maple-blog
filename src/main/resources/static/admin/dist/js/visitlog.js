@@ -2,7 +2,7 @@
 /**
  * @author Maple created on 2019/7/25
  * @description 访问日志管理模块
- * @version v2.1
+ * @version v1.0
  */
 $(function () {
     //加载访问日志数据列表

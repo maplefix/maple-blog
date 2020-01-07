@@ -9,7 +9,7 @@ import top.maplefix.model.VisitLog;
  * @author : Maple
  * @description : 访问日志mapper
  * @date : Created in 2019/7/25 0:34
- * @version : v2.1
+ * @version : v1.0
  */
 @CacheNamespace
 public interface VisitLogMapper extends Mapper<VisitLog> , SelectByIdsMapper<VisitLog> {

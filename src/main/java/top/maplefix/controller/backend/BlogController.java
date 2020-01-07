@@ -37,7 +37,7 @@ import java.util.Objects;
  * @description : 后端博客管理controller
  * @date : Created in 2019/7/27 16:33
            Edited in 2019/10/28 16:47
- * @version : v2.1
+ * @version : v1.0
  */
 @Controller
 @RequestMapping("/api/admin/blog")

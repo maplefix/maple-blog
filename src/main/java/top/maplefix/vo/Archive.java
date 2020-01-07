@@ -10,7 +10,7 @@ import java.util.List;
  * @author : Maple
  * @description : 归档实体
  * @date : Created in 2019/9/14 21:05
- * @version : v2.1
+ * @version : v1.0
  */
 @Data
 public class Archive implements Serializable {

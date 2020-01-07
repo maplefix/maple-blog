@@ -31,7 +31,7 @@ import java.io.IOException;
  * @author : Maple
  * @description : xss过滤器(OncePerRequestFilter)
  * @date : Created in 2019/9/16 23:25
- * @version : v2.1
+ * @version : v1.0
  */
 @Component
 @Slf4j

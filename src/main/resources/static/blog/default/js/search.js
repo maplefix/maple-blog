@@ -1,7 +1,7 @@
 /**
  * @author Maple created on 2019/9/25
  * @description 首页搜索功能
- * @version v2.1
+ * @version v1.0
  */
 $(function () {
     $('#searchbox').keypress(function (e) {

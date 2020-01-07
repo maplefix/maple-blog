@@ -15,7 +15,7 @@ import java.io.Serializable;
  * @author : Maple
  * @description: 书单表
  * @date : 2019/12/2 10:48
- * @version : v2.1
+ * @version : v1.0
  */
 @Data
 @Table(name = "t_book_list")

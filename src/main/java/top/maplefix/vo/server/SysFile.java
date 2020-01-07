@@ -6,7 +6,7 @@ import lombok.Data;
  * @author : Maple
  * @description : 系统文件相关信息
  * @date : Created in 2019/9/15 16:17
- * @version : v2.1
+ * @version : v1.0
  */
 @Data
 public class SysFile {

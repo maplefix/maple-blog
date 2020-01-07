@@ -23,7 +23,7 @@ import java.io.IOException;
  * @author : Maple
  * @description : 验证码接口
  * @date : Created in 2019/7/24 19:42
- * @version : v2.1
+ * @version : v1.0
  */
 @RestController
 @RequestMapping("/api/admin/captcha")

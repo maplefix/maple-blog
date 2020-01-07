@@ -18,7 +18,7 @@ import java.util.Map;
  * @author : Maple
  * @description : 访问日志接口实现类
  * @date : Created in 2019/7/24 23:01
- * @version : v2.1
+ * @version : v1.0
  */
 @Service
 public class VisitLogServiceImpl implements IVisitLogService {

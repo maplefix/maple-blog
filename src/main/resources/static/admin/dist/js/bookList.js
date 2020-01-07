@@ -1,7 +1,7 @@
 /**
  * @author Maple created on 2019/12/2
  * @description 书单管理模块
- * @version v2.1
+ * @version v1.0
  */
 $(function () {
     //加载书单数据列表

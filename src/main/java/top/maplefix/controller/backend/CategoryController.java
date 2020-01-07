@@ -26,7 +26,7 @@ import java.util.Map;
  * @description : 博客分类控制类
  * @date : Created in 2019/7/28 2:53
            Edited in 2019/10/29 20:42
- * @version : v2.1
+ * @version : v1.0
  */
 @Controller
 @RequestMapping("/api/admin/category")

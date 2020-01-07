@@ -1,7 +1,7 @@
 /**
  * @author Maple created on 2019/9/25
  * @description 页面加载完后加载回到顶部
- * @version v2.1
+ * @version v1.0
  */
 $(document).ready(function(){
     //首先将#back-to-top隐藏

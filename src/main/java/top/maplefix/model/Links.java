@@ -14,7 +14,7 @@ import java.io.Serializable;
  * @author : Maple
  * @description : 友链实体
  * @date : Created in 2019/7/24 0:04
- * @version : v2.1
+ * @version : v1.0
  */
 @Data
 @Table(name = "t_links")

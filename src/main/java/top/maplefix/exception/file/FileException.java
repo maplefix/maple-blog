@@ -7,7 +7,7 @@ import top.maplefix.exception.BaseException;
  * @author : Maple
  * @description : 文件信息异常
  * @date : Created in 2019/4/01 11:01
- * @version : v2.1
+ * @version : v1.0
  */
 public class FileException extends BaseException {
     private static final long serialVersionUID = 1L;

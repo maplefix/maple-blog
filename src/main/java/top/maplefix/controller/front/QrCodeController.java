@@ -19,7 +19,7 @@ import java.io.ByteArrayOutputStream;
  * @author : Maple
  * @description : 前端文章链接二维码生成接口
  *  可以返回BufferedImage或者base64
- * @date : Created in 2019/11/15 14:16* @version : v2.1
+ * @date : Created in 2019/11/15 14:16* @version : v1.0
  */
 @Controller
 @Slf4j

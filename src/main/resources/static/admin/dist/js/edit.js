@@ -1,7 +1,7 @@
 /**
  * @author Maple created on 2019/7/25
  * @description 博客编辑模块
- * @version v2.1
+ * @version v1.0
  */
 //声明editor.md编辑器
 let blogEditor;

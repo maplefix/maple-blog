@@ -2,7 +2,7 @@
 /**
  * @author Maple created on 2019/7/25
  * @description ajax扩展，用于每个ajax请求头设置JWT的token信息及通用校验
- * @version v2.1
+ * @version v1.0
  */
 $.extend({
     newAjax: function(option) {

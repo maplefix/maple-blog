@@ -16,7 +16,7 @@ import java.io.Serializable;
  * @description : 博客分类实体
  * @date : Created in 2019/7/24 0:04
            Edited in 2019/10/30 14：24
- * @version : v2.1
+ * @version : v1.0
  */
 @Data
 @Table(name = "t_category")

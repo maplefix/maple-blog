@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author : Maple
  * @description : 服务器监控相关信息
  * @date : Created in 2019/9/15 16:20
- * @version : v2.1
+ * @version : v1.0
  */
 @Controller
 @RequestMapping("/api/admin/server")

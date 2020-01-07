@@ -15,7 +15,7 @@ import java.util.List;
  * @author : Maple
  * @description :
  * @date : Created in 2019/7/25 17:15
- * @version : v2.1
+ * @version : v1.0
  */
 @Service
 public class BlogLabelServiceImpl implements IBlogLabelService {

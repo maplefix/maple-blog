@@ -16,7 +16,7 @@ import java.io.IOException;
  * @author : Maple
  * @description : 登录拦截器
  * @date : Created in 2019/9/8 23:25
- * @version : v2.1
+ * @version : v1.0
  */
 @Slf4j
 public class LoginInterceptor implements HandlerInterceptor {

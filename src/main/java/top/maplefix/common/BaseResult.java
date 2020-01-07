@@ -11,7 +11,7 @@ import top.maplefix.utils.PageData;
  * @author : Maple
  * @description : 通用数据返回对象
  * @date : Created in 2019/7/24 23:13
- * @version : v2.1
+ * @version : v1.0
  */
 @Data
 public class BaseResult {

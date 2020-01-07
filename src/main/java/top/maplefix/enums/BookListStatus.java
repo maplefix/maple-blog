@@ -4,7 +4,7 @@ package top.maplefix.enums;
  * @author : Maple
  * @description: 书单阅读状态
  * @date : Created on 2019/12/2 16:16
- * @version v2.1
+ * @version v1.0
  */
 public enum  BookListStatus {
     /**

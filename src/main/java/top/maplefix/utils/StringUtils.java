@@ -16,7 +16,7 @@ import java.util.*;
  * @author : Maple
  * @description :  自定义字符串工具类
  * @date : Created in 2019/3/31 21:04
- * @version : v2.1
+ * @version : v1.0
  */
 @Slf4j
 public class StringUtils extends org.apache.commons.lang3.StringUtils {

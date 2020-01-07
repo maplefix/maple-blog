@@ -4,7 +4,7 @@ package top.maplefix.exception;
  * @author : Maple
  * @description : 自定义业务异常
  * @date : Created in 2019/3/31 20:55
- * @version : v2.1
+ * @version : v1.0
  */
 public class BusinessException extends RuntimeException{
 

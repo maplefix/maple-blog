@@ -15,7 +15,7 @@ import java.util.List;
  * @description : 博客mapper
  * @date : Created in 2019/7/25 0:29
            Edited in 2019/10/28 15:15
- * @version : v2.1
+ * @version : v1.0
  */
 @CacheNamespace
 public interface BlogMapper extends Mapper<Blog>, AggregationMapper<Blog> {

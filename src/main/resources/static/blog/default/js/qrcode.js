@@ -1,7 +1,7 @@
 /**
  * @author Maple created on 2019/11/20
  * @description 其他设备阅读-调用二维码接口生成二维码，手机扫描可继续阅读
- * @version v2.1
+ * @version v1.0
  */
 $(function () {
     //点击图标时生成二维码图片，点击图片之外的屈于二维码消失

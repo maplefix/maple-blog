@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * @author : Maple
  * @description : spring工具类，可在非spring环境中获取bean
  * @date : Created in 2019/3/31 21:23
- * @version : v2.1
+ * @version : v1.0
  */
 @Component
 public final class SpringUtils implements BeanFactoryPostProcessor {

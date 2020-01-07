@@ -15,7 +15,7 @@ import java.util.Map;
  * @author : Maple
  * @description :通用controller，所有controller类都继承它
  * @date : Created in 2019/7/24 23:20
- * @version : v2.1
+ * @version : v1.0
  */
 @Slf4j
 public class BaseController {

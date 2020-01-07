@@ -33,7 +33,7 @@ import java.util.Objects;
  * @author : Maple
  * @description : 文件相关操作接口
  * @date : Created in 2019/8/18 9:47
- * @version : v2.1
+ * @version : v1.0
  */
 @RestController
 @RequestMapping("/api/admin/file")

@@ -9,7 +9,7 @@ import top.maplefix.model.Links;
  * @author : Maple
  * @description : 友链mapper
  * @date : Created in 2019/7/25 0:32
- * @version : v2.1
+ * @version : v1.0
  */
 @CacheNamespace
 public interface LinksMapper extends Mapper<Links> , SelectByIdsMapper<Links> {

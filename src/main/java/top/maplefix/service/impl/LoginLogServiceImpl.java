@@ -18,7 +18,7 @@ import java.util.Map;
  * @author : Maple
  * @description : 登录日志操作接口实现类
  * @date : Created in 2019/7/24 22:57
- * @version : v2.1
+ * @version : v1.0
  */
 @Service
 public class LoginLogServiceImpl implements ILoginLogService {

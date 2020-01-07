@@ -25,7 +25,7 @@ import java.util.Map;
  * @author : Maple
  * @description : 博客标签控制类
  * @date : Created in 2019/7/28 2:52
- * @version : v2.1
+ * @version : v1.0
  */
 @Controller
 @RequestMapping("/api/admin/label")

@@ -12,7 +12,7 @@ import java.util.Set;
  * @author : Maple
  * @description : 类型转换器
  * @Date : Created in 2019/3/31 21:04
- * @version : v2.1
+ * @version : v1.0
  */
 public class Convert {
     /**

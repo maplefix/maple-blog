@@ -12,7 +12,7 @@ import java.util.Map;
  * @author : Maple
  * @description : 文件操作service接口
  * @date : Created in 2019/8/22 22:31
- * @version : v2.1
+ * @version : v1.0
  */
 public interface IFileItemService {
     /**

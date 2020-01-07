@@ -9,7 +9,7 @@ import top.maplefix.model.Dict;
  * @author : Maple
  * @description : 字典mapper
  * @date : Created in 2019/7/25 0:31
- * @version : v2.1
+ * @version : v1.0
  */
 @CacheNamespace
 public interface DictMapper extends Mapper<Dict>, SelectByIdsMapper<Dict> {

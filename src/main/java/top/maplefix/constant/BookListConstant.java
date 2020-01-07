@@ -3,7 +3,7 @@ package top.maplefix.constant;
 /**
  * @author : Maple on 2019/12/2 11:41
  * @description : 书单常量
- * @version : v2.1
+ * @version : v1.0
  */
 public class BookListConstant {
 

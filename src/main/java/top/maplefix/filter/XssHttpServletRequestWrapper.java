@@ -35,7 +35,7 @@ import java.util.Map;
  * @author : Maple
  * @description : XSS过滤处理
  * @date : Created in 2019/9/12 21:25
- * @version : v2.1
+ * @version : v1.0
  */
 
 public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {

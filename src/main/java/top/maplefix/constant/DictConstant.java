@@ -4,7 +4,7 @@ package top.maplefix.constant;
  * @author : Maple
  * @description : 字典关键字常量
  * @date : Created in 2019/9/17 10:21
- * @version : v2.1
+ * @version : v1.0
  */
 public class DictConstant {
     /**

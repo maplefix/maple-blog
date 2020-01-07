@@ -14,7 +14,7 @@ import java.security.cert.X509Certificate;
  * @author : Maple
  * @description : 通用http工具类
  * @Date : Created in 2019/3/31 21:23
- * @version : v2.1
+ * @version : v1.0
  */
 @Slf4j
 public class HttpUtils {

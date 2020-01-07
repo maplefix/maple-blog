@@ -10,7 +10,7 @@ import top.maplefix.model.BookList;
  * @author : Maple
  * @description: 书单mapper
  * @date : 2019/12/2 10:57
- * @version : v2.1
+ * @version : v1.0
  */
 @CacheNamespace
 public interface BookListMapper extends Mapper<BookList>, SelectByIdsMapper<BookList>, SelectByIdListMapper<BookList, String> {

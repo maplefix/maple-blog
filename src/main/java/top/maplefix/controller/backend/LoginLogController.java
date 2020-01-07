@@ -24,7 +24,7 @@ import java.util.Map;
  * @author : Maple
  * @description : 登录日志控制器
  * @date : Created in 2019/9/12 16:52
- * @version : v2.1
+ * @version : v1.0
  */
 @Controller
 @RequestMapping("/api/admin/loginLog")

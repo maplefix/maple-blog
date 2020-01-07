@@ -11,7 +11,7 @@ import java.util.List;
  * @author: Maple
  * @description: 接收参数类型兼容text/plain和text/xml
  * @date : Created in 2019/7/31 16:35
- * @version : v2.1
+ * @version : v1.0
  */
 @Component
 public class MessageConverter extends MappingJackson2HttpMessageConverter {

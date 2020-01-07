@@ -1,7 +1,7 @@
 /**
  * @author Maple created on 2019/7/25
  * @description 字典管理模块
- * @version v2.1
+ * @version v1.0
  */
 $(function () {
     //加载字典数据列表

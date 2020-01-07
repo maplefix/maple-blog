@@ -15,7 +15,7 @@ import java.util.Arrays;
  * @author : Maple
  * @description : 性能监控aop,打印出sql执行参数和执行耗时
  * @date : Created in 2019/11/20 15:48
- * @version : v2.1
+ * @version : v1.0
  */
 @Slf4j
 @Component

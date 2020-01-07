@@ -9,7 +9,7 @@ import java.util.Map;
  * @author : Maple
  * @description: 书单接口service
  * @date : on 2019/12/2 10:59
- * @version v2.1
+ * @version v1.0
  */
 public interface IBookListService {
 

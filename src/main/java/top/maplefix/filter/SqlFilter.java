@@ -23,7 +23,7 @@ import org.apache.commons.lang3.StringUtils;
  * @author : Maple
  * @description : SQL过滤
  * @date : Created in 2019/9/8 23:25
- * @version : v2.1
+ * @version : v1.0
  */
 public class SqlFilter {
 

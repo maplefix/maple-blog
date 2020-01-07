@@ -16,7 +16,7 @@ import java.util.List;
  * @author : Maple
  * @description : 首页图标数据填充
  * @date : Created in 2019/9/15 17:46
- * @version : v2.1
+ * @version : v1.0
  */
 @RestController
 @RequestMapping("/api/admin/dashboard")

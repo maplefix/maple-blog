@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
  *                  2.调用腾讯API实现(每天限额10000次)
  * @date : Created in 2019/3/31 21:04
            Edited in 2019/11/24 10:08
- * @version : v2.1
+ * @version : v1.0
  */
 @Slf4j
 public class AddressUtils {

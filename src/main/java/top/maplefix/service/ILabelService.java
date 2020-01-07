@@ -9,7 +9,7 @@ import java.util.Map;
  * @author : Maple
  * @description : 博客标签接口
  * @date : Created in 2019/7/24 22:55
- * @version : v2.1
+ * @version : v1.0
  */
 public interface ILabelService {
 

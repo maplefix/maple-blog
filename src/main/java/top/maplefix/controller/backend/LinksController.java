@@ -24,7 +24,7 @@ import java.util.Map;
  * @author : Maple
  * @description : 友链控制类
  * @date : Created in 2019/7/28 2:53
- * @version : v2.1
+ * @version : v1.0
  */
 @Controller
 @RequestMapping("/api/admin/links")
