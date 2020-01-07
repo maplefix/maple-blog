@@ -32,6 +32,7 @@ public class CommonController {
      */
     @GetMapping("/common/download")
     public void fileDownload(String fileName, String deleteFlag, HttpServletResponse response, HttpServletRequest request) {
+        log.info("开始文件下载接口...");
         try {
             String realFileName = System.currentTimeMillis() + fileName.substring(fileName.indexOf("_") + 1);
             String filePath = SystemConfig.getProfile() + fileName;
@@ -43,9 +44,12 @@ public class CommonController {
             FileUtils.writeBytes(filePath, response.getOutputStream());
             //如需删除文件，则在下载操作完成后删除源文件
             if(StringUtils.isNotEmpty(deleteFlag) && Constant.TRUE.equals(deleteFlag)){
+                log.info("该文件下载完需删除，开始删除文件...");
                 //删除源文件
                 FileUtil.deleteFile(filePath);
+                log.info("文件删除成功...");
             }
+            log.info("文件下载成功...");
         } catch (Exception e) {
             log.error("下载文件失败,异常原因为:{},异常堆栈为：{}", e.getMessage(),e);
         }
