@@ -10,7 +10,7 @@
     </parent>
     <groupId>top.maplefix</groupId>
     <artifactId>maple-blog</artifactId>
-    <version>2.1</version>
+    <version>1.0</version>
     <name>maple-blog</name>
     <description>Personal blog refactoring project</description>
 
