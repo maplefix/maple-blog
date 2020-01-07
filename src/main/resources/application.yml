@@ -55,8 +55,7 @@ pagehelper:
 # bucket是创建的存储空间名, [华东z0] [华东z1] [华南z2] [北美na0] [东南亚as0]
 # path对应存储空间的访问域名
 qiniu:
-  accessKey: rU_q0KHNNW7Ku9Fo9Qao66nZ3_-Q1l04N9tz-ixx
-  secretKey: -3m3j5NfG-eZlHoTlvHF98c_yhmK4HxuhJbVn3MK
+  accessKey: cp-3jdetLlkmHv0VHMfu4IQkRGEF2yqdnuoZUM9R
+  secretKey: JdQ5UJA665Zsx1vzb5yjRTKhXse-v7-2bmzHOB1I
   bucket: maple_bucket
-  #path: http://pvwrkn8fo.bkt.clouddn.com
-  path: https://qny.maplefix.top
+  path: http://pvwrkn8fo.bkt.clouddn.com
