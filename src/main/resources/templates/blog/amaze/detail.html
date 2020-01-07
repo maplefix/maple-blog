@@ -13,13 +13,14 @@
     <script async="async" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     <!-- 网站底部运行时间引入 -->
     <script th:src="@{/blog/default/js/bottom-runtime.js}"></script>
-    <!--代码高亮样式导入，可以自由调整-->
-    <link rel="stylesheet" th:href="@{/blog/plugins/highlight/styles/monokai-sublime.css}"/>
     <!--markdown回显样式,不要要导入，不然会覆盖highlight高亮插件的样式-->
     <!--  <link rel="stylesheet" th:href="@{/admin/plugins/editormd/examples/css/style.css}" />
     <link rel="stylesheet" th:href="@{/admin/plugins/editormd/css/editormd.preview.css}" />-->
     <!--目录生成插件引入-->
     <link rel="stylesheet" th:href="@{/blog/plugins/autocjs/autoc.css}"/>
+    <!--代码高亮样式导入，可以自由调整-->
+    <link rel="stylesheet" th:href="@{/blog/plugins/highlight/styles/monokai-sublime.css}"/>
+    <!--<link rel="stylesheet" th:href="@{/blog/plugins/highlight/styles/github.css}"/>-->
 </head>
 <body>
 <div th:replace="blog/amaze/header::nav-fragment"></div>
@@ -60,7 +61,6 @@
                     </div>
                     <aside class="blog-rights clearfix">
                         <p>本站除注明出处外，所有的文章皆为原创，采用<a href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh">CC BY-NC 4.0</a>协议授权，欢迎各位转载，转载最好标明出处。</p>
-
                     </aside>
                 </div>
             </article>
@@ -102,8 +102,6 @@
 </div>
 <footer th:replace="blog/amaze/footer::footer-fragment"></footer>
 </body>
-<!--高亮插件引入-->
-<script th:src="@{/blog/plugins/highlight/highlight.pack.js}"></script>
 <script th:src="@{/blog/default/js/jquery.min.js}"></script>
 <!--其他设备阅读js-->
 <script th:src="@{/blog/default/js/qrcode.js}"></script>
@@ -116,6 +114,8 @@
 <script th:src="@{/admin/plugins/editormd/lib/flowchart.min.js}"></script>
 <script th:src="@{/admin/plugins/editormd/lib/jquery.flowchart.min.js}"></script>
 <script th:src="@{/admin/plugins/editormd/editormd.min.js}" type="text/javascript" charset="utf-8"></script>
+<!--代码高亮插件引入-->
+<script th:src="@{/blog/plugins/highlight/highlight.pack.js}"></script>
 <!--高亮插件初始化-->
 <script>hljs.initHighlightingOnLoad();</script>
 <!--目录生成插件引入-->

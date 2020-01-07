@@ -3,7 +3,21 @@
 Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-license.org/
 
 */
-
+@media only screen and (min-width: 750px) {
+  pre {
+    max-width: 80%;
+    display: block;
+    padding: 1rem;
+    margin: 0.625rem 0;
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    word-break: break-all;
+    word-wrap: break-word;
+    color: #999999;
+    background-color: #23241f;
+    border-radius: 4px;
+  }
+}
 .hljs {
   display: block;
   overflow-x: auto;

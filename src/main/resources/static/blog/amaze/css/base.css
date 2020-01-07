@@ -4311,11 +4311,22 @@ th {
  
  /* fix pre width */
  
- /*@media only screen and (min-width: 750px) {
+ @media only screen and (min-width: 750px) {
    pre {
-     max-width: 80%;
+       max-width: 80%;
+       display: block;
+       padding: 1rem;
+       margin: 0.625rem 0;
+       font-size: 0.8125rem;
+       line-height: 1.6;
+       word-break: break-all;
+       word-wrap: break-word;
+       /*此处颜色影响比较大的地方是：前端页面显示代码高亮时背景色，所以在导入的高亮样式css中指定背景色和color*/
+       color: #999999;
+       background-color: #f8f8f8;
+       border-radius: 4px;
    }
- }*/
+ }
  
  @media(max-width: 1000px) {
    .directory-content {
