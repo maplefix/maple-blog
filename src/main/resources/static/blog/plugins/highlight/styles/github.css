@@ -3,11 +3,25 @@
 github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 
 */
-
+@media only screen and (min-width: 750px) {
+  pre {
+    max-width: 80%;
+    display: block;
+    padding: 1rem;
+    margin: 0.625rem 0;
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    word-break: break-all;
+    word-wrap: break-word;
+    color: #333;
+    background-color: #f8f8f8;
+    border-radius: 4px;
+  }
+}
 .hljs {
   display: block;
   overflow-x: auto;
-  padding: 0.5em;
+  padding: 0.8em;
   color: #333;
   background: #f8f8f8;
 }
