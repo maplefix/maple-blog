@@ -1,12 +1,38 @@
 /*
 Monokai style - ported by Luigi Maselli - http://grigio.org
 */
-
+@media only screen and (min-width: 750px) {
+  pre {
+    max-width: 80%;
+    display: block;
+    padding: 1rem;
+    margin: 0.625rem 0;
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    word-break: break-all;
+    word-wrap: break-word;
+    color: #ddd;
+    background-color: #272822;
+    border-radius: 4px;
+  }
+}
+li.L0,
+li.L1,
+li.L2,
+li.L3,
+li.L5,
+li.L6,
+li.L7,
+li.L8 {
+  list-style-type:decimal;
+  color: #ddd;
+}
 .hljs {
   display: block;
   overflow-x: auto;
-  padding: 0.8em;
-  background: #272822; color: #ddd;
+/*  padding: 0.5em;*/
+  background: #272822;
+  color: #ddd;
 }
 
 .hljs-tag,

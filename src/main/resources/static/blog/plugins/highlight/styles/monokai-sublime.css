@@ -21,8 +21,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 .hljs {
   display: block;
   overflow-x: auto;
-  /*代码间距，0.8以下会出现白底很难看*/
-  padding: 0.8em;
+  padding: 0.5em;
   background: #23241f;
 }
 
