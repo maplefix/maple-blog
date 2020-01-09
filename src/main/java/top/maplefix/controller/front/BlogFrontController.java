@@ -31,7 +31,8 @@ import java.util.stream.Collectors;
  * @author : Maple
  * @description : 博客前端控制类
  * @date : Created in 2019/7/24 22:26
- Edited in 2019/10/28 14:20* @version : v1.0
+           Edited in 2019/10/28 14:20
+ * @version : v1.0
  */
 @Controller
 @Slf4j

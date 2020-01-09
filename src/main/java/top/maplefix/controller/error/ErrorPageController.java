@@ -18,7 +18,8 @@ import java.util.Map;
 /**
  * @author : Maple
  * @description : 通用错误页面
- * @date : Created in 2019/7/24 19:26* @version : v1.0
+ * @date : Created in 2019/7/24 19:26
+ * @version : v1.0
  */
 
 @Controller
