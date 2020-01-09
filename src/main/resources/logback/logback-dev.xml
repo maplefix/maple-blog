@@ -28,6 +28,6 @@
     <root level="INFO">
         <appender-ref ref="CONSOLE" />
         <!-- 开发环境只需要console打印日志即可-->
-        <appender-ref ref="LOGFILE" />
+        <!--<appender-ref ref="LOGFILE" />-->
     </root>
 </configuration>

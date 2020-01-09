@@ -26,8 +26,8 @@
     <!--级别分为：TRACE < DEBUG < INFO < WARN < ERROR < FATAL-->
     <logger name="top.maplefix.mapper" level="DEBUG"/>
     <root level="INFO">
-        <appender-ref ref="CONSOLE" />
-        <!-- 开发环境只需要console打印日志即可-->
+        <!--<appender-ref ref="CONSOLE" />-->
+        <!-- 生成环境不需要console打印日志-->
         <appender-ref ref="LOGFILE" />
     </root>
 </configuration>

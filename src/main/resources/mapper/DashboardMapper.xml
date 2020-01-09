@@ -2,16 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="top.maplefix.mapper.DashboardMapper">
 
+    <!--获取5条最新的登陆数据-->
     <select id="getLoginLogData" resultType="top.maplefix.model.LoginLog">
         select loginDate,loginName from t_login_log
          order by loginDate desc limit 5
     </select>
 
+    <!--获取5条最新的操作数据-->
     <select id="getOperationLogData" resultType="top.maplefix.model.OperationLog">
         select operName,operDate,module,businessType from t_operation_log
         order by operDate desc limit 5
     </select>
 
+    <!--获取5条最新的访问数据-->
     <select id="getVisitLogData" resultType="top.maplefix.model.VisitLog">
         select visitIp,visitDate,module from t_visit_log
         order by visitDate desc limit 5
