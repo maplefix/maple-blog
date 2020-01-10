@@ -24,7 +24,7 @@ public class ServerController extends BaseController {
      * @return
      * @throws Exception
      */
-    @GetMapping()
+    @GetMapping({"","/"})
     public String server(HttpServletRequest request) throws Exception {
         Server server = new Server();
         server.copyTo();
