@@ -29,12 +29,15 @@ public class QrCodeController {
     @Autowired
     private SystemConfig systemConfig;
 
-    /**根据内容生成带logo二维码
-     * 返回BufferedImage
+    /**
+     * 根据内容生成带logo二维码,返回BufferedImage
+     * @param response 响应
+     * @param content 需要生成二维码的内容
+     * @param needLogo 是否需要中间logo图案
      */
     @RequestMapping(value = "/createBufferedImage")
     @ResponseBody
-    public void createBufferedImage (HttpServletResponse response, String content,String needLogo){
+    public void createBufferedImage (HttpServletResponse response, String content, String needLogo){
         log.info("开始访问二维码生成(BufferedImage)...");
         try {
             String projectName = systemConfig.getName();

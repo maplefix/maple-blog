@@ -63,8 +63,7 @@ public class BlogFrontController extends BaseController {
 
     /**
      * 首页
-     *
-     * @return
+     * @return 首页
      */
     @GetMapping({"/", "/index", "index.html"})
     @VLog(module = "首页")
@@ -88,7 +87,7 @@ public class BlogFrontController extends BaseController {
 
     /**
      * 设置字典信息
-     * @param request
+     * @param request 请求
      */
     private void setDictMessage(HttpServletRequest request){
         //查出字典表中的系统展示字段配置,//KeyWord.SYSTEM_CONFIG.getValue()
@@ -99,8 +98,8 @@ public class BlogFrontController extends BaseController {
 
     /**
      * 设置分页参数
-     * @param page
-     * @return
+     * @param page 页数
+     * @return Map
      */
     private Map<String, Object> setPageParams(Integer page){
         Map<String, Object> params = new HashMap<>(16);
@@ -110,10 +109,10 @@ public class BlogFrontController extends BaseController {
     }
     /**
      * 首页数据加载
-     * @param request
-     * @param pageNum
-     * @param pageSize
-     * @return
+     * @param request 请求
+     * @param pageNum 页数
+     * @param pageSize 页大小
+     * @return 页面地址
      */
     @GetMapping({"/page/{pageNum}.html"})
     @VLog(module = "首页")
@@ -128,7 +127,7 @@ public class BlogFrontController extends BaseController {
         List<Blog> blogList = blogService.selectBlogForIndexPage(params);
         PageInfo<Blog> pageInfo = new PageInfo<Blog>(blogList);
         PageData page = new PageData(pageInfo);
-        if (blogList == null || blogList.size() <1) {
+        if (blogList.size() < 1) {
             log.info("博客查询页面访问失败...");
             return "error/error_404";
         }
@@ -143,8 +142,7 @@ public class BlogFrontController extends BaseController {
 
     /**
      * Category页面(包括分类数据和标签数据)
-     *
-     * @return
+     * @return 分类页面地址
      */
     @GetMapping({"/category.html"})
     @VLog(module = "分类")
@@ -159,8 +157,7 @@ public class BlogFrontController extends BaseController {
     }
     /**
      * 归档页面
-     *
-     * @return
+     * @return 归档页面地址
      */
     @GetMapping({"/archive.html"})
     @VLog(module = "归档")
@@ -176,9 +173,9 @@ public class BlogFrontController extends BaseController {
 
     /**
      *  博客详情页
-     * @param request
+     * @param request 请求
      * @param blogId 博客id
-     * @return
+     * @return 博客详情页
      */
     @GetMapping({"/blog/{blogId}.html", "/article/{blogId}.html"})
     @VLog(module = "博客")
@@ -204,7 +201,7 @@ public class BlogFrontController extends BaseController {
      * 标签列表页
      * @param request
      * @param labelName 标签名
-     * @return
+     * @return 标签页
      */
     @GetMapping({"/label/{labelName}.html"})
     @VLog(module = "标签")
@@ -214,8 +211,7 @@ public class BlogFrontController extends BaseController {
 
     /**
      * 标签列表页
-     *
-     * @return
+     * @return 标签页
      */
     @GetMapping({"/label/{labelName}/{page}.html"})
     @VLog(module = "标签")
@@ -238,8 +234,7 @@ public class BlogFrontController extends BaseController {
 
     /**
      * 分类列表页
-     *
-     * @return
+     * @return 分类列表页
      */
     @GetMapping({"/category/{categoryName}.html"})
     @VLog(module = "分类")
@@ -249,10 +244,10 @@ public class BlogFrontController extends BaseController {
 
     /**
      * 分页查看分类列表页
-     * @param request
-     * @param categoryName
-     * @param page
-     * @return
+     * @param request 请求
+     * @param categoryName 分类名称
+     * @param page 页数
+     * @return 分类页面
      */
     @GetMapping({"/category/{categoryName}/{page}.html"})
     @VLog(module = "分类")
@@ -280,9 +275,9 @@ public class BlogFrontController extends BaseController {
 
     /**
      * 搜索列表页
-     * @param request
+     * @param request 请求
      * @param keyword 关键字
-     * @return
+     * @return 关键字搜索页
      */
     @GetMapping({"/search/{keyword}.html"})
     @VLog(module = "博客")
@@ -292,8 +287,7 @@ public class BlogFrontController extends BaseController {
 
     /**
      * 搜索列表页
-     *
-     * @return
+     * @return 搜索列表页
      */
     @GetMapping({"/search/{keyword}/{page}.html"})
     @VLog(module = "博客")
@@ -317,8 +311,7 @@ public class BlogFrontController extends BaseController {
 
     /**
      * 友情链接页
-     *
-     * @return
+     * @return 友情链接页
      */
     @GetMapping({"/link.html"})
     @VLog(module = "友链")
@@ -344,8 +337,7 @@ public class BlogFrontController extends BaseController {
 
     /**
      * 关于页面
-     *
-     * @return
+     * @return 关于页面
      */
     @GetMapping({"/about.html"})
     @VLog(module = "关于")
