@@ -23,7 +23,7 @@
             <charset>UTF-8</charset>
         </encoder>
     </appender>
-    <!--级别分为：TRACE < DEBUG < INFO < WARN < ERROR < FATAL-->
+    <!--级别分为：TRACE < DEBUG < INFO < WARN < ERROR < FATAL，用来查看SQL语句及耗时-->
     <logger name="top.maplefix.mapper" level="DEBUG"/>
     <root level="INFO">
         <!--<appender-ref ref="CONSOLE" />-->
