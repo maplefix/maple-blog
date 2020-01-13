@@ -145,11 +145,11 @@
                                     <label class="control-label">是否原创:&nbsp;</label>
                                     <label class="btn btn-success" >
                                         <input name="originalFlag" type="radio"  value="1" checked
-                                               th:checked="${null !=blog  and blog.status=='1'} ?true:false" />&nbsp;原创&nbsp;
+                                               th:checked="${null !=blog  and blog.originalFlag=='1'} ?true:false" />&nbsp;原创&nbsp;
                                     </label>
                                     <label class="btn btn-success" >
                                         <input name="originalFlag" type="radio"  value="0" checked
-                                               th:checked="${null !=blog  and blog.status=='0'} ?true:false"/>&nbsp;转载&nbsp;
+                                               th:checked="${null !=blog  and blog.originalFlag=='0'} ?true:false"/>&nbsp;转载&nbsp;
                                     </label>
                                 </div>
                             </form>

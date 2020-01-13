@@ -128,48 +128,23 @@ public class BlogController extends BaseController {
 
     /**
      * 更新博客
-     * @param blogId 博客io
-     * @param title 标题
-     * @param coverImg 封面图路径
-     * @param content 内容
-     * @param summary 摘要
-     * @param categoryId 分类id
-     * @param status 状态（发布/草稿）
-     * @param height 权重
-     * @return
+     * @param blog 博客实体
+     * @return BaseResult
      */
     @PostMapping("/update")
     @OLog(module = "博客管理", businessType = OperationType.UPDATE)
     @ResponseBody
-    public BaseResult update(@RequestParam("blogId") String blogId,
-                         @RequestParam("title") String title,
-                         @RequestParam("coverImg") String coverImg,
-                         @RequestParam("content") String content,
-                         @RequestParam("label") String label,
-                         @RequestParam(value = "summary",required = false) String summary,
-                         @RequestParam("categoryId") String categoryId,
-                         @RequestParam("status") String  status,
-                         @RequestParam(name = "height", required = false) Integer height) {
+    public BaseResult update(Blog blog) {
         log.info("博客编辑操作开始...");
-        Blog blog = new Blog();
-        blog.setBlogId(blogId);
-        blog.setTitle(title);
         //此处修改标签时应该先判断是否有修改，如有则先删除原本的博客和标签关系再重新插入数据
-        blog.setLabel(blogService.parseLabel(blogId,label));
-        blog.setCoverImg(coverImg);
-        blog.setContent(content);
-        int index = content.length();
-        if(StringUtils.isEmpty(summary)){
-            if(index > length){
-                summary = content.substring(0,length);
+        blog.setLabel(blogService.parseLabel(blog.getBlogId(),blog.getLabel()));
+        if(StringUtils.isEmpty(blog.getSummary())){
+            if(blog.getContent().length() > length){
+                blog.setSummary(blog.getContent().substring(0,length));
             }else {
-                summary = content;
+                blog.setSummary(blog.getContent());
             }
         }
-        blog.setSummary(summary);
-        blog.setCategoryId(categoryId);
-        blog.setStatus(status);
-        blog.setHeight(height);
         blog.setDelFlag(Constant.NORMAL);
         try {
             blog.setUpdateDate(DateUtils.getCurrDate());
@@ -249,14 +224,14 @@ public class BlogController extends BaseController {
      *   message : "提示的信息，上传成功或上传失败及错误信息等。",
      *   url     : "图片地址"        // 上传成功时才返回
      * }
-     * @param request
+     * @param response 响应
+     * @param file 文件
      * @param serverType 文件存储类型（1表示在本地存储，2表示存储在七牛云）
      */
     @PostMapping(value = "/upload",produces= MediaType.APPLICATION_JSON_VALUE +";charset=utf-8")
     @OLog(module = "博客管理", businessType = OperationType.UPLOAD)
     @ResponseBody
-    public JSONObject uploadEditorFile(HttpServletRequest request, HttpServletResponse response,
-                                       @RequestParam(value = "editormd-image-file", required = false) MultipartFile file,
+    public JSONObject uploadEditorFile(HttpServletResponse response, @RequestParam(value = "editormd-image-file", required = false) MultipartFile file,
                                        @RequestParam(value = "serverType", required = false) String serverType){
         log.info("editor.md上传文件操作开始...");
         JSONObject result = new JSONObject();

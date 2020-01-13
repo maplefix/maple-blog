@@ -151,9 +151,8 @@ public class BlogServiceImpl implements IBlogService {
     public boolean insert(Blog blog) {
         blog.setCreateDate(DateUtils.getCurrDate());
         blog.setDelFlag(Constant.NORMAL);
-        int i = blogMapper.insert(blog);
-        handlerBlogTag(blog.getBlogId(), blog.getLabel().split(","));
-        return true;
+        blogMapper.insert(blog);
+        return handlerBlogTag(blog.getBlogId(), blog.getLabel().split(","));
     }
 
     /**
@@ -162,28 +161,25 @@ public class BlogServiceImpl implements IBlogService {
      * @param blogId 博客id
      * @param labelName 标签名
      */
-    private void handlerBlogTag(String  blogId, String[] labelName) {
+    private boolean handlerBlogTag(String  blogId, String[] labelName) {
         if (labelName == null || labelName.length == 0) {
-            return;
+            return false;
         }
         //将标签数据插入数据库
-        for(int i= 0; i<labelName.length; i++){
+        for (String s : labelName) {
             Label label = new Label();
             label.setDelFlag(Constant.NORMAL);
-            label.setLabelName(labelName[i]);
-            /*if(labelMapper.selectOne(label) != null){
-                continue;
-            }*/
+            label.setLabelName(s);
             Label localLabel = labelMapper.selectOne(label);
             //标签已经存在的话拿到labelId插入一条关联关系到博客标签关联表即可
-            if(null != localLabel){
+            if (null != localLabel) {
                 //插入博客标签关联表
                 BlogLabel blogLabel = new BlogLabel();
                 blogLabel.setBlogId(blogId);
                 blogLabel.setLabelId(localLabel.getLabelId());
                 blogLabel.setCreateDate(DateUtils.getCurrDate());
                 blogLabelMapper.insert(blogLabel);
-            }else {
+            } else {
                 //插入标签表
                 label.setCreateDate(DateUtils.getCurrDate());
                 labelMapper.insert(label);
@@ -195,6 +191,7 @@ public class BlogServiceImpl implements IBlogService {
                 blogLabelMapper.insert(blogLabel);
             }
         }
+        return true;
     }
     @Override
     public void deleteBatch(String[] ids) {
