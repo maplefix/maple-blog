@@ -1,7 +1,15 @@
-[TOCM]
 
 [TOC]
+## 重构说明：
+ `maple-blog第一个版本基本已经成型了，后续应该不会再新增功能了。系统整体采用一体博客，即前后端不分离，页面采用thymeleaf模板。`
+ 后续开发计划是将系统前后端分离开来，后端继续使用spring boot+MySQL/Redis提供数据驱动，页面构建使用vue。
+ 分支说明：
+ - master 主分支，最细开发代码会合并在这个分支
+ - develop 开发分支
+ - feature-themeleaf 第一个发布版本
+
 ## 1.项目说明
+
 >maple-blog是利用闲暇时两个多月时间搭建的一套个人博客系统，由于之前搭建的博客体量有点大，图片文件都是存在本地。部署服务器带宽根本吃不消。于是才有了现在的重构。博客前端是基于[Amaze](https://github.com/spiritree/typecho-theme-amaze "Amaze")主题，自己略作修改而来。后端采用[springboot2](https://spring.io/projects/spring-boot/ "springboot2")+[Themeleaf](https://www.thymeleaf.org/)+[AdminLTE3](https://adminlte.io/themes/dev/AdminLTE/index.html "AdminLTE3")搭建而成。
 
 ## 2.项目展示
