@@ -2,7 +2,7 @@ server:
   port: 8081
 # 项目相关配置
 maple:
-  #主题,amaze,yummy-jekyll
+  #主题,amaze
   theme: amaze
   # 名称
   name: maple-blog

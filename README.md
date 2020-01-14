@@ -46,7 +46,7 @@
 ![](https://qny.maplefix.top/访问日志-20190925103223.png)
 
 
-![](https://qny.maplefix.top/操作 日志-20190925103231.png)
+![](https://qny.maplefix.top/操作日志-20190925103231.png)
 
 
 ![](https://qny.maplefix.top/服务器监控-20190925103241.png)
