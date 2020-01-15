@@ -35,8 +35,7 @@ import java.util.Map;
 /**
  * @author : Maple
  * @description : 操作日志切面
- * @date : Created in 2019/9/12 23:42
- * @version : v1.0
+ * @date : Created in 2020/1/15 16:30
  */
 @Aspect
 @Component
@@ -64,8 +63,8 @@ public class OperationLogAspect {
     /**
      * 拦截异常操作
      *
-     * @param joinPoint
-     * @param e
+     * @param joinPoint 切点
+     * @param e 异常
      */
     @AfterThrowing(value = "logPointCut()", throwing = "e")
     public void doAfter(JoinPoint joinPoint, Exception e) {
@@ -73,7 +72,6 @@ public class OperationLogAspect {
     }
 
     protected void handleLog(final JoinPoint joinPoint, final Exception e) {
-        // *========数据库日志=========*//
         OperationLog operLog = new OperationLog();
         try {
             // 接收到请求，记录请求内容
@@ -99,28 +97,28 @@ public class OperationLogAspect {
             //访问地址
             String operUrl = request.getRequestURI();
             operLog.setStatus(Constant.SUCCESS);
-            operLog.setOperIp(operIp);
-            operLog.setOperLocation(operLocation);
-            operLog.setOperOs(operOs);
-            operLog.setOperBrowser(operBrowser);
-            operLog.setOperUrl(operUrl);
+            operLog.setIp(operIp);
+            operLog.setLocation(operLocation);
+            operLog.setOs(operOs);
+            operLog.setBrowser(operBrowser);
+            operLog.setUrl(operUrl);
             if (loginUser != null) {
-                operLog.setOperName(loginUser.getLoginName());
+                operLog.setUserId(loginUser.getUserId());
             }
             if (e != null) {
                 e.printStackTrace();
                 operLog.setStatus(Constant.FAIL);
-                operLog.setErrorMsg(StringUtils.substring(e.getMessage(), 0, 2000));
+                operLog.setExceptionMsg(StringUtils.substring(e.getMessage(), 0, 2000));
             }
             // 设置方法名称
             String className = joinPoint.getTarget().getClass().getName();
             String methodName = joinPoint.getSignature().getName();
             operLog.setMethod(className + "." + methodName + "()");
-            operLog.setOperDate(DateUtils.getCurrDate());
+            operLog.setOperationDate(DateUtils.getCurrDate());
             // 处理设置注解上的参数
             getControllerMethodDescription(controllerLog, operLog);
-            if(StringUtils.isEmpty(operLog.getOperName())){
-                operLog.setOperName("admin");
+            if(StringUtils.isEmpty(operLog.getUserId())){
+                operLog.setUserId("admin");
             }
             // 保存数据库
             operationLogService.saveOperationLog(operLog);
@@ -139,7 +137,7 @@ public class OperationLogAspect {
      */
     public void getControllerMethodDescription(OLog log, OperationLog operLog) throws Exception {
         // 设置action动作
-        operLog.setBusinessType(BusinessType.getValue(log.businessType().toString()));
+        operLog.setFunction(BusinessType.getValue(log.businessType().toString()));
         // 设置标题
         operLog.setModule(log.module());
         // 是否需要保存request，参数和值
@@ -164,13 +162,13 @@ public class OperationLogAspect {
             map.put(paramName, paramValue);
         }
         String params = JSONObject.toJSONString(map);
-        operationLog.setOperParam(params.length()>2000 ? params.substring(0,2000) : params);
+        operationLog.setParams(params.length()>2000 ? params.substring(0,2000) : params);
     }
 
     /**
      * 是否存在注解，如果存在就获取
      */
-    private OLog getAnnotationLog(JoinPoint joinPoint) throws Exception {
+    private OLog getAnnotationLog(JoinPoint joinPoint) {
         Signature signature = joinPoint.getSignature();
         MethodSignature methodSignature = (MethodSignature) signature;
         Method method = methodSignature.getMethod();

@@ -28,11 +28,9 @@ import java.lang.reflect.Method;
 
 /**
  * @author : Maple
- * @description : 访客日志处理
- * @date : Created in 2019/7/24 23:13
- * @version : v1.0
+ * @description : 访客日志切面
+ * @date : Created in 2020/1/15 17:19
  */
-
 @Aspect
 @Component
 @Slf4j
@@ -60,8 +58,8 @@ public class VisitLogAspect {
 /**
      * 拦截异常操作
      *
-     * @param joinPoint
-     * @param e
+     * @param joinPoint 切点
+     * @param e 异常
      */
 
     @AfterThrowing(value = "logPointCut()", throwing = "e")
@@ -90,15 +88,15 @@ public class VisitLogAspect {
             //访问地址
             String requestUrl = request.getRequestURI();
             VisitLog visitLog = new VisitLog();
-            visitLog.setVisitIp(visitIp);
-            visitLog.setVisitLocation(visitLocation);
-            visitLog.setVisitOs(visitOs);
-            visitLog.setVisitBrowser(visitBrowser);
+            visitLog.setIp(visitIp);
+            visitLog.setLocation(visitLocation);
+            visitLog.setOs(visitOs);
+            visitLog.setBrowser(visitBrowser);
             visitLog.setVisitDate(DateUtils.getCurrDate());
             visitLog.setRequestUrl(requestUrl);
             if (e != null) {
                 visitLog.setStatus(Constant.FAIL);
-                visitLog.setErrorMsg(StringUtils.substring(e.getMessage(), 0, 2000));
+                visitLog.setExceptionMsg(StringUtils.substring(e.getMessage(), 0, 2000));
             } else {
                 visitLog.setStatus(Constant.SUCCESS);
             }

@@ -6,7 +6,7 @@ package top.maplefix.common;
  * @date : Created in 2019/7/25 0:19
  * @version : v1.0
  */
-public enum KeyWord {
+public enum Keyword {
 
 
     /**
@@ -20,7 +20,7 @@ public enum KeyWord {
 
     private final String value;
 
-    KeyWord(String value){
+    Keyword(String value){
         this.value = value;
     }
 

@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 import top.maplefix.config.SystemConfig;
 import top.maplefix.constant.FileItemConstant;
 import top.maplefix.utils.DateUtils;
-import top.maplefix.vo.FileItem;
+import top.maplefix.model.FileItem;
 
 import java.io.*;
 import java.text.SimpleDateFormat;

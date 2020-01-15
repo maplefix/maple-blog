@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Set;
 
 /**
- * @author wangjg
+ * @author Maple
  * @description 在线用户信息
  * @date 2020/1/14 17:25
  */
@@ -44,37 +44,30 @@ public class OnlineUser {
      * token
      */
     private String token;
-
     /**
      * 登陆时间
      */
     private Long loginTime;
-
     /**
      * 过期时间
      */
     private Long expireTime;
-
     /**
      * 登陆IP
      */
     private String ip;
-
     /**
      * 登陆地区
      */
     private String location;
-
     /**
      * 登陆浏览器
      */
     private String browser;
-
     /**
      * 操作系统
      */
     private String os;
-
     /**
      * 权限集合
      */

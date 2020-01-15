@@ -10,9 +10,9 @@ public class FileItemConstant {
     /**
      * 本地存储
      */
-    public static final String LOCAL_STORE = "1";
+    public static final Integer LOCAL_STORE = 1;
     /**
      * 七牛云存储
      */
-    public static final String QINIU_STORE = "2";
+    public static final Integer QINIU_STORE = 2;
 }

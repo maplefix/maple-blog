@@ -3,8 +3,7 @@ package top.maplefix.constant;
 /**
  * @author : Maple
  * @description : 系统通用常量
- * @date : Created in 2019/7/24 11:10
- * @version : v1.0
+ * @date : Created in 2020/1/15 16:31
  */
 public class Constant {
 
@@ -47,11 +46,11 @@ public class Constant {
     /**
      * 返回：成功
      */
-    public static final String SUCCESS = "0";
+    public static final Integer SUCCESS = 1;
     /**
      * 返回：失败
      */
-    public static final String FAIL = "1";
+    public static final Integer FAIL = 0;
 
 
     /**

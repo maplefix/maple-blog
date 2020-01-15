@@ -37,8 +37,8 @@ public class OperationLog implements Serializable {
     /**
      * 业务类型（0其它 1新增 2修改 3删除）
      */
-    @Excel(name = "业务类型",readConverterExp = "0=其他,1=新增,2=修改,3=删除")
-    private Integer function;
+    @Excel(name = "业务类型")
+    private String function;
     /**
      * 方法名
      */

@@ -15,7 +15,7 @@ import top.maplefix.config.QiNiuConfig;
 import top.maplefix.constant.FileItemConstant;
 import top.maplefix.utils.DateUtils;
 import top.maplefix.utils.SpringUtils;
-import top.maplefix.vo.FileItem;
+import top.maplefix.model.FileItem;
 
 import java.io.File;
 import java.io.IOException;
