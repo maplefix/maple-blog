@@ -51,9 +51,9 @@ public class LoginLog implements Serializable {
     @Excel(name = "登录操作系统")
     private String os;
     /**
-     * 登录状态（0:成功,1:失败）
+     * 登录状态（1:成功,0:失败）
      */
-    @Excel(name = "登录状态",readConverterExp = "1=失败,0=成功")
+    @Excel(name = "登录状态",readConverterExp = "0=失败,1=成功")
     private Integer status;
     /**
      * 登录描述

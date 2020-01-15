@@ -46,7 +46,7 @@ public class FileItem implements Serializable {
     /**
      * 图床保存的文件的类型（1表示在本地存储，2表示存储在七牛云）
      */
-    @Excel(name = "保存类型",readConverterExp = "1=本地存储,0=七牛云存储")
+    @Excel(name = "保存类型",readConverterExp = "1=本地存储,2=七牛云存储")
     private Integer serverType;
     /**
      * 访问路径

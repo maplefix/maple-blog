@@ -77,7 +77,7 @@ public class OperationLog implements Serializable {
     @Excel(name = "请求参数")
     private String params;
     /**
-     * 请求状态(0:成功,1:失败)
+     * 请求状态(1:成功,0:失败)
      */
     @Excel(name = "请求状态",readConverterExp = "0=失败,1=成功")
     private Integer status;
