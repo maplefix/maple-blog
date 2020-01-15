@@ -2,8 +2,6 @@ package top.maplefix.model;
 
 import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
-import tk.mybatis.mapper.annotation.NameStyle;
-import tk.mybatis.mapper.code.Style;
 import top.maplefix.annotation.Excel;
 import top.maplefix.component.UuIdGenId;
 
@@ -14,13 +12,11 @@ import java.io.Serializable;
 /**
  * @author : Maple
  * @description: 书单表
- * @date : 2019/12/2 10:48
- * @version : v1.0
+ * @date : 2020/1/15 14:36
  */
 @Data
-@Table(name = "t_book_list")
-@NameStyle(value = Style.normal)
-public class BookList implements Serializable {
+@Table(name = "t_book")
+public class Book implements Serializable {
 
     /**
      * 主键
@@ -46,13 +42,13 @@ public class BookList implements Serializable {
      * 阅读开始时间
      */
     @Excel(name = "阅读开始时间")
-    private String readBeginDate;
+    private String readBegin;
 
     /**
      * 阅读结束时间
      */
     @Excel(name = "阅读结束时间")
-    private String readEndDate;
+    private String readEnd;
 
     /**
      * 创建时间
@@ -74,7 +70,7 @@ public class BookList implements Serializable {
      * 阅读状态，0:未开始，1:阅读中,2:已结束
      */
     @Excel(name = "阅读状态" ,readConverterExp = "0=未开始,1=阅读中,2=已结束")
-    private String readStatus;
+    private Integer readStatus;
 
     /**
      *备注说明

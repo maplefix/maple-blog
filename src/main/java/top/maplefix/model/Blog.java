@@ -2,7 +2,6 @@ package top.maplefix.model;
 
 import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
-import tk.mybatis.mapper.annotation.NameStyle;
 import top.maplefix.annotation.Excel;
 import top.maplefix.component.UuIdGenId;
 
@@ -15,12 +14,10 @@ import java.util.List;
 /**
  * @author : Maple
  * @description : 博客表实体
- * @date : Created in 2019/7/23 22:14
- * @version : v1.0
+ * @date : Created in 2020/1/15 14:26
  */
 @Data
 @Table(name = "t_blog")
-@NameStyle
 public class Blog implements Serializable {
 
     /**
@@ -39,7 +36,7 @@ public class Blog implements Serializable {
      * 封面相对路径
      */
     @Excel(name = "封面路径")
-    private String coverImg;
+    private String coverUrl;
     /**
      * 博客内容
      */
@@ -58,7 +55,7 @@ public class Blog implements Serializable {
      * 博客分类名称
      */
     @Transient
-    @Excel(name = "分类")
+    @Excel(name = "分类名称")
     private String categoryName;
     /**
      * 博客标签，冗余字段
@@ -72,7 +69,7 @@ public class Blog implements Serializable {
      * 博文状态，1表示已经发表，2表示在草稿箱，3表示在垃圾箱
      */
     @Excel(name = "状态" ,readConverterExp = "1=已发布,2=草稿箱,3=垃圾箱")
-    private String status;
+    private Integer status;
     /**
      * 点击量
      */
@@ -87,17 +84,12 @@ public class Blog implements Serializable {
      * 是否推荐(置顶)，1表示推荐，0表示不推荐
      */
     @Excel(name = "是否推荐",readConverterExp = "1=推荐,0=普通")
-    private String support;
-    /**
-     * 删除标识(1:删除,0:正常)
-     */
-    @Excel(name = "是否删除",readConverterExp = "1=删除,0=正常")
-    private String delFlag;
+    private Integer isRecommend;
     /**
      * 原创标识(1:原创,0:转载)
      */
     @Excel(name = "是否原创",readConverterExp = "1=原创,0=转载")
-    private String originalFlag;
+    private Integer isOriginal;
     /**
      * 创建时间
      */
@@ -108,12 +100,13 @@ public class Blog implements Serializable {
      */
     @Excel(name = "更新时间")
     private String updateDate;
-
-    public String getBlogId() {
-        return blogId;
-    }
-
-    public void setBlogId(String blogId) {
-        this.blogId = blogId;
-    }
+    /**
+     * 创建者
+     */
+    @Excel(name = "创建人")
+    private String createBy;
+    /**
+     * 修改者
+     */
+    private String updateBy;
 }

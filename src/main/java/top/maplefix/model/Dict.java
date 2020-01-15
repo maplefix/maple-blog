@@ -2,7 +2,6 @@ package top.maplefix.model;
 
 import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
-import tk.mybatis.mapper.annotation.NameStyle;
 import top.maplefix.annotation.Excel;
 import top.maplefix.component.UuIdGenId;
 
@@ -13,12 +12,10 @@ import java.io.Serializable;
 /**
  * @author : Maple
  * @description : 博客字典实体
- * @date : Created in 2019/7/24 0:04
- * @version : v1.0
+ * @date : Created in 2020/1/15 14:40
  */
 @Data
 @Table(name = "t_dict")
-@NameStyle
 public class Dict implements Serializable {
 
     private static final long serialVersionUID = -7458813809933292186L;
@@ -33,7 +30,7 @@ public class Dict implements Serializable {
      * 关键字
      */
     @Excel(name = "关键字")
-    private String keyWord;
+    private String keyword;
     /**
      * 字典名
      */
@@ -44,16 +41,6 @@ public class Dict implements Serializable {
      */
     @Excel(name = "字典值")
     private String dictValue;
-    /**
-     * 排序号
-     */
-    @Excel(name = "排序号")
-    private Integer sort;
-    /**
-     * 删除标识（1：删除，0正常）
-     */
-    @Excel(name = "删除标识",readConverterExp = "1=删除,0=正常")
-    private String delFlag;
     /**
      * 创建时间
      */
@@ -69,4 +56,9 @@ public class Dict implements Serializable {
      */
     @Excel(name = "备注")
     private String remark;
+    /**
+     * 排序号
+     */
+    @Excel(name = "排序号")
+    private Integer seq;
 }

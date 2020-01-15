@@ -2,7 +2,6 @@ package top.maplefix.model;
 
 import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
-import tk.mybatis.mapper.annotation.NameStyle;
 import top.maplefix.annotation.Excel;
 import top.maplefix.component.UuIdGenId;
 
@@ -13,13 +12,11 @@ import java.io.Serializable;
 /**
  * @author : Maple
  * @description : 友链实体
- * @date : Created in 2019/7/24 0:04
- * @version : v1.0
+ * @date : Created in 2020/1/15 14：51
  */
 @Data
-@Table(name = "t_links")
-@NameStyle
-public class Links implements Serializable {
+@Table(name = "t_link")
+public class Link implements Serializable {
 
     /**
      * 友链表主键
@@ -27,17 +24,17 @@ public class Links implements Serializable {
     @Id
     @KeySql(genId = UuIdGenId.class)
     @Excel(name = "编号")
-    private String linksId;
+    private String linkId;
     /**
      * 友链名称
      */
     @Excel(name = "编号")
-    private String linksName;
+    private String linkName;
     /**
      * 友链类型(友链类别 0-友链 1-推荐网站)
      */
     @Excel(name = "友链类别",readConverterExp = "1=推荐网站,0=友链")
-    private String linksType;
+    private Integer linkType;
     /**
      * 描述
      */
@@ -47,27 +44,22 @@ public class Links implements Serializable {
      * 头像地址
      */
     @Excel(name = "头像地址")
-    private String headerImg;
+    private String avatar;
     /**
      * 链接地址
      */
     @Excel(name = "链接地址")
-    private String linksUrl;
+    private String url;
     /**
      * 邮箱
      */
     @Excel(name = "邮箱")
-    private String linksEmail;
+    private String email;
     /**
      * 是否显示(1:显示,0:不显示)
      */
     @Excel(name = "是否显示",readConverterExp = "1=显示,0=不显示")
-    private String display;
-    /**
-     * 删除标识（1：删除，0：正常）
-     */
-    @Excel(name = "删除标识",readConverterExp = "1=删除,0=正常")
-    private String delFlag;
+    private Integer display;
     /**
      * 创建时间
      */
@@ -82,6 +74,6 @@ public class Links implements Serializable {
      * 排序值
      */
     @Excel(name = "排序值")
-    private String  linksRank;
+    private String  seq;
 
 }

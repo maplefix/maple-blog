@@ -2,7 +2,6 @@ package top.maplefix.model;
 
 import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
-import tk.mybatis.mapper.annotation.NameStyle;
 import top.maplefix.annotation.Excel;
 import top.maplefix.component.UuIdGenId;
 
@@ -13,12 +12,10 @@ import java.io.Serializable;
 /**
  * @author : Maple
  * @description : 登录日志实体
- * @date : Created in 2019/7/24 0:05
- * @version : v1.0
+ * @date : Created in 2020/1/15 15：09
  */
 @Data
 @Table(name = "t_login_log")
-@NameStyle
 public class LoginLog implements Serializable {
 
     /**
@@ -37,27 +34,27 @@ public class LoginLog implements Serializable {
      * 登录IP
      */
     @Excel(name = "登录IP")
-    private String loginIp;
+    private String ip;
     /**
      * 登录地区
      */
     @Excel(name = "登录地区")
-    private String loginLocation;
+    private String location;
     /**
      * 登录浏览器
      */
     @Excel(name = "登录浏览器")
-    private String loginBrowser;
+    private String browser;
     /**
      * 登录操作系统
      */
     @Excel(name = "登录操作系统")
-    private String loginOs;
+    private String os;
     /**
      * 登录状态（0:成功,1:失败）
      */
     @Excel(name = "登录状态",readConverterExp = "1=失败,0=成功")
-    private String status;
+    private Integer status;
     /**
      * 登录描述
      */

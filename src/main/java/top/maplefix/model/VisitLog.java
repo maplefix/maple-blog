@@ -2,7 +2,6 @@ package top.maplefix.model;
 
 import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
-import tk.mybatis.mapper.annotation.NameStyle;
 import top.maplefix.annotation.Excel;
 import top.maplefix.component.UuIdGenId;
 
@@ -13,12 +12,10 @@ import java.io.Serializable;
 /**
  * @author : Maple
  * @description : 访问日志实体
- * @date : Created in 2019/7/24 0:06
- * @version : v1.0
+ * @date : Created in 2020/1/15 15:11
  */
 @Data
 @Table(name = "t_visit_log")
-@NameStyle
 public class VisitLog implements Serializable {
 
     /**
@@ -32,22 +29,22 @@ public class VisitLog implements Serializable {
      * 访问者IP
      */
     @Excel(name = "访问者IP")
-    private String visitIp;
+    private String ip;
     /**
      * 访问者地区
      */
     @Excel(name = "访问者地区")
-    private String visitLocation;
+    private String location;
     /**
      * 访问者浏览器
      */
     @Excel(name = "访问者浏览器")
-    private String visitBrowser;
+    private String browser;
     /**
      * 访问者操作系统
      */
     @Excel(name = "访问者操作系统")
-    private String visitOs;
+    private String os;
     /**
      * 请求地址
      */
@@ -57,7 +54,7 @@ public class VisitLog implements Serializable {
      * 错误信息
      */
     @Excel(name = "错误信息")
-    private String errorMsg;
+    private String exceptionMsg;
     /**
      * 模块名
      */
@@ -67,7 +64,7 @@ public class VisitLog implements Serializable {
      * 访问状态(0:成功,1:失败)
      */
     @Excel(name = "访问状态",readConverterExp = "1=失败,0=成功")
-    private String status;
+    private Integer status;
     /**
      * 访问时间
      */

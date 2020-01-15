@@ -9,30 +9,29 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
- * @author : Maple
- * @description : 博客标签关联表
- * @date : Created in 2019/7/25 17:03
+ * @author wangjg
+ * @description 用户角色中间表实体类
+ * @date 2020/1/15 16:17
  */
 @Data
-@Table(name = "t_blog_label_mid")
-public class BlogLabel implements Serializable {
-
+@Table(name = "t_user_role_mid")
+public class UserRoleMid implements Serializable {
     /**
      * 主键
      */
     @Id
     @KeySql(genId = UuIdGenId.class)
-    private String blId;
+    private String urmId;
     /**
-     * 博客id
+     * 用户id
      */
-    private String blogId;
+    private String userId;
     /**
-     * 标签id
+     * 角色id
      */
-    private String labelId;
+    private String roleId;
     /**
      * 创建时间
      */
-    private String createDate;
+    private String createData;
 }
