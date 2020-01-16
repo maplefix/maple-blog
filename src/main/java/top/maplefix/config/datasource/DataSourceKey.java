@@ -3,8 +3,7 @@ package top.maplefix.config.datasource;
 /**
  * @author : Maple
  * @description : 多数据源key
- * @date : Created in 2019/7/24 18：10
- * @version : v1.0
+ * @date : Created in 2020/1/16 9:55
  */
 public enum DataSourceKey {
     /**

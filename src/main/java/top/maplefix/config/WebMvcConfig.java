@@ -9,8 +9,7 @@ import top.maplefix.interceptor.LoginInterceptor;
 /**
  * @author : Maple
  * @description : 自定义web拦截器
- * @date : Created in 2019/7/24 22:17
- * @version : v1.0
+ * @date : Created in 2020/1/16 9:57
  */
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {

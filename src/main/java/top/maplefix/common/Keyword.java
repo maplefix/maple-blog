@@ -3,8 +3,7 @@ package top.maplefix.common;
 /**
  * @author : Maple
  * @description : 关键字
- * @date : Created in 2019/7/25 0:19
- * @version : v1.0
+ * @date : Created in 2020/1/16 9:54
  */
 public enum Keyword {
 

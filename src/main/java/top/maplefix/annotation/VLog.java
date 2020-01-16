@@ -5,8 +5,7 @@ import java.lang.annotation.*;
 /**
  * @description : 自定义访问日志注解
  * @author : Maple
- * @date : Created in 2019/7/27 14:43
- * @version : v1.0
+ * @date : Created in 2020/1/16 9:53
  */
 @Target({ElementType.PARAMETER, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

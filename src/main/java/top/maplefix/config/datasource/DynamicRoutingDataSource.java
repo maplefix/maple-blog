@@ -7,9 +7,7 @@ import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
  * @author : Maple
  * @description : 该类继承自 AbstractRoutingDataSource 类，
  *                在访问数据库时会调用该类的 determineCurrentLookupKey() 方法获取数据库实例的 key
- * @date : Created in 2019/7/24 13：10
-           Edited in 2019/1120 14:17
- * @version : v1.0
+ * @date : Created in 2020/1/16 9:56
  */
 @Slf4j
 public class DynamicRoutingDataSource extends AbstractRoutingDataSource {

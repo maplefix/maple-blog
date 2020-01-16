@@ -10,8 +10,7 @@ import java.util.Properties;
 /**
  * @author : Maple
  * @description : 验证码属性配置
- * @date : Created in 2019/7/24 19:40
- * @version : v1.0
+ * @date : Created in 2020/1/16 9:56
  */
 @Configuration
 public class CaptchaConfig {

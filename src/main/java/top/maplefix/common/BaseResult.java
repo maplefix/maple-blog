@@ -10,8 +10,7 @@ import top.maplefix.utils.PageData;
 /**
  * @author : Maple
  * @description : 通用数据返回对象
- * @date : Created in 2019/7/24 23:13
- * @version : v1.0
+ * @date : Created in 2020/1/16 9:54
  */
 @Data
 public class BaseResult {

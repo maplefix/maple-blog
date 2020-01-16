@@ -1,16 +1,14 @@
 package top.maplefix.vo;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import top.maplefix.model.FileItem;
 
 /**
  * @author : Maple
- * @description :
- * @date : Created in 2019/8/22 22:55
- * @version : v1.0
+ * @description : 文件表实体vo
+ * @date : Created in 2020/1/15 16:28
  */
 @Data
-@EqualsAndHashCode
 public class FileItemVo extends FileItem {
     /**
      * 搜索关键字
@@ -33,7 +31,7 @@ public class FileItemVo extends FileItem {
      */
     private String endDate;
 
-    public FileItemVo(String fileName, String fileHash, Long fileSize, String uploadDate, String serverType, String filePath) {
+    public FileItemVo(String fileName, String fileHash, Long fileSize, String uploadDate, Integer serverType, String filePath) {
         super(fileName, fileHash, fileSize, uploadDate, serverType, filePath);
     }
 }

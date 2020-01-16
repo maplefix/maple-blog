@@ -7,8 +7,7 @@ import org.springframework.stereotype.Component;
 /**
  * @author : Maple
  * @description : 七牛云相关配置
- * @date : Created in 2019/8/8 16:01
- * @version : v1.0
+ * @date : Created in 2020/1/16 9:57
  */
 @Data
 @Component

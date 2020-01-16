@@ -7,8 +7,7 @@ import java.lang.annotation.*;
 /**
  * @author : Maple
  * @description : 数据源标识注解，默认为主数据源。该注解可直接在controller的方法上标注使用
- * @date : Created in 2019/11/20 14:09
- * @version : v1.0
+ * @date : Created in 2020/1/16 9:53
  */
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
@@ -17,7 +16,6 @@ public @interface TargetDataSource {
 
     /**
      * 数据源，默认为主数据源
-     * @return
      */
     DataSourceKey value() default DataSourceKey.MASTER;
 }

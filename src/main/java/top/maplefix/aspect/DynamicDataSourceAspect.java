@@ -12,8 +12,7 @@ import top.maplefix.config.datasource.DynamicDataSourceContextHolder;
 /**
  * @author : Maple
  * @description : 动态切换数据源aop
- * @date : Created in 2019/11/20 14:43
- * @version : v1.0
+ * @date : Created in 2020/1/16 9:54
  */
 @Slf4j
 @Aspect
