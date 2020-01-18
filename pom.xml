@@ -15,12 +15,15 @@
     <description>Personal blog refactoring project</description>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
         <!--最终打包目录配置-->
         <maple.path>${project.build.directory}/${project.artifactId}</maple.path>
-        <shiro.version>1.4.2</shiro.version>
+        <kisso.version>3.7.5</kisso.version>
+        <jwt.version>0.9.1</jwt.version>
         <tk.mapper.version>2.1.5</tk.mapper.version>
         <lombok.version>1.18.6</lombok.version>
-        <thymeleaf.extras.shiro.version>2.0.0</thymeleaf.extras.shiro.version>
         <mybatis.spring.boot.version>2.0.0</mybatis.spring.boot.version>
         <pagehelper.version>1.2.12</pagehelper.version>
         <fastjson.version>1.2.60</fastjson.version>
@@ -28,7 +31,6 @@
         <commons.io.version>2.5</commons.io.version>
         <commons.fileupload.version>1.3.3</commons.fileupload.version>
         <bitwalker.version>1.19</bitwalker.version>
-        <velocity.version>1.7</velocity.version>
         <kaptcha.version>2.3.2</kaptcha.version>
         <jsoup.version>1.11.3</jsoup.version>
         <poi.version>4.1.0</poi.version>
@@ -38,6 +40,10 @@
         <google.guava.version>28.1-jre</google.guava.version>
         <gson.version>2.8.6</gson.version>
         <zxing.version>3.4.0</zxing.version>
+        <swagger2.version>2.9.2</swagger2.version>
+        <swagger.ui.version>2.9.2</swagger.ui.version>
+        <swagger.models.version>2.1.1</swagger.models.version>
+        <bootstart.swagger.ui.version>1.9.6</bootstart.swagger.ui.version>
     </properties>
 
     <dependencies>
@@ -53,11 +59,12 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
-        <!--shiro-->
+
+        <!--kisso单点登陆-->
         <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-spring-boot-web-starter</artifactId>
-            <version>${shiro.version}</version>
+            <groupId>com.baomidou</groupId>
+            <artifactId>kisso</artifactId>
+            <version>${kisso.version}</version>
         </dependency>
         <!--通用mapper-->
         <dependency>
@@ -84,6 +91,18 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!-- spring security 安全认证 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!-- quartz -->
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+        </dependency>
+
         <!-- SpringBoot集成thymeleaf模板 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -100,6 +119,36 @@
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>${mybatis.spring.boot.version}</version>
+        </dependency>
+        <!--swagger2-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger2.version}</version>
+        </dependency>
+        <!--swagger2ui-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.swagger</groupId>
+                    <artifactId>swagger-models</artifactId>
+                </exclusion>
+            </exclusions>
+            <version>${swagger.ui.version}</version>
+        </dependency>
+        <!--swagger models-->
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-models</artifactId>
+            <version>${swagger.models.version}</version>
+        </dependency>
+        <!-- 引入swagger-bootstrap-ui包 -->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>swagger-bootstrap-ui</artifactId>
+            <version>${bootstart.swagger.ui.version}</version>
         </dependency>
 
         <!--连接池，redis依赖-->
