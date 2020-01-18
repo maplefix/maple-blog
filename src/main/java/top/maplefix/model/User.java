@@ -61,9 +61,9 @@ public class User implements Serializable {
     @Excel(name = "密码")
     private String password;
     /**
-     * 帐号状态(0停用,1正常,2注销)
+     * 帐号状态(0停用,1正常)
      */
-    @Excel(name = "用户状态", readConverterExp = "0=停用,1=正常,2=注销")
+    @Excel(name = "用户状态", readConverterExp = "0=停用,1=正常")
     private Integer status;
     /**
      * 最后登录IP
