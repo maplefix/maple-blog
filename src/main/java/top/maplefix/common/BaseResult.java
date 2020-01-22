@@ -1,11 +1,6 @@
 package top.maplefix.common;
 
-import com.alibaba.fastjson.JSONObject;
 import lombok.Data;
-import org.apache.poi.ss.formula.functions.T;
-import top.maplefix.constant.Constant;
-import top.maplefix.enums.ResultCode;
-import top.maplefix.utils.PageData;
 
 /**
  * @author : Maple
@@ -15,9 +10,9 @@ import top.maplefix.utils.PageData;
 @Data
 public class BaseResult {
     /**
-     * 返回应答码 成功："success"，失败："fail"
+     * 返回应答码
      */
-    private Integer code;
+    private int  code;
     /**
      * 返回应答信息
      */
@@ -28,96 +23,71 @@ public class BaseResult {
     private Object data;
 
 
-    public void setData(Object data){
-        this.data = data;
-    }
-
     /**
-     * jqGrid分页封装
-     * @param pageInfo
+     * 初始化一个BaseResult对象,无data对象
+     *
+     * @param code 状态码
+     * @param msg  返回内容
      */
-    public void setData(com.github.pagehelper.PageInfo pageInfo){
-        PageData data = new PageData(pageInfo);
-        JSONObject meta = new JSONObject();
-        meta.put("currPage",data.getCurrPage());
-        meta.put("pageSize",data.getPageSize());
-        meta.put("totalPage",data.getTotalPage());
-        meta.put("totalCount",data.getTotalCount());
-        meta.put("list",data.getList());
-        this.data = meta;
-    }
-
-    /**
-     * bootstrap表格分页封装
-     * @param pageInfo
-     * @param flag
-     */
-    public void setData(com.github.pagehelper.PageInfo pageInfo,boolean flag){
-        PageData data = new PageData(pageInfo);
-        JSONObject meta = new JSONObject();
-        meta.put("currPage",data.getCurrPage());
-        meta.put("pageSize",data.getPageSize());
-        meta.put("totalPage",data.getTotalPage());
-        meta.put("total",data.getTotalCount());
-        meta.put("rows",data.getList());
-        this.data = meta;    }
-
-    public BaseResult(){
-        this.code = ResultCode.SUCCESS_CODE.getCode();
-        this.msg = Constant.SUCCESS_MSG;
-    }
-    public BaseResult(T data){
-        this.code = ResultCode.SUCCESS_CODE.getCode();
-        this.msg = Constant.SUCCESS_MSG;
-        this.data = data;
-    }
-    public BaseResult(String msg){
-        this.code = ResultCode.SUCCESS_CODE.getCode();
+    public BaseResult(int code, String msg) {
+        this.code = code;
         this.msg = msg;
     }
 
     /**
-     * 根据错误码返回错误包装信息
-     * @param code
-     * @return
+     * 初始化一个BaseResult对象
+     *
+     * @param code 状态码
+     * @param msg  返回内容
+     * @param data 数据对象
      */
-    public static BaseResult failResult(int code){
-        BaseResult baseResult = new BaseResult();
-        baseResult.setCode(code);
-        baseResult.setMsg(getMsgByErrorCode(code));
-        return baseResult;
+    public BaseResult(int code, String msg, Object data) {
+        this.code = code;
+        this.msg = msg;
+        this.data = data;
     }
-    public static BaseResult failResult(int code, String msg){
-        BaseResult baseResult = new BaseResult();
-        baseResult.setCode(code);
-        baseResult.setMsg(msg);
-        return baseResult;
-    }
-
 
     /**
-     * 根据错误码获取错误信息
-     * @param code
-     * @return
+     * 返回成功消息
+     *
+     * @param msg 返回内容
+     * @return 成功消息
      */
-    public static String getMsgByErrorCode(int code){
-        String msg;
-        switch (code){
-            case 00:
-                msg = "请求成功";
-                break;
-            case 01:
-                msg = "参数缺失";
-                break;
-            case 03:
-                msg = "请求超时";
-                break;
-            case 04:
-                msg = "系统内部错误";
-                break;
-            default:
-                msg = "未知异常";
-        }
-        return msg;
+    public static BaseResult success(String msg) {
+        return BaseResult.success(msg, null);
     }
+
+    /**
+     * 返回成功消息
+     *
+     * @param msg  返回内容
+     * @param data 数据对象
+     * @return 成功消息
+     */
+    public static BaseResult success(String msg, Object data) {
+        return new BaseResult(ResultCode.OK, msg, data);
+    }
+
+    /**
+     * 返回错误消息
+     *
+     * @param msg  返回内容
+     * @param data 数据对象
+     * @return 警告消息
+     */
+    public static BaseResult error(int code,String msg, Object data) {
+        return new BaseResult(code, msg, data);
+    }
+
+    /**
+     * 返回错误消息
+     *
+     * @param code 状态码
+     * @param msg  返回内容
+     * @return 警告消息
+     */
+    public static BaseResult error(int code, String msg) {
+        return new BaseResult(code, msg, null);
+    }
+
 }
