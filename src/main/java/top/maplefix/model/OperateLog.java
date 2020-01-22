@@ -16,7 +16,7 @@ import java.io.Serializable;
  */
 @Data
 @Table(name = "t_operation_log")
-public class OperationLog implements Serializable {
+public class OperateLog implements Serializable {
 
     /**
      * 操作日志表主键

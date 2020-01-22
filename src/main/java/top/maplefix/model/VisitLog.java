@@ -60,6 +60,9 @@ public class VisitLog implements Serializable {
      */
     @Excel(name = "模块名")
     private String module;
+
+    @Excel(name = "爬虫")
+    private String spider;
     /**
      * 访问状态(1:成功,0:失败)
      */

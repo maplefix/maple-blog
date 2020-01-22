@@ -1,6 +1,8 @@
 package top.maplefix.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import tk.mybatis.mapper.annotation.KeySql;
 import top.maplefix.annotation.Excel;
 import top.maplefix.component.UuIdGenId;
@@ -12,11 +14,16 @@ import java.io.Serializable;
 /**
  * @author : Maple
  * @description : 用户表实体类
+ *  JsonInclude 序列化Json的时候,如果是Null则忽略
  * @date : Created in 2020/1/15 15:09
  */
 @Data
 @Table(name = "t_user")
+@NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class User implements Serializable {
+
+    public static final String ADMIN = "f0e38fd7bcee4c248a0908258d6947d7";
 
     /**
      * 用户表主键
@@ -91,5 +98,11 @@ public class User implements Serializable {
     @Excel(name = "备注")
     private String remark;
 
+    public boolean isAdmin() {
+        return isAdmin(this.userId);
+    }
 
+    public static boolean isAdmin(String userId) {
+        return ADMIN.equals(userId);
+    }
 }
