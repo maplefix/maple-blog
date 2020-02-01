@@ -4,7 +4,7 @@ import org.apache.ibatis.annotations.CacheNamespace;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 import tk.mybatis.mapper.common.ids.SelectByIdsMapper;
-import top.maplefix.vo.FileItem;
+import top.maplefix.model.FileItem;
 import top.maplefix.vo.FileItemVo;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author : Maple
  * @description :
- * @date : Created in 2019/8/22 22:35
+ * @date : 2019/8/22 22:35
  * @version : v1.0
  */
 @CacheNamespace

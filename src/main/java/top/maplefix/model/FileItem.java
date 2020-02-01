@@ -13,7 +13,7 @@ import java.io.Serializable;
 /**
  * @author : Maple
  * @description : 文件相关属性
- * @date : Created in 2020/1/15 14:47
+ * @date : 2020/1/15 14:47
  */
 @Data
 @Table(name = "t_file_item")

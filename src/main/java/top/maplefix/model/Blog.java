@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * @author : Maple
  * @description : 博客表实体
- * @date : Created in 2020/1/15 14:26
+ * @date : 2020/1/15 14:26
  */
 @Data
 @Table(name = "t_blog")

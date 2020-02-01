@@ -3,18 +3,41 @@ package top.maplefix.constant;
 /**
  * @author : Maple
  * @description : 系统通用常量
- * @date : Created in 2020/1/15 16:31
+ * @date : 2020/1/15 16:31
  */
 public class Constant {
+    /**
+     * 登陆用户的 redis key
+     */
+    public static final String LOGIN_TOKEN_KEY = "login_tokens:";
 
     /**
-     * session中保存的登陆用户
+     * 验证码过期时间(单位为分钟)
      */
-    public static final String LOGIN_USER = "loginUser";
+    public static final Integer CAPTCHA_EXPIRATION = 2;
+
+    /**
+     * token
+     */
+    public static final String TOKEN = "token";
+
+    /**
+     * token前缀
+     */
+    public static final String TOKEN_PREFIX = "Bearer ";
+
+    /**
+     * the prefix of token
+     */
+    public static final String LOGIN_USER_KEY = "login_user_key";
+    /**
+     * 登陆用户信息
+     */
+    public static final String LOGIN_USER = "LOGIN_USER";
     /**
      * session中保存的登陆用户id
      */
-    public static final String LOGIN_USER_ID = "loginUserId";
+    public static final String USER_TOKEN = "USER_TOKEN";
     /**
      * 请求成功返回值
      */
@@ -33,24 +56,15 @@ public class Constant {
      */
     public static String charC = "char";
 
-    /**
-     * 状态：已删除
-     */
-    public static final String DELETED = "1";
-    /**
-     * 状态：正常
-     */
-    public static final String NORMAL = "0";
-
 
     /**
-     * 返回：成功
+     * common constant for success
      */
-    public static final Integer SUCCESS = 1;
+    public static final int SUCCESS = 1;
     /**
-     * 返回：失败
+     * common constant for failed
      */
-    public static final Integer FAIL = 0;
+    public static final int FAILED = 0;
 
 
     /**
@@ -70,6 +84,7 @@ public class Constant {
      * 谷歌浏览器
      */
     public static final String CHROME = "Chrome";
+
     /**
      * .
      */
@@ -91,4 +106,11 @@ public class Constant {
      * 字符串false
      */
     public static final String FALSE = "false";
+
+    /**
+     * 校验返回结果码
+     */
+    public final static String UNIQUE = "0";
+
+    public final static String NOT_UNIQUE = "1";
 }

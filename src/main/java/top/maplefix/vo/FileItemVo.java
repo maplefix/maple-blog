@@ -6,7 +6,7 @@ import top.maplefix.model.FileItem;
 /**
  * @author : Maple
  * @description : 文件表实体vo
- * @date : Created in 2020/1/15 16:28
+ * @date : 2020/1/15 16:28
  */
 @Data
 public class FileItemVo extends FileItem {

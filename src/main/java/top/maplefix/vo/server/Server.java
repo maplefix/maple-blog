@@ -22,7 +22,7 @@ import java.util.Properties;
 /**
  * @author : Maple
  * @description : 服务器相关信息
- * @date : Created in 2019/9/15 16:15
+ * @date : 2019/9/15 16:15
  * @version : v1.0
  */
 public class Server {

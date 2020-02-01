@@ -8,7 +8,7 @@ import top.maplefix.model.Label;
 /**
  * @author : Maple
  * @description : 博客标签mapper
- * @date : Created in 2019/7/25 0:31
+ * @date : 2019/7/25 0:31
  * @version : v1.0
  */
 @CacheNamespace

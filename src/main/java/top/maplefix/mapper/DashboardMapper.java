@@ -3,7 +3,7 @@ package top.maplefix.mapper;
 import org.apache.ibatis.annotations.CacheNamespace;
 import tk.mybatis.mapper.common.Mapper;
 import top.maplefix.model.LoginLog;
-import top.maplefix.model.OperationLog;
+import top.maplefix.model.OperateLog;
 import top.maplefix.model.VisitLog;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author : Maple
  * @description : 访问日志mapper
- * @date : Created in 2019/7/25 0:34
+ * @date : 2019/7/25 0:34
  * @version : v1.0
  */
 @CacheNamespace
@@ -26,7 +26,7 @@ public interface DashboardMapper extends Mapper<LoginLog> {
      * 查询五条最新的操作信息
      * @return
      */
-    List<OperationLog> getOperationLogData();
+    List<OperateLog> getOperationLogData();
     /**
      * 查询五条最新的访问信息
      * @return

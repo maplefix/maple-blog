@@ -3,7 +3,7 @@ package top.maplefix.constant;
 /**
  * @author : Maple
  * @description : 黑名单常量
- * @date : Created in 2019/7/24 11:27
+ * @date : 2019/7/24 11:27
  * @version : v1.0
  */
 public class BlacklistConstant {

@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
- * @author wangjg
+ * @author Maple
  * @description 用户角色中间表实体类
  * @date 2020/1/15 16:17
  */

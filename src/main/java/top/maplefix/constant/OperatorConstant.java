@@ -3,7 +3,7 @@ package top.maplefix.constant;
 /**
  * @author : Maple
  * @description : 操作日志常量
- * @date : Created in 2019/7/24 11:02
+ * @date : 2019/7/24 11:02
  * @version : v1.0
  */
 public class OperatorConstant {

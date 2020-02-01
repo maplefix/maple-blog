@@ -14,7 +14,7 @@ import top.maplefix.utils.SpringUtils;
  * @author : Maple
  * @description : maple-blog starter
  *  由于多数据动态切换，需要排除DataSourceAutoConfiguration
- * @date : Created in 2020/1/16 17:05
+ * @date : 2020/1/16 17:05
  */
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 @MapperScan( basePackages = {"top.maplefix.mapper"})

@@ -12,7 +12,7 @@ import java.io.Serializable;
 /**
  * @author : Maple
  * @description : 友链实体
- * @date : Created in 2020/1/15 14：51
+ * @date : 2020/1/15 14：51
  */
 @Data
 @Table(name = "t_link")

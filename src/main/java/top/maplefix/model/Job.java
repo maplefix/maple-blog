@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
- * @author wangjg
+ * @author Maple
  * @description 定时任务实体类
  * @date 2020/1/15 15:31
  */
@@ -18,13 +18,14 @@ import java.io.Serializable;
 @Table(name = "t_job")
 public class Job implements Serializable {
 
+    public static final String JOB_KEY = "JOB_KEY";
     /**
      * 主键
      */
     @Id
     @KeySql(genId = UuIdGenId.class)
     @Excel(name = "编号")
-    private String jboId;
+    private String jobId;
     /**
      * 任务名称
      */

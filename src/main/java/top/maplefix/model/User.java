@@ -15,7 +15,7 @@ import java.io.Serializable;
  * @author : Maple
  * @description : 用户表实体类
  *  JsonInclude 序列化Json的时候,如果是Null则忽略
- * @date : Created in 2020/1/15 15:09
+ * @date : 2020/1/15 15:09
  */
 @Data
 @Table(name = "t_user")

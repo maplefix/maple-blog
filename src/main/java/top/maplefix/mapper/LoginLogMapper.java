@@ -8,7 +8,7 @@ import top.maplefix.model.LoginLog;
 /**
  * @author : Maple
  * @description : 登录日志mapper
- * @date : Created in 2019/7/25 0:32
+ * @date : 2019/7/25 0:32
  * @version : v1.0
  */
 @CacheNamespace

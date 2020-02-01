@@ -14,7 +14,7 @@ import java.io.Serializable;
 /**
  * @author : Maple
  * @description : 博客标签实体
- * @date : Created in 2020/1/15 14：51
+ * @date : 2020/1/15 14：51
  */
 @Data
 @Table(name = "t_label")

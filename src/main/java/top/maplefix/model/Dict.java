@@ -12,7 +12,7 @@ import java.io.Serializable;
 /**
  * @author : Maple
  * @description : 博客字典实体
- * @date : Created in 2020/1/15 14:40
+ * @date : 2020/1/15 14:40
  */
 @Data
 @Table(name = "t_dict")
@@ -35,7 +35,7 @@ public class Dict implements Serializable {
      * 字典名
      */
     @Excel(name = "字典名")
-    private String dictName;
+    private String dictKey;
     /**
      * 字典值
      */

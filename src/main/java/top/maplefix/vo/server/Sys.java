@@ -5,7 +5,7 @@ import lombok.Data;
 /**
  * @author : Maple
  * @description : 系统相关信息
- * @date : Created in 2019/9/15 16:16
+ * @date : 2019/9/15 16:16
  * @version : v1.0
  */
 @Data

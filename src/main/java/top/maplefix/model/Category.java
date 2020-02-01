@@ -13,7 +13,7 @@ import java.io.Serializable;
 /**
  * @author : Maple
  * @description : 博客分类实体
- * @date : Created in 2020/1/15 14:39
+ * @date : 2020/1/15 14:39
  */
 @Data
 @Table(name = "t_category")

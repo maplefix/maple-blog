@@ -3,7 +3,7 @@ package top.maplefix.constant;
 /**
  * @author : Maple
  * @description : 登录模块常量
- * @date : Created in 2019/9/12 16:04
+ * @date : 2019/9/12 16:04
  * @version : v1.0
  */
 public class LoginConstant {
@@ -30,7 +30,11 @@ public class LoginConstant {
      */
     public static final String VERIFY_CODE_ERROR = "验证码错误";
     /**
-     * 账号已停用
+     * 账号已锁定
      */
-    public static final String ACCOUNT_DISABLED = "账号已停用";
+    public static final String ACCOUNT_LOCKED = "账号已锁定";
+    /**
+     * 账号已注销
+     */
+    public static final String ACCOUNT_CANCELED = "账号已注销";
 }

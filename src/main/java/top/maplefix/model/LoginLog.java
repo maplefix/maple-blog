@@ -1,5 +1,6 @@
 package top.maplefix.model;
 
+import lombok.Builder;
 import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
 import top.maplefix.annotation.Excel;
@@ -12,10 +13,11 @@ import java.io.Serializable;
 /**
  * @author : Maple
  * @description : 登录日志实体
- * @date : Created in 2020/1/15 15：09
+ * @date : 2020/1/15 15：09
  */
 @Data
 @Table(name = "t_login_log")
+@Builder
 public class LoginLog implements Serializable {
 
     /**

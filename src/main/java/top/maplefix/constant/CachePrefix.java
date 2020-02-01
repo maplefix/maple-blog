@@ -3,8 +3,7 @@ package top.maplefix.constant;
 /**
  * @author : Maple
  * @description : 缓存前缀
- * @date : Created in 2019/7/24 11:15
- * @version : v1.0
+ * @date : 2019/7/24 11:15
  */
 public class CachePrefix {
     /**

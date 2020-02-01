@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
- * @author wangjg
+ * @author Maple
  * @description 任务日志实体类
  * @date 2020/1/15 15:39
  */
@@ -63,7 +63,7 @@ public class JobLog implements Serializable {
     /**
      * 运行状态
      */
-    @Excel(name = "运行状态",readConverterExp = "1=成功,0=失败")
+    @Excel(name = "运行状态",readConverterExp = "1=运行,2=暂停")
     private Integer status;
     /**
      * 耗时

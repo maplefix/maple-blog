@@ -12,7 +12,7 @@ import java.io.Serializable;
 /**
  * @author : Maple
  * @description : 操作日志实体类
- * @date : Created in 2020/1/15 15:09
+ * @date : 2020/1/15 15:09
  */
 @Data
 @Table(name = "t_operation_log")
