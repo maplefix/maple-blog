@@ -1,5 +1,6 @@
 package top.maplefix.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
 import top.maplefix.annotation.Excel;
@@ -13,10 +14,11 @@ import java.util.List;
 
 /**
  * @author : Maple
- * @description : 博客表实体
+ * @description : 博客表实体,不序列化null列
  * @date : 2020/1/15 14:26
  */
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Table(name = "t_blog")
 public class Blog implements Serializable {
 

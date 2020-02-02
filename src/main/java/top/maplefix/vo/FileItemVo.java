@@ -1,5 +1,6 @@
 package top.maplefix.vo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import top.maplefix.model.FileItem;
 
@@ -9,6 +10,7 @@ import top.maplefix.model.FileItem;
  * @date : 2020/1/15 16:28
  */
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class FileItemVo extends FileItem {
     /**
      * 搜索关键字

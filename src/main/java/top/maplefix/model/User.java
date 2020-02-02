@@ -18,9 +18,9 @@ import java.io.Serializable;
  * @date : 2020/1/15 15:09
  */
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Table(name = "t_user")
 @NoArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class User implements Serializable {
 
     public static final String ADMIN = "f0e38fd7bcee4c248a0908258d6947d7";

@@ -1,5 +1,6 @@
 package top.maplefix.vo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import top.maplefix.model.Blog;
 
@@ -13,6 +14,7 @@ import java.util.List;
  * @version : v1.0
  */
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Archive implements Serializable {
 
     /**

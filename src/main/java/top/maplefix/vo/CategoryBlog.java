@@ -1,5 +1,6 @@
 package top.maplefix.vo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 /**
@@ -9,6 +10,7 @@ import lombok.Data;
  * @version : v1.0
  */
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CategoryBlog {
 
     /**

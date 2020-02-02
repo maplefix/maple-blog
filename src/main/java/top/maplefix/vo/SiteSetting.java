@@ -1,5 +1,6 @@
 package top.maplefix.vo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 /**
@@ -8,6 +9,7 @@ import lombok.Data;
  * @date 2020/1/22 20:26
  */
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SiteSetting {
     /**
      * the title of front site

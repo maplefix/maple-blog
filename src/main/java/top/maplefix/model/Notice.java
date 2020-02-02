@@ -15,8 +15,8 @@ import javax.persistence.Table;
  * @date 2020/1/22 20:35
  */
 @Data
-@Table(name = "t_notice")
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Table(name = "t_notice")
 @NoArgsConstructor
 public class Notice {
 

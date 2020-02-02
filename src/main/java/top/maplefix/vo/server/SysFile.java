@@ -9,6 +9,7 @@ import lombok.Data;
  * @version : v1.0
  */
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SysFile {
     /**
      * 盘符路径

@@ -1,5 +1,6 @@
 package top.maplefix.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
 import top.maplefix.annotation.Excel;
@@ -16,6 +17,7 @@ import java.io.Serializable;
  * @date : 2020/1/15 14:39
  */
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Table(name = "t_category")
 public class Category implements Serializable {
 

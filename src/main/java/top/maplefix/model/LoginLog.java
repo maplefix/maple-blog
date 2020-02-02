@@ -1,5 +1,6 @@
 package top.maplefix.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
@@ -16,6 +17,7 @@ import java.io.Serializable;
  * @date : 2020/1/15 15：09
  */
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Table(name = "t_login_log")
 @Builder
 public class LoginLog implements Serializable {

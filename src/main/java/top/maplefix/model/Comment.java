@@ -1,5 +1,6 @@
 package top.maplefix.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
 import top.maplefix.component.UuIdGenId;
@@ -14,6 +15,7 @@ import java.io.Serializable;
  * @date 2020/1/15 15:19
  */
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Table(name = "t_comment")
 public class Comment implements Serializable {
 
