@@ -6,7 +6,7 @@ import top.maplefix.model.JobLog;
 import java.util.List;
 
 /**
- * @author wangjg
+ * @author Maple
  * @description 定时任务日志
  * @date 2020/2/1 13:30
  */
