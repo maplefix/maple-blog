@@ -33,7 +33,7 @@ public class FileItemVo extends FileItem {
      */
     private String endDate;
 
-    public FileItemVo(String fileName, String fileHash, Long fileSize, String uploadDate, Integer serverType, String filePath) {
+    public FileItemVo(String fileName, String fileHash, Long fileSize, String uploadDate, int serverType, String filePath) {
         super(fileName, fileHash, fileSize, uploadDate, serverType, filePath);
     }
 }

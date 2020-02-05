@@ -49,7 +49,7 @@ public class FileItem implements Serializable {
      * 图床保存的文件的类型（1表示在本地存储，2表示存储在七牛云）
      */
     @Excel(name = "保存类型",readConverterExp = "1=本地存储,2=七牛云存储")
-    private Integer serverType;
+    private int serverType;
     /**
      * 访问路径
      */
@@ -58,7 +58,7 @@ public class FileItem implements Serializable {
 
     public FileItem(){}
 
-    public FileItem(String fileName, String fileHash, Long fileSize, String uploadDate, Integer serverType, String filePath) {
+    public FileItem(String fileName, String fileHash, Long fileSize, String uploadDate, int serverType, String filePath) {
         this.fileId = UuidUtils.getRandomUuidWithoutSeparator();
         this.fileName = fileName;
         this.fileHash = fileHash;
@@ -81,9 +81,9 @@ public class FileItem implements Serializable {
          *//*
         QI_NIU_YUN(2);
 
-        private Integer serverType;
+        private int serverType;
 
-        ServerType(Integer serverType) {
+        ServerType(int serverType) {
             this.serverType = serverType;
         }
 

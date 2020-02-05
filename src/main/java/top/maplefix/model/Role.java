@@ -33,9 +33,13 @@ public class Role implements Serializable {
     @Excel(name = "角色名称")
     private String roleName;
     /**
+     * 角色权限字符串
+     */
+    private String roleKey;
+    /**
      * 角色描述
      */
-    @Excel(name = "橘色描述")
+    @Excel(name = "角色描述")
     private String description;
     /**
      * 角色类型(0:系统角色,1:自定义角色)
@@ -52,4 +56,32 @@ public class Role implements Serializable {
      */
     @Excel(name = "更新时间")
     private String updateData;
+    /**
+     * 排序号
+     */
+    @Excel(name = "排序")
+    private Integer seq;
+
+    /**
+     * 用户是否存在此角色标识 默认不存在
+     */
+    private boolean flag = false;
+
+    /**
+     * 菜单组
+     */
+    private String[] menuIds;
+
+
+    public Role(String roleId) {
+        this.roleId = roleId;
+    }
+
+    public static boolean isAdmin(String roleId) {
+        return "admin".equals(roleId);
+    }
+
+    public boolean isAdmin() {
+        return isAdmin(this.roleId);
+    }
 }

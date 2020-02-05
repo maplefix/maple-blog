@@ -9,6 +9,8 @@ import top.maplefix.component.UuIdGenId;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Maple
@@ -36,6 +38,11 @@ public class Menu implements Serializable {
      */
     @Excel(name = "父菜单ID")
     private String parentId;
+    /**
+     * 组件地址
+     */
+    @Excel(name = "组件地址")
+    private String component;
     /**
      * 路由地址
      */
@@ -92,5 +99,8 @@ public class Menu implements Serializable {
      */
     @Excel(name = "序号")
     private String seq;
-
+    /**
+     * 子菜单
+     */
+    private List<Menu> children = new ArrayList<>();
 }

@@ -10,6 +10,7 @@ import top.maplefix.component.UuIdGenId;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author : Maple
@@ -97,6 +98,16 @@ public class User implements Serializable {
      */
     @Excel(name = "备注")
     private String remark;
+
+    /**
+     * 角色对象
+     */
+    private List<Role> roles;
+
+    /**
+     * 角色组
+     */
+    private String[] roleIds;
 
     public boolean isAdmin() {
         return isAdmin(this.userId);

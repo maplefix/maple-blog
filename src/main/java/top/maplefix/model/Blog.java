@@ -93,6 +93,11 @@ public class Blog implements Serializable {
     @Excel(name = "是否原创",readConverterExp = "1=原创,0=转载")
     private Integer isOriginal;
     /**
+     * 评论标识(1:允许,0:不允许)
+     */
+    @Excel(name = "是否允许评论",readConverterExp = "1=允许,0=不允许")
+    private Integer isComment;
+    /**
      * 创建时间
      */
     @Excel(name = "创建时间")
