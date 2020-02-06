@@ -24,7 +24,7 @@ import java.util.Optional;
 /**
  * @author : Maple
  * @description : 七牛云操作工具类
- * @date : Created in 2019/8/8 16:01
+ * @date : 2019/8/8 16:01
  * @version : v1.0
  */
 @Slf4j

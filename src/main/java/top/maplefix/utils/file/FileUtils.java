@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 /**
  * @author : Maple
  * @description : 文件处理工具类
- * @date : Created in 2019/3/31 21:23
+ * @date : 2019/3/31 21:23
  * @version : v1.0
  */
 public class FileUtils {
@@ -110,7 +110,7 @@ public class FileUtils {
      * @return 文件信息
      */
     public static List<FileItem> getImageFileItemList() {
-        File file = new File(SystemConfig.getImagePath());
+        File file = new File(SystemConfig.getProfile());
         File[] files = file.listFiles();
         List<FileItem> FileItems = Arrays.stream(files).map(f ->
                 new FileItem(f.getName(), String.valueOf(f.hashCode()),f.getUsableSpace(), DateUtils.getCurrDate(), FileItemConstant.LOCAL_STORE, getImageFilePath(f.getName()))
@@ -125,7 +125,7 @@ public class FileUtils {
      * @return 可访问路径
      */
     public static String getImageFilePath(String name) {
-        String imagePath = SystemConfig.getImagePath();
+        String imagePath = SystemConfig.getProfile();
         return imagePath + "/" + name;
     }
 
