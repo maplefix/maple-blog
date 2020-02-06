@@ -26,7 +26,7 @@ import java.util.*;
 /**
  * @author : Maple
  * @description : excel导入导出工具
- * @Date : Created in 2019/3/31 21:23
+ * @Date : 2019/3/31 21:23
  * @version : v1.0
  */
 
@@ -160,22 +160,22 @@ public class ExcelUtil<T> {
                     // 取得类型,并根据对象类型设置值.
                     Class<?> fieldType = field.getType();
                     if (String.class == fieldType) {
-                        String s = Convert.toStr(val);
+                        String s = ConvertUtils.toStr(val);
                         if (StringUtils.endsWith(s, ".0")) {
                             val = StringUtils.substringBefore(s, ".0");
                         } else {
-                            val = Convert.toStr(val);
+                            val = ConvertUtils.toStr(val);
                         }
                     } else if ((Integer.TYPE == fieldType) || (Integer.class == fieldType)) {
-                        val = Convert.toInt(val);
+                        val = ConvertUtils.toInt(val);
                     } else if ((Long.TYPE == fieldType) || (Long.class == fieldType)) {
-                        val = Convert.toLong(val);
+                        val = ConvertUtils.toLong(val);
                     } else if ((Double.TYPE == fieldType) || (Double.class == fieldType)) {
-                        val = Convert.toDouble(val);
+                        val = ConvertUtils.toDouble(val);
                     } else if ((Float.TYPE == fieldType) || (Float.class == fieldType)) {
-                        val = Convert.toFloat(val);
+                        val = ConvertUtils.toFloat(val);
                     } else if (BigDecimal.class == fieldType) {
-                        val = Convert.toBigDecimal(val);
+                        val = ConvertUtils.toBigDecimal(val);
                     } else if (Date.class == fieldType) {
                         if (val instanceof String) {
                             val = DateUtils.parseDate(val);
@@ -291,7 +291,7 @@ public class ExcelUtil<T> {
             String filePath = getAbsoluteFile(filename);
             out = new FileOutputStream(filePath);
             wb.write(out);
-            return new BaseResult(filename);
+            return BaseResult.success(filename);
         } catch (Exception e) {
             log.error("导出Excel失败,异常信息为：{}，异常堆栈为：{}", e.getMessage(),e);
             throw new BusinessException("导出Excel失败，请联系网站管理员！");

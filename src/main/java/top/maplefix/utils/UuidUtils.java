@@ -5,7 +5,7 @@ import java.util.UUID;
 /**
  * @author : Maple
  * @description : uuid生成工具类
- * @date : Created in 2019/7/24 14:05
+ * @date : 2019/7/24 14:05
  * @version : v1.0
  */
 public class UuidUtils {

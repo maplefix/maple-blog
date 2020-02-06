@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
 import java.util.Set;
 
@@ -11,10 +12,12 @@ import java.util.Set;
 /**
  * @author : Maple
  * @description : 类型转换器
- * @Date : Created in 2019/3/31 21:04
- * @version : v1.0
+ * @date : 2020/1/22 15:35
  */
-public class Convert {
+public class ConvertUtils {
+    private ConvertUtils() {
+    }
+
     /**
      * 转换为字符串<br>
      * 如果给定的值为null，或者转换失败，返回默认值<br>
@@ -637,6 +640,16 @@ public class Convert {
         return toBigDecimal(value, null);
     }
 
+    /**
+     * 将对象转为字符串<br>
+     * 1、Byte数组和ByteBuffer会被转换为对应字符串的数组 2、对象数组会调用Arrays.toString方法
+     *
+     * @param obj 对象
+     * @return 字符串
+     */
+    public static String utf8Str(Object obj) {
+        return str(obj, StandardCharsets.UTF_8);
+    }
 
     /**
      * 将对象转为字符串<br>
@@ -799,9 +812,7 @@ public class Convert {
                 c[i] = (char) (c[i] - 65248);
             }
         }
-        String returnString = new String(c);
-
-        return returnString;
+        return new String(c);
     }
 
     /**

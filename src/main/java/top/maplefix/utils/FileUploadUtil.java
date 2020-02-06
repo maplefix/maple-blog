@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  * @author : Maple
  * @description : 文件上传工具类
- * @Date : Created in 2019/3/31 21:23
+ * @Date : 2019/3/31 21:23
  * @version : v1.0
  */
 @Slf4j

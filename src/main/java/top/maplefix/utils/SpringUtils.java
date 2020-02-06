@@ -4,12 +4,13 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 /**
  * @author : Maple
  * @description : spring工具类，可在非spring环境中获取bean
- * @date : Created in 2019/3/31 21:23
+ * @date : 2019/3/31 21:23
  * @version : v1.0
  */
 @Component
@@ -18,6 +19,23 @@ public final class SpringUtils implements BeanFactoryPostProcessor {
      * Spring应用上下文环境
      */
     private static ConfigurableListableBeanFactory beanFactory;
+
+    private static ApplicationContext applicationContext;
+
+    public static void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        if (SpringUtils.applicationContext == null) {
+            SpringUtils.applicationContext = applicationContext;
+        }
+    }
+
+    /**
+     * 获取applicationContext
+     *
+     * @return
+     */
+    public static ApplicationContext getApplicationContext() {
+        return applicationContext;
+    }
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {

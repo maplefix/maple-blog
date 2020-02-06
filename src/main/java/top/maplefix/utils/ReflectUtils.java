@@ -13,7 +13,7 @@ import java.util.Date;
  * @author : Maple
  * @description: 反射工具类. 提供调用getter/setter方法,
  *               访问私有变量, 调用私有方法, 获取泛型类型Class, 被AOP过的真实类等工具函数.
- * @date : Created in 2019/3/31 21:23
+ * @date : 2019/3/31 21:23
  * @version : v1.0
  */
 @SuppressWarnings("rawtypes")
@@ -136,18 +136,18 @@ public class ReflectUtils {
             for (int i = 0; i < cs.length; i++) {
                 if (args[i] != null && !args[i].getClass().equals(cs[i])) {
                     if (cs[i] == String.class) {
-                        args[i] = Convert.toStr(args[i]);
+                        args[i] = ConvertUtils.toStr(args[i]);
                         if (StringUtils.endsWith((String) args[i], ".0")) {
                             args[i] = StringUtils.substringBefore((String) args[i], ".0");
                         }
                     } else if (cs[i] == Integer.class) {
-                        args[i] = Convert.toInt(args[i]);
+                        args[i] = ConvertUtils.toInt(args[i]);
                     } else if (cs[i] == Long.class) {
-                        args[i] = Convert.toLong(args[i]);
+                        args[i] = ConvertUtils.toLong(args[i]);
                     } else if (cs[i] == Double.class) {
-                        args[i] = Convert.toDouble(args[i]);
+                        args[i] = ConvertUtils.toDouble(args[i]);
                     } else if (cs[i] == Float.class) {
-                        args[i] = Convert.toFloat(args[i]);
+                        args[i] = ConvertUtils.toFloat(args[i]);
                     } else if (cs[i] == Date.class) {
                         if (args[i] instanceof String) {
                             args[i] = DateUtils.parseDate(args[i]);
