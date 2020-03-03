@@ -15,22 +15,24 @@ import top.maplefix.constant.LinksConstant;
 import top.maplefix.constant.PageConstant;
 import top.maplefix.controller.BaseController;
 import top.maplefix.enums.BookListStatus;
-import top.maplefix.model.*;
+import top.maplefix.model.Blog;
+import top.maplefix.model.Book;
+import top.maplefix.model.Category;
+import top.maplefix.model.Link;
 import top.maplefix.service.*;
-import top.maplefix.utils.PageData;
 import top.maplefix.utils.StringUtils;
+import top.maplefix.utils.page.PageModel;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @author : Maple
  * @description : 博客前端控制类
- * @date : Created in 2019/7/24 22:26
+ * @date : 2019/7/24 22:26
            Edited in 2019/10/28 14:20
  * @version : v1.0
  */
@@ -39,22 +41,22 @@ import java.util.stream.Collectors;
 public class BlogFrontController extends BaseController {
 
     @Autowired
-    private IBlogService blogService;
+    private BlogService blogService;
 
     @Autowired
-    private ICategoryService categoryService;
+    private CategoryService categoryService;
 
     @Autowired
-    private ILabelService labelService;
+    private LabelService labelService;
 
     @Autowired
-    private ILinksService linksService;
+    private LinksService linksService;
 
     @Autowired
-    private IDictService dictService;
+    private DictService dictService;
 
     @Autowired
-    private IBookListService bookListService;
+    private BookListService bookListService;
     /**
      * 前端主题
      */
@@ -91,9 +93,9 @@ public class BlogFrontController extends BaseController {
      */
     private void setDictMessage(HttpServletRequest request){
         //查出字典表中的系统展示字段配置,//KeyWord.SYSTEM_CONFIG.getValue()
-        List<Dict> config = dictService.getSystemConfig("");
-        Map<String, Object> dictMap = config.stream().collect(Collectors.toMap(Dict::getKeyWord,Dict::getDictValue));
-        request.setAttribute("dict", dictMap);
+        //List<Dict> config = dictService.getSystemConfig("");
+        //Map<String, Object> dictMap = config.stream().collect(Collectors.toMap(Dict::getKeyWord,Dict::getDictValue));
+        request.setAttribute("dict", "");
     }
 
     /**
@@ -126,7 +128,7 @@ public class BlogFrontController extends BaseController {
         params.put("isAll",null);
         List<Blog> blogList = blogService.selectBlogForIndexPage(params);
         PageInfo<Blog> pageInfo = new PageInfo<Blog>(blogList);
-        PageData page = new PageData(pageInfo);
+        PageModel page = new PageModel( );
         if (blogList.size() < 1) {
             log.info("博客查询页面访问失败...");
             return "error/error_404";
@@ -221,8 +223,8 @@ public class BlogFrontController extends BaseController {
         params.put("labelName", labelName);
         List<Blog> blogList = blogService.selectBlogForIndexPage(params);
         PageInfo<Blog> pageInfo = new PageInfo<>(blogList);
-        PageData pageData = new PageData(pageInfo);
-        request.setAttribute("blogPageResult", pageData);
+        PageModel pageModel = new PageModel( );
+        request.setAttribute("blogPageResult", pageModel);
         request.setAttribute("pageName", "标签");
         request.setAttribute("pageUrl", "label");
         request.setAttribute("keyword", labelName);
@@ -263,8 +265,8 @@ public class BlogFrontController extends BaseController {
         params.put("categoryId",categories.get(0).getCategoryId());
         List<Blog> blogList = blogService.selectBlogForIndexPage(params);
         PageInfo<Blog> pageInfo = new PageInfo<>(blogList);
-        PageData pageData = new PageData(pageInfo);
-        request.setAttribute("blogPageResult", pageData);
+        PageModel pageModel = new PageModel( );
+        request.setAttribute("blogPageResult", pageModel);
         request.setAttribute("pageName", "分类");
         request.setAttribute("pageUrl", "category");
         setCommonMessage(request);
@@ -297,8 +299,8 @@ public class BlogFrontController extends BaseController {
         params.put("keyword", keyword);
         List<Blog> blogList = blogService.selectBlogForIndexPage(params);
         PageInfo<Blog> pageInfo = new PageInfo<>(blogList);
-        PageData pageData = new PageData(pageInfo);
-        request.setAttribute("blogPageResult", pageData);
+        PageModel pageModel = new PageModel( );
+        request.setAttribute("blogPageResult", pageModel);
         request.setAttribute("pageName", "搜索");
         request.setAttribute("pageUrl", "search");
         request.setAttribute("keyword", keyword);
@@ -322,11 +324,11 @@ public class BlogFrontController extends BaseController {
         params.put(PageConstant.PAGENUM, 1);
         params.put(PageConstant.PAGESIZE, 100);
         params.put("linksType",LinksConstant.LINK_FRIEND);
-        List<Links> linkList = linksService.getLinksPage(params);
+        List<Link> linkList = linksService.getLinksPage(params);
         request.setAttribute("favoriteLinks", linkList);
         params.remove("linksType");
         params.put("linksType",LinksConstant.LINK_RECOMMEND);
-        List<Links> recommendList = linksService.getLinksPage(params);
+        List<Link> recommendList = linksService.getLinksPage(params);
         request.setAttribute("recommendLinks", recommendList);
         setDictMessage(request);
         request.setAttribute("pageName", "友链");
@@ -360,22 +362,22 @@ public class BlogFrontController extends BaseController {
         log.info("reading页面访问开始...");
         setDictMessage(request);
         Map<String,Object> params = new HashMap<>();
-        List<BookList> bookListPage = bookListService.getBookListPage(params);
-        for(BookList bookList : bookListPage){
+        List<Book> bookListPage = bookListService.getBookListPage(params);
+        for(Book bookList : bookListPage){
             //阅读状态格式化
-            if(BookListConstant.NOT_READ.equals(bookList.getReadStatus())){
+            if(BookListConstant.NOT_READ==(bookList.getReadStatus())){
                 bookList.setReadStatus(BookListStatus.NOT_READ.getValue());
-            }else if(BookListConstant.READING.equals(bookList.getReadStatus())){
+            }else if(BookListConstant.READING==(bookList.getReadStatus())){
                 bookList.setReadStatus(BookListStatus.READING.getValue());
-            }else if(BookListConstant.END_READ.equals(bookList.getReadStatus())){
+            }else if(BookListConstant.END_READ==(bookList.getReadStatus())){
                 bookList.setReadStatus(BookListStatus.END_READ.getValue());
             }
             //时间格式化
-            if(!StringUtils.isEmpty(bookList.getReadBeginDate())){
-              bookList.setReadBeginDate(bookList.getReadBeginDate().substring(0,10));
+            if(!StringUtils.isEmpty(bookList.getReadBegin())){
+              bookList.setReadBegin(bookList.getReadBegin().substring(0,10));
             }
-            if(!StringUtils.isEmpty(bookList.getReadEndDate())){
-                bookList.setReadEndDate(bookList.getReadEndDate().substring(0,10));
+            if(!StringUtils.isEmpty(bookList.getReadEnd())){
+                bookList.setReadEnd(bookList.getReadEnd().substring(0,10));
             }
             log.info("书单列表查询成功...");
         }
