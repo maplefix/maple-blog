@@ -100,11 +100,11 @@ public class Comment implements Serializable {
     /**
      * 回复
      */
-    private String replay;
+    private String reply;
     /**
      * 管理员回复
      */
-    private String adminReplay;
+    private String adminReply;
     /**
      * 回复id
      */

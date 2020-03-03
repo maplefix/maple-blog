@@ -112,10 +112,10 @@ public class FileUtils {
     public static List<FileItem> getImageFileItemList() {
         File file = new File(SystemConfig.getProfile());
         File[] files = file.listFiles();
-        List<FileItem> FileItems = Arrays.stream(files).map(f ->
+        List<FileItem> fileItems = Arrays.stream(files).map(f ->
                 new FileItem(f.getName(), String.valueOf(f.hashCode()),f.getUsableSpace(), DateUtils.getCurrDate(), FileItemConstant.LOCAL_STORE, getImageFilePath(f.getName()))
         ).collect(Collectors.toList());
-        return FileItems;
+        return fileItems;
     }
 
     /**
