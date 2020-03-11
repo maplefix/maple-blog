@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 /**
  * @author : Maple
  * @description : 自定义excel注解
- * @date : Created in 2020/1/16 9:52
+ * @date : 2020/1/16 9:52
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
