@@ -10,7 +10,10 @@ public class Constant {
      * 登陆用户的 redis key
      */
     public static final String LOGIN_TOKEN_KEY = "login_tokens:";
-
+    /**
+     * 验证码key
+     */
+    public static final String CAPTCHA_CODE_KEY = "captcha_codes:";
     /**
      * 验证码过期时间(单位为分钟)
      */
@@ -66,6 +69,14 @@ public class Constant {
      */
     public static final int FAILED = 0;
 
+    /**
+     * 显示
+     */
+    public static final int DISPLAY = 1;
+    /**
+     * 隐藏
+     */
+    public static final int HIDE = 0;
 
     /**
      * UTF-8 字符集
@@ -101,11 +112,11 @@ public class Constant {
     /**
      * 字符串true
      */
-    public static final String TRUE = "true";
+    public static final Boolean TRUE = true;
     /**
      * 字符串false
      */
-    public static final String FALSE = "false";
+    public static final Boolean FALSE = false;
 
     /**
      * 校验返回结果码
