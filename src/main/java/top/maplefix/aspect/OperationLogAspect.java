@@ -1,49 +1,49 @@
 package top.maplefix.aspect;
 
-import com.alibaba.fastjson.JSONObject;
-import eu.bitwalker.useragentutils.UserAgent;
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
-import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.HandlerMapping;
 import org.thymeleaf.util.StringUtils;
 import top.maplefix.annotation.OLog;
+import top.maplefix.config.factory.AsyncFactory;
+import top.maplefix.config.factory.AsyncManager;
 import top.maplefix.constant.Constant;
-import top.maplefix.enums.BusinessType;
-import top.maplefix.model.OperationLog;
-import top.maplefix.model.User;
-import top.maplefix.service.IOperationLogService;
-import top.maplefix.utils.AddressUtils;
-import top.maplefix.utils.DateUtils;
+import top.maplefix.model.OperateLog;
+import top.maplefix.secrrity.LoginUser;
+import top.maplefix.secrrity.service.TokenService;
 import top.maplefix.utils.IpUtils;
 import top.maplefix.utils.ServletUtils;
+import top.maplefix.utils.SpringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
-import java.util.Enumeration;
-import java.util.HashMap;
+import java.text.MessageFormat;
 import java.util.Map;
 
 /**
  * @author : Maple
- * @description : 操作日志切面
- * @date : Created in 2020/1/15 16:30
+ * @description : 操作日志同步工厂
+ * @date : 2020/1/15 16:30
  */
 @Aspect
 @Component
 @Slf4j
 public class OperationLogAspect {
 
-    @Autowired
-    private IOperationLogService operationLogService;
+    private long startTime = 0L;
+
     /**
      * 配置切入点
      */
@@ -51,122 +51,121 @@ public class OperationLogAspect {
     public void logPointCut() { }
 
     /**
-     * 前置通知 用于拦截操作
+     * 目标方法出现异常将被拦截
      *
      * @param joinPoint 切点
      */
-    @AfterReturning(pointcut = "logPointCut()")
-    public void doBefore(JoinPoint joinPoint) {
-        handleLog(joinPoint, null);
+    @AfterThrowing(value = "logPointCut()",throwing = "e")
+    public void doBefore(JoinPoint joinPoint, Exception e) {
+        handleLog(joinPoint, e,null,System.currentTimeMillis() - startTime);
     }
 
     /**
-     * 拦截异常操作
+     * 环绕方法
      *
      * @param joinPoint 切点
-     * @param e 异常
+     * @return object 目标方法返回结果
+     * @throws Throwable exception
      */
-    @AfterThrowing(value = "logPointCut()", throwing = "e")
-    public void doAfter(JoinPoint joinPoint, Exception e) {
-        handleLog(joinPoint, e);
+    @Around("logPointCut()")
+    public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
+        Object result;
+        startTime = System.currentTimeMillis();
+        result = joinPoint.proceed();
+        handleLog(joinPoint, null, result, System.currentTimeMillis() - startTime);
+        return result;
     }
 
-    protected void handleLog(final JoinPoint joinPoint, final Exception e) {
-        OperationLog operLog = new OperationLog();
+    /**
+     * 日志记录
+     *
+     * @param joinPoint  join point
+     * @param e          exception
+     * @param jsonResult result
+     * @param cost       the time of this method cost
+     */
+    protected void handleLog(final JoinPoint joinPoint, final Exception e, Object jsonResult, long cost) {
         try {
-            // 接收到请求，记录请求内容
-            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-            HttpServletRequest request = attributes.getRequest();
-            final UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
-            // 获得注解
+            // get annotation
             OLog controllerLog = getAnnotationLog(joinPoint);
             if (controllerLog == null) {
                 return;
             }
 
-            // 获取当前的用户
-            User loginUser = (User)request.getSession().getAttribute(Constant.LOGIN_USER);
+            // get current user from servlet
+            LoginUser loginUser = SpringUtils.getBean(TokenService.class).getLoginUser(ServletUtils.getRequest());
 
-            String operIp = IpUtils.getIpAddr(request);
-            //访问地区
-            String operLocation = AddressUtils.getRealAddressByIp(operIp);
-            // 获取客户端操作系统
-            String operOs = userAgent.getOperatingSystem().getName();
-            // 获取客户端浏览器
-            String operBrowser = userAgent.getBrowser().getName();
-            //访问地址
-            String operUrl = request.getRequestURI();
-            operLog.setStatus(Constant.SUCCESS);
-            operLog.setIp(operIp);
-            operLog.setLocation(operLocation);
-            operLog.setOs(operOs);
-            operLog.setBrowser(operBrowser);
-            operLog.setUrl(operUrl);
-            if (loginUser != null) {
-                operLog.setUserId(loginUser.getUserId());
-            }
+            OperateLog operateLog = new OperateLog();
+            operateLog.setStatus(Constant.SUCCESS);
+            // get the IP of this request
+            operateLog.setIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
+            operateLog.setResult(JSON.toJSONString(jsonResult));
+            operateLog.setCost(cost);
+            operateLog.setUrl(ServletUtils.getRequest().getRequestURI());
+
             if (e != null) {
-                e.printStackTrace();
-                operLog.setStatus(Constant.FAIL);
-                operLog.setExceptionMsg(StringUtils.substring(e.getMessage(), 0, 2000));
+                operateLog.setStatus(Constant.FAILED);
+                operateLog.setExceptionMsg(StringUtils.substring(e.getMessage(), 0, 2000));
             }
-            // 设置方法名称
+            // get the class name
             String className = joinPoint.getTarget().getClass().getName();
+            // get method name
             String methodName = joinPoint.getSignature().getName();
-            operLog.setMethod(className + "." + methodName + "()");
-            operLog.setOperationDate(DateUtils.getCurrDate());
-            // 处理设置注解上的参数
-            getControllerMethodDescription(controllerLog, operLog);
-            if(StringUtils.isEmpty(operLog.getUserId())){
-                operLog.setUserId("admin");
-            }
-            // 保存数据库
-            operationLogService.saveOperationLog(operLog);
-        } catch (Exception exp) {
-            // 记录本地异常日志
-            log.error("操作日志保存异常，异常信息:{},异常堆栈:{}", exp.getMessage(),exp);
+            operateLog.setMethod(MessageFormat.format("{}.{}()", className, methodName));
+            // get request method
+            operateLog.setMethod(ServletUtils.getRequest().getMethod());
+            // set method args
+            getControllerMethodDescription(joinPoint, controllerLog, operateLog);
+            // save log
+            AsyncManager.me().execute(AsyncFactory.recordOperateLog(operateLog));
+        } catch (Exception exception) {
+            log.error("get exception in handleLog,{} ", exception.getMessage(), exception);
         }
     }
 
     /**
-     * 获取注解中对方法的描述信息 用于Controller层注解
+     * 设置操作日志值
      *
-     * @param log     日志
-     * @param operLog 操作日志
-     * @throws Exception
+     * @param joinPoint  join point
+     * @param log        the annotation
+     * @param operateLog the operateLog
      */
-    public void getControllerMethodDescription(OLog log, OperationLog operLog) throws Exception {
-        // 设置action动作
-        operLog.setFunction(BusinessType.getValue(log.businessType().toString()));
-        // 设置标题
-        operLog.setModule(log.module());
-        // 是否需要保存request，参数和值
+    private void getControllerMethodDescription(JoinPoint joinPoint, OLog log, OperateLog operateLog) {
+        // set businessType
+        operateLog.setFunction(log.businessType().getValue());
+        // set title
+        operateLog.setModule(log.module());
+        // save request data if saveRequestData is true
         if (log.isSaveRequestData()) {
-            // 获取参数的信息，传入到数据库中。
-            setRequestValue(operLog);
+            // set request value
+            setRequestValue(joinPoint, operateLog);
         }
     }
 
     /**
-     * 获取请求的参数，放到log中
+     * get the data from request.
+     * If this request method is PUT/POST get data from body(the method args)
+     * else ,get data from attribute
      *
-     * @param operationLog
+     * @param joinPoint  join point
+     * @param operateLog operate log
      */
-    private void setRequestValue(OperationLog operationLog) {
-        Map map = new HashMap(16);
-        Enumeration enumeration = ServletUtils.getRequest().getParameterNames();
-        while (enumeration.hasMoreElements()) {
-            String paramName = (String) enumeration.nextElement();
-            String paramValue = ServletUtils.getRequest().getParameter(paramName);
-            //形成键值对应的map
-            map.put(paramName, paramValue);
+    private void setRequestValue(JoinPoint joinPoint, OperateLog operateLog) {
+        String requestMethod = operateLog.getMethod();
+        if (HttpMethod.PUT.matches(requestMethod) || HttpMethod.POST.matches(requestMethod)) {
+            String params = argsArrayToString(joinPoint.getArgs());
+            operateLog.setParams(StringUtils.substring(params, 0, 2000));
+        } else {
+            Map<?, ?> paramsMap = (Map<?, ?>) ServletUtils.getRequest().getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+            operateLog.setParams(StringUtils.substring(paramsMap.toString(), 0, 2000));
         }
-        String params = JSONObject.toJSONString(map);
-        operationLog.setParams(params.length()>2000 ? params.substring(0,2000) : params);
     }
 
     /**
-     * 是否存在注解，如果存在就获取
+     * 获取注解
+     *
+     * @param joinPoint join point
+     * @return
      */
     private OLog getAnnotationLog(JoinPoint joinPoint) {
         Signature signature = joinPoint.getSignature();
@@ -177,5 +176,34 @@ public class OperationLogAspect {
             return method.getAnnotation(OLog.class);
         }
         return null;
+    }
+
+    /**
+     * 参数链接
+     *
+     * @param paramsArray data
+     * @return params data
+     */
+    private String argsArrayToString(Object[] paramsArray) {
+        StringBuilder params = new StringBuilder();
+        if (paramsArray != null && paramsArray.length > 0) {
+            for (int i = 0; i < paramsArray.length; i++) {
+                if (!isFilterObject(paramsArray[i])) {
+                    Object jsonObj = JSON.toJSON(paramsArray[i]);
+                    params.append(jsonObj.toString() + " ");
+                }
+            }
+        }
+        return params.toString().trim();
+    }
+
+    /**
+     * 判断数据是否为文件或者数据响应
+     *
+     * @param o the data
+     * @return 是返回true，否则返回false
+     */
+    public boolean isFilterObject(final Object o) {
+        return o instanceof MultipartFile || o instanceof HttpServletRequest || o instanceof HttpServletResponse;
     }
 }
