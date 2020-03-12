@@ -19,9 +19,9 @@ import java.io.Serializable;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Table(name = "t_label")
+@Table(name = "t_tag")
 @NoArgsConstructor
-public class Label implements Serializable {
+public class Tag implements Serializable {
 
     /**
      * 标签表主键
@@ -29,12 +29,12 @@ public class Label implements Serializable {
     @Id
     @KeySql(genId = UuIdGenId.class)
     @Excel(name = "编号")
-    public String labelId;
+    public String tagId;
     /**
      * 标签名
      */
     @Excel(name = "标签名")
-    public String labelName;
+    public String tagName;
     /**
      * 创建时间
      */
