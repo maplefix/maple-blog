@@ -1,7 +1,7 @@
 package top.maplefix.constant;
 
 /**
- * @author wangjg
+ * @author Maple
  * @description 任务常量
  * @date 2020/2/1 13:50
  */

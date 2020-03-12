@@ -4,7 +4,6 @@ package top.maplefix.constant;
  * @author : Maple
  * @description : 文件存储表常量
  * @date : 2019/8/9 19:41
- * @version : v1.0
  */
 public class FileItemConstant {
     /**
