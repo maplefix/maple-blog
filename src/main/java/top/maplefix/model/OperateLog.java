@@ -74,6 +74,11 @@ public class OperateLog implements Serializable {
     private String url;
 
     /**
+     * 请求返回值
+     */
+    @Excel(name = "请求返回值")
+    private String result;
+    /**
      * 请求参数
      */
     @Excel(name = "请求参数")

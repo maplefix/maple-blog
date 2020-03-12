@@ -33,6 +33,11 @@ public class VisitLog implements Serializable {
     @Excel(name = "访问者IP")
     private String ip;
     /**
+     * 页面id
+     */
+    @Excel(name = "页面id")
+    private String pageId;
+    /**
      * 访问者地区
      */
     @Excel(name = "访问者地区")
@@ -51,7 +56,7 @@ public class VisitLog implements Serializable {
      * 请求地址
      */
     @Excel(name = "请求地址")
-    private String requestUrl;
+    private String url;
     /**
      * 错误信息
      */
