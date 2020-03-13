@@ -6,6 +6,7 @@ package top.maplefix.constant;
  * @date : 2020/1/15 16:31
  */
 public class Constant {
+    private Constant(){}
     /**
      * 登陆用户的 redis key
      */
