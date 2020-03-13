@@ -1,7 +1,7 @@
 package top.maplefix.annotation;
 
 
-import top.maplefix.enums.OperationType;
+import top.maplefix.enums.BusinessType;
 
 import java.lang.annotation.*;
 
@@ -22,7 +22,7 @@ public @interface OLog {
     /**
      * 操作类型，默认其他
      */
-    OperationType businessType() default OperationType.OTHER;
+    BusinessType businessType() default BusinessType.OTHER;
 
 
     /**
