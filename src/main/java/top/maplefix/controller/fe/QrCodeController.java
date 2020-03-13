@@ -1,13 +1,12 @@
-package top.maplefix.controller.front;
+package top.maplefix.controller.fe;
 
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import top.maplefix.config.SystemConfig;
-import top.maplefix.constant.Constant;
 import top.maplefix.utils.QrCodeUtils;
 
 import javax.imageio.ImageIO;
@@ -20,7 +19,8 @@ import java.io.ByteArrayOutputStream;
  * @description : 前端文章链接二维码生成接口,可以返回BufferedImage或者base64
  * @date : 2019/11/15 14:16
  */
-@Controller
+@RestController
+@RequestMapping("/qrCode")
 @Slf4j
 public class QrCodeController {
 
@@ -35,14 +35,14 @@ public class QrCodeController {
      */
     @RequestMapping(value = "/createBufferedImage")
     @ResponseBody
-    public void createBufferedImage (HttpServletResponse response, String content, String needLogo){
+    public void createBufferedImage (HttpServletResponse response, String content, Boolean needLogo){
         log.info("开始访问二维码生成(BufferedImage)...");
         try {
             String projectName = systemConfig.getName();
             String logoPath = System.getProperty("user.dir") + "/" + projectName + "/src/main/resources/static/blog/amaze/images/maple-logo.png";
             System.out.println(logoPath);
             BufferedImage bufferedImage;
-            if(needLogo.equals(Constant.TRUE)){
+            if(needLogo){
                 bufferedImage = QrCodeUtils.encode(content,logoPath,true);
             }else {
                 bufferedImage = QrCodeUtils.encode(content,null,true);
@@ -67,13 +67,13 @@ public class QrCodeController {
      */
     @RequestMapping(value = "/createBase64String")
     @ResponseBody
-    public String createBase64String(String content,String needLogo) throws Exception {
+    public String createBase64String(String content,Boolean needLogo) throws Exception {
         log.info("开始访问二维码生成(base64)...");
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         try {
             String logoPath = System.getProperty("user.dir") + "/" + systemConfig.getName() + "/src/main/resources/static/blog/amaze/images/maple-logo.png";
             BufferedImage bufferedImage;
-            if(needLogo.equals(Constant.TRUE)){
+            if(needLogo){
                 bufferedImage = QrCodeUtils.encode(content,logoPath,true);
             }else {
                 bufferedImage = QrCodeUtils.encode(content,null,true);
