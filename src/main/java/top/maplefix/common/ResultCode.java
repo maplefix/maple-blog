@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 /**
  * @author : Maple
  * @description : 统一返回码
- * @date : Created in 2020/1/16 17:11
+ * @date : 2020/1/16 17:11
  */
 public class ResultCode{
 

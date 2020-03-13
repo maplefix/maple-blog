@@ -1,13 +1,15 @@
 package top.maplefix.common;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 /**
  * @author : Maple
  * @description : 通用数据返回对象
- * @date : Created in 2020/1/16 9:54
+ * @date : 2020/1/16 9:54
  */
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BaseResult {
     /**
      * 返回应答码
