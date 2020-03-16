@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * @author wangjg
+ * @author Maple
  * @description 前端路由实体
  * @date 2020/2/2 16:39
  */

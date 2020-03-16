@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @author wangjg
+ * @author Maple
  * @description 前端树节点
  * @date 2020/2/2 16:26
  */
