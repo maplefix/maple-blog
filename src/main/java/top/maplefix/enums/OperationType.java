@@ -3,7 +3,7 @@ package top.maplefix.enums;
 /**
  * @author : Maple
  * @description : 操作类型
- * @date : Created in 2019/9/15 19:23
+ * @date : 2019/9/15 19:23
  * @version : v1.0
  */
 public enum OperationType {
@@ -48,5 +48,9 @@ public enum OperationType {
     /**
      * 登录
      */
-    LOGIN
+    LOGIN,
+    /**
+     * 登出
+     */
+    LOGOUT
 }

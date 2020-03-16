@@ -3,7 +3,7 @@ package top.maplefix.enums;
 /**
  * @author : Maple
  * @description : 访问业务类型
- * @date : Created in 2019/7/27 16:43
+ * @date : 2019/7/27 16:43
  * @version : v1.0
  */
 public enum VisitBusinessType {
@@ -14,6 +14,6 @@ public enum VisitBusinessType {
     /**
      * 关于
      */
-    ABOUT,
+    ABOUT
 
 }

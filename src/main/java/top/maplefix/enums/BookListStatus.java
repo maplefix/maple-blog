@@ -10,23 +10,23 @@ public enum  BookListStatus {
     /**
      * 未开始阅读
      */
-    NOT_READ("未开始"),
+    NOT_READ(0),
     /**
      * 阅读中
      */
-    READING("阅读中"),
+    READING(1),
     /**
      * 已阅读完
      */
-    END_READ("已结束");
+    END_READ(2);
 
-    private String value;
+    private int value;
 
-    BookListStatus(String value){
+    BookListStatus(int value){
         this.value = value;
     }
 
-    public String getValue() {
+    public int getValue() {
         return value;
     }
 }

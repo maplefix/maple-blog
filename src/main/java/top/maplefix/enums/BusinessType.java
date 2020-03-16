@@ -3,8 +3,7 @@ package top.maplefix.enums;
 /**
  * @author : Maple
  * @description : 业务类型
- * @date : Created in 2019/7/27 16:43
- * @version : v1.0
+ * @date : 2020/1/16 9:34
  */
 public enum BusinessType {
     /**
@@ -55,6 +54,10 @@ public enum BusinessType {
      * 上传
      */
     UPLOAD("UPLOAD","上传"),
+    /**
+     * 登出
+     */
+    LOGOUT("LOGOUT","登出"),
     /**
      * 登录
      */
