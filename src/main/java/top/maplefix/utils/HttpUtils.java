@@ -8,6 +8,7 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.security.cert.X509Certificate;
 
 /**
@@ -21,11 +22,12 @@ public class HttpUtils {
     /**
      * 向指定 URL 发送GET方法的请求
      *
-     * @param url   发送请求的 URL
-     * @param param 请求参数，请求参数应该是 name1=value1&name2=value2 的形式。
+     * @param url         发送请求的 URL
+     * @param param       请求参数，请求参数应该是 name1=value1&name2=value2 的形式。
+     * @param charsetName 字符编码
      * @return 所代表远程资源的响应结果
      */
-    public static String sendGet(String url, String param) {
+    public static String sendGet(String url, String param, String charsetName) {
         StringBuilder result = new StringBuilder();
         BufferedReader in = null;
         try {
@@ -33,11 +35,11 @@ public class HttpUtils {
             log.info("sendGet - {}", urlNameString);
             URL realUrl = new URL(urlNameString);
             URLConnection connection = realUrl.openConnection();
-            //connection.setRequestProperty("accept", "*/*");
-            //connection.setRequestProperty("connection", "Keep-Alive");
-            //connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+            connection.setRequestProperty("accept", "*/*");
+            connection.setRequestProperty("connection", "Keep-Alive");
+            connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
             connection.connect();
-            in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            in = new BufferedReader(new InputStreamReader(connection.getInputStream(), StringUtils.isEmpty(charsetName) ? "" : charsetName));
             String line;
             while ((line = in.readLine()) != null) {
                 result.append(line);
@@ -89,7 +91,7 @@ public class HttpUtils {
             out = new PrintWriter(conn.getOutputStream());
             out.print(param);
             out.flush();
-            in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
+            in = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
             String line;
             while ((line = in.readLine()) != null) {
                 result.append(line);
@@ -142,8 +144,8 @@ public class HttpUtils {
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             String ret = "";
             while ((ret = br.readLine()) != null) {
-                if (ret != null && !"".equals(ret.trim())) {
-                    result.append(new String(ret.getBytes("ISO-8859-1"), "utf-8"));
+                if (ret != null && !ret.trim().equals("")) {
+                    result.append(new String(ret.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                 }
             }
             log.info("recv - {}", result);

@@ -17,6 +17,7 @@ import java.util.List;
  * @version : v1.0
  */
 public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
+
     public static String YYYY = "yyyy";
 
     public static String YYYY_MM = "yyyy-MM";
@@ -46,12 +47,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
      *
      * @return String
      */
-    public static String getCurrDate() {
-        return dateTimeNow(YYYY_MM_DD_HH_MM_SS);
+    public static String getDate() {
+        return dateTimeNow(YYYY_MM_DD);
     }
 
     public static final String getTime() {
-        return dateTimeNow(YYYY_MM_DD);
+        return dateTimeNow(YYYY_MM_DD_HH_MM_SS);
     }
 
     public static final String dateTimeNow() {
@@ -69,7 +70,6 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     public static final String parseDateToStr(final String format, final Date date) {
         return new SimpleDateFormat(format).format(date);
     }
-
 
     public static final Date dateTime(final String format, final String ts) {
         try {
@@ -139,31 +139,40 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     }
 
     /**
-     * 获取过去的任意时间内的日期数组
+     * 获取过去 <code>intervals</code>时间的字符串数组
      *
-     * @param intervals
-     * @return
+     * @param intervals 过去时间
+     * @return 字符串数组
      */
     public static List<String> getPastDaysList(int intervals) {
         List<String> pastDaysList = new ArrayList<>();
-        for (int i = intervals; i > 0; i--) {
-            pastDaysList.add(getPastDate(i));
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(YYYY_MM_DD);
+        for (int i = intervals - 1; i >= 0; i--) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) - i);
+            Date today = calendar.getTime();
+            pastDaysList.add(simpleDateFormat.format(today));
         }
         return pastDaysList;
     }
 
     /**
-     * 获取过去的某一天的日期
+     * 获取过去anchor开始到anchor+intervals时间段的日期
      *
-     * @param past
-     * @return
+     * @param anchor    锚点
+     * @param intervals 间隔
+     * @return 时间段日期String
      */
-    public static String getPastDate(int past) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) - past);
-        Date today = calendar.getTime();
+    public static List<String> getPastDaysList(int anchor, int intervals) {
+        List<String> pastDaysList = new ArrayList<>();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(YYYY_MM_DD);
-        return simpleDateFormat.format(today);
+        for (int i = intervals - 1; i >= 0; i--) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) - anchor - i);
+            Date today = calendar.getTime();
+            pastDaysList.add(simpleDateFormat.format(today));
+        }
+        return pastDaysList;
     }
 
     /**
@@ -172,7 +181,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
      * @param paramTime 需要判断的时间
      * @return 判断出的结果
      */
-    public static String showTime(Date paramTime) {
+    public static String showTime(String paramTime) {
         String result = "";
         if (paramTime == null) {
             return result;
@@ -180,7 +189,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         //当前时间的时间戳
         long nowTimeLong = System.currentTimeMillis();
         //传入的时间的时间戳
-        long paramTimeLong = paramTime.getTime();
+        long paramTimeLong = DateUtils.dateTime(paramTime,YYYY_MM_DD_HH_MM_SS).getTime();
 
         long resultLong = Math.abs(nowTimeLong - paramTimeLong);
 
@@ -209,36 +218,5 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
             result = new SimpleDateFormat(YYYY_MM_DD).format(paramTime);
         }
         return result;
-    }
-
-
-    public static String longToString(long currentTime, String formatType) {
-        // long类型转成Date类型
-        Date date = longToDate(currentTime, formatType);
-        // date类型转成String
-        String strTime = dateToString(date, formatType);
-        return strTime;
-    }
-    public static String dateToString(Date data, String formatType) {
-        return new SimpleDateFormat(formatType).format(data);
-    }
-    public static Date longToDate(long currentTime, String formatType) {
-        // 根据long类型的毫秒数生命一个date类型的时间
-        Date dateOld = new Date(currentTime);
-        // 把date类型的时间转换为string
-        String sDateTime = dateToString(dateOld, formatType);
-        // 把String类型转换为Date类型
-        Date date = stringToDate(sDateTime, formatType);
-        return date;
-    }
-    public static Date stringToDate(String strTime, String formatType) {
-        SimpleDateFormat formatter = new SimpleDateFormat(formatType);
-        Date date = null;
-        try {
-            date = formatter.parse(strTime);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return date;
     }
 }

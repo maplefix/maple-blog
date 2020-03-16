@@ -15,8 +15,7 @@ import java.util.Set;
  * @date : 2020/1/22 15:35
  */
 public class ConvertUtils {
-    private ConvertUtils() {
-    }
+    private ConvertUtils() { }
 
     /**
      * 转换为字符串<br>

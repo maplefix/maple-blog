@@ -5,7 +5,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import top.maplefix.model.User;
-import top.maplefix.secrrity.OnlineUser;
+import top.maplefix.secrrity.LoginUser;
 import top.maplefix.exception.CustomException;
 
 /**
@@ -29,9 +29,9 @@ public class SecurityUtils {
     /**
      * 获取用户
      **/
-    public static OnlineUser getOnlinUser() {
+    public static LoginUser getOnlinUser() {
         try {
-            return (OnlineUser) getAuthentication().getPrincipal();
+            return (LoginUser) getAuthentication().getPrincipal();
         } catch (Exception e) {
             throw new CustomException("获取用户信息异常", org.springframework.http.HttpStatus.UNAUTHORIZED);
         }
@@ -42,8 +42,8 @@ public class SecurityUtils {
      */
     public static boolean isAdmin() {
         try {
-            OnlineUser onlineUser = (OnlineUser) getAuthentication().getPrincipal();
-            return onlineUser.getUser().isAdmin();
+            LoginUser loginUser = (LoginUser) getAuthentication().getPrincipal();
+            return loginUser.getUser().isAdmin();
         } catch (Exception e) {
             //ignore it
             return false;
