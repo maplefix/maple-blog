@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author : Maple
  * @description: 接收参数类型兼容text/plain和text/xml
- * @date : Created in 2020/1/16 9:56
+ * @date : 2020/1/16 9:56
  */
 @Component
 public class MessageConverter extends MappingJackson2HttpMessageConverter {
