@@ -2,6 +2,7 @@ package top.maplefix.common;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import top.maplefix.constant.Constant;
 
 /**
  * @author : Maple
@@ -52,11 +53,28 @@ public class BaseResult {
     /**
      * 返回成功消息
      *
+     * @return 成功消息
+     */
+    public static BaseResult success() {
+        return BaseResult.success(Constant.SUCCESS_MSG);
+    }
+    /**
+     * 返回成功消息
+     *
      * @param msg 返回内容
      * @return 成功消息
      */
     public static BaseResult success(String msg) {
         return BaseResult.success(msg, null);
+    }
+    /**
+     * 返回成功消息
+     *
+     * @param msg 返回内容
+     * @return 成功消息
+     */
+    public static BaseResult success(Object msg) {
+        return BaseResult.success(Constant.SUCCESS_MSG, null);
     }
 
     /**
@@ -70,6 +88,30 @@ public class BaseResult {
         return new BaseResult(ResultCode.OK, msg, data);
     }
 
+    /**
+     * 返回错误消息
+     *
+     * @return 警告消息
+     */
+    public static BaseResult error() {
+        return BaseResult.error(Constant.FAIL_MSG);
+    }
+    /**
+     * 返回错误消息
+     *
+     * @return 警告消息
+     */
+    public static BaseResult error(String msg) {
+        return BaseResult.error(msg,null);
+    }
+    /**
+     * 返回错误消息
+     *
+     * @return 警告消息
+     */
+    public static BaseResult error(String msg,Object data) {
+        return BaseResult.error(ResultCode.INTERNAL_SERVER_ERROR,msg,data);
+    }
     /**
      * 返回错误消息
      *
