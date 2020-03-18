@@ -101,10 +101,7 @@ public class Constant {
      * .
      */
     public static final String POINT = ".";
-    /**
-     * 1
-     */
-    public static final String ONE = "1";
+
     /**
      * unknown
      */
