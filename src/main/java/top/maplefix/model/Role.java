@@ -7,7 +7,6 @@ import top.maplefix.annotation.Excel;
 import top.maplefix.component.UuIdGenId;
 
 import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
@@ -17,8 +16,7 @@ import java.io.Serializable;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Table(name = "t_role")
-public class Role implements Serializable {
+public class Role extends BaseEntity implements Serializable {
 
     /**
      * 主键id
@@ -47,15 +45,10 @@ public class Role implements Serializable {
     @Excel(name = "角色类型",readConverterExp = "1=自定义角色,0=系统角色")
     private Integer roleType;
     /**
-     * 创建时间
+     * 角色类型(0:系统角色,1:自定义角色)
      */
-    @Excel(name = "创建时间")
-    private String createData;
-    /**
-     * 更新时间
-     */
-    @Excel(name = "更新时间")
-    private String updateData;
+    @Excel(name = "角色状态",readConverterExp = "1=正常,0=停用")
+    private Integer status;
     /**
      * 排序号
      */

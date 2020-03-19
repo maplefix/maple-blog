@@ -7,7 +7,6 @@ import top.maplefix.annotation.Excel;
 import top.maplefix.component.UuIdGenId;
 
 import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +18,7 @@ import java.util.List;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Table(name = "t_menu")
-public class Menu implements Serializable {
+public class Menu extends BaseEntity implements Serializable {
     /**
      * 主键ID(每4位进行编号,父子关系采用拼接,例如00010001)
      */
@@ -79,17 +77,6 @@ public class Menu implements Serializable {
     @Excel(name = "菜单图标")
     private String icon;
     /**
-     * 创建时间
-     */
-    @Excel(name = "创建时间")
-    private String createDate;
-
-    /**
-     * 更新时间
-     */
-    @Excel(name = "更新时间")
-    private String updateDate;
-    /**
      * 备注
      */
     @Excel(name = "备注")
@@ -98,7 +85,7 @@ public class Menu implements Serializable {
      * 序号
      */
     @Excel(name = "序号")
-    private String seq;
+    private Integer seq;
     /**
      * 子菜单
      */

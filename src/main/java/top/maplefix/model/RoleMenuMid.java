@@ -6,7 +6,6 @@ import tk.mybatis.mapper.annotation.KeySql;
 import top.maplefix.component.UuIdGenId;
 
 import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
@@ -16,8 +15,7 @@ import java.io.Serializable;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Table(name = "t_role_menu_mid")
-public class RoleMenuMid implements Serializable {
+public class RoleMenuMid extends BaseEntity implements Serializable {
 
     /**
      * 主键
@@ -33,8 +31,4 @@ public class RoleMenuMid implements Serializable {
      * 菜单id
      */
     private String menuId;
-    /**
-     * 创建时间
-     */
-    private String createDate;
 }
