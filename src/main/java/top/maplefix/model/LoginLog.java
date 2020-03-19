@@ -8,7 +8,6 @@ import top.maplefix.annotation.Excel;
 import top.maplefix.component.UuIdGenId;
 
 import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
@@ -18,9 +17,8 @@ import java.io.Serializable;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Table(name = "t_login_log")
 @Builder
-public class LoginLog implements Serializable {
+public class LoginLog extends BaseEntity implements Serializable {
 
     /**
      * 主键id
@@ -64,9 +62,4 @@ public class LoginLog implements Serializable {
      */
     @Excel(name = "登录描述")
     private String loginMsg;
-    /**
-     * 登录日期
-     */
-    @Excel(name = "登录日期")
-    private String loginDate;
 }

@@ -7,7 +7,6 @@ import top.maplefix.annotation.Excel;
 import top.maplefix.component.UuIdGenId;
 
 import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
@@ -17,11 +16,10 @@ import java.io.Serializable;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Table(name = "t_visit_log")
-public class VisitLog implements Serializable {
+public class VisitLog extends BaseEntity implements Serializable {
 
     /**
-     * 访问日志表实体
+     * 访问日志表实体主键
      */
     @Id
     @KeySql(genId = UuIdGenId.class)
@@ -75,9 +73,5 @@ public class VisitLog implements Serializable {
      */
     @Excel(name = "访问状态",readConverterExp = "0=失败,1=成功")
     private Integer status;
-    /**
-     * 访问时间
-     */
-    @Excel(name = "访问时间")
-    private String visitDate;
+
 }

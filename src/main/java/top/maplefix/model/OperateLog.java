@@ -7,7 +7,6 @@ import top.maplefix.annotation.Excel;
 import top.maplefix.component.UuIdGenId;
 
 import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
@@ -17,8 +16,7 @@ import java.io.Serializable;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Table(name = "t_operation_log")
-public class OperateLog implements Serializable {
+public class OperateLog extends BaseEntity implements Serializable {
 
     /**
      * 操作日志表主键
@@ -28,9 +26,9 @@ public class OperateLog implements Serializable {
     @Excel(name = "编号")
     private String operateLogId;
     /**
-     * 操作用户id
+     * 操作用户
      */
-    private String userId;
+    private String operateName;
     /**
      * 模块名
      */
@@ -46,6 +44,11 @@ public class OperateLog implements Serializable {
      */
     @Excel(name = "方法名")
     private String method;
+    /**
+     * 请求方式
+     */
+    @Excel(name = "请求方式")
+    private String requestMethod;
     /**
      * 操作ip
      */
@@ -93,11 +96,6 @@ public class OperateLog implements Serializable {
      */
     @Excel(name = "错误信息")
     private String exceptionMsg;
-    /**
-     * 操作日期
-     */
-    @Excel(name = "操作日期")
-    private String operationDate;
 
     /**
      * 耗时
