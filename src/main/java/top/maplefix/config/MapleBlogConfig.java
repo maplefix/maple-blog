@@ -5,12 +5,12 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author : Maple
- * @description : 项目相关配置
- * @date : Created in 2020/1/16 9:57
+ * @description : 博客项目相关配置
+ * @date : 2020/1/16 9:57
  */
 @Component
 @ConfigurationProperties(prefix = "maple")
-public class SystemConfig {
+public class MapleBlogConfig {
     /**
      * 项目名称
      */
@@ -57,23 +57,6 @@ public class SystemConfig {
     }
 
     public void setProfile(String profile) {
-        SystemConfig.profile = profile;
-    }
-
-
-    public static String getAvatarPath() {
-        return profile + "avatar/";
-    }
-
-    public static String getDownloadPath() {
-        return profile + "download/";
-    }
-
-    public static String getUploadPath() {
-        return profile + "upload/";
-    }
-
-    public static String getImagePath() {
-        return profile + "images/";
+        MapleBlogConfig.profile = profile;
     }
 }
