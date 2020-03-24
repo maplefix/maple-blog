@@ -25,7 +25,7 @@ import java.util.List;
 @EnableSwagger2
 public class SwaggerConfig {
     @Autowired
-    private SystemConfig systemConfig;
+    private MapleBlogConfig mapleBlogConfig;
 
     /**
      * 创建API
@@ -41,7 +41,7 @@ public class SwaggerConfig {
                 // 扫描所有有注解的api，用这种方式更灵活
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
                 // 扫描指定包中的swagger注解
-                //.apis(RequestHandlerSelectors.basePackage("com.dimple.project.tool.swagger"))
+                //.apis(RequestHandlerSelectors.basePackage("top.maplefix.config.swagger"))
                 // 扫描所有 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
                 .build()
@@ -57,13 +57,13 @@ public class SwaggerConfig {
         // 用ApiInfoBuilder进行定制
         return new ApiInfoBuilder()
                 // 设置标题
-                .title("标题：maple-blog后台挂你系统")
+                .title("标题：maple-blog后台管理系统")
                 // 描述
                 .description("代码开源:https://github.com/maplefix/maple-blog")
                 // 作者信息
-                .contact(new Contact(systemConfig.getName(), "https://maplefix.top", "maplefix@163.com"))
+                .contact(new Contact(mapleBlogConfig.getName(), "https://maplefix.top", "maplefix@163.com"))
                 // 版本
-                .version("版本号:" + systemConfig.getVersion())
+                .version("版本号:" + mapleBlogConfig.getVersion())
                 .build();
     }
 

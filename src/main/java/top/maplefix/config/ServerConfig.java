@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author : Maple
  * @description : 服务相关配置
- * @date : Created in 2020/1/16 9:57
+ * @date : 2020/1/16 9:57
  */
 @Component
 public class ServerConfig {
