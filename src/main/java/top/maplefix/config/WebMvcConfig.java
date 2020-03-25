@@ -16,7 +16,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        String pathUtl = Paths.get(SystemConfig.getProfile()).normalize().toUri().toASCIIString();
+        String pathUtl = Paths.get(MapleBlogConfig.getProfile()).normalize().toUri().toASCIIString();
         registry.addResourceHandler("/file/**").addResourceLocations(pathUtl).setCachePeriod(0);
 
         registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");

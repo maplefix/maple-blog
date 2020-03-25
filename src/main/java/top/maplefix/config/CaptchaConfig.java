@@ -10,7 +10,7 @@ import java.util.Properties;
 /**
  * @author : Maple
  * @description : 验证码属性配置
- * @date : Created in 2020/1/16 9:56
+ * @date : 2020/1/16 9:56
  */
 @Configuration
 public class CaptchaConfig {

@@ -7,7 +7,7 @@ import java.util.Random;
 /**
  * @author : Maple
  * @description : 自定义验证码文本生成器
- * @date : Created in 2020/1/16 9:56
+ * @date : 2020/1/16 9:56
  */
 public class CaptchaTextCreator extends DefaultTextCreator {
 
