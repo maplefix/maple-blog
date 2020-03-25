@@ -11,7 +11,7 @@ import org.apache.poi.xssf.usermodel.XSSFDataValidation;
 import top.maplefix.annotation.Excel;
 import top.maplefix.annotation.Excel.Type;
 import top.maplefix.common.BaseResult;
-import top.maplefix.config.SystemConfig;
+import top.maplefix.config.MapleBlogConfig;
 import top.maplefix.constant.Constant;
 import top.maplefix.exception.BusinessException;
 
@@ -482,7 +482,7 @@ public class ExcelUtil<T> {
      * @return
      */
     public String getAbsoluteFile(String filename){
-        String path = SystemConfig.getProfile();
+        String path = MapleBlogConfig.getProfile();
         //String path = ResourceUtils.getURL("classpath:/file/").getPath();
         String downloadPath = path + filename;
         File desc = new File(downloadPath);

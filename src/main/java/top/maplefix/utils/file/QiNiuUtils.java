@@ -1,25 +1,10 @@
 package top.maplefix.utils.file;
 
-import com.google.gson.Gson;
-import com.qiniu.common.QiniuException;
-import com.qiniu.common.Zone;
-import com.qiniu.http.Response;
-import com.qiniu.storage.BucketManager;
-import com.qiniu.storage.Configuration;
-import com.qiniu.storage.UploadManager;
-import com.qiniu.storage.model.DefaultPutRet;
-import com.qiniu.util.Auth;
+import com.qiniu.storage.Region;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.multipart.MultipartFile;
-import top.maplefix.config.QiNiuConfig;
-import top.maplefix.constant.FileItemConstant;
-import top.maplefix.utils.DateUtils;
-import top.maplefix.utils.SpringUtils;
-import top.maplefix.model.FileItem;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Optional;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author : Maple
@@ -29,70 +14,50 @@ import java.util.Optional;
  */
 @Slf4j
 public class QiNiuUtils {
-    /**
-     * 七牛云配置
-     */
-    private static QiNiuConfig qiNiuConfig = SpringUtils.getBean(QiNiuConfig.class);
-
-    /**
-     * 获取七牛云的BucketManager
-     *
-     * @return BucketManager
-     */
-    public static BucketManager getBucketManager() {
-        Configuration configuration = new Configuration(Zone.zone2());
-        Auth auth = Auth.create(qiNiuConfig.getAccessKey(), qiNiuConfig.getSecretKey());
-        BucketManager bucketManager = new BucketManager(auth, configuration);
-        return bucketManager;
+    private QiNiuUtils() {
     }
 
-    /**
-     * 获取Bucket
-     *
-     * @return Bucket
-     */
-    public static String getBucket() {
-        return qiNiuConfig.getBucket();
-    }
+    private static final String HUAD = "华东";
+
+    private static final String HUAB = "华北";
+
+    private static final String HUAN = "华南";
+
+    private static final String BEIM = "北美";
 
     /**
-     * 上传文件到七牛云
+     * 得到机房的对应关系
      *
-     * @param file 需要上传的文件
+     * @param zone 机房名称
+     * @return Region
      */
-    public static Optional<FileItem> uploadFile(MultipartFile file) {
-        Configuration configuration = new Configuration();
-        UploadManager uploadManager = new UploadManager(configuration);
-        Auth auth = Auth.create(qiNiuConfig.getAccessKey(), qiNiuConfig.getSecretKey());
-        String token = auth.uploadToken(qiNiuConfig.getBucket());
-        Response response = null;
-        //生成文件名
-        String fileName = FileUtils.generateFileName(file);
-        FileItem FileItem = null;
-        try {
-            response = uploadManager.put(file.getInputStream(), fileName, token, null, null);
-            DefaultPutRet defaultPutRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
-            String path = qiNiuConfig.getPath() + File.separator + defaultPutRet.key;
-            log.info("上传文件到七牛云服务器成功{}", path);
-            //file.getContentType(),
-            FileItem = new FileItem(fileName, defaultPutRet.hash, file.getSize(), DateUtils.getCurrDate(), FileItemConstant.QINIU_STORE, path);
-        } catch (QiniuException e) {
-            Response r = e.response;
-            log.error(r.toString());
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
-        } finally {
-            response.close();
+    public static Region getRegion(String zone) {
+        if (HUAD.equals(zone)) {
+            return Region.huadong();
+        } else if (HUAB.equals(zone)) {
+            return Region.huabei();
+        } else if (HUAN.equals(zone)) {
+            return Region.huanan();
+        } else if (BEIM.equals(zone)) {
+            return Region.beimei();
+            // 否则就是东南亚
+        } else {
+            return Region.qvmHuadong();
         }
-        return Optional.ofNullable(FileItem);
     }
 
     /**
-     * 根据name获取其访问路径
+     * 默认不指定key的情况下，以文件内容的hash值作为文件名
      *
-     * @return 访问路径
+     * @param file 文件名
+     * @return String
      */
-    public static String getPathByName(String name) {
-        return qiNiuConfig.getPath() + File.separator + name;
+    public static String getKey(String file) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        Date date = new Date();
+        return FileUtils.getFileNameNoExtension(file) + "-" +
+                sdf.format(date) +
+                "." +
+                FileUtils.getExtensionName(file);
     }
 }

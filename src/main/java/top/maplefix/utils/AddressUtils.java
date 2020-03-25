@@ -9,9 +9,7 @@ import org.springframework.web.client.RestTemplate;
  * @description : 根据登录IP获取省份地区信息：
  *                  1.调用太平台网络API实现（境外IP有时获取不到）
  *                  2.调用腾讯API实现(每天限额10000次)
- * @date : 2019/3/31 21:04
-           Edited in 2019/11/24 10:08
- * @version : v1.0
+ * @date : 2020/2/21 21:04
  */
 @Slf4j
 public class AddressUtils {

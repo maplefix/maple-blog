@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import top.maplefix.model.User;
+import top.maplefix.model.SysUser;
 import top.maplefix.secrrity.LoginUser;
 import top.maplefix.exception.CustomException;
 
@@ -20,7 +20,7 @@ public class SecurityUtils {
      **/
     public static String getUsername() {
         try {
-            return getOnlinUser().getUser().getUserName();
+            return getLoginUser().getUsername();
         } catch (Exception e) {
             throw new CustomException("获取用户账户异常", org.springframework.http.HttpStatus.UNAUTHORIZED);
         }
@@ -29,7 +29,7 @@ public class SecurityUtils {
     /**
      * 获取用户
      **/
-    public static LoginUser getOnlinUser() {
+    public static LoginUser getLoginUser() {
         try {
             return (LoginUser) getAuthentication().getPrincipal();
         } catch (Exception e) {
@@ -79,14 +79,15 @@ public class SecurityUtils {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.matches(rawPassword, encodedPassword);
     }
+
     /**
      * 是否为管理员
      *
      * @param userId 用户ID
      * @return 结果
      */
-    public static boolean isAdmin(String userId) {
-        return User.ADMIN.equals(userId);
+    public static boolean isAdmin(String  userId) {
+        return SysUser.ADMIN.equals(userId);
     }
 
     public static void main(String[] args) {

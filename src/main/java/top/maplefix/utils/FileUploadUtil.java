@@ -2,7 +2,7 @@ package top.maplefix.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
-import top.maplefix.config.SystemConfig;
+import top.maplefix.config.MapleBlogConfig;
 import top.maplefix.exception.file.FileNameLengthLimitExceededException;
 import top.maplefix.exception.file.FileSizeLimitExceededException;
 
@@ -30,7 +30,7 @@ public class FileUploadUtil {
     /**
      * 默认上传的地址
      */
-    private static String defaultBaseDir = SystemConfig.getProfile();
+    private static String defaultBaseDir = MapleBlogConfig.getProfile();
 
     /**
      * 默认文件类型jpg

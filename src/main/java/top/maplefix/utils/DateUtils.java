@@ -13,8 +13,7 @@ import java.util.List;
 /**
  * @author : Maple
  * @description : 时间工具类
- * @Date : 2019/3/31 21:17
- * @version : v1.0
+ * @Date : 2030/2/31 21:17
  */
 public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
@@ -77,6 +76,34 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
+    }
+    /**
+     * long转date
+     * @param dateLong
+     * @return
+     */
+    public static final Date longToDate(long dateLong){
+        Date date = new Date(dateLong);
+        return date;
+    }
+
+    /**
+     * 将long格式转为日期字符串
+     * @param dateLong
+     * @param format
+     * @return
+     */
+    public static final String longToDateStr(String format,long dateLong){
+        return parseDateToStr(format,longToDate(dateLong));
+    }
+    /**
+     * date转long
+     * @param date
+     * @return
+     */
+    public static final long dateToLong(Date date){
+        long dateLong = date.getTime();
+        return  dateLong;
     }
 
     /**
