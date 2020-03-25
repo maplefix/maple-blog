@@ -2,13 +2,14 @@ package top.maplefix.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 import tk.mybatis.mapper.annotation.KeySql;
 import top.maplefix.annotation.Excel;
 import top.maplefix.component.UuIdGenId;
 
 import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -19,8 +20,7 @@ import java.util.List;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Table(name = "t_blog")
-public class Blog implements Serializable {
+public class Blog extends BaseEntity implements Serializable {
 
     /**
      * 主键
@@ -33,6 +33,7 @@ public class Blog implements Serializable {
      * 博客标题
      */
     @Excel(name = "标题")
+    @Length(min = 3, max = 100, message = "文章标题不能为空，且长度为{min}~{max}个字符")
     private String title;
     /**
      * 封面相对路径
@@ -43,7 +44,14 @@ public class Blog implements Serializable {
      * 博客内容
      */
     @Excel(name = "内容")
+    @NotNull(message = "正文内容不能为空")
     private String content;
+    /**
+     * tml格式内容
+     */
+    @Excel(name = "html格式内容")
+    @NotNull(message = "html正文内容不能为空")
+    private String htmlContent;
     /**
      * 内容摘要
      */
@@ -71,21 +79,27 @@ public class Blog implements Serializable {
      * 博文状态，1表示已经发表，2表示在草稿箱，3表示在垃圾箱
      */
     @Excel(name = "状态" ,readConverterExp = "1=已发布,2=草稿箱,3=垃圾箱")
+    @NotNull(message = "状态设置不能为空")
     private Integer status;
     /**
      * 点击量
      */
     @Excel(name = "点击量")
-    private Integer hits;
+    private Integer click;
     /**
      * 权重
      */
     @Excel(name = "权重")
-    private Integer height;
+    private Integer weight;
+    /**
+     * 分类
+     */
+    private Category category;
     /**
      * 是否推荐(置顶)，1表示推荐，0表示不推荐
      */
     @Excel(name = "是否推荐",readConverterExp = "1=推荐,0=普通")
+    @NotNull(message = "推荐设置不能为空")
     private Integer isRecommend;
     /**
      * 原创标识(1:原创,0:转载)
@@ -98,15 +112,25 @@ public class Blog implements Serializable {
     @Excel(name = "是否允许评论",readConverterExp = "1=允许,0=不允许")
     private Integer isComment;
     /**
-     * 创建时间
+     * 点赞数
      */
-    @Excel(name = "创建时间")
-    private String createDate;
+    private Integer like;
     /**
-     * 更新时间
+     * 标签集合
      */
-    @Excel(name = "更新时间")
-    private String updateDate;
+    private List<Tag> tagList;
+    /**
+     * 标签名集合
+     */
+    private List<String> tagTitleList;
+    /**
+     * 评论集合
+     */
+    private List<Comment> commentList;
+    /**
+     * 评论数量
+     */
+    private Integer commentCount;
     /**
      * 创建者
      */

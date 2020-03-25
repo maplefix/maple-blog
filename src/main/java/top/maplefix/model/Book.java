@@ -7,7 +7,6 @@ import top.maplefix.annotation.Excel;
 import top.maplefix.component.UuIdGenId;
 
 import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
@@ -17,8 +16,7 @@ import java.io.Serializable;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Table(name = "t_book")
-public class Book implements Serializable {
+public class Book extends BaseEntity implements Serializable {
 
     /**
      * 主键

@@ -2,12 +2,16 @@ package top.maplefix.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 import tk.mybatis.mapper.annotation.KeySql;
 import top.maplefix.component.UuIdGenId;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author Maple
@@ -16,8 +20,7 @@ import java.io.Serializable;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Table(name = "t_comment")
-public class Comment implements Serializable {
+public class Comment extends BaseEntity implements Serializable {
 
     /**
      * 主键
@@ -28,10 +31,13 @@ public class Comment implements Serializable {
     /**
      * 昵称
      */
+    @NotNull(message = "昵称不能为空")
+    @Length(min = 1, max = 100, message = "昵称长度为{min}~{max}个字符")
     private String nickName;
     /**
      *Email地址
      */
+    @Email(message = "Email地址不合法")
     private String email;
     /**
      *IP地址
@@ -50,23 +56,25 @@ public class Comment implements Serializable {
      */
     private String browser;
     /**
-     * 父评论id
+     * 父评论的id
      */
     private String parentId;
     /**
      * QQ号
      */
+    @Length(max = 11, message = "QQ号码长度不能超过{max}")
     private String qqNum;
     /**
      * 头像地址
      */
+    @Length(max = 256, message = "头像地址长度不能超过{max}")
     private String avatar;
     /**
      * 页面id
      */
     private String pageId;
     /**
-     * 页面俩
+     * 页面url
      */
     private String url;
     /**
@@ -76,37 +84,41 @@ public class Comment implements Serializable {
     /**
      * 点赞
      */
-    private String good;
+    private Long good;
     /**
      * 踩
      */
-    private String bad;
+    private Long bad;
     /**
      * 评论内容
      */
+    @NotNull(message = "内容不能为空")
     private String content;
-    /**
-     * 创建时间
-     */
-    private String createData;
-    /**
-     * 更新时间
-     */
-    private String updateDate;
     /**
      * html内容
      */
+    @NotNull(message = "内容不能为空")
     private String htmlContent;
     /**
-     * 回复
+     * 是否接收回复邮件，1是，0否
      */
     private String reply;
     /**
-     * 管理员回复
+     * 回复的id
      */
-    private String adminReply;
+    private String replyId;
     /**
-     * 回复id
+     * 是否管理员回复，1是，0否
      */
-    private String replayId;
+    private Integer adminReply;
+
+    private Comment parentComment;
+    /**
+     * 子评论
+     */
+    private List<Comment> subCommentList;
+    /**
+     * 回复的NickName
+     */
+    private String replyNickName;
 }

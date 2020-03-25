@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import top.maplefix.annotation.Excel;
 import top.maplefix.utils.StringUtils;
 
 import java.io.Serializable;
@@ -24,11 +25,13 @@ public class BaseEntity implements Serializable {
      * 创建时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "创建时间")
     private String createDate;
     /**
      * 更新时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "更新时间")
     private String updateDate;
     /**
      * 请求参数

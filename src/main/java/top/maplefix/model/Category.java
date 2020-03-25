@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author : Maple
@@ -33,11 +34,7 @@ public class Category implements Serializable {
      */
     @Excel(name = "分类名称")
     private String categoryName;
-    /**
-     * 分类图标相对地址
-     */
-    @Excel(name = "图标地址")
-    private String categoryIcon;
+
     /**
      * 创建时间
      */
@@ -61,4 +58,5 @@ public class Category implements Serializable {
     @Transient
     public Integer count;
 
+    private List<Blog> blogList;
 }

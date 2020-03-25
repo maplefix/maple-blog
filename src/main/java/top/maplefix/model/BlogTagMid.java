@@ -1,12 +1,11 @@
 package top.maplefix.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Builder;
 import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
 import top.maplefix.component.UuIdGenId;
 
 import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
@@ -15,16 +14,15 @@ import java.io.Serializable;
  * @date : 2019/7/25 17:03
  */
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@Table(name = "t_blog_label_mid")
-public class BlogLabelMid implements Serializable {
+@Builder
+public class BlogTagMid implements Serializable {
 
     /**
      * 主键
      */
     @Id
     @KeySql(genId = UuIdGenId.class)
-    private String blId;
+    private String btId;
     /**
      * 博客id
      */
@@ -32,7 +30,11 @@ public class BlogLabelMid implements Serializable {
     /**
      * 标签id
      */
-    private String labelId;
+    private String tagId;
+    /**
+     * 书单id
+     */
+    private String bookId;
     /**
      * 创建时间
      */

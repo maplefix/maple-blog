@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
- * @author wangjg
+ * @author Maple
  * @description 轮播图实体类
  * @date 2020/2/5 18:02
  */
@@ -22,7 +22,7 @@ import java.io.Serializable;
 public class Carousel extends BaseEntity implements Serializable {
 
     @NotNull(message = "主键不能为空")
-    private String  id;
+    private String  carouselId;
 
     @NotNull(message = "标题不能为空")
     private String title;
@@ -34,25 +34,30 @@ public class Carousel extends BaseEntity implements Serializable {
     /**
      * 点击次数
      */
-    private Long click;
+    private Integer click;
     /**
-     * 图片URL
+     * URL
      */
     @URL(message = "URL不合法")
-    private String headerImg;
+    private String url;
     /**
-     * 是否显示
+     * 图片URL地址
+     */
+    @URL(message = "URL不合法")
+    private String imgUrl;
+    /**
+     * 是否显示,1是0否
      */
     @NotNull(message = "显示配置不能为空")
-    private Boolean display;
+    private Integer display;
     /**
-     * 是否当前窗口打开
+     * 是否当前窗口打开,1是0否
      */
     @NotNull(message = "target配置不能为空")
-    private Boolean target;
+    private Integer target;
 
     @NotNull(message = "URL不能为空")
-    private String url;
+    private String targetUrl;
 
 }
 

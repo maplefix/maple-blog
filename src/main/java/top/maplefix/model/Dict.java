@@ -7,7 +7,6 @@ import top.maplefix.annotation.Excel;
 import top.maplefix.component.UuIdGenId;
 
 import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
@@ -17,8 +16,7 @@ import java.io.Serializable;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Table(name = "t_dict")
-public class Dict implements Serializable {
+public class Dict extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = -7458813809933292186L;
     /**
@@ -43,16 +41,6 @@ public class Dict implements Serializable {
      */
     @Excel(name = "字典值")
     private String dictValue;
-    /**
-     * 创建时间
-     */
-    @Excel(name = "创建时间")
-    private String createDate;
-    /**
-     * 更新时间
-     */
-    @Excel(name = "更新时间")
-    private String updateDate;
     /**
      * 备注
      */
