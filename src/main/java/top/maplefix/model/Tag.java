@@ -8,7 +8,6 @@ import top.maplefix.annotation.Excel;
 import top.maplefix.component.UuIdGenId;
 
 import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.io.Serializable;
 
@@ -19,9 +18,8 @@ import java.io.Serializable;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Table(name = "t_tag")
 @NoArgsConstructor
-public class Tag implements Serializable {
+public class Tag extends BaseEntity implements Serializable {
 
     /**
      * 标签表主键
@@ -38,13 +36,14 @@ public class Tag implements Serializable {
     /**
      * 创建时间
      */
-    @Excel(name = "创建时间")
-    public String createDate;
+    @Excel(name = "标签轮廓颜色")
+    public String color;
+
     /**
-     * 更新时间
+     * 标签类型，1博客标签，2读书标签
      */
-    @Excel(name = "更新时间")
-    public String updateDate;
+    @Excel(name = "标签类型")
+    public Integer type;
     /**
      * 备注
      */
@@ -63,4 +62,10 @@ public class Tag implements Serializable {
      */
     @Transient
     public Integer blogCount;
+
+    public Tag(String tagName, String color, Integer type) {
+        this.color = color;
+        this.tagName = tagName;
+        this.type = type;
+    }
 }

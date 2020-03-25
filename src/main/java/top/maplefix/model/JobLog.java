@@ -7,7 +7,6 @@ import top.maplefix.annotation.Excel;
 import top.maplefix.component.UuIdGenId;
 
 import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
@@ -17,8 +16,7 @@ import java.io.Serializable;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Table(name = "t_job_log")
-public class JobLog implements Serializable {
+public class JobLog extends BaseEntity implements Serializable {
 
     /**
      * 主键
@@ -72,11 +70,5 @@ public class JobLog implements Serializable {
      */
     @Excel(name = "耗时")
     private long cost;
-    /**
-     * 创建时间
-     */
-    @Excel(name = "创建时间")
-    private String createDate;
-
 
 }

@@ -8,7 +8,6 @@ import top.maplefix.component.UuIdGenId;
 import top.maplefix.utils.UuidUtils;
 
 import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
@@ -18,7 +17,6 @@ import java.io.Serializable;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Table(name = "t_file_item")
 public class FileItem implements Serializable {
 
     @Id

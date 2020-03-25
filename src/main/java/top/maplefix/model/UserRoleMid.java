@@ -6,7 +6,6 @@ import tk.mybatis.mapper.annotation.KeySql;
 import top.maplefix.component.UuIdGenId;
 
 import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
@@ -16,8 +15,7 @@ import java.io.Serializable;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Table(name = "t_user_role_mid")
-public class UserRoleMid implements Serializable {
+public class UserRoleMid extends BaseEntity implements Serializable {
     /**
      * 主键
      */
@@ -32,8 +30,5 @@ public class UserRoleMid implements Serializable {
      * 角色id
      */
     private String roleId;
-    /**
-     * 创建时间
-     */
-    private String createData;
+
 }

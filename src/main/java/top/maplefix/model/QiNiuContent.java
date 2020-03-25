@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * @author wangjg
+ * @author Maple
  * @description 七牛云文件存储
  * @date 2020/3/20 13:44
  */

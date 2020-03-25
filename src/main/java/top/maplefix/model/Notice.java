@@ -7,7 +7,7 @@ import tk.mybatis.mapper.annotation.KeySql;
 import top.maplefix.component.UuIdGenId;
 
 import javax.persistence.Id;
-import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * @author Maple
@@ -16,9 +16,8 @@ import javax.persistence.Table;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Table(name = "t_notice")
 @NoArgsConstructor
-public class Notice {
+public class Notice extends BaseEntity implements Serializable {
 
     /**
      * 公告ID

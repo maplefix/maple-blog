@@ -7,7 +7,6 @@ import top.maplefix.annotation.Excel;
 import top.maplefix.component.UuIdGenId;
 
 import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
@@ -17,8 +16,7 @@ import java.io.Serializable;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Table(name = "t_job")
-public class Job implements Serializable {
+public class Job extends BaseEntity implements Serializable {
 
     public static final String JOB_KEY = "JOB_KEY";
     /**
@@ -58,16 +56,6 @@ public class Job implements Serializable {
      */
     @Excel(name = "任务状态",readConverterExp = "1=运行,2=暂停")
     private Integer status;
-    /**
-     * 创建时间
-     */
-    @Excel(name = "创建时间")
-    private String createDate;
-    /**
-     * 更新时间
-     */
-    @Excel(name = "更新时间")
-    private String updateDate;
     /**
      * 备注信息
      */

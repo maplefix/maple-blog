@@ -7,7 +7,6 @@ import top.maplefix.annotation.Excel;
 import top.maplefix.component.UuIdGenId;
 
 import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
@@ -17,8 +16,7 @@ import java.io.Serializable;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Table(name = "t_link")
-public class Link implements Serializable {
+public class Link extends BaseEntity implements Serializable {
 
     /**
      * 友链表主键
@@ -30,13 +28,13 @@ public class Link implements Serializable {
     /**
      * 友链名称
      */
-    @Excel(name = "编号")
+    @Excel(name = "友链名称")
     private String linkName;
     /**
-     * 友链类型(友链类别 0-友链 1-推荐网站)
+     * 链接地址
      */
-    @Excel(name = "友链类别",readConverterExp = "1=推荐网站,0=友链")
-    private Integer linkType;
+    @Excel(name = "链接地址")
+    private String url;
     /**
      * 描述
      */
@@ -47,11 +45,7 @@ public class Link implements Serializable {
      */
     @Excel(name = "头像地址")
     private String avatar;
-    /**
-     * 链接地址
-     */
-    @Excel(name = "链接地址")
-    private String url;
+
     /**
      * 邮箱
      */
@@ -60,18 +54,13 @@ public class Link implements Serializable {
     /**
      * 是否显示(1:显示,0:不显示)
      */
+    @Excel(name = "审核状态",readConverterExp = "1=通过,0=不通过")
+    private Integer status;
+    /**
+     * 是否显示(1:显示,0:不显示)
+     */
     @Excel(name = "是否显示",readConverterExp = "1=显示,0=不显示")
     private Integer display;
-    /**
-     * 创建时间
-     */
-    @Excel(name = "创建时间")
-    private String createDate;
-    /**
-     * 更新时间
-     */
-    @Excel(name = "更新时间")
-    private String updateDate;
     /**
      * 排序值
      */
