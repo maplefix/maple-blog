@@ -108,13 +108,13 @@ public class Constant {
     public static final String UNKNOWN = "unknown";
 
     /**
-     * 字符串true
+     * Integer true
      */
-    public static final Boolean TRUE = true;
+    public static final Integer  TRUE = 1;
     /**
-     * 字符串false
+     * Integer false
      */
-    public static final Boolean FALSE = false;
+    public static final Integer FALSE = 0;
 
     /**
      * 校验返回结果码

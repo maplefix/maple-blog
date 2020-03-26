@@ -3,8 +3,7 @@ package top.maplefix.constant;
 /**
  * @author : Maple
  * @description : 用户常量
- * @date : 2019/7/24 10:51
- * @version : v1.0
+ * @date : 2020/1/24 10:51
  */
 public class UserConstant {
 
@@ -31,5 +30,10 @@ public class UserConstant {
      */
     public static final Integer USER_CANCELED = 2;
 
+    /**
+     * 校验返回结果码
+     */
+    public final static String UNIQUE = "0";
 
+    public final static String NOT_UNIQUE = "1";
 }

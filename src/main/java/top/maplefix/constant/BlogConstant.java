@@ -11,32 +11,32 @@ public class BlogConstant {
     /**
      * 所有
      */
-    public static final String BLOG_ALL = "0";
+    public static final int BLOG_ALL = 0;
 
     /**
      * 已发布
      */
-    public static final String BLOG_PUBLISHED = "1";
+    public static final int BLOG_PUBLISHED = 1;
 
     /**
      * 草稿箱
      */
-    public static final String BLOG_DRAFT = "2";
+    public static final int BLOG_DRAFT = 2;
 
     /**
      * 垃圾箱
      */
-    public static final String BLOG_DUSTBIN = "3";
+    public static final int BLOG_DUSTBIN = 3;
 
 
     /**
      * 推荐
      */
-    public static final String BLOG_RECOMMENDED = "1";
+    public static final int BLOG_RECOMMENDED = 1;
     /**
      * 不推荐
      */
-    public static final String BLOG_UNRECOMMENDED = "0";
+    public static final int BLOG_UNRECOMMENDED = 0;
 
 
     /**
