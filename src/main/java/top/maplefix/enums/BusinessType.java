@@ -55,6 +55,10 @@ public enum BusinessType {
      */
     UPLOAD("UPLOAD","上传"),
     /**
+     * 下载
+     */
+    DOWNLOAD("UPLOAD","下载"),
+    /**
      * 登出
      */
     LOGOUT("LOGOUT","登出"),
