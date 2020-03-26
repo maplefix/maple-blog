@@ -30,14 +30,13 @@ import java.io.IOException;
 /**
  * @author : Maple
  * @description : xss过滤器(OncePerRequestFilter)
- * @date : Created in 2019/9/16 23:25
- * @version : v1.0
+ * @date : 2020/2/2 16:01
  */
 @Component
 @Slf4j
 public class XssSecurityFilter extends OncePerRequestFilter {
 
-    private static final String[] excludePath = {"/api/admin/blog/save","/api/admin/blog/update"};
+    private static final String[] EXCLUDE_PATH = {"/api/notice/*,/api/admin/blog/save","/api/admin/blog/update"};
 
     /**
      * Same contract as for {@code doFilter}, but guaranteed to be
@@ -54,7 +53,7 @@ public class XssSecurityFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         //过滤掉editor.md文本内容(其包含特殊的html标签)
         String uri = request.getRequestURI();
-        if(excludePath(excludePath,uri)){
+        if(excludePath(EXCLUDE_PATH,uri)){
             filterChain.doFilter(request, response);
             return;
         }
