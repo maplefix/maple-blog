@@ -1,7 +1,7 @@
 package top.maplefix.exception.user;
 
 /**
- * @author wangjg
+ * @author Maple
  * @description 用户密码异常
  * @date 2020/2/2 18:36
  */
