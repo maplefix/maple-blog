@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import top.maplefix.config.SystemConfig;
+import top.maplefix.config.MapleBlogConfig;
 import top.maplefix.utils.QrCodeUtils;
 
 import javax.imageio.ImageIO;
@@ -25,7 +25,7 @@ import java.io.ByteArrayOutputStream;
 public class QrCodeController {
 
     @Autowired
-    private SystemConfig systemConfig;
+    private MapleBlogConfig mapleBlogConfig;
 
     /**
      * 根据内容生成带logo二维码,返回BufferedImage
@@ -38,7 +38,7 @@ public class QrCodeController {
     public void createBufferedImage (HttpServletResponse response, String content, Boolean needLogo){
         log.info("开始访问二维码生成(BufferedImage)...");
         try {
-            String projectName = systemConfig.getName();
+            String projectName = mapleBlogConfig.getName();
             String logoPath = System.getProperty("user.dir") + "/" + projectName + "/src/main/resources/static/blog/amaze/images/maple-logo.png";
             System.out.println(logoPath);
             BufferedImage bufferedImage;
@@ -71,7 +71,7 @@ public class QrCodeController {
         log.info("开始访问二维码生成(base64)...");
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         try {
-            String logoPath = System.getProperty("user.dir") + "/" + systemConfig.getName() + "/src/main/resources/static/blog/amaze/images/maple-logo.png";
+            String logoPath = System.getProperty("user.dir") + "/" + mapleBlogConfig.getName() + "/src/main/resources/static/blog/amaze/images/maple-logo.png";
             BufferedImage bufferedImage;
             if(needLogo){
                 bufferedImage = QrCodeUtils.encode(content,logoPath,true);
