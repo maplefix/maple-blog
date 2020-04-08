@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * @author wangjg
+ * @author Maple
  * @description 当前在线会话
  * @date 2020/3/20 10:33
  */

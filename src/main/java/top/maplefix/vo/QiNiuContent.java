@@ -6,7 +6,7 @@ import top.maplefix.model.BaseEntity;
 import java.io.Serializable;
 
 /**
- * @author wangjg
+ * @author Maple
  * @description 七牛云存储文件内容
  * @date 2020/3/18 17:23
  */
