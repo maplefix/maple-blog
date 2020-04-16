@@ -1,6 +1,5 @@
 package top.maplefix.controller.oms;
 
-import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import top.maplefix.annotation.OLog;
@@ -37,9 +36,7 @@ public class ProfileController extends BaseController {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         SysUser user = loginUser.getUser();
         BaseResult baseResult = BaseResult.success(user);
-        JSONObject data = new JSONObject();
-        data.put("roleGroup", userService.selectUserRoleGroup(loginUser.getUsername()));
-        baseResult.setData(data);
+        baseResult.put("roleGroup", userService.selectUserRoleGroup(loginUser.getUsername()));
         return baseResult;
     }
 

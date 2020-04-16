@@ -1,6 +1,5 @@
 package top.maplefix.controller.oms;
 
-import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,10 +49,8 @@ public class CaptchaController {
         VerifyCodeUtils.outputImage(w, h, stream, verifyCode);
         try {
             BaseResult baseResult = BaseResult.success();
-            JSONObject data = new JSONObject();
-            data.put("uuid", uuid);
-            data.put("img", Base64.encode(stream.toByteArray()));
-            baseResult.setData(data);
+            baseResult.put("uuid", uuid);
+            baseResult.put("img", Base64.encode(stream.toByteArray()));
             return baseResult;
         } catch (Exception e) {
             log.error(e.getMessage(), e);

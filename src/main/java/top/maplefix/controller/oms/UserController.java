@@ -55,8 +55,7 @@ public class UserController extends BaseController {
     public BaseResult getInfo(@PathVariable String  id) {
         BaseResult baseResult = BaseResult.success(userService.selectUserById(id));
         JSONObject data = new JSONObject();
-        data.put("roleIds", roleService.selectRoleListByUserId(id));
-        baseResult.setData(data);
+        baseResult.put("roleIds", roleService.selectRoleListByUserId(id));
         return baseResult;
     }
 

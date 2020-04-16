@@ -1,6 +1,5 @@
 package top.maplefix.controller.oms;
 
-import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,9 +57,7 @@ public class LoginController {
         BaseResult baseResult = BaseResult.success();
         // 生成令牌
         String token = loginService.login(username, password, code, uuid);
-        JSONObject data = new JSONObject();
-        data.put(Constant.TOKEN, token);
-        baseResult.setData(data);
+        baseResult.put(Constant.TOKEN, token);
         return baseResult;
     }
 
@@ -78,11 +75,9 @@ public class LoginController {
         // 权限集合
         Set<String> permissions = permissionService.getMenuPermission(user);
         BaseResult baseResult = BaseResult.success();
-        JSONObject data = new JSONObject();
-        data.put("user", user);
-        data.put("roles", roles);
-        data.put("permissions", permissions);
-        baseResult.setData(data);
+        baseResult.put("user", user);
+        baseResult.put("roles", roles);
+        baseResult.put("permissions", permissions);
         return baseResult;
     }
 
