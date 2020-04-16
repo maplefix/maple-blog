@@ -3,6 +3,9 @@ package top.maplefix.common;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import top.maplefix.constant.Constant;
+import top.maplefix.utils.StringUtils;
+
+import java.util.HashMap;
 
 /**
  * @author : Maple
@@ -11,20 +14,21 @@ import top.maplefix.constant.Constant;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class BaseResult {
+public class BaseResult extends HashMap<String,Object> {
     /**
      * 返回应答码
      */
-    private int  code;
+    public static final String CODE = "code";
     /**
      * 返回应答信息
      */
-    private String msg;
+    public static final String MSG = "msg";
     /**
      * 返回数据域
      */
-    private Object data;
+    public static final String DATA = "data";
 
+    public BaseResult(){}
 
     /**
      * 初始化一个BaseResult对象,无data对象
@@ -33,8 +37,8 @@ public class BaseResult {
      * @param msg  返回内容
      */
     public BaseResult(int code, String msg) {
-        this.code = code;
-        this.msg = msg;
+        super.put(CODE, code);
+        super.put(MSG, msg);
     }
 
     /**
@@ -45,9 +49,11 @@ public class BaseResult {
      * @param data 数据对象
      */
     public BaseResult(int code, String msg, Object data) {
-        this.code = code;
-        this.msg = msg;
-        this.data = data;
+        super.put(CODE, code);
+        super.put(MSG, msg);
+        if (StringUtils.isNotNull(data)) {
+            super.put(DATA, data);
+        }
     }
 
     /**
