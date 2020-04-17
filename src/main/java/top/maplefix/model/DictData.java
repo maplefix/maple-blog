@@ -27,7 +27,7 @@ public class DictData extends BaseEntity implements Serializable {
     @Id
     @KeySql(genId = UuIdGenId.class)
     @Excel(name = "编号")
-    private String dictId;
+    private String dictDataId;
     /**
      * 字典标签
      */
@@ -70,4 +70,9 @@ public class DictData extends BaseEntity implements Serializable {
      */
     @Excel(name = "字典状态")
     private String status;
+    /**
+     * 备注
+     */
+    @Excel(name = "备注")
+    private String remark;
 }

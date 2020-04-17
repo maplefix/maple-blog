@@ -66,12 +66,12 @@ public class Book extends BaseEntity implements Serializable {
      * 页数
      */
     @Excel(name = "页数")
-    private String pageNum;
+    private Integer pageNum;
     /**
      * 评分
      */
     @Excel(name = "评分")
-    private String grade;
+    private Integer grade;
 
     /**
      * 原书目录

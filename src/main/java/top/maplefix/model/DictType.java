@@ -2,10 +2,12 @@ package top.maplefix.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import tk.mybatis.mapper.annotation.KeySql;
 import top.maplefix.component.UuIdGenId;
 
 import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  * @author wangjg
@@ -14,7 +16,8 @@ import javax.persistence.Id;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DictType {
+@NoArgsConstructor
+public class DictType extends BaseEntity implements Serializable {
     /**
      * 主键
      */

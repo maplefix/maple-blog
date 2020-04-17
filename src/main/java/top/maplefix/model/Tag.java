@@ -57,12 +57,6 @@ public class Tag extends BaseEntity implements Serializable {
     @Transient
     public Integer count;
 
-    /**
-     * 该标签关联博客数
-     */
-    @Transient
-    public Integer blogCount;
-
     public Tag(String tagName, String color, Integer type) {
         this.color = color;
         this.tagName = tagName;
