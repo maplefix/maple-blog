@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.maplefix.mapper.LocalStorageMapper">
+
+    <resultMap type="top.maplefix.model.LocalStorage" id="LocalStorageMap">
+        <result property="fileId" column="file_id"/>
+        <result property="realName" column="real_name"/>
+        <result property="name" column="name"/>
+        <result property="suffix" column="suffix"/>
+        <result property="path" column="path"/>
+        <result property="type" column="type"/>
+        <result property="size" column="size"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateDate" column="update_date"/>
+    </resultMap>
+
+    <insert id="insertLocalStorage">
+        insert into t_local_storage(
+        <if test="fileId != null and fileId != ''">file_id,</if>
+        <if test="realName != null and realName != ''">real_name,</if>
+        <if test="name != null and name != ''">name,</if>
+        <if test="suffix != null and suffix != ''">suffix,</if>
+        <if test="path != null and path != ''">path,</if>
+        <if test="type != null and type != ''">type,</if>
+        <if test="size != null and size != ''">size,</if>
+        <if test="createDate != null and createDate != ''">create_date</if>
+        )values(
+        <if test="fileId != null and fileId != ''">#{fileId},</if>
+        <if test="realName != null and realName != ''">#{realName},</if>
+        <if test="name != null and name != ''">#{name},</if>
+        <if test="suffix != null and suffix != ''">#{suffix},</if>
+        <if test="path != null and path != ''">#{path},</if>
+        <if test="type != null and type != ''">#{type},</if>
+        <if test="size != null and size != ''">#{size},</if>
+        <if test="createDate != null and createDate != ''">#{createDate}</if>
+        )
+    </insert>
+
+    <update id="updateLocalStorage">
+        update t_local_storage
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                update_date = #{updateDate}
+            </if>
+        </set>
+        where file_id = #{id}
+    </update>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="selectLocalStorageList" resultMap="LocalStorageMap">
+        select file_id,
+        real_name,
+        name,
+        suffix,
+        path,
+        type,
+        size,
+        create_date,
+        update_date
+        from t_local_storage
+        <where>
+            <if test="name != null and name != ''">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="suffix != null and suffix != ''">
+                and suffix = #{suffix}
+            </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="params.beginDate != null and params.beginDate != ''"><!-- 开始时间检索 -->
+                and date_format(create_date,'%y%m%d') &gt;= date_format(#{params.beginDate},'%y%m%d')
+            </if>
+            <if test="params.endDate != null and params.endDate != ''"><!-- 结束时间检索 -->
+                and date_format(create_date,'%y%m%d') &lt;= date_format(#{params.endDate},'%y%m%d')
+            </if>
+        </where>
+    </select>
+    <select id="selectLocalStorageById" resultMap="LocalStorageMap">
+        select file_id,
+        real_name,
+        name,
+        suffix,
+        path,
+        type,
+        size,
+        create_date,
+        update_date
+        from t_local_storage
+        where file_id=#{id}
+    </select>
+
+    <!--通过主键删除-->
+    <delete id="deleteLocalStorageById">
+      delete from t_local_storage
+      where file_id=#{id}
+    </delete>
+
+</mapper>

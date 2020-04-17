@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.maplefix.mapper.BlacklistMapper">
+
+    <resultMap type="top.maplefix.model.Blacklist" id="SysBlacklistResult">
+        <id property="blacklistId" column="blacklist_id"/>
+        <result property="ip" column="ip"/>
+        <result property="description" column="description"/>
+        <result property="interceptCount" column="intercept_count"/>
+        <result property="lastAccessDate" column="last_access_time"/>
+        <result property="lastAccessUrl" column="last_access_url"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateDate" column="update_date"/>
+    </resultMap>
+
+    <insert id="insertBlacklist" parameterType="top.maplefix.model.LoginLog">
+		insert into t_blacklist (blacklist_id,ip, description, intercept_count, last_access_url, last_access_date,create_date)
+		values (#{blacklistId},#{ip}, #{description}, #{interceptCount}, #{lastAccessUrl}, #{lastAccessDate}, #{createDate})
+	</insert>
+
+    <insert id="insertBlacklistRecord">
+        update t_blacklist set interceptCount+=1,last_access_url=${lastAccessUrl} ,last_access_date=${lastAccessDate}
+        where blacklist_id=${id}
+    </insert>
+
+    <update id="updateBlacklist">
+        update t_blacklist
+        <set>
+            <if test="ip != null and ip != ''">ip = #{ip},</if>
+            <if test="description != null and description != ''">description = #{description},</if>
+            <if test="updateDate != null and updateDate != ''">update_date = #{updateDate} </if>
+        </set>
+        where blacklist_id = #{id}
+    </update>
+
+    <select id="selectBlacklistList" parameterType="top.maplefix.model.Blacklist"
+            resultMap="SysBlacklistResult" resultType="top.maplefix.model.Blacklist">
+        select blacklist_id,
+        ip,
+        description,
+        intercept_count,
+        last_access_url,
+        last_access_date,
+        create_date,
+        update_date
+        from t_blacklist
+        <where>
+            <if test="ip != null and ip != ''">
+                AND ip like concat('%', #{ip}, '%')
+            </if>
+            <if test="description != null and description != ''">
+                AND description = #{description}
+            </if>
+            <if test="params.beginDate != null and params.beginDate != ''"><!-- 开始时间检索 -->
+                and date_format(create_date,'%y%m%d') &gt;= date_format(#{params.beginDate},'%y%m%d')
+            </if>
+            <if test="params.endDate != null and params.endDate != ''"><!-- 结束时间检索 -->
+                and date_format(create_date,'%y%m%d') &lt;= date_format(#{params.endDate},'%y%m%d')
+            </if>
+        </where>
+    </select>
+    <select id="selectBlacklistById" resultType="top.maplefix.model.Blacklist">
+         select blacklist_id,
+         ip,
+         description,
+         intercept_count,
+         last_access_url,
+         last_access_date,
+         create_date,
+         update_date
+        from t_blacklist
+         where blacklist_id = ${id}
+    </select>
+
+    <delete id="deleteBlacklistByIds" parameterType="String">
+        delete from  t_blacklist where blacklist_id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

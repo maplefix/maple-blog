@@ -2,22 +2,120 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="top.maplefix.mapper.DashboardMapper">
 
-    <!--获取5条最新的登陆数据-->
-    <select id="getLoginLogData" resultType="top.maplefix.model.LoginLog">
-        select loginDate,loginName from t_login_log
-         order by loginDate desc limit 5
+    <select id="getVisitorCount" resultType="java.lang.Long">
+        select count(*)
+        from t_visit_log
+    </select>
+    <select id="getBlogCount" resultType="java.lang.Long">
+        select count(*)
+        from t_blog
+    </select>
+    <select id="getBookCount" resultType="java.lang.Long">
+        select count(*)
+        from t_book
+    </select>
+    <select id="getNoteCount" resultType="java.lang.Long">
+        select count(*)
+        from t_note
+    </select>
+    <select id="getVisitorCountByCreateDate" resultType="java.lang.Long">
+        select count(*)
+        from t_visit_log
+        where date(create_date) = #{date}
+    </select>
+    <select id="getNoteCountByCreateDate" resultType="java.lang.Long">
+        select count(*)
+        from t_note
+        where date(create_date) = #{date}
+    </select>
+    <select id="getBlogCountByCreateDate" resultType="java.lang.Long">
+        select count(*)
+        from t_blog
+        where date(create_date) = #{date}
+    </select>
+    <select id="getBookCountByCreateDate" resultType="java.lang.Long">
+        select count(*)
+        from t_book
+        where date(create_date) = #{date}
+    </select>
+    <select id="getSpiderData" resultType="java.util.Map">
+        select spider as 'name', count(spider) as 'value'
+        from t_visit_log
+        where spider is not null
+        group by spider
+        order by spider
+        limit 20
+    </select>
+    <select id="getVisitLog" resultType="top.maplefix.model.VisitLog">
+        select visit_log_id,
+               ip,
+               page_id,
+               location,
+               browser,
+               os,
+               entry_url,
+               url,
+               exception_msg,
+               status,
+               module,
+               spider,
+               create_date,
+update_date
+        from t_visit_log
+    </select>
+    <select id="getBlogNameByPageId" resultType="java.lang.String">
+        select title
+        from t_blog
+        where blog_id = #{pageId}
+    </select>
+    <select id="getLoginLogList" resultType="top.maplefix.model.LoginLog">
+        select login_log_id,
+               login_name,
+               ip,
+               location,
+               browser,
+               os,
+               status,
+               login_msg,
+               create_date,
+update_date
+        from t_login_log
+    </select>
+    <select id="getOperateLogList" resultType="top.maplefix.model.OperateLog">
+        select operate_log_id,
+               module,
+               function,
+               method,
+               request_method,
+               operator_type,
+               operate_name,
+               url,
+               ip,
+               location,
+               params,
+               result,
+               status,
+               exception_msg,
+               cost,
+               create_date,
+update_date
+        from t_operate_log
+    </select>
+    <select id="getJobLogList" resultType="top.maplefix.model.JobLog">
+        select job_log_id,
+               job_name,
+               bean_name,
+               method_name,
+               method_params,
+               cron_expression,
+               exception_exception,
+               result,
+               status,
+               cost,
+               create_date,
+update_date
+        from t_job_log
     </select>
 
-    <!--获取5条最新的操作数据-->
-    <select id="getOperationLogData" resultType="top.maplefix.model.OperationLog">
-        select operName,operDate,module,businessType from t_operation_log
-        order by operDate desc limit 5
-    </select>
-
-    <!--获取5条最新的访问数据-->
-    <select id="getVisitLogData" resultType="top.maplefix.model.VisitLog">
-        select visitIp,visitDate,module from t_visit_log
-        order by visitDate desc limit 5
-    </select>
 
 </mapper>

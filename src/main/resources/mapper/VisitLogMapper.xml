@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.maplefix.mapper.VisitLogMapper">
+    <resultMap type="top.maplefix.model.VisitLog" id="VisitLogResult">
+        <id property="visitLogId" column="visit_log_id"/>
+        <result property="ip" column="ip"/>
+        <result property="location" column="location"/>
+        <result property="browser" column="browser"/>
+        <result property="os" column="os"/>
+        <result property="pageId" column="page_id"/>
+        <result property="spider" column="spider"/>
+        <result property="url" column="url"/>
+        <result property="module" column="module"/>
+        <result property="exceptionMsg" column="exception_msg"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateDate" column="update_date"/>
+    </resultMap>
+
+    <insert id="insertVisitLog" parameterType="top.maplefix.model.VisitLog">
+        insert into t_visit_log(
+        <if test="visitLogId!=null and visitLogId !=''">visit_log_id,</if>
+        <if test="ip!=null and ip!=''">ip,</if>
+        <if test="location!=null and location!=''">location,</if>
+        <if test="browser!=null and browser!=''">browser,</if>
+        <if test="os!=null and os!=''">os,</if>
+        <if test="url!=null and url!=''">url,</if>
+        <if test="pageId !=null">page_id,</if>
+        <if test="exceptionMsg!=null and exceptionMsg!=''">exception_msg,</if>
+        <if test="spider!=null and spider!=''">spider,</if>
+        <if test="status!=null and status!=''">status,</if>
+        <if test="module!=null and module!=''">module,</if>
+        <if test="createDate!=null and createDate!=''">create_date</if>
+        )values (
+        <if test="ip!=null and ip!=''">#{ip},</if>
+        <if test="location!=null and location!=''">#{location},</if>
+        <if test="browser!=null and browser!=''">#{browser},</if>
+        <if test="os!=null and os!=''">#{os},</if>
+        <if test="url!=null and url!=''">#{url},</if>
+        <if test="pageId!=null ">#{pageId},</if>
+        <if test="exceptionMsg!=null and exceptionMsg!=''">#{exceptionMsg},</if>
+        <if test="spider!=null and spider!=''">#{spider},</if>
+        <if test="status!=null and status!=''">#{status},</if>
+        <if test="module!=null and module!=''">#{module},</if>
+        <if test="createDate!=null and createDate!=''">#{createDate}</if>
+        )
+    </insert>
+
+    <select id="selectVisitLogList" parameterType="top.maplefix.model.VisitLog" resultMap="VisitLogResult">
+        select visit_log_id,
+        ip,
+        location,
+        browser,
+        os,
+        module,
+        status,
+        exception_msg,
+        spider,
+        url,
+        create_date,
+        update_date,
+        page_id
+        from t_visit_log
+        <where>
+            <if test="ip != null and ip != ''">
+                AND ip like concat('%', #{ip}, '%')
+            </if>
+            <if test="status != null ">
+                AND status = #{status}
+            </if>
+            <if test="params.beginDate != null and params.beginDate != ''"><!-- 开始时间检索 -->
+                and date_format(create_date,'%y%m%d') &gt;= date_format(#{params.beginDate},'%y%m%d')
+            </if>
+            <if test="params.endDate != null and params.endDate != ''"><!-- 结束时间检索 -->
+                and date_format(create_date,'%y%m%d') &lt;= date_format(#{params.endDate},'%y%m%d')
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteVisitLogByIds">
+        delete from t_visit_log
+        where visit_log_id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="cleanVisitLog">
+        truncate table t_visit_log
+    </update>
+
+    <update id="updateVisitLog">
+        update t_visit_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="ip != null ">ip = #{ip},</if>
+            <if test="location != null  and location != ''">location = #{location},</if>
+            <if test="browser != null  and browser != ''">browser = #{browser},</if>
+            <if test="os != null  and os != ''">os = #{os},</if>
+            <if test="pageId != null  and pageId != ''">page_id = #{pageId},</if>
+            <if test="exceptionMsg != null  and exceptionMsg != ''">exception_msg = #{exceptionMsg},</if>
+            <if test="spider != null  and spider != ''">spider = #{spider},</if>
+            <if test="status != null ">status = #{status},</if>
+            <if test="module != null ">module = #{module}</if>
+        </trim>
+        where visit_log_id = #{id}
+    </update>
+
+</mapper>

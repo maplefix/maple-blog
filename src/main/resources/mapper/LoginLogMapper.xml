@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.maplefix.mapper.LoginLogMapper">
+
+    <resultMap type="top.maplefix.model.LoginLog" id="SysLoginLogResult">
+        <id property="loginLogId" column="login_log_id"/>
+        <result property="loginName" column="login_name"/>
+        <result property="status" column="status"/>
+        <result property="ip" column="ip"/>
+        <result property="location" column="location"/>
+        <result property="browser" column="browser"/>
+        <result property="os" column="os"/>
+        <result property="loginMsg" column="login_msg"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateDate" column="update_date"/>
+    </resultMap>
+
+    <insert id="insertLoginLog" parameterType="top.maplefix.model.LoginLog">
+        insert into t_login_log (login_log_id,login_name, status, ip, location, browser, os, login_msg, create_date)
+        values (#{loginLogId},#{userName}, #{status}, #{ip}, #{location}, #{browser}, #{os}, #{loginMsg}, #{createDate})
+    </insert>
+
+    <select id="selectLoginLogList" parameterType="top.maplefix.model.LoginLog" resultMap="SysLoginLogResult">
+        select login_log_id,
+        login_name,
+        ip,
+        location,
+        browser,
+        os,
+        status,
+        login_msg,
+        create_date,
+        update_date
+        from t_login_log
+        <where>
+            <if test="ip != null and ip != ''">
+                AND ip like concat('%', #{ip}, '%')
+            </if>
+            <if test="status != null ">
+                AND status = #{status}
+            </if>
+            <if test="loginName != null and loginName != ''">
+                AND login_name like concat('%', #{loginName}, '%')
+            </if>
+            <if test="params.beginDate != null and params.beginDate != ''"><!-- 开始时间检索 -->
+                and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginDate},'%y%m%d')
+            </if>
+            <if test="params.endDate != null and params.endDate != ''"><!-- 结束时间检索 -->
+                and date_format(create_date,'%y%m%d') &lt;= date_format(#{params.endDate},'%y%m%d')
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteLoginLogByIds">
+        delete from t_login_log
+        where login_log_id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="cleanLoginLog">
+        truncate table t_login_log
+    </update>
+
+    <update id="updateLoginLog">
+        update t_login_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="loginName != null and loginName != ''">login_name = #{loginName},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="ip != null  and ip != ''">ip = #{ip},</if>
+            <if test="location != null  and location != ''">location = #{location},</if>
+            <if test="browser != null ">browser = #{browser},</if>
+            <if test="os != null  and os != ''">os = #{os},</if>
+            <if test="loginMsg != null  and loginMsg != ''">login_msg = #{loginMsg},</if>
+            <if test="updateDate != null  and updateDate != ''">update_date = #{updateDate}</if>
+        </trim>
+        where login_log_id = #{id}
+    </update>
+
+</mapper>

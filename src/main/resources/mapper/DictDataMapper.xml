@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.maplefix.mapper.DictDataMapper">
+
+    <resultMap type="top.maplefix.model.DictData" id="SysDictDataResult">
+        <id property="dictDataId" column="dict_data_id"/>
+        <result property="seq" column="seq"/>
+        <result property="dictLabel" column="dict_label"/>
+        <result property="dictValue" column="dict_value"/>
+        <result property="dictType" column="dict_type"/>
+        <result property="cssClass" column="css_class"/>
+        <result property="listClass" column="list_class"/>
+        <result property="isDefault" column="is_default"/>
+        <result property="status" column="status"/>
+        <result property="remark" column="remark"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateDate" column="update_date"/>
+    </resultMap>
+
+    <sql id="selectDictDataVo">
+        select dict_data_id, seq, dict_label, dict_value, dict_type, css_class, list_class, is_default, status,
+        create_date, update_date, remark
+		from t_dict_data
+    </sql>
+
+    <select id="selectDictDataList" parameterType="top.maplefix.model.DictData"
+            resultMap="SysDictDataResult">
+        <include refid="selectDictDataVo"/>
+        <where>
+            <if test="dictType != null and dictType != ''">
+                AND dict_type = #{dictType}
+            </if>
+            <if test="dictLabel != null and dictLabel != ''">
+                AND dict_label like concat('%', #{dictLabel}, '%')
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectDictDataByType" parameterType="top.maplefix.model.DictData"
+            resultMap="SysDictDataResult">
+        <include refid="selectDictDataVo"/>
+        where status = 1
+        and dict_type = #{dictType}
+        order by seq asc
+    </select>
+
+    <select id="selectDictLabel" resultType="String">
+		select dict_label
+		from t_dict_data
+		where dict_type = #{dictType}
+		and dict_value = #{dictValue}
+	</select>
+
+    <select id="selectDictDataById" parameterType="Long" resultMap="SysDictDataResult">
+        <include refid="selectDictDataVo"/>
+        where dict_data_id = #{dictDataId}
+    </select>
+
+    <select id="countDictDataByType" resultType="Integer">
+	    select count(1)
+	    from t_dict_data
+	    where dict_type=#{dictType}
+	</select>
+
+    <delete id="deleteDictDataById">
+ 		delete from t_dict_data
+ 		where dict_data_id = #{dictDataId}
+ 	</delete>
+
+    <update id="updateDictData" parameterType="top.maplefix.model.DictData">
+        update t_dict_data
+        <set>
+            <if test="seq != null and seq != ''">seq = #{seq},</if>
+            <if test="dictLabel != null and dictLabel != ''">dict_label = #{dictLabel},</if>
+            <if test="dictValue != null and dictValue != ''">dict_value = #{dictValue},</if>
+            <if test="dictType != null and dictType != ''">dict_type = #{dictType},</if>
+            <if test="cssClass != null">css_class = #{cssClass},</if>
+            <if test="listClass != null">list_class = #{listClass},</if>
+            <if test="isDefault != null and isDefault != ''">is_default = #{isDefault},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="updateDate != null and updateDate != ''">update_date = #{updateDate}</if>
+        </set>
+        where dict_data_id = #{dictDataId}
+    </update>
+
+    <update id="updateDictDataType" parameterType="String">
+ 		update t_dict_data
+ 		set dict_type = #{newDictType}
+ 		where dict_type = #{oldDictType}
+	</update>
+
+    <insert id="insertDictData" parameterType="top.maplefix.model.DictData">
+        insert into t_dict_data(
+        <if test="dictDataId != null and dictDataId != ''">dict_data_id,</if>
+        <if test="seq != null and seq != ''">seq,</if>
+        <if test="dictLabel != null and dictLabel != ''">dict_label,</if>
+        <if test="dictValue != null and dictValue != ''">dict_value,</if>
+        <if test="dictType != null and dictType != ''">dict_type,</if>
+        <if test="cssClass != null and cssClass != ''">css_class,</if>
+        <if test="listClass != null and listClass != ''">list_class,</if>
+        <if test="isDefault != null and isDefault != ''">is_default,</if>
+        <if test="status != null">status,</if>
+        <if test="remark != null and remark != ''">remark,</if>
+        <if test="createDate != null and createDate != ''">create_date</if>
+        )values(
+        <if test="dictDataId != null and dictDataId != ''">#{dictDataId},</if>
+        <if test="seq != null and seq != ''">#{seq},</if>
+        <if test="dictLabel != null and dictLabel != ''">#{dictLabel},</if>
+        <if test="dictValue != null and dictValue != ''">#{dictValue},</if>
+        <if test="dictType != null and dictType != ''">#{dictType},</if>
+        <if test="cssClass != null and cssClass != ''">#{cssClass},</if>
+        <if test="listClass != null and listClass != ''">#{listClass},</if>
+        <if test="isDefault != null and isDefault != ''">#{isDefault},</if>
+        <if test="status != null">#{status},</if>
+        <if test="remark != null and remark != ''">#{remark},</if>
+        <if test="createDate != null and createDate != ''">#{createDate}</if>
+        )
+    </insert>
+
+</mapper>

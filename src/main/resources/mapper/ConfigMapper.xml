@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.maplefix.mapper.ConfigMapper">
+
+    <resultMap type="top.maplefix.model.Config" id="SysConfigResult">
+        <id property="configId" column="config_id"/>
+        <result property="configKey" column="config_key"/>
+        <result property="configValue" column="config_value"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateDate" column="update_date"/>
+    </resultMap>
+
+    <sql id="selectConfigVo">
+        select config_id, config_key, config_value, create_date, update_date,remark
+		from t_config
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="sqlwhereSearch">
+        <where>
+            <if test="configId !=null">
+                and config_id = #{id}
+            </if>
+            <if test="configKey !=null and configKey != ''">
+                and config_key = #{configKey}
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectConfig" parameterType="top.maplefix.model.Config" resultMap="SysConfigResult">
+        <include refid="selectConfigVo"/>
+        <include refid="sqlwhereSearch"/>
+    </select>
+
+    <select id="selectConfigList" parameterType="top.maplefix.model.Config"
+            resultMap="SysConfigResult">
+        <include refid="selectConfigVo"/>
+        <where>
+            <if test="configKey != null and configKey != ''">
+                AND config_key like concat('%', #{configKey}, '%')
+            </if>
+            <if test="params.beginDate != null and params.beginDate != ''"><!-- 开始时间检索 -->
+                and date_format(create_date,'%y%m%d') &gt;= date_format(#{params.beginDate},'%y%m%d')
+            </if>
+            <if test="params.endDate != null and params.endDate != ''"><!-- 结束时间检索 -->
+                and date_format(create_date,'%y%m%d') &lt;= date_format(#{params.endDate},'%y%m%d')
+            </if>
+        </where>
+    </select>
+
+    <select id="checkConfigKeyUnique" parameterType="String" resultMap="SysConfigResult">
+        <include refid="selectConfigVo"/>
+        where config_key = #{configKey}
+    </select>
+
+    <insert id="insertConfig" parameterType="top.maplefix.model.Config">
+        insert into t_config (
+        <if test="configId != null and configId != '' ">config_id,</if>
+        <if test="configKey != null and configKey != '' ">config_key,</if>
+        <if test="configValue != null and configValue != '' ">config_value,</if>
+        <if test="createDate != null and createDate != ''">create_date,</if>
+        <if test="remark != null and remark != ''">remark</if>
+        )values(
+        <if test="configId != null and configId != ''">#{configId},</if>
+        <if test="configKey != null and configKey != ''">#{configKey},</if>
+        <if test="configValue != null and configValue != ''">#{configValue},</if>
+        <if test="createDate != null and createDate != ''">#{createDate},</if>
+        <if test="remark != null and remark != ''">#{remark}</if>
+        )
+    </insert>
+
+    <update id="updateConfig" parameterType="top.maplefix.model.Config">
+        update t_config
+        <set>
+            <if test="configKey != null and configKey != ''">config_key = #{configKey},</if>
+            <if test="configValue != null and configValue != ''">config_value = #{configValue},</if>
+            <if test="updateDate != null and updateDate != ''">update_date = #{updateDate},</if>
+            <if test="remark != null">remark = #{remark}</if>
+        </set>
+        where config_id = #{id}
+    </update>
+    <update id="updateConfigByConfigKey">
+        update t_config
+        <set>
+            <if test="configValue != null and configValue != ''">config_value = #{configValue},</if>
+            <if test="updateDate != null and updateDate != ''">update_date = #{updateDate},</if>
+            <if test="remark != null">remark = #{remark}</if>
+        </set>
+        where config_key = #{configKey}
+    </update>
+
+    <delete id="deleteConfigById">
+        delete from t_config where config_id = #{id}
+    </delete>
+
+</mapper>

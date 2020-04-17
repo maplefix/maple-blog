@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.maplefix.mapper.MenuMapper">
+
+    <resultMap type="top.maplefix.model.Menu" id="SysMenuResult">
+        <id property="menuId" column="menu_id"/>
+        <result property="menuName" column="menu_name"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="seq" column="seq"/>
+        <result property="path" column="path"/>
+        <result property="component" column="component"/>
+        <result property="isFrame" column="is_frame"/>
+        <result property="menuType" column="menu_type"/>
+        <result property="status" column="status"/>
+        <result property="perms" column="perms"/>
+        <result property="icon" column="icon"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="selectMenuVo">
+        select menu_id,
+        menu_name,
+        parent_id,
+        seq,
+        path,
+        component,
+        is_frame,
+        menu_type,
+        status,
+        ifnull(perms,'') as perms,
+        icon,
+        create_date,
+        update_date
+        from t_menu
+    </sql>
+
+    <select id="selectMenuList" parameterType="top.maplefix.model.Menu" resultMap="SysMenuResult">
+        <include refid="selectMenuVo"/>
+        <where>
+            <if test="menuName != null and menuName != ''">
+                AND menu_name like concat('%', #{menuName}, '%')
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+        </where>
+        order by parent_id, seq
+    </select>
+
+    <select id="selectMenuTreeAll" resultMap="SysMenuResult">
+		select distinct m.menu_id,
+		m.parent_id,
+		m.menu_name,
+		m.path,
+		m.component,
+		m.status,
+		ifnull(m.perms,'') as perms,
+		m.is_frame,
+		m.menu_type,
+		m.icon,
+		m.seq,
+		m.create_date,
+        m.update_date
+        from t_menu m
+		where m.menu_type in ('M', 'C')
+		and m.status = 1
+		order by m.parent_id, m.seq
+	</select>
+
+    <select id="selectMenuTreeByUserId" parameterType="java.lang.String" resultMap="SysMenuResult">
+		select distinct m.menu_id,
+		m.parent_id,
+		m.menu_name,
+		m.path,
+		m.component,
+		m.status,
+		ifnull(m.perms,'') as perms,
+		m.is_frame,
+		m.menu_type,
+		m.icon,
+		m.seq,
+		m.create_time
+		m.update_time
+		from t_menu m
+        left join t_role_menu_mid rm on m.menu_id = rm.menu_id
+        left join t_user_role_mid ur on rm.role_id = ur.role_id
+        left join t_role ro on ur.role_id = ro.role_id
+        left join t_user u on ur.user_id = u.user_id
+		where u.user_id = #{userId}
+		and m.menu_type in ('M', 'C')
+		and m.status = 1
+		AND ro.status = 1
+		order by m.parent_id, m.seq
+	</select>
+
+    <select id="selectMenuListByRoleId" parameterType="java.lang.String" resultType="Integer">
+		select m.menu_id,
+		m.parent_id
+		from t_menu m
+        left join t_role_menu_mid rm on m.menu_id = rm.menu_id
+        where rm.role_id = #{roleId}
+        and m.menu_id not in (
+            select m.parent_id
+            from t_menu m
+            inner join t_role_menu_mid rm on m.menu_id = rm.menu_id
+            and rm.role_id = #{roleId}
+        )
+		order by m.parent_id, m.seq
+	</select>
+
+    <select id="selectMenuPerms" resultType="String">
+		select distinct m.perms
+		from t_menu m
+        left join t_role_menu_mid rm on m.menu_id = rm.menu_id
+        left join t_user_role_mid ur on rm.role_id = ur.role_id
+
+	</select>
+
+    <select id="selectMenuPermsByUserId" parameterType="java.lang.String" resultType="String">
+		select distinct m.perms
+		from t_menu m
+        left join t_role_menu_mid rm on m.menu_id = rm.menu_id
+        left join t_user_role_mid ur on rm.role_id = ur.role_id
+		where ur.user_id = #{userId}
+	</select>
+
+    <select id="selectMenuById" parameterType="java.lang.String" resultMap="SysMenuResult">
+        <include refid="selectMenuVo"/>
+        where menu_id = #{id}
+    </select>
+
+    <select id="hasChildByMenuId" resultType="Integer">
+	    select count(1) from t_menu where parent_id = #{id}
+	</select>
+
+    <select id="checkMenuNameUnique" parameterType="top.maplefix.model.Menu" resultMap="SysMenuResult">
+        <include refid="selectMenuVo"/>
+        where menu_name=#{menuName}
+        and parent_id = #{parentId}
+    </select>
+
+    <update id="updateMenu" parameterType="top.maplefix.model.Menu">
+        update t_menu
+        <set>
+            <if test="menuId != null and menuId != ''">menu_id = #{menuId},</if>
+            <if test="menuName != null and menuName != ''">menu_name = #{menuName},</if>
+            <if test="parentId != null and parentId != 0">parent_id = #{parentId},</if>
+            <if test="seq != null">seq = #{seq},</if>
+            <if test="path != null and path != ''">path = #{path},</if>
+            <if test="component != null and component != ''">component = #{component},</if>
+            <if test="isFrame != null and isFrame != ''">is_frame = #{isFrame},</if>
+            <if test="menuType != null and menuType != ''">menu_type = #{menuType},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="perms !=null">perms = #{perms},</if>
+            <if test="icon !=null and icon != ''">icon = #{icon},</if>
+            <if test="remark != null and remark != ''">remark = #{remark},</if>
+            <if test="updateDate != null and updateDate != ''">update_date = #{updateDate}</if>
+        </set>
+        where menu_id = #{id}
+    </update>
+
+    <insert id="insertMenu" parameterType="top.maplefix.model.Menu">
+        insert into t_menu(
+        <if test="menuId != null and menuId != ''">menu_id,</if>
+        <if test="parentId != null and parentId != 0">parent_id,</if>
+        <if test="menuName != null and menuName != ''">menu_name,</if>
+        <if test="seq != null ">seq,</if>
+        <if test="path != null and path != ''">path,</if>
+        <if test="component != null and component != ''">component,</if>
+        <if test="isFrame != null and isFrame != ''">is_frame,</if>
+        <if test="menuType != null and menuType != ''">menu_type,</if>
+        <if test="status != null">status,</if>
+        <if test="perms !=null and perms != ''">perms,</if>
+        <if test="icon != null and icon != ''">icon,</if>
+        <if test="remark != null and remark != ''">remark,</if>
+        <if test="createDate != null and createDate != ''">create_date</if>
+        )values(
+        <if test="menuId != null and menuId != ''">menu_id = #{menuId},</if>
+        <if test="parentId != null and parentId != 0">#{parentId},</if>
+        <if test="menuName != null and menuName != ''">#{menuName},</if>
+        <if test="seq != null">#{seq},</if>
+        <if test="path != null and path != ''">#{path},</if>
+        <if test="component != null and component != ''">#{component},</if>
+        <if test="isFrame != null and isFrame != ''">#{isFrame},</if>
+        <if test="menuType != null and menuType != ''">#{menuType},</if>
+        <if test="status != null">#{status},</if>
+        <if test="perms !=null and perms != ''">#{perms},</if>
+        <if test="icon != null and icon != ''">#{icon},</if>
+        <if test="remark != null and remark != ''">#{remark},</if>
+        <if test="createDate != null and createDate != ''">#{createDate}</if>
+        )
+    </insert>
+
+    <delete id="deleteMenuById">
+	    delete from t_menu where menu_id = #{menuId}
+	</delete>
+
+</mapper>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.maplefix.mapper.TagMapper">
+
+    <resultMap type="top.maplefix.model.Tag" id="TagResult">
+        <result property="tagId" column="tag_id"/>
+        <result property="tagName" column="tag_name"/>
+        <result property="color" column="color"/>
+        <result property="count" column="count"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateDate" column="update_date"/>
+    </resultMap>
+
+    <select id="selectTagList" parameterType="top.maplefix.model.Tag" resultMap="TagResult">
+        select t.tag_id,
+        t.tag_name,
+        t.color,
+        t.create_date,
+        t.update_date,
+        count(tm.bt_id) as count
+        from t_tag t left join t_blog_tag_mid tm
+        on t.tag_id=tm.tag_id
+        <where>
+            <if test="type != null">
+                AND t.type =#{type}
+            </if>
+            <if test="tagName != null and tagName != ''">
+                AND t.tag_name like concat('%', #{tagName}, '%')
+            </if>
+            <if test="params.beginDate != null and params.beginDate != ''"><!-- 开始时间检索 -->
+                and date_format(t.create_date,'%y%m%d') &gt;= date_format(#{params.beginDate},'%y%m%d')
+            </if>
+            <if test="params.endDate != null and params.endDate != ''"><!-- 结束时间检索 -->
+                and date_format(t.create_date,'%y%m%d') &lt;= date_format(#{params.endDate},'%y%m%d')
+            </if>
+            group by t.tag_id
+        </where>
+    </select>
+
+    <select id="selectTagById" resultMap="TagResult">
+        select t.tag_id,
+        t.tag_name,
+        t.color,
+        count(tm.bt_id) as count
+        from t_tag t
+        left join t_blog_tag_mid tm
+        on t.tag_id=tm.tag_id
+        where t.tag_id = #{id}
+    </select>
+
+    <select id="selectTagByTitle" resultType="top.maplefix.model.Tag">
+        select t.tag_id,
+        t.tag_name,
+        t.color,
+        type
+        from t_tag
+        where title = #{title}
+          and type = #{type}
+    </select>
+
+    <select id="selectTagListByType" resultType="top.maplefix.model.Tag">
+        select t.id,
+        color,
+        title,
+        type,
+        create_date,
+        update_date
+        from t_tag t
+        left join t_blog_tag_mid tm on t.tag_id=tm.tag_id
+        where t.type=#{type}
+        <if test="type == 1">and tm.blog_id=#{id}</if>
+        <if test="type ==2">and tm.book_id=#{id}</if>
+    </select>
+
+
+    <insert id="insertTag" parameterType="top.maplefix.model.Tag" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into t_tag
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tagId != null  and tagId != ''">tag_id,</if>
+            <if test="tagName != null  and tagName != ''">tag_name,</if>
+            <if test="color != null  and color != ''">color,</if>
+            <if test="type != null">type,</if>
+            <if test="createDate != null  and createDate != ''">create_date</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tagId != null  and tagId != ''">#{tagId},</if>
+            <if test="tagName != null  and tagName != ''">#{tagName},</if>
+            <if test="color != null  and color != ''">#{color},</if>
+            <if test="type != null">#{type},</if>
+            <if test="createDate != null  and createDate != ''">#{createDate}</if>
+        </trim>
+    </insert>
+    <insert id="insertTagMid">
+        insert into t_blog_tag_mid
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="blogId != null">blog_id,</if>
+            <if test="tagId != null">tag_id,</if>
+            <if test="bookId != null">book_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="blogId != null">#{blogId},</if>
+            <if test="tagId != null">#{tagId},</if>
+            <if test="bookId != null">#{bookId},</if>
+        </trim>
+    </insert>
+
+    <update id="updateTag" parameterType="top.maplefix.model.Tag">
+        update t_tag
+        <set>
+            <if test="tagName != null  and tagName != ''">tag_name = #{tagName},</if>
+            <if test="color != null  and color != ''">color = #{color},</if>
+            <if test="updateDate != null  and updateDate != ''">update_date = #{updateDate}</if>
+        </set>
+        where tag_id = #{id}
+    </update>
+
+
+    <delete id="deleteTagByIds">
+        delete from t_tag where tag_id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteTagMid">
+        delete from t_blog_tag_mid
+        <choose>
+            <when test="blogId==null and tagId==null and bookId==null">
+                where 1=2
+            </when>
+            <otherwise>
+                where 1=1
+            </otherwise>
+        </choose>
+        <if test="blogId != null">
+            AND blog_id =#{blogId}
+        </if>
+        <if test="tagId != null">
+            AND tag_id =#{tagId}
+        </if>
+        <if test="bookId != null">
+            AND book_id =#{bookId}
+        </if>
+    </delete>
+
+</mapper>

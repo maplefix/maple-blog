@@ -2,82 +2,256 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="top.maplefix.mapper.BlogMapper">
 
-    <!--查询前台首页博客列表-->
-    <select id="selectBlogForIndexPage" resultType="top.maplefix.model.Blog">
-        select b.*,c.categoryName
-        from t_blog b
-        LEFT JOIN t_category c on b.categoryId = c.categoryId
+    <resultMap type="top.maplefix.model.Blog" id="BlogResult">
+        <result property="blogId" column="blog_id"/>
+        <result property="categoryId" column="category_id"/>
+        <result property="title" column="title"/>
+        <result property="summary" column="summary"/>
+        <result property="coverUrl" column="cover_url"/>
+        <result property="content" column="content"/>
+        <result property="htmlContent" column="html_content"/>
+        <result property="status" column="status"/>
+        <result property="click" column="click"/>
+        <result property="isComment" column="is_comment"/>
+        <result property="commentCount" column="comment_count"/>
+        <result property="isRecommend" column="is_recommend"/>
+        <result property="isOriginal" column="is_original"/>
+        <result property="weight" column="weight"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateDate" column="update_date"/>
+    </resultMap>
+
+    <resultMap id="BlogResultWithoutContent" type="top.maplefix.model.Blog">
+        <result property="blogId" column="blog_id"/>
+        <result property="categoryId" column="category_id"/>
+        <result property="title" column="title"/>
+        <result property="summary" column="summary"/>
+        <result property="coverUrl" column="cover_url"/>
+        <result property="status" column="status"/>
+        <result property="isComment" column="is_comment"/>
+        <result property="like" column="like"/>
+        <result property="click" column="click"/>
+        <result property="isRecommend" column="is_recommend"/>
+        <result property="weight" column="weight"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateDate" column="update_date"/>
+        <association property="category" javaType="top.maplefix.model.Category">
+            <id property="categoryId" column="c_category_id"/>
+            <result property="categoryName" column="c_category_name"/>
+            <result property="description" column="c_description"/>
+            <result property="createDate" column="c_create_date"/>
+        </association>
+    </resultMap>
+
+    <select id="selectBlogList" resultMap="BlogResultWithoutContent">
+        select b.blog_id,
+        b.category_id,
+        b.title,
+        b.summary,
+        b.weight,
+        b.cover_url,
+        b.status,
+        b.is_recommend,
+        b.like,
+        b.click,
+        b.is_comment,
+        b.create_by,
+        b.create_date,
+        c.category_id c_category_id,
+        c.category_name c_category_name,
+        c.description c_description,
+        c.support c_support,
+        c.create_date c_create_date,
+        update_date
+        from t_blog b ,t_category c
+        where b.category_id=c.category_id
+        <if test="title != null and title != ''">
+            AND b.title like concat('%', #{title}, '%')
+        </if>
+        <if test="status != null">
+            AND b.status = #{status}
+        </if>
+        <if test="isRecommend != null ">
+            AND b.is_recommend = #{isRecommend}
+        </if>
+        <if test="params.beginDate != null and params.beginDate != ''"><!-- 开始时间检索 -->
+            and date_format( b.create_date,'%y%m%d') &gt;= date_format(#{params.beginDate},'%y%m%d')
+        </if>
+        <if test="params.endDate != null and params.endDate != ''"><!-- 结束时间检索 -->
+            and date_format( b.create_date,'%y%m%d') &lt;= date_format(#{params.endDate},'%y%m%d')
+        </if>
+    </select>
+
+    <select id="selectBlogById" resultMap="BlogResult">
+        select blog_id,
+        category_id,
+        title,
+        summary,
+        cover_url,
+        content,
+        is_recommend,
+        click,
+        `like`,
+        status,
+        weight,
+        is_rcomment,
+        create_by,
+        create_date,
+        update_date
+        from t_blog
+        where blog_id = #{id}
+    </select>
+
+
+    <select id="selectBlogListQuery" resultMap="BlogResult">
+        select b.blog_id,
+        b.category_id,
+        b.title,
+        b.summary,
+        b.weight,
+        b.cover_url,
+        b.status,
+        b.is_recommend,
+        b.like,
+        b.click,
+        b.is_rcomment,
+        create_by,
+        b.create_date,
+        b.update_date,
+        count(c.comment_id) as comment_count
+        from t_blog b left join t_comment c
+        on b.blog_id=c.page_id
         <where>
-            <if test="categoryId != '' and categoryId != null">
-                AND b.categoryId = #{categoryId}
+            <if test="categoryId != null">
+                AND b.category_id =#{categoryId}
             </if>
-            <if test="title != '' and title != null">
-                AND b.title = #{title}
+            <if test="isRecommend != null ">
+                AND b.is_recommend = #{isRecommend}
             </if>
-            <if test="label != '' and label != null">
-                <bind name="search" value="'%' + label + '%'"/>
-                AND b.label like #{search}
+            <if test="beginDate != null "><!-- 开始时间检索 -->
+                and date_format( b.create_date,'%y%m%d') &gt;= date_format(#{beginDate},'%y%m%d')
             </if>
-            <if test="keyword != '' and keyword != null">
-                <bind name="search" value="'%' + keyword + '%'"/>
-                AND (b.title like #{search} or b.label like #{search})
-            </if>
-            <if test="beginDate != '' and beginDate != null">
-                <bind name="beginDate" value="beginDate +' 00:00:00'"/>
-                <![CDATA[ AND b.createDate >=  #{beginDate}]]>
-            </if>
-            <if test="endDate != '' and endDate != null">
-                <bind name="endDate" value="endDate +' 23:59:59'"/>
-                <![CDATA[ AND b.createDate <=  #{beginDate}]]>
-            </if>
-            <if test="isAll == '' and isAll == null">
-                AND b.delFlag = '0'
-                AND b.status = '1'
+            <if test="endDate != null "><!-- 结束时间检索 -->
+                and date_format( b.create_date,'%y%m%d') &lt;= date_format(#{endDate},'%y%m%d')
             </if>
         </where>
-        order by b.support desc, b.createDate desc
+        group by b.blog_id
     </select>
 
-
-
-    <!--获取归档的Date和count-->
-    <select id="selectArchiveDateAndCount" resultType="top.maplefix.vo.Archive">
-        select date_format(createDate, '%Y-%m') as createDate,count(*) as count from t_blog
-        where delFlag = "0"
-        group by date_format(createDate,'%Y-%m')
-        order by date_format(createDate, '%Y-%m') desc
+    <select id="selectBlogByIdQuery" resultMap="BlogResult">
+        select b.blog_id,
+        b.category_id,
+        b.title,
+        b.summary,
+        b.cover_url,
+        b.html_content as content,
+        b.is_recommend,
+        b.click,
+        b.like,
+        b.status,
+        b.weight,
+        b.is_comment,
+        create_by,
+        b.create_date,
+        b.update_date,
+        count(c.id) as comment_count
+        from t_blog b left join t_comment c
+        on b.blog_id=c.page_id
+        where b.blog_id = #{id}
+        and b.status=1
     </select>
 
-    <!-- 根据createTime获取blog信息-->
-    <select id="selectBlogByCreateTime" resultType="top.maplefix.model.Blog">
-        select blogId,title,hits,createDate from t_blog
-        where date_format(createDate, '%Y-%m') =#{createDate}
-        and delFlag = "0"
-        order by createDate desc
+    <select id="selectBlogListByCategoryIds" resultMap="BlogResultWithoutContent">
+        select blog_id ,
+        category_id,
+        title,
+        summary,
+        weight,
+        cover_url,
+        status,
+        is_recommend,
+        is_comment,
+        create_by,
+        create_date,
+        update_date
+        from t_blog
+        where category_id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
     </select>
 
-    <!--获取最热分类名称以及对应的博客数量-->
-    <select id="selectBlogForHotCategory" resultType="top.maplefix.vo.CategoryBlog">
-        select b.categoryId categoryId,c.categoryName categoryName,count(b.categoryId) blogCount
-        from t_blog b
-        LEFT JOIN t_category c on b.categoryId = c.categoryId
-        group by b.categoryId
-    </select>
-    <!-- 根据id批量查询博客列表 -->
-    <select id="selectBlogByIds" resultType="top.maplefix.model.Blog">
-        select b.*,c.categoryName
-        from t_blog b
-        LEFT JOIN t_category c on b.categoryId = c.categoryId
-        <where>
-            <if test="blogIds != null">
-                AND b.blogId IN
-                <foreach collection="blogIds" index="index" item="item" open="(" separator="," close=")">
-                    #{item}
-                </foreach>
-            </if>
-            AND b.delFlag = '0'
-            AND b.status = '1'
-        </where>
-        order by b.support desc, b.createDate desc
-    </select>
+    <insert id="insertBlog" >
+        insert into t_blog
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="categoryId != null ">category_id,</if>
+            <if test="title != null  and title != ''">title,</if>
+            <if test="summary != null  and summary != ''">summary,</if>
+            <if test="coverUrl != null  and coverUrl != ''">cover_url,</if>
+            <if test="content != null  and content != ''">content,</if>
+            <if test="htmlContent != null  and htmlContent != ''">html_content,</if>
+            <if test="status != null ">status,</if>
+            <if test="isComment != null ">is_comment,</if>
+            <if test="isRecommend != null ">is_recommend,</if>
+            <if test="weight != null ">weight,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            create_date
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="categoryId != null ">#{categoryId},</if>
+            <if test="title != null  and title != ''">#{title},</if>
+            <if test="summary != null  and summary != ''">#{summary},</if>
+            <if test="headerImg != null  and headerImg != ''">#{headerImg},</if>
+            <if test="content != null  and content != ''">#{content},</if>
+            <if test="htmlContent != null  and htmlContent != ''">#{htmlContent},</if>
+            <if test="status != null ">#{status},</if>
+            <if test="isComment != null ">#{isComment},</if>
+            <if test="isRecommend != null ">#{isRecommend},</if>
+            <if test="weight != null ">#{weight},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="createDate != null  and createDate != ''">#{create_date}</if>
+        </trim>
+    </insert>
+
+    <update id="updateBlog">
+        update t_blog
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="categoryId != null ">category_id = #{categoryId},</if>
+            <if test="title != null  and title != ''">title = #{title},</if>
+            <if test="summary != null  and summary != ''">summary = #{summary},</if>
+            <if test="coverUrl != null  and coverUrl != ''">cover_url = #{coverUrl},</if>
+            <if test="content != null  and content != ''">content = #{content},</if>
+            <if test="htmlContent != null  and htmlContent != ''">html_content = #{htmlContent},</if>
+            <if test="status != null ">status = #{status},</if>
+            <if test="isRecommend != null ">is_recommend = #{isRecommend},</if>
+            <if test="weight != null ">weight = #{weight},</if>
+            <if test="isComment != null ">is_comment = #{isComment},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateDate != null  and updateDate != ''">update_date = #{updateDate}</if>
+        </trim>
+        where blog_id = #{id}
+    </update>
+
+    <update id="incrementBlogLike">
+        update t_blog set `like`=`like`+1 where blog_id=#{id}
+    </update>
+    <update id="incrementBlogClick">
+         update t_blog set click=click+1 where blog_id=#{id}
+    </update>
+
+    <delete id="deleteBlogById">
+        delete from  t_blog where blog_id = #{id}
+    </delete>
+
+    <delete id="deleteBlogByIds">
+        delete from t_blog where blog_id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

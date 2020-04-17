@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.maplefix.mapper.QiNiuContentMapper">
+
+    <resultMap type="top.maplefix.model.QiNiuContent" id="QiNiuContentMap">
+        <result property="fileId" column="file_id"/>
+        <result property="name" column="name"/>
+        <result property="bucket" column="bucket"/>
+        <result property="size" column="size"/>
+        <result property="url" column="url"/>
+        <result property="suffix" column="suffix"/>
+        <result property="type" column="type"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateDate" column="update_date"/>
+    </resultMap>
+    <insert id="insertContent" useGeneratedKeys="true" keyProperty="id">
+        insert into t_qiniu_content(
+        <if test="fileId != null and fileId != ''">file_id,</if>
+        <if test="name != null and name != ''">name,</if>
+        <if test="bucket != null and bucket != ''">bucket,</if>
+        <if test="size != null and size != ''">size,</if>
+        <if test="url != null and url != ''">url,</if>
+        <if test="suffix != null and suffix != ''">suffix,</if>
+        <if test="type != null and type != ''">type,</if>
+        <if test="createDate != null and createDate != ''">create_date</if>
+        )values(
+        <if test="fileId != null and fileId != ''">#{fileId},</if>
+        <if test="name != null and name != ''">#{name},</if>
+        <if test="bucket != null and bucket != ''">#{bucket},</if>
+        <if test="size != null and size != ''">#{size},</if>
+        <if test="url != null and url != ''">#{url},</if>
+        <if test="suffix != null and suffix != ''">#{suffix},</if>
+        <if test="type != null and type != ''">#{type},</if>
+        <if test="createDate != null and createDate != ''">#{createDate}</if>
+        )
+    </insert>
+
+    <!--查询单个-->
+    <select id="selectContentById" resultMap="QiNiuContentMap">
+        select file_id,
+        name,
+        bucket,
+        size,
+        url,
+        suffix,
+        type,
+        create_date,
+        update_date
+        from t_qiniu_content
+        where file_id = #{id}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="selectContentList" resultMap="QiNiuContentMap">
+        select file_id,
+        name,
+        bucket,
+        size,
+        url,
+        suffix,
+        type,
+        create_date,
+        update_date
+        from t_qiniu_content
+        <where>
+            <if test="name != null and name != ''">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="bucket != null and bucket != ''">
+                and bucket = #{bucket}
+            </if>
+            <if test="suffix != null and suffix != ''">
+                and suffix = #{suffix}
+            </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="params.beginDate != null and params.beginDate != ''"><!-- 开始时间检索 -->
+                and date_format(create_date,'%y%m%d') &gt;= date_format(#{params.beginDate},'%y%m%d')
+            </if>
+            <if test="params.endDate != null and params.endDate != ''"><!-- 结束时间检索 -->
+                and date_format(create_date,'%y%m%d') &lt;= date_format(#{params.endDate},'%y%m%d')
+            </if>
+        </where>
+    </select>
+    <select id="selectContentByIds" resultType="top.maplefix.model.QiNiuContent">
+        select file_id,
+        name,
+        bucket,
+        size,
+        url,
+        suffix,
+        type,
+        create_date,
+        update_date
+        from t_qiniu_content
+        where file_id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <!--通过主键删除-->
+    <delete id="deleteContentByIds">
+        delete from t_qiniu_content where file_id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="clearContent">
+        TRUNCATE TABLE t_qiniu_content
+    </delete>
+
+</mapper>

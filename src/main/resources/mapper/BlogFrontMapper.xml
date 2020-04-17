@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.maplefix.mapper.BlogFrontMapper">
+
+    <!--新增友链申请-->
+    <insert id="insertLink" parameterType="top.maplefix.model.Link">
+        insert into t_link(link_id,link_name, url, description, avatar, email, create_date)
+        value (#{linkId}, #{linkName},#{url},
+              #{description}, #{avatar},
+              #{email}, #{createDate})
+    </insert>
+    <!--新增评论-->
+    <insert id="insertComment">
+        insert into t_comment(
+        <if test="email != null and email != ''">email,</if>
+        <if test="ip != null and ip != ''">ip,</if>
+        <if test="location != null and location != ''">location,</if>
+        <if test="os != null and os != ''">os,</if>
+        <if test="browser != null and browser != ''">browser,</if>
+        <if test="parentId != null">parent_id,</if>
+        <if test="qqNum != null and qqNum != ''">qq_num,</if>
+        <if test="nickName != null and nickName != ''">nick_name,</if>
+        <if test="avatar != null and avatar != ''">avatar,</if>
+        <if test="pageId != null">page_id,</if>
+        <if test="url != null and url != ''">url,</if>
+        <if test="display != null and display != ''">display,</if>
+        <if test="content != null and content != ''">content,</if>
+        <if test="htmlContent != null and htmlContent != ''">html_content,</if>
+        <if test="replyId != null ">reply_id,</if>
+        <if test="reply != null ">reply,</if>
+        <if test="adminReply != null ">admin_reply,</if>
+        create_date
+        )values(
+        <if test="email != null and email != ''">#{email},</if>
+        <if test="ip != null and ip != ''">#{ip},</if>
+        <if test="location != null and location != ''">#{location},</if>
+        <if test="os != null and os != ''">#{os},</if>
+        <if test="browser != null and browser != ''">#{browser},</if>
+        <if test="parentId != null">#{parentId},</if>
+        <if test="qqNum != null and qqNum != ''">#{qqNum},</if>
+        <if test="nickName != null and nickName != ''">#{nickName},</if>
+        <if test="avatar != null and avatar != ''">#{avatar},</if>
+        <if test="pageId != null">#{pageId},</if>
+        <if test="url != null and url != ''">#{url},</if>
+        <if test="display != null and display != ''">#{display},</if>
+        <if test="content != null and content != ''">#{content},</if>
+        <if test="htmlContent != null and htmlContent != ''">#{htmlContent},</if>
+        <if test="replyId != null">#{replyId},</if>
+        <if test="reply != null">#{reply},</if>
+        <if test="adminReply != null">#{adminReply},</if>
+        <if test="createDate != null and createDate != ''">#{createDate}</if>
+        )
+    </insert>
+    <!--评论踩+1-->
+    <update id="incrementCommentBad">
+        update t_comment
+        set bad=bad + 1
+        where comment_id = #{id}
+    </update>
+    <!--评论喜欢+1-->
+    <update id="incrementCommentGood">
+        update t_comment
+        set good=good + 1
+        where comment_id = #{id}
+    </update>
+    <!--博客喜欢+1-->
+    <update id="incrementBlogLike">
+        update t_blog
+        set  like = like  + 1
+        where blog_id = #{id}
+    </update>
+    <!--博客点击+1-->
+    <update id="incrementBlogClick">
+        update t_blog
+        set click=click + 1
+        where blog_id = #{id}
+    </update>
+    <!--友链点击+1-->
+    <update id="incrementLinkClick">
+        update t_link
+        set click=click + 1
+        where link_id = #{id}
+    </update>
+    <!--查询显示友链-->
+    <select id="selectLinkList" resultType="top.maplefix.model.Link">
+        select link_id, link_name, url, description, avatar
+        from t_link
+        where  display = 1
+        and status = 1
+
+    </select>
+    <!--查询分类-->
+    <select id="selectCategoryList" resultType="top.maplefix.model.Category">
+        select category_id, category_name
+        from t_category
+        order by create_date, support desc
+    </select>
+    <!--查询推荐博客-->
+    <select id="selectSupportBlogList" resultType="top.maplefix.model.Blog">
+        select b.blog_id,
+               b.title,
+               b.summary,
+               b.cover_img,
+               b.like,
+               b.click,
+               b.create_date,
+               count(c.id) as comment_count
+        from t_blog b
+        left join t_comment c on b.blog_id = c.page_id
+        where b.support = 1
+        and b.status = 1
+        group by b.blog_id
+        order by b.create_date, b.weight desc
+        limit 5
+    </select>
+    <!--查询热门博客-->
+    <select id="selectHotBlogList" resultType="top.maplefix.model.Blog">
+        select b.blog_id,
+               b.title,
+               b.summary,
+               b.summary,
+               b.like,
+               b.click,
+               b.create_date,
+               count(c.id) as comment_count
+        from t_blog b
+        left join t_comment c
+        on b.blog_id = c.page_id
+        group by b.blog_id
+        order by click desc
+        limit 5
+    </select>
+    <!--查询标签列表-->
+    <select id="selectTagList" resultType="top.maplefix.model.Tag">
+        select t.tag_id, t.tag_name, t.color, count(tm.bt_id) as count
+        from t_tag t
+        left join t_blog_tag_mid tm
+        on t.tag_id = tm.tag_id
+        group by t.tag_id
+        having count(tm.bt_id) > 0
+    </select>
+    <!--查询轮播图列表-->
+    <select id="selectCarouselList" resultType="top.maplefix.model.Carousel">
+        select carousel_id,
+               title,
+               description,
+               url,
+               display,
+               target,
+               target_url,
+               create_date,
+update_date
+        from t_carousel
+    </select>
+    <!--查询通知公告列表-->
+    <select id="selectNoticeList" resultType="top.maplefix.model.Notice">
+        select notice_id, title, type, html_content
+        from t_notice
+    </select>
+    <!--根据页面id查询评论标题-->
+    <select id="selectCommentListByPageId" resultType="top.maplefix.model.Comment">
+        select comment_id,
+               parent_id,
+               nick_name,
+               avatar,
+               page_id,
+               good,
+               admin_reply,
+               bad,
+               reply_id,
+               html_content as content,
+               create_date,
+update_date
+        from t_comment
+        where  page_id = #{id}
+        order by create_date desc
+    </select>
+
+    <resultMap  id="BlogDetail" type="top.maplefix.model.Blog">
+        <result property="blogId" column="blog_id"/>
+        <result property="categoryId" column="category_id"/>
+        <result property="title" column="title"/>
+        <result property="summary" column="summary"/>
+        <result property="coverUrl" column="cover_url"/>
+        <result property="content" column="html_content"/>
+        <result property="isComment" column="comment"/>
+        <result property="isRecommend" column="is_recommend"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateDate" column="update_date"/>
+        <collection property="tagTitleList" ofType="string" select="selectTagByBlogId" column="blog_id">
+        </collection>
+    </resultMap>
+    <!--根据博客id查询标签-->
+    <select id="selectTagByBlogId" resultType="java.lang.String">
+        select title
+        from t_tag t
+        left join t_blog_tag_mid tm on t.tag_id = tm.tag_id
+        where tm.blog_id = #{id}
+    </select>
+    <!--根据页面id查询博客详情-->
+    <select id="selectBlogDetailById" resultMap="BlogDetail">
+        select blog_id,
+               category_id,
+               title,
+               summary,
+               cover_url,
+               html_content,
+               comment,
+               support,
+               like,
+               click,
+               create_date,
+               update_date
+        from t_blog
+        where  blog_id = #{id}
+    </select>
+    <!--查询博客列表-->
+    <select id="selectBlogList" resultType="top.maplefix.model.Blog">
+        select b.id,
+        b.category_id,
+        b.title,
+        b.summary,
+        b.weight,
+        b.header_img,
+        b.status,
+        b.support,
+        b.like,
+        b.click,
+        b.comment,
+        b.create_time,
+        b.update_time,
+        count(c.id) as comment_count
+        from t_blog b left join t_comment c
+        on b.blog_id=c.page_id
+        <where>
+            <if test="categoryId != null">
+                AND b.category_id =#{categoryId}
+            </if>
+            <if test="support != null ">
+                AND b.support = #{support}
+            </if>
+            <if test="beginDate != null "><!-- 开始时间检索 -->
+                and date_format( b.create_date,'%y%m%d') &gt;= date_format(#{beginDate},'%y%m%d')
+            </if>
+            <if test="endDate != null "><!-- 结束时间检索 -->
+                and date_format( b.create_date,'%y%m%d') &lt;= date_format(#{endDate},'%y%m%d')
+            </if>
+        </where>
+        group by b.blog_id
+    </select>
+    <!--根据类型和id查询表亲列表-->
+    <select id="selectTagListByTypeAndId" resultType="top.maplefix.model.Tag">
+        select t.tag_id, color, title,type, create_date,
+update_date
+        from t_tag t
+        left join t_blog_tag_mid tm on t.tag_id = tm.tag_id
+        where t.type=#{type}
+        <if test="type == 1">and tm.blog_id=#{id}</if>
+        <if test="type == 2">and tm.book_id=#{id}</if>
+    </select>
+    <!--从字典表查询关于我信息-->
+    <select id="selectAbout" resultType="top.maplefix.model.DictData">
+        select dict_id, dict_key, dict_value
+        from t_dict
+        where dict_key = 'about'
+    </select>
+    <!--根据id查询评论信息-->
+    <select id="selectCommentById" resultType="top.maplefix.model.Comment">
+        select comment_id,
+               nick_name,
+               email,
+               ip,
+               location,
+               os,
+               browser,
+               parent_id,
+               qq_num,
+               avatar,
+               page_id,
+               url,
+               display,
+               good,
+               bad,
+               content,
+               create_by,
+               create_date,
+               reply
+        from t_comment
+        where comment_id = #{id}
+    </select>
+    <!--查询推荐的友链列表-->
+    <select id="selectSupportLinkList" resultType="top.maplefix.model.Link">
+        select link_id, link_name, url, description, avatar
+        from t_link
+        where support = 1
+        order by weight desc
+    </select>
+    <!--根据博客id查询博客标题-->
+    <select id="selectBlogTitleById" resultType="java.lang.String">
+        select title from t_blog where blog_id=#{id}
+    </select>
+</mapper>
+

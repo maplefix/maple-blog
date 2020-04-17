@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.maplefix.mapper.CarouselMapper">
+
+    <resultMap type="top.maplefix.model.Carousel" id="SysCarouselMap">
+        <result property="carouselId" column="carousel_id"/>
+        <result property="title" column="title"/>
+        <result property="url" column="url"/>
+        <result property="description" column="description"/>
+        <result property="click" column="click"/>
+        <result property="imgUrl" column="img_url"/>
+        <result property="display" column="display"/>
+        <result property="target" column="target"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateDate" column="update_date"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="selectCarouselById" resultMap="SysCarouselMap">
+        select carousel_id,
+        description,
+        click,
+        img_url,
+        display,
+        target,
+        create_date,
+        update_date,
+        title,
+        url
+        from t_carousel
+        where carousel_id = #{id}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="selectCarouselList" resultMap="SysCarouselMap">
+        select carousel_id,
+        title,
+        description,
+        click,
+        img_url,
+        display,
+        target,
+        create_date,
+        update_date,
+        url
+        from t_carousel
+        where delete_time is null
+        <if test="description != null and description != ''">
+            and description = #{description}
+        </if>
+        <if test="display != null">
+            and display = #{display}
+        </if>
+        <if test="target != null">
+            and target = #{target}
+        </if>
+        <if test="params.beginDate != null and params.beginDate != ''"><!-- 开始时间检索 -->
+            and date_format(create_date,'%y%m%d') &gt;= date_format(#{params.beginDate},'%y%m%d')
+        </if>
+        <if test="params.endDate != null and params.endDate != ''"><!-- 结束时间检索 -->
+            and date_format(create_date,'%y%m%d') &lt;= date_format(#{params.endDate},'%y%m%d')
+        </if>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insertCarousel">
+        insert into t_carousel (
+        <if test="carouselId != null and carouselId != '' ">carousel_id,</if>
+        <if test="description != null and description != '' ">description,</if>
+        <if test="imgUrl != null and imgUrl != '' ">img_url,</if>
+        <if test="display != null">display,</if>
+        <if test="target != null and target != ''">target,</if>
+        <if test="url != null and url != ''">url,</if>
+        <if test="title != null and title != ''">title,</if>
+        <if test="createDate != null and createDate != ''">create_date</if>
+        )values(
+        <if test="carouselId != null and carouselId != ''">#{carouselId},</if>
+        <if test="description != null and description != ''">#{description},</if>
+        <if test="imgUrl != null and imgUrl != ''">#{imgUrl},</if>
+        <if test="display != null and display != ''">#{display},</if>
+        <if test="target != null and target != ''">#{target},</if>
+        <if test="url != null and url != ''">#{url},</if>
+        <if test="title != null and title != ''">#{title},</if>
+        <if test="createDate != null and createDate != ''">#{createDate}</if>
+        )
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="updateCarousel">
+        update t_carousel
+        <set>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="imgUrl != null and imgUrl != ''">
+                img_url = #{imgUrl},
+            </if>
+            <if test="display != null">
+                display = #{display},
+            </if>
+            <if test="target != null">
+                target = #{target},
+            </if>
+            <if test="title != null and title != ''">
+                title = #{title},
+            </if>
+            <if test="url != null and url != ''">
+                url = #{url},
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                update_date = #{updateDate},
+            </if>
+        </set>
+        where updateDate = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteCarouselById">
+        delete from t_carousel where carousel_id = #{id}
+    </delete>
+
+</mapper>

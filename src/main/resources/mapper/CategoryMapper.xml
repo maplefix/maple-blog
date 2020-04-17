@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.maplefix.mapper.CategoryMapper">
+
+    <resultMap type="top.maplefix.model.Category" id="CategoryResult">
+        <result property="categoryId" column="category_id"/>
+        <result property="categoryName" column="category_name"/>
+        <result property="description" column="description"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="type" column="type"/>
+    </resultMap>
+
+
+    <select id="selectCategoryList" parameterType="top.maplefix.model.Category"
+            resultMap="CategoryResult">
+        select category_id,
+        category_name,
+        type,
+        description,
+        create_date,
+        update_date
+        from t_category
+        <where>
+            <if test="type != null">
+                AND type =#{type}
+            </if>
+            <if test="categoryName != null and categoryName != ''">
+                AND category_name like concat('%', #{categoryName}, '%')
+            </if>
+            <if test="params.beginDate != null and params.beginDate != ''"><!-- 开始时间检索 -->
+                and date_format(create_date,'%y%m%d') &gt;= date_format(#{params.beginDate},'%y%m%d')
+            </if>
+            <if test="params.endDate != null and params.endTime != ''"><!-- 结束时间检索 -->
+                and date_format(create_date,'%y%m%d') &lt;= date_format(#{params.endDate},'%y%m%d')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectCategoryById" resultMap="CategoryResult">
+        select category_id,
+        category_name,
+        type,
+        description,
+        create_date,
+        update_date
+        from t_category
+        where category_id = #{id}
+    </select>
+
+    <select id="selectSupportBlogCategoryList" resultType="top.maplefix.model.Category">
+        select category_id,
+        category_name,
+        type,
+        description,
+        create_date,
+        update_date
+        from t_category
+    </select>
+
+    <insert id="insertCategory" parameterType="top.maplefix.model.Category" >
+        insert into t_category
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="categoryName != null  and categoryName != ''">category_name,</if>
+            <if test="type != null">type,</if>
+            <if test="description != null  and description != ''">description,</if>
+            <if test="createDate != null  and createDate != ''">create_date</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="categoryName != null  and categoryName != ''">#{categoryName},</if>
+            <if test="type != null">#{type},</if>
+            <if test="description != null  and description != ''">#{description},</if>
+            <if test="createDate != null  and createDate != ''">#{createDate}</if>
+        </trim>
+    </insert>
+
+    <update id="updateCategory" parameterType="top.maplefix.model.Category">
+        update t_category
+        <set>
+            <if test="categoryName != null  and categoryName != ''">category_name = #{categoryName},</if>
+            <if test="description != null  and description != ''">description = #{description},</if>
+            <if test="updateDate != null  and updateDate != ''">update_date = #{updateDate}</if>
+        </set>
+        where category_id = #{id}
+    </update>
+
+    <delete id="deleteCategoryById">
+        delete from  t_category
+        where category_id = #{id}
+    </delete>
+
+    <delete id="deleteCategoryByIds">
+        delete from  t_category
+        where category_id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
