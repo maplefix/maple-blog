@@ -85,7 +85,7 @@ public class OperateLog extends BaseEntity implements Serializable {
      * 请求参数
      */
     @Excel(name = "请求参数")
-    private String params;
+    private String param;
     /**
      * 请求状态(1:成功,0:失败)
      */

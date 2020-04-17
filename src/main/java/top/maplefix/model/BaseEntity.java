@@ -3,7 +3,6 @@ package top.maplefix.model;
 import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import top.maplefix.annotation.Excel;
 import top.maplefix.utils.StringUtils;
@@ -18,7 +17,6 @@ import java.util.Map;
  * @date 2020/2/2 14:33
  */
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BaseEntity implements Serializable {
 
     /**

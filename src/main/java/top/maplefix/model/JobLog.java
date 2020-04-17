@@ -44,7 +44,7 @@ public class JobLog extends BaseEntity implements Serializable {
      * 参数
      */
     @Excel(name = "参数")
-    private String params;
+    private String param;
     /**
      * cron表达式
      */

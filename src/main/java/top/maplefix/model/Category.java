@@ -8,7 +8,6 @@ import top.maplefix.component.UuIdGenId;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.List;
 
@@ -52,11 +51,9 @@ public class Category implements Serializable {
     private String description;
 
     /**
-     * 关联博客数
-     * @Transient 注解表明该字段不与数据库字段相对应
+     * 分类的类型
      */
-    @Transient
-    public Integer count;
+    private Integer type;
 
     private List<Blog> blogList;
 }
