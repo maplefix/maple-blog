@@ -44,7 +44,7 @@ public class Carousel extends BaseEntity implements Serializable {
      * 图片URL地址
      */
     @URL(message = "URL不合法")
-    private String imgUrl;
+    private String headerImg;
     /**
      * 是否显示,1是0否
      */

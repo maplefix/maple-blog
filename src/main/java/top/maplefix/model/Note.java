@@ -52,7 +52,11 @@ public class Note extends BaseEntity implements Serializable {
     /**
      * 封面
      */
-    private String coverUrl;
+    private String headerImg;
+    /**
+     * 封面类型
+     */
+    private String headerImgType;
 
     /**
      * 推荐，1推荐，0不推荐

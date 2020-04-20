@@ -2,6 +2,7 @@ package top.maplefix.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import tk.mybatis.mapper.annotation.KeySql;
 import top.maplefix.annotation.Excel;
 import top.maplefix.component.UuIdGenId;
@@ -14,6 +15,7 @@ import java.io.Serializable;
  * @description : 友链实体
  * @date : 2020/1/15 14：51
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Link extends BaseEntity implements Serializable {
@@ -44,7 +46,7 @@ public class Link extends BaseEntity implements Serializable {
      * 头像地址
      */
     @Excel(name = "头像地址")
-    private String avatar;
+    private String headerImg;
 
     /**
      * 邮箱

@@ -40,7 +40,7 @@ public class Book extends BaseEntity implements Serializable {
      * 封面
      */
     @Excel(name = "封面")
-    private String coverUrl;
+    private String headerImg;
 
     /**
      * 作者

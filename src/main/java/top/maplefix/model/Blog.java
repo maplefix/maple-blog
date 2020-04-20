@@ -36,10 +36,15 @@ public class Blog extends BaseEntity implements Serializable {
     @Length(min = 3, max = 100, message = "文章标题不能为空，且长度为{min}~{max}个字符")
     private String title;
     /**
-     * 封面相对路径
+     * 封面图类型.0无,1普通,2大图
+     */
+    @Excel(name = "封面类型")
+    private Integer headerImgType;
+    /**
+     * 封面路径
      */
     @Excel(name = "封面路径")
-    private String coverUrl;
+    private String headerImg;
     /**
      * 博客内容
      */
