@@ -96,7 +96,7 @@ public class BookController extends BaseController {
         Book book = new Book();
         book.setTitle((String) map.get("title"));
         book.setPageNum(Integer.valueOf(((String) map.get("page")).trim()));
-        book.setCoverUrl((String) map.get("logo"));
+        book.setHeaderImg((String) map.get("logo"));
         List<Map<String, String>> authors = (List<Map<String, String>>) map.get("author");
         String author = "";
         for (Map<String, String> authorInfo : authors) {

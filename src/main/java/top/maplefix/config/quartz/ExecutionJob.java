@@ -31,23 +31,23 @@ public class ExecutionJob extends QuartzJobBean {
 
     @Override
     protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
-        Job quartzJob = (Job) context.getMergedJobDataMap().get(Job.JOB_KEY);
+        Job job = (Job) context.getMergedJobDataMap().get(Job.JOB_KEY);
         // 获取spring bean
         JobService quartzJobService = SpringUtils.getBean(JobService.class);
         JobLogService quartzJobLogService = SpringUtils.getBean(JobLogService.class);
 
         JobLog quartzJobLog = new JobLog();
-        quartzJobLog.setJobName(quartzJob.getJobName());
-        quartzJobLog.setBeanName(quartzJob.getBeanName());
-        quartzJobLog.setMethodName(quartzJob.getMethodName());
-        quartzJobLog.setParams(quartzJob.getParams());
-        quartzJobLog.setCronExpression(quartzJob.getCronExpression());
+        quartzJobLog.setJobName(job.getJobName());
+        quartzJobLog.setBeanName(job.getBeanName());
+        quartzJobLog.setMethodName(job.getMethodName());
+        quartzJobLog.setParams(job.getParam());
+        quartzJobLog.setCronExpression(job.getCronExpression());
 
         long startTime = System.currentTimeMillis();
         try {
             // 执行任务
-            log.info("任务准备执行，任务名称：{}", quartzJob.getJobName());
-            QuartzRunnable task = new QuartzRunnable(quartzJob.getBeanName(), quartzJob.getMethodName(), quartzJob.getParams());
+            log.info("任务准备执行，任务名称：{}", job.getJobName());
+            QuartzRunnable task = new QuartzRunnable(job.getBeanName(), job.getMethodName(), job.getParam());
             Future<Object> future = threadPoolTaskExecutor.submit(task);
             Object result = future.get();
             log.info("任务返回值:{}", result);
@@ -56,17 +56,17 @@ public class ExecutionJob extends QuartzJobBean {
             quartzJobLog.setCost(times);
             // 任务状态
             quartzJobLog.setStatus(Constant.SUCCESS);
-            log.info("任务执行完毕，任务名称：{} 总共耗时：{} 毫秒", quartzJob.getJobName(), times);
+            log.info("任务执行完毕，任务名称：{} 总共耗时：{} 毫秒", job.getJobName(), times);
         } catch (Exception e) {
-            log.error("任务执行失败，任务名称：{}" + quartzJob.getJobName(), e);
+            log.error("任务执行失败，任务名称：{}" + job.getJobName(), e);
             long times = System.currentTimeMillis() - startTime;
             quartzJobLog.setCost(times);
             quartzJobLog.setStatus(Constant.FAILED);
             quartzJobLog.setExceptionMsg(getStackTrace(e));
             //设置为暂停状态
-            quartzJob.setStatus(JobConstant.PAUSE);
+            job.setStatus(JobConstant.PAUSE);
             //更新状态
-            quartzJobService.updateJob(quartzJob);
+            quartzJobService.updateJob(job);
         } finally {
             quartzJobLogService.insertJobLog(quartzJobLog);
         }

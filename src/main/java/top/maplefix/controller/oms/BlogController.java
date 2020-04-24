@@ -28,7 +28,7 @@ public class BlogController extends BaseController {
     private BlogService blogService;
 
     /**
-     * 分页查询博客泪飙
+     * 分页查询博客列表
      * @param blog blog
      * @return  TableDataInfo
      */
