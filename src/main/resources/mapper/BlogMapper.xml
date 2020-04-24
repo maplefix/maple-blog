@@ -7,7 +7,8 @@
         <result property="categoryId" column="category_id"/>
         <result property="title" column="title"/>
         <result property="summary" column="summary"/>
-        <result property="coverUrl" column="cover_url"/>
+        <result property="headerImg" column="header_img"/>
+        <result property="headerImgType" column="header_img_type"/>
         <result property="content" column="content"/>
         <result property="htmlContent" column="html_content"/>
         <result property="status" column="status"/>
@@ -28,7 +29,8 @@
         <result property="categoryId" column="category_id"/>
         <result property="title" column="title"/>
         <result property="summary" column="summary"/>
-        <result property="coverUrl" column="cover_url"/>
+        <result property="headerImg" column="header_img"/>
+        <result property="headerImgType" column="header_img_type"/>
         <result property="status" column="status"/>
         <result property="isComment" column="is_comment"/>
         <result property="like" column="like"/>
@@ -53,7 +55,8 @@
         b.title,
         b.summary,
         b.weight,
-        b.cover_url,
+        b.header_img,
+        b.header_img_type,
         b.status,
         b.is_recommend,
         b.like,
@@ -91,7 +94,8 @@
         category_id,
         title,
         summary,
-        cover_url,
+        header_img,
+        header_img_type,
         content,
         is_recommend,
         click,
@@ -113,7 +117,8 @@
         b.title,
         b.summary,
         b.weight,
-        b.cover_url,
+        b.header_img,
+        b.header_img_type,
         b.status,
         b.is_recommend,
         b.like,
@@ -147,7 +152,8 @@
         b.category_id,
         b.title,
         b.summary,
-        b.cover_url,
+        b.header_img,
+        b.header_img_type,
         b.html_content as content,
         b.is_recommend,
         b.click,
@@ -171,7 +177,8 @@
         title,
         summary,
         weight,
-        cover_url,
+        header_img,
+        header_img_type,
         status,
         is_recommend,
         is_comment,
@@ -191,7 +198,8 @@
             <if test="categoryId != null ">category_id,</if>
             <if test="title != null  and title != ''">title,</if>
             <if test="summary != null  and summary != ''">summary,</if>
-            <if test="coverUrl != null  and coverUrl != ''">cover_url,</if>
+            <if test="headerImg != null  and headerImg != ''">header_img,</if>
+            <if test="headerImgType != null  and headerImgType != ''">header_img_type,</if>
             <if test="content != null  and content != ''">content,</if>
             <if test="htmlContent != null  and htmlContent != ''">html_content,</if>
             <if test="status != null ">status,</if>
@@ -206,6 +214,7 @@
             <if test="title != null  and title != ''">#{title},</if>
             <if test="summary != null  and summary != ''">#{summary},</if>
             <if test="headerImg != null  and headerImg != ''">#{headerImg},</if>
+            <if test="headerImgType != null  and headerImgType != ''">#{headerImgType},</if>
             <if test="content != null  and content != ''">#{content},</if>
             <if test="htmlContent != null  and htmlContent != ''">#{htmlContent},</if>
             <if test="status != null ">#{status},</if>
@@ -223,7 +232,8 @@
             <if test="categoryId != null ">category_id = #{categoryId},</if>
             <if test="title != null  and title != ''">title = #{title},</if>
             <if test="summary != null  and summary != ''">summary = #{summary},</if>
-            <if test="coverUrl != null  and coverUrl != ''">cover_url = #{coverUrl},</if>
+            <if test="headerImg != null  and headerImg != ''">header_img = #{headerImg},</if>
+            <if test="headerImgType != null  and headerImgType != ''">header_img_type = #{headerImgType} ,</if>
             <if test="content != null  and content != ''">content = #{content},</if>
             <if test="htmlContent != null  and htmlContent != ''">html_content = #{htmlContent},</if>
             <if test="status != null ">status = #{status},</if>

@@ -7,7 +7,7 @@
         <result property="linkName" column="link_name"/>
         <result property="url" column="url"/>
         <result property="description" column="description"/>
-        <result property="avatar" column="avatar"/>
+        <result property="headerImg" column="header_img"/>
         <result property="status" column="status"/>
         <result property="display" column="display"/>
         <result property="email" column="email"/>
@@ -21,7 +21,7 @@
         link_name,
         url,
         description,
-        avatar,
+        header_img,
         status,
         display,
         email,
@@ -66,7 +66,7 @@
             <if test="linkName != null  and linkName != ''">link_name,</if>
             <if test="url != null  and url != ''">url,</if>
             <if test="description != null  and description != ''">description,</if>
-            <if test="avatar != null  and avatar != ''">avatar,</if>
+            <if test="headerImg != null  and headerImg != ''">header_img,</if>
             <if test="status != null ">status,</if>
             <if test="display != null ">display,</if>
             <if test="email != null  and email != ''">email,</if>
@@ -78,7 +78,7 @@
             <if test="linkName != null  and linkName != ''">#{linkName},</if>
             <if test="url != null  and url != ''">#{url},</if>
             <if test="description != null  and description != ''">#{description},</if>
-            <if test="avatar != null  and avatar != ''">#{avatar},</if>
+            <if test="headerImg != null  and headerImg != ''">#{avatar},</if>
             <if test="status != null ">#{status},</if>
             <if test="display != null ">#{display},</if>
             <if test="email != null  and email != ''">#{email},</if>
@@ -93,7 +93,7 @@
             <if test="linkName != null  and linkName != ''">link_name = #{linkName},</if>
             <if test="url != null  and url != ''">url = #{url},</if>
             <if test="description != null  and description != ''">description = #{description},</if>
-            <if test="avatar != null  and avatar != ''">avatar = #{avatar},</if>
+            <if test="headerImg != null  and headerImg != ''">header_img = #{avatar},</if>
             <if test="status != null ">status = #{status},</if>
             <if test="display != null ">display = #{display},</if>
             <if test="email != null  and email != ''">email = #{email},</if>

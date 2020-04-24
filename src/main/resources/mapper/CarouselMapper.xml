@@ -8,7 +8,7 @@
         <result property="url" column="url"/>
         <result property="description" column="description"/>
         <result property="click" column="click"/>
-        <result property="imgUrl" column="img_url"/>
+        <result property="headerImg" column="header_img"/>
         <result property="display" column="display"/>
         <result property="target" column="target"/>
         <result property="createDate" column="create_date"/>
@@ -20,7 +20,7 @@
         select carousel_id,
         description,
         click,
-        img_url,
+        header_img,
         display,
         target,
         create_date,
@@ -37,7 +37,7 @@
         title,
         description,
         click,
-        img_url,
+        header_img,
         display,
         target,
         create_date,
@@ -67,7 +67,7 @@
         insert into t_carousel (
         <if test="carouselId != null and carouselId != '' ">carousel_id,</if>
         <if test="description != null and description != '' ">description,</if>
-        <if test="imgUrl != null and imgUrl != '' ">img_url,</if>
+        <if test="headerImg != null and headerImg != '' ">header_img,</if>
         <if test="display != null">display,</if>
         <if test="target != null and target != ''">target,</if>
         <if test="url != null and url != ''">url,</if>
@@ -76,7 +76,7 @@
         )values(
         <if test="carouselId != null and carouselId != ''">#{carouselId},</if>
         <if test="description != null and description != ''">#{description},</if>
-        <if test="imgUrl != null and imgUrl != ''">#{imgUrl},</if>
+        <if test="headerImg != null and headerImg != ''">#{headerImg},</if>
         <if test="display != null and display != ''">#{display},</if>
         <if test="target != null and target != ''">#{target},</if>
         <if test="url != null and url != ''">#{url},</if>
@@ -92,8 +92,8 @@
             <if test="description != null and description != ''">
                 description = #{description},
             </if>
-            <if test="imgUrl != null and imgUrl != ''">
-                img_url = #{imgUrl},
+            <if test="headerImg != null and headerImg != ''">
+                header_img = #{headerImg},
             </if>
             <if test="display != null">
                 display = #{display},

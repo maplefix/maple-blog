@@ -5,7 +5,7 @@
     <resultMap type="top.maplefix.model.Book" id="BkBookMap">
         <result property="bookId" column="book_id"/>
         <result property="title" column="title"/>
-        <result property="coverUrl" column="cover_url"/>
+        <result property="headerImg" column="header_img"/>
         <result property="author" column="author"/>
         <result property="categoryId" column="category_id"/>
         <result property="publisher" column="publisher"/>
@@ -26,7 +26,7 @@
     <!--查询单个-->
     <select id="selectBookById" resultMap="BkBookMap">
         select
-          book_id, title, cover_url, author, category_id, publisher, publish_date, page_num, grade, summary, catalog,
+          book_id, title, header_img, author, category_id, publisher, publish_date, page_num, grade, summary, catalog,
           click, like, status, progress, support, create_date, update_date
         from t_book
         where book_id = #{bookId}
@@ -35,7 +35,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="selectBookList" resultMap="BkBookMap">
         select
-        book_id, title, cover_url, author, category_id, publisher, publish_date, page_num, grade, summary, `catalog`,
+        book_id, title, header_img, author, category_id, publisher, publish_date, page_num, grade, summary, `catalog`,
         click, `like`, status, progress, support, create_date,update_date
         from t_book
         <where>
@@ -69,7 +69,7 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="bookId != null and bookId != ''">book_id,</if>
             <if test="title != null and title != '' ">title,</if>
-            <if test="coverUrl != null  and coverUrl != ''">cover_url,</if>
+            <if test="headerImg != null  and headerImg != ''">header_img,</if>
             <if test="author != null  and author != ''">author,</if>
             <if test="categoryId != null  and categoryId != ''">category_id,</if>
             <if test="publisher != null  and publisher != ''">publisher,</if>
@@ -86,7 +86,7 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="bookId != null and bookId !='' ">#{bookId},</if>
             <if test="title != null and title !='' ">#{title},</if>
-            <if test="coverUrl != null  and coverUrl != ''">#{coverUrl},</if>
+            <if test="headerImg != null  and headerImg != ''">#{headerImg},</if>
             <if test="author != null  and author != ''">#{author},</if>
             <if test="categoryId != null  and categoryId != ''">#{categoryId},</if>
             <if test="publisher != null  and publisher != ''">#{publisher},</if>
@@ -109,8 +109,8 @@
             <if test="title != null and title != ''">
                 title = #{title},
             </if>
-            <if test="coverUrl != null and coverUrl != ''">
-                cover_url = #{coverUrl},
+            <if test="headerImg != null and headerImg != ''">
+                header_img = #{headerImg},
             </if>
             <if test="author != null and author != ''">
                 author = #{author},
