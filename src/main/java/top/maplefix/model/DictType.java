@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * @author wangjg
+ * @author Maple
  * @description 字典类型实体类
  * @date 2020/4/17 9:36
  */

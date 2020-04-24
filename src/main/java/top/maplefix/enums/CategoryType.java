@@ -1,7 +1,7 @@
 package top.maplefix.enums;
 
 /**
- * @author wangjg
+ * @author Maple
  * @description 目录类型
  * @date 2020/4/17 11:36
  */

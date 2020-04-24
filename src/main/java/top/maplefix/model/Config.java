@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * @author wangjg
+ * @author Maple
  * @description 参数配置表
  * @date 2020/4/17 14:44
  */

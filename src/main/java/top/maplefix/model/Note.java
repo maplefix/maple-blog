@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @author wangjg
+ * @author Maple
  * @description 读书笔记实体类
  * @date 2020/4/17 10:29
  */
