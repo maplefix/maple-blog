@@ -7,7 +7,7 @@ import top.maplefix.model.Comment;
 import java.util.List;
 
 /**
- * @author wangjg
+ * @author Maple
  * @description 评论mapper
  * @date 2020/2/5 18:17
  */
@@ -76,7 +76,7 @@ public interface CommentMapper extends Mapper<Comment> {
      * @param blogIdList blog的Id
      * @return map
      */
-    List<Comment> selectCommentListByPageIds(@Param("blogIdList") List<Long> blogIdList);
+    List<Comment> selectCommentListByPageIds(@Param("blogIdList") List<String > blogIdList);
 
     /**
      * 获取page id对应的comment
