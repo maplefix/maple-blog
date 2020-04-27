@@ -7,8 +7,7 @@ import tk.mybatis.mapper.entity.Example;
 /**
  * @author : Maple
  * @description : service基类
- * @date : Created in 2019/7/24 22:41
- * @version : v1.0
+ * @date : 2019/12/24 22:41
  */
 public abstract class BaseServiceImpl<T, R extends Mapper<T>>{
 
