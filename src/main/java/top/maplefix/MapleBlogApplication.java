@@ -18,7 +18,7 @@ import top.maplefix.utils.SpringUtils;
  *  EnableAspectJAutoProxy:通过aop框架暴露该代理对象,AopContext能够访问
  * @date : 2020/1/16 17:05
  */
-@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @MapperScan( basePackages = {"top.maplefix.mapper"})
 @EnableAspectJAutoProxy(exposeProxy = true)
 public class MapleBlogApplication {
