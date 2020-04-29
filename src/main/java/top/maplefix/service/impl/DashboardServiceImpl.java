@@ -1,82 +1,231 @@
 package top.maplefix.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import top.maplefix.constant.Constant;
 import top.maplefix.mapper.DashboardMapper;
+import top.maplefix.model.JobLog;
 import top.maplefix.model.LoginLog;
-import top.maplefix.model.OperationLog;
+import top.maplefix.model.OperateLog;
 import top.maplefix.model.VisitLog;
-import top.maplefix.service.IDashboardService;
+import top.maplefix.redis.CacheExpire;
+import top.maplefix.redis.TimeType;
+import top.maplefix.service.DashboardService;
 import top.maplefix.utils.DateUtils;
-import top.maplefix.vo.LogMessage;
+import top.maplefix.utils.StringUtils;
+import top.maplefix.vo.LineChartData;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author : Maple
- * @description :
- * @date : Created in 2019/9/15 18:08
- * @version : v1.0
+ * @description : dashboard面板service实现类
+ * @date : 2020/2/15 18:08
  */
 @Service
-public class DashboardServiceImpl implements IDashboardService {
+@Slf4j
+public class DashboardServiceImpl implements DashboardService {
 
     @Autowired
     private DashboardMapper dashboardMapper;
 
     @Override
-    public List<LogMessage> selectLogMessage() {
-        List<LogMessage> messages = new ArrayList<>();
-        //登录日志
-        List<LoginLog> loginLogList = dashboardMapper.getLoginLogData();
-        //操作日志
-        List<OperationLog> operationLogList = dashboardMapper.getOperationLogData();
-        //访问日志
-        List<VisitLog> visitLogList = dashboardMapper.getVisitLogData();
+    public Map<String, Long> getPanelGroupData() {
+        Map<String, Long> resultMap = new HashMap<>();
+        Long visitorCount = dashboardMapper.getVisitorCount();
+        Long blogCount = dashboardMapper.getBlogCount();
+        Long bookCount = dashboardMapper.getBookCount();
+        Long noteCount = dashboardMapper.getNoteCount();
+        resultMap.put("visitorCount", visitorCount);
+        resultMap.put("blogCount", blogCount);
+        resultMap.put("bookCount", bookCount);
+        resultMap.put("noteCount", noteCount);
+        return resultMap;
+    }
 
-        if (loginLogList != null && loginLogList.size() != 0) {
-            for (LoginLog loginLog : loginLogList) {
-                LogMessage temp = new LogMessage();
-                temp.setDateStr(DateUtils.showTime(DateUtils.parseDate(loginLog.getLoginDate())));
-                temp.setDate(loginLog.getLoginDate());
-                temp.setMessage(loginLog.getLoginName() + " 登录了系统");
-                messages.add(temp);
-            }
+    @Override
+    @Cacheable(value = "DashBoard", key = "'LineChartData'+ #type")
+    @CacheExpire(expire = 3, type = TimeType.HOURS)
+    public LineChartData<Long> getLineChartData(String type) {
+        LineChartData lineChartData = null;
+        switch (type) {
+            case LineChartData.BLOG_LINE:
+                lineChartData = getBlogLineChartData();
+                break;
+            case LineChartData.BOOK_LINE:
+                lineChartData = getBookLineChartData();
+                break;
+            case LineChartData.NOTE_LINE:
+                lineChartData = getNoteLineChartData();
+                break;
+            case LineChartData.VISITOR_LINE:
+                lineChartData = getVisitorLineChartData();
+                break;
+            default:
         }
+        log.info("get line chart data \n{}", lineChartData);
+        return lineChartData;
+    }
 
-        if (operationLogList != null && operationLogList.size() != 0) {
-            for (OperationLog operationLog : operationLogList) {
-                LogMessage temp = new LogMessage();
-                temp.setDateStr(DateUtils.showTime(DateUtils.parseDate(operationLog.getOperDate())));
-                temp.setDate(operationLog.getOperDate());
-                temp.setMessage(operationLog.getOperName() + " 对 " + operationLog.getModule() + " 进行了 " + operationLog.getBusinessType() + " 操作");
-                messages.add(temp);
-            }
-        }
-        //访问日志
-        if (visitLogList != null && visitLogList.size() != 0) {
-            for (VisitLog visitLog : visitLogList) {
-                LogMessage temp = new LogMessage();
-                temp.setDate(visitLog.getVisitDate());
-                temp.setDateStr(DateUtils.showTime(DateUtils.parseDate(visitLog.getVisitDate())));
-                temp.setMessage(visitLog.getVisitIp() + " 访问了 " + visitLog.getModule() + " 模块");
-                messages.add(temp);
-            }
-        }
+    @Override
+    @Cacheable(value = "DashBoard", key = "'SpiderData'")
+    public List<Map<String, Long>> getSpiderData() {
+        return dashboardMapper.getSpiderData();
+    }
 
-        Collections.sort(messages, (logMessage1, logMessage2) -> {
-            long time = DateUtils.parseDate(logMessage1.getDate()).getTime() - DateUtils.parseDate(logMessage2.getDate()).getTime();
-            if (time < 0) {
-                return 1;
-            } else if (time > 0) {
-                return -1;
-            } else {
-                return 0;
+    @Override
+    public List<String> getVisitLogStringList() {
+        List<VisitLog> visitLogList = dashboardMapper.getVisitLog();
+        List<String> result = new ArrayList<>();
+        for (VisitLog visitLog : visitLogList) {
+            String name = "";
+            if (visitLog.getPageId() != null) {
+                if (visitLog.getPageId() == "-1000") {
+                    name = "留言页";
+                } else {
+                    String pageId = visitLog.getPageId();
+                    if (pageId != null) {
+                        name = dashboardMapper.getBlogNameByPageId(pageId);
+                    }
+                }
             }
-        });
-        return messages;
+            //XXX 分钟前 : @47.112.14.207 浏览了 <strong>title</strong> <a href='url'>XXXXX</a>
+            result.add(StringUtils.format("{} : @{} 浏览了 <strong> {} </strong> <a href='{}'> {} </a>",
+                    DateUtils.showTime(visitLog.getCreateDate()), visitLog.getIp(), visitLog.getModule(),
+                    visitLog.getUrl(), StringUtils.isEmpty(name) ? visitLog.getUrl() : name));
+        }
+        return result;
+    }
+
+    @Override
+    public List<String> getLoginLogStringList() {
+        List<LoginLog> loginLogList = dashboardMapper.getLoginLogList();
+        List<String> result = new LinkedList<>();
+        for (LoginLog loginLog : loginLogList) {
+//            XXX 分钟前: XXXX 登录系统 XXXX
+            result.add(StringUtils.format("{} : {} 登录系统 {}{}", DateUtils.showTime(loginLog.getCreateDate()),
+                    loginLog.getLoginName(), loginLog.getStatus().equals(Constant.SUCCESS) ? "成功" : "失败",
+                    loginLog.getStatus().equals(Constant.SUCCESS) ? "" : "异常信息:" + loginLog.getLoginMsg()));
+        }
+        return result;
+    }
+
+    @Override
+    public List<String> getOperateLogStringList() {
+        List<OperateLog> operateLogList = dashboardMapper.getOperateLogList();
+        List<String> result = new LinkedList<>();
+        for (OperateLog operateLog : operateLogList) {
+            result.add(StringUtils.format("{}:{}对{}进行{}操作{}{}", DateUtils.showTime(operateLog.getCreateDate()),
+                    operateLog.getOperateName(), operateLog.getModule(), operateLog.getFunction(), operateLog.getStatus().equals(Constant.SUCCESS) ? "成功" : "失败",
+                    operateLog.getStatus().equals(Constant.SUCCESS) ? "" : ",异常信息:" + operateLog.getExceptionMsg()));
+        }
+        return result;
+    }
+
+    @Override
+    public List<String> getTaskLogStringList() {
+        List<String> result = new LinkedList<>();
+        List<JobLog> jobLogList = dashboardMapper.getJobLogList();
+        for (JobLog jobLog : jobLogList) {
+            result.add(StringUtils.format("{}:{}执行{}", DateUtils.showTime(jobLog.getCreateDate()),
+                    jobLog.getJobName(), jobLog.getStatus().equals(Constant.SUCCESS) ? "成功" : "失败"));
+        }
+        return result;
+    }
+
+    /**
+     * 获取访问折线图数据
+     *
+     * @return 折线图数据
+     */
+    private LineChartData getVisitorLineChartData() {
+        //Get days before the current time mark one week.
+        List<String> actualDataDayList = DateUtils.getPastDaysList(7);
+        List<Long> actualData = new LinkedList<>();
+        for (String day : actualDataDayList) {
+            Long count = dashboardMapper.getVisitorCountByCreateDate(day);
+            actualData.add(count);
+        }
+        //Get days before the select time mark one week.
+        List<String> expectedDataDayList = DateUtils.getPastDaysList(7, 7);
+        List<Long> expectedData = new LinkedList<>();
+        for (String day : expectedDataDayList) {
+            Long count = dashboardMapper.getVisitorCountByCreateDate(day);
+            expectedData.add(count);
+        }
+        LineChartData<Long> lineChartData = new LineChartData<>();
+        lineChartData.setActualData(actualData);
+        lineChartData.setExpectedData(expectedData);
+        lineChartData.setAxisData(actualDataDayList);
+        return lineChartData;
+    }
+
+    private LineChartData getNoteLineChartData() {
+        //Get days before the current time mark one week.
+        List<String> actualDataDayList = DateUtils.getPastDaysList(7);
+        List<Long> actualData = new LinkedList<>();
+        for (String day : actualDataDayList) {
+            Long count = dashboardMapper.getNoteCountByCreateDate(day);
+            actualData.add(count);
+        }
+        //Get days before the select time mark one week.
+        List<String> expectedDataDayList = DateUtils.getPastDaysList(7, 7);
+        List<Long> expectedData = new LinkedList<>();
+        for (String day : expectedDataDayList) {
+            Long count = dashboardMapper.getNoteCountByCreateDate(day);
+            expectedData.add(count);
+        }
+        LineChartData<Long> lineChartData = new LineChartData<>();
+        lineChartData.setActualData(actualData);
+        lineChartData.setExpectedData(expectedData);
+        lineChartData.setAxisData(actualDataDayList);
+        return lineChartData;
+    }
+
+    private LineChartData getBookLineChartData() {
+        //Get days before the current time mark one week.
+        List<String> actualDataDayList = DateUtils.getPastDaysList(7);
+        List<Long> actualData = new LinkedList<>();
+        for (String day : actualDataDayList) {
+            Long count = dashboardMapper.getBookCountByCreateDate(day);
+            actualData.add(count);
+        }
+        //Get days before the select time mark one week.
+        List<String> expectedDataDayList = DateUtils.getPastDaysList(7, 7);
+        List<Long> expectedData = new LinkedList<>();
+        for (String day : expectedDataDayList) {
+            Long count = dashboardMapper.getBookCountByCreateDate(day);
+            expectedData.add(count);
+        }
+        LineChartData<Long> lineChartData = new LineChartData<>();
+        lineChartData.setActualData(actualData);
+        lineChartData.setExpectedData(expectedData);
+        lineChartData.setAxisData(actualDataDayList);
+        return lineChartData;
+    }
+
+    private LineChartData getBlogLineChartData() {
+        //Get days before the current time mark one week.
+        List<String> actualDataDayList = DateUtils.getPastDaysList(7);
+        List<Long> actualData = new LinkedList<>();
+        for (String day : actualDataDayList) {
+            Long count = dashboardMapper.getBlogCountByCreateDate(day);
+            actualData.add(count);
+        }
+        //Get days before the select time mark one week.
+        List<String> expectedDataDayList = DateUtils.getPastDaysList(7, 7);
+        List<Long> expectedData = new LinkedList<>();
+        for (String day : expectedDataDayList) {
+            Long count = dashboardMapper.getBlogCountByCreateDate(day);
+            expectedData.add(count);
+        }
+        LineChartData<Long> lineChartData = new LineChartData<>();
+        lineChartData.setActualData(actualData);
+        lineChartData.setExpectedData(expectedData);
+        lineChartData.setAxisData(actualDataDayList);
+        return lineChartData;
     }
 
 }

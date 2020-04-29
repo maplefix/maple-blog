@@ -1,65 +1,103 @@
 package top.maplefix.mapper;
 
-import org.apache.ibatis.annotations.CacheNamespace;
 import org.apache.ibatis.annotations.Param;
-import tk.mybatis.mapper.additional.aggregation.AggregationMapper;
 import tk.mybatis.mapper.common.Mapper;
 import top.maplefix.model.Blog;
-import top.maplefix.vo.Archive;
-import top.maplefix.vo.CategoryBlog;
+import top.maplefix.vo.BlogQuery;
 
 import java.util.List;
 
 /**
  * @author : Maple
  * @description : 博客mapper
- * @date : 2019/7/25 0:29
-           Edited in 2019/10/28 15:15
- * @version : v1.0
+ * @date : 2020/3/3 0:29
  */
-@CacheNamespace
-public interface BlogMapper extends Mapper<Blog>, AggregationMapper<Blog> {
+public interface BlogMapper extends Mapper<Blog>{
 
     /**
-     * 查询前台首页博客列表
-     * @param title 标题
-     * @param categoryId 分类id
-     * @param label 标签名
-     * @param keyword 前台查询关键字
-     * @param beginDate 开始日期
-     * @param endDate 结束日期
-     * @param isAll 是否查出所有状态的文章
-     * @return 博客列表
-     */
-    List<Blog> selectBlogForIndexPage(@Param("title") String title, @Param("categoryId") String categoryId,
-                                   @Param("label") String label, @Param("keyword") String keyword,
-                                   @Param("beginDate") String beginDate, @Param("endDate") String endDate,
-                                   @Param("isAll") String isAll);
-
-    /**
-     * 根据id批量查询博客列表
-     * @param blogIds 博客id集合
-     * @return Blog
-     */
-    List<Blog> selectBlogByIds(@Param("blogIds") String[] blogIds);
-    /**
-     * 获取归档的Date和count
+     * 查询博客
      *
-     * @return list集合
+     * @param id 博客ID
+     * @return 博客
      */
-    List<Archive> selectArchiveDateAndCount();
+    Blog selectBlogById(String id);
 
     /**
-     * 根据createTime获取blog信息
+     * 查询博客列表
      *
-     * @param createDate 创建的时间
-     * @return blog集合
+     * @param blog 博客
+     * @return 博客集合
      */
-    List<Blog> selectBlogByCreateTime(@Param("createDate") String createDate);
+    List<Blog> selectBlogList(Blog blog);
 
     /**
-     * 首页最热门分类查询
-     * @return
+     * 新增博客
+     *
+     * @param blog 博客
+     * @return 结果
      */
-    List<CategoryBlog> selectBlogForHotCategory();
+    int insertBlog(Blog blog);
+
+    /**
+     * 修改博客
+     *
+     * @param blog 博客
+     * @return 结果
+     */
+    int updateBlog(Blog blog);
+
+    /**
+     * 删除博客
+     *
+     * @param id 博客ID
+     * @return 结果
+     */
+    int deleteBlogById(@Param("id") String id, @Param("username") String username);
+
+    /**
+     * 批量删除博客
+     *
+     * @param ids 需要删除的数据ID
+     * @return 结果
+     */
+    int deleteBlogByIds(@Param("ids") String[] ids, @Param("username") String username);
+
+    /**
+     * 前台查询blog
+     *
+     * @param blogQuery blog查询条件
+     * @return list
+     */
+    List<Blog> selectBlogListQuery(BlogQuery blogQuery);
+
+    /**
+     * 新增blog的like
+     *
+     * @param id id
+     * @return 受影响的行数
+     */
+    int incrementBlogLike(String id);
+
+    /**
+     * 增加blog的click数量
+     *
+     * @param id id
+     */
+    void incrementBlogClick(String id);
+
+    /**
+     * 查询博客
+     *
+     * @param id 博客ID
+     * @return 博客
+     */
+    Blog selectBlogByIdQuery(String id);
+
+    /**
+     * 根据categoryId获取所有的blog
+     *
+     * @param ids category ids
+     * @return blog list
+     */
+    List<Blog> selectBlogListByCategoryIds(@Param("ids") List<String> ids);
 }

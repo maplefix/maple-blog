@@ -1,8 +1,7 @@
 package top.maplefix.mapper;
 
-import org.apache.ibatis.annotations.CacheNamespace;
 import tk.mybatis.mapper.common.Mapper;
-import top.maplefix.model.BlogLabelMid;
+import top.maplefix.model.BlogTagMid;
 
 /**
  * @author : Maple
@@ -10,7 +9,6 @@ import top.maplefix.model.BlogLabelMid;
  * @date : 2019/7/25 17:17
  * @version : v1.0
  */
-@CacheNamespace
-public interface BlogLabelMapper extends Mapper<BlogLabelMid> {
+public interface BlogLabelMapper extends Mapper<BlogTagMid> {
 
 }

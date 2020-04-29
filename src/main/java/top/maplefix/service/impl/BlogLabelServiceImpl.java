@@ -5,20 +5,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import tk.mybatis.mapper.entity.Example;
 import top.maplefix.mapper.BlogLabelMapper;
-import top.maplefix.model.BlogLabel;
-import top.maplefix.model.Label;
-import top.maplefix.service.IBlogLabelService;
+import top.maplefix.model.BlogTagMid;
+import top.maplefix.model.Tag;
+import top.maplefix.service.BlogLabelService;
 
 import java.util.List;
 
 /**
  * @author : Maple
  * @description :
- * @date : Created in 2019/7/25 17:15
+ * @date : 2019/7/25 17:15
  * @version : v1.0
  */
 @Service
-public class BlogLabelServiceImpl implements IBlogLabelService {
+public class BlogLabelServiceImpl implements BlogLabelService {
 
     @Autowired
     private BlogLabelMapper blogLabelMapper;
@@ -27,10 +27,10 @@ public class BlogLabelServiceImpl implements IBlogLabelService {
     @Override
     public boolean isExistBlogLabel(String[] labelIds) {
         for (String labelId : labelIds){
-            Example example = new Example(BlogLabel.class);
+            Example example = new Example(BlogTagMid.class);
             Example.Criteria criteria = example.createCriteria();
             criteria.andEqualTo("labelId", labelId);
-            List<BlogLabel> labelList = blogLabelMapper.selectByExample(example);
+            List<BlogTagMid> labelList = blogLabelMapper.selectByExample(example);
             if(!CollectionUtils.isEmpty(labelList)){
                 return true;
             }
@@ -39,10 +39,10 @@ public class BlogLabelServiceImpl implements IBlogLabelService {
     }
 
     @Override
-    public int countBlogByLabel(Label label) {
-        Example example = new Example(BlogLabel.class);
+    public int countBlogByLabel(Tag tag) {
+        Example example = new Example(BlogTagMid.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("labelId", label.getLabelId());
+        criteria.andEqualTo("labelId", tag.getTagId());
         blogLabelMapper.selectCountByExample(example);
         return blogLabelMapper.selectCountByExample(example);
     }
