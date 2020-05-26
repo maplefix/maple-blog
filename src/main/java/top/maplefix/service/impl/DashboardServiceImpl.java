@@ -6,18 +6,17 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import top.maplefix.constant.Constant;
 import top.maplefix.mapper.DashboardMapper;
-import top.maplefix.model.JobLog;
-import top.maplefix.model.LoginLog;
-import top.maplefix.model.OperateLog;
-import top.maplefix.model.VisitLog;
+import top.maplefix.model.*;
 import top.maplefix.redis.CacheExpire;
 import top.maplefix.redis.TimeType;
 import top.maplefix.service.DashboardService;
+import top.maplefix.service.DictDataService;
 import top.maplefix.utils.DateUtils;
 import top.maplefix.utils.StringUtils;
 import top.maplefix.vo.LineChartData;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author : Maple
@@ -30,6 +29,8 @@ public class DashboardServiceImpl implements DashboardService {
 
     @Autowired
     private DashboardMapper dashboardMapper;
+    @Autowired
+    private DictDataService dictDataService;
 
     @Override
     public Map<String, Long> getPanelGroupData() {
@@ -112,13 +113,24 @@ public class DashboardServiceImpl implements DashboardService {
         return result;
     }
 
+    private Map<String,String> getOperateTypeString() {
+        List<DictData> operateTypeList = dictDataService.selectDictDataByType("sys_oper_type");
+        return operateTypeList.stream().collect(Collectors.toMap(DictData::getDictValue, DictData::getDictLabel));
+    }
     @Override
     public List<String> getOperateLogStringList() {
         List<OperateLog> operateLogList = dashboardMapper.getOperateLogList();
         List<String> result = new LinkedList<>();
+        Map<String, String> operateTypeString = getOperateTypeString();
         for (OperateLog operateLog : operateLogList) {
             result.add(StringUtils.format("{}:{}对{}进行{}操作{}{}", DateUtils.showTime(operateLog.getCreateDate()),
-                    operateLog.getOperateName(), operateLog.getModule(), operateLog.getFunction(), operateLog.getStatus().equals(Constant.SUCCESS) ? "成功" : "失败",
+                    operateLog.getOperateName(), operateLog.getModule(), operateLog.getFunction(),
+                    operateLog.getStatus().equals(Constant.SUCCESS) ? "成功" : "失败",
+                    operateLog.getStatus().equals(Constant.SUCCESS) ? "" : ",异常信息:" + operateLog.getExceptionMsg()));
+            String  businessType = operateLog.getFunction();
+            String typeString = operateTypeString.get(businessType);
+            result.add(StringUtils.format("{} : {} 对 {} 进行 {} 操作 {} {}", DateUtils.showTime(operateLog.getCreateDate()),
+                    operateLog.getOperateName(), operateLog.getModule(), typeString, operateLog.getStatus().equals(Constant.SUCCESS) ? "成功" : "失败",
                     operateLog.getStatus().equals(Constant.SUCCESS) ? "" : ",异常信息:" + operateLog.getExceptionMsg()));
         }
         return result;
@@ -129,7 +141,7 @@ public class DashboardServiceImpl implements DashboardService {
         List<String> result = new LinkedList<>();
         List<JobLog> jobLogList = dashboardMapper.getJobLogList();
         for (JobLog jobLog : jobLogList) {
-            result.add(StringUtils.format("{}:{}执行{}", DateUtils.showTime(jobLog.getCreateDate()),
+            result.add(StringUtils.format("{} : {} 执行 {}", DateUtils.showTime(jobLog.getCreateDate()),
                     jobLog.getJobName(), jobLog.getStatus().equals(Constant.SUCCESS) ? "成功" : "失败"));
         }
         return result;
