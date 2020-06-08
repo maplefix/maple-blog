@@ -12,7 +12,8 @@
     <artifactId>maple-blog</artifactId>
     <version>1.0</version>
     <name>maple-blog</name>
-    <description>Personal blog refactoring project</description>
+    <url>https://maplefix.top</url>
+    <description>Maple' Blog</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -330,91 +331,60 @@
     </dependencies>
 
     <build>
-        <finalName>${project.artifactId}-${project.version}</finalName>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
-            <!-- 打包时跳过测试-->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <skipTests>true</skipTests>
+                    <fork>true</fork> <!-- 如果没有该配置，devtools不会生效 -->
                 </configuration>
-            </plugin>
-            <!-- 打包插件 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <!--内部包排除配置文件-->
-                    <excludes>
-                        <exclude>**/*.properties</exclude>
-                        <exclude>**/*.yml</exclude>
-                        <exclude>db/**</exclude>
-                        <exclude>i18n/**</exclude>
-                        <exclude>logback/*.xml</exclude>
-                        <exclude>mapper/*.xml</exclude>
-                        <exclude>static/**</exclude>
-                        <exclude>templates/**</exclude>
-                        <exclude>banner.txt</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>appassembler-maven-plugin</artifactId>
-                <version>2.1.0</version>
-                <configuration>
-                    <binFileExtensions>
-                        <unix>.bat</unix>
-                        <unix>.sh</unix>
-                    </binFileExtensions>
-                    <binFolder>bin</binFolder>
-                    <repositoryName>lib</repositoryName>
-                    <repositoryLayout>flat</repositoryLayout>
-                    <configurationDirectory>conf</configurationDirectory>
-                    <configurationSourceDirectory>src/main/resources</configurationSourceDirectory>
-                    <copyConfigurationDirectory>true</copyConfigurationDirectory>
-                    <includeConfigurationDirectoryInClasspath>true</includeConfigurationDirectoryInClasspath>
-                    <assembleDirectory>${project.build.directory}/${project.artifactId}</assembleDirectory>
-                    <!--<extraJvmArguments>-Xms128m -Xmx512m</extraJvmArguments>-->
-                    <platforms>
-                        <platform>windows</platform>
-                        <platform>unix</platform>
-                    </platforms>
-                    <programs>
-                        <program>
-                            <mainClass>top.maplefix.MapleBlogApplication</mainClass>
-                            <name>${project.artifactId}-${project.version}</name>
-                        </program>
-                    </programs>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>assemble</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <descriptors>
-                        <descriptor>${project.basedir}/src/main/assembly/assembly.xml</descriptor>
-                    </descriptors>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.yml</include>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.yml</include>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
     </build>
-    <!--打包时使用命令：mvn clean package appassembler:generate-daemons-->
+
+    <!--<repositories>
+        <repository>
+            <id>public</id>
+            <name>aliyun nexus</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>public</id>
+            <name>aliyun nexus</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>-->
 </project>
