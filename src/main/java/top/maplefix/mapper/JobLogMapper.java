@@ -40,9 +40,8 @@ public interface JobLogMapper {
     /**
      * 清空日志
      *
-     * @param username 操作者
      */
-    void cleanJobLog(String username);
+    void cleanJobLog();
 
     /**
      * select quartz log by id
