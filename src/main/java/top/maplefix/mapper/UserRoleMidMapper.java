@@ -7,7 +7,7 @@ import top.maplefix.model.UserRoleMid;
 import java.util.List;
 
 /**
- * @author wangjg
+ * @author Maple
  * @description 用户角色中间表关系
  * @date 2020/2/2 16:45
  */
@@ -47,10 +47,10 @@ public interface UserRoleMidMapper extends Mapper<top.maplefix.model.UserRoleMid
     /**
      * 删除用户和角色关联信息
      *
-     * @param userRoleMid 用户和角色关联信息
+     * @param userRole 用户和角色关联信息
      * @return 结果
      */
-    int deleteUserRoleInfo(UserRoleMid userRoleMid);
+    int deleteUserRoleInfo(UserRoleMid userRole);
 
     /**
      * 批量取消授权用户角色
