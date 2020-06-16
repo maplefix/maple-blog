@@ -6,7 +6,7 @@ import top.maplefix.model.RoleMenuMid;
 import java.util.List;
 
 /**
- * @author wangjg
+ * @author Maple
  * @description 角色菜单关联
  * @date 2020/2/2 16:43
  */
