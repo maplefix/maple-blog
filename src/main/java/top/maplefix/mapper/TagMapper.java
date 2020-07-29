@@ -68,10 +68,9 @@ public interface TagMapper extends Mapper<Tag>{
      * 根据Title查询Tag
      *
      * @param title title
-     * @param type  类型
      * @return Tag tag
      */
-    Tag selectTagByTitle(@Param("title") String title, @Param("type") Integer type);
+    Tag selectTagByTitle(@Param("title") String title);
 
     /**
      * 插入Tag关联
@@ -82,11 +81,10 @@ public interface TagMapper extends Mapper<Tag>{
     int insertTagMid(BlogTagMid blogTagMid);
 
     /**
-     * 根据Tag的type和对应type的id获取TagList
+     * 根据Tag的id获取TagList
      *
-     * @param type 类型
      * @param id   对应类型的id
      * @return Tag list
      */
-    List<Tag> selectTagListByType(@Param("type") Integer type, @Param("id") String id);
+    List<Tag> selectTagListByType(@Param("id") String id);
 }
