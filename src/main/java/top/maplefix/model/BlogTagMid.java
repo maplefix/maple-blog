@@ -31,12 +31,4 @@ public class BlogTagMid implements Serializable {
      * 标签id
      */
     private String tagId;
-    /**
-     * 书单id
-     */
-    private String bookId;
-    /**
-     * 创建时间
-     */
-    private String createDate;
 }
