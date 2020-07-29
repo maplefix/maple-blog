@@ -1,6 +1,7 @@
 package top.maplefix.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import tk.mybatis.mapper.annotation.KeySql;
@@ -68,6 +69,7 @@ public class SysUser extends BaseEntity implements Serializable {
      * 密码
      */
     @Excel(name = "密码")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     /**
      * 盐加密
