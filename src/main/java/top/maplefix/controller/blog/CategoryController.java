@@ -1,4 +1,4 @@
-package top.maplefix.controller.oms;
+package top.maplefix.controller.blog;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.maplefix.annotation.OLog;
 import top.maplefix.common.BaseResult;
-import top.maplefix.controller.BaseController;
+import top.maplefix.controller.common.BaseController;
 import top.maplefix.enums.BusinessType;
 import top.maplefix.model.Category;
 import top.maplefix.service.CategoryService;
@@ -21,7 +21,7 @@ import java.util.List;
  * @date : 2020/1/28 2:53
  */
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/blog/category")
 @Slf4j
 public class CategoryController extends BaseController {
 

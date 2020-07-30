@@ -1,4 +1,4 @@
-package top.maplefix.controller.oms;
+package top.maplefix.controller.blog;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,9 +6,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import top.maplefix.annotation.OLog;
 import top.maplefix.common.BaseResult;
-import top.maplefix.controller.BaseController;
+import top.maplefix.controller.common.BaseController;
 import top.maplefix.enums.BusinessType;
-import top.maplefix.enums.TagType;
 import top.maplefix.model.Tag;
 import top.maplefix.service.TagService;
 import top.maplefix.vo.page.TableDataInfo;
@@ -21,7 +20,7 @@ import java.util.List;
  * @date : 2019/7/28 2:52
  */
 @RestController
-@RequestMapping("/tags")
+@RequestMapping("/blog/tag")
 @Slf4j
 public class TagController extends BaseController {
 
@@ -37,7 +36,6 @@ public class TagController extends BaseController {
     @GetMapping("/list")
     public TableDataInfo list(Tag tag) {
         startPage();
-        tag.setType(TagType.BLOG.getType());
         List<Tag> list = tagService.selectTagList(tag);
         return getDataTable(list);
     }
@@ -51,7 +49,6 @@ public class TagController extends BaseController {
     @OLog(module = "标签管理", businessType = BusinessType.INSERT)
     @PostMapping()
     public BaseResult add(@RequestBody Tag tag) {
-        tag.setType(TagType.BLOG.getType());
         return toResult(tagService.insertTag(tag));
     }
 
