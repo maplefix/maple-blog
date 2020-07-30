@@ -1,11 +1,11 @@
-package top.maplefix.controller.oms;
+package top.maplefix.controller.blog;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import top.maplefix.annotation.OLog;
 import top.maplefix.common.BaseResult;
-import top.maplefix.controller.BaseController;
+import top.maplefix.controller.common.BaseController;
 import top.maplefix.enums.BusinessType;
 import top.maplefix.model.Blog;
 import top.maplefix.service.BlogService;
@@ -20,7 +20,7 @@ import java.util.List;
  * @date : 2020/2/27 16:33
  */
 @RestController
-@RequestMapping("/blog")
+@RequestMapping("/blog/blog")
 @Slf4j
 public class BlogController extends BaseController {
 
