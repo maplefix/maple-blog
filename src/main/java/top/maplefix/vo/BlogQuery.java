@@ -14,7 +14,7 @@ public class BlogQuery implements Serializable {
     /**
      * 分类Id
      */
-    private String categoryId;
+    private Long categoryId;
     /**
      * 是否推荐
      */
