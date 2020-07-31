@@ -4,9 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import top.maplefix.model.SysUser;
-import top.maplefix.secrrity.LoginUser;
 import top.maplefix.exception.CustomException;
+import top.maplefix.secrrity.LoginUser;
 
 /**
  * @author Maple
@@ -86,8 +85,8 @@ public class SecurityUtils {
      * @param userId 用户ID
      * @return 结果
      */
-    public static boolean isAdmin(String  userId) {
-        return SysUser.ADMIN.equals(userId);
+    public static boolean isAdmin(Long  userId) {
+        return userId != null && 1L == userId;
     }
 
     public static void main(String[] args) {
