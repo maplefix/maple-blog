@@ -2,11 +2,8 @@ package top.maplefix.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
-import tk.mybatis.mapper.annotation.KeySql;
 import top.maplefix.annotation.Excel;
-import top.maplefix.component.UuIdGenId;
 
-import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
@@ -21,13 +18,12 @@ public class OperateLog extends BaseEntity implements Serializable {
     /**
      * 操作日志表主键
      */
-    @Id
-    @KeySql(genId = UuIdGenId.class)
-    @Excel(name = "编号")
-    private String operateLogId;
+    @Excel(name = "主键")
+    private Long id;
     /**
      * 操作用户
      */
+    @Excel(name = "操作用户")
     private String operateName;
     /**
      * 模块名

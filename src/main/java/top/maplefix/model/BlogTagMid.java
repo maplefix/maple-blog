@@ -2,10 +2,8 @@ package top.maplefix.model;
 
 import lombok.Builder;
 import lombok.Data;
-import tk.mybatis.mapper.annotation.KeySql;
-import top.maplefix.component.UuIdGenId;
+import top.maplefix.annotation.Excel;
 
-import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
@@ -20,15 +18,14 @@ public class BlogTagMid implements Serializable {
     /**
      * 主键
      */
-    @Id
-    @KeySql(genId = UuIdGenId.class)
-    private String btId;
+    @Excel(name = "主键")
+    private Long id;
     /**
      * 博客id
      */
-    private String blogId;
+    private Long blogId;
     /**
      * 标签id
      */
-    private String tagId;
+    private Long tagId;
 }

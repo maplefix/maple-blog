@@ -14,9 +14,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class Config extends BaseEntity implements Serializable {
     /**
-     * 参数主键
+     * 主键
      */
-    private String configId;
+    private Long id;
 
     /**
      * 参数键名

@@ -2,11 +2,8 @@ package top.maplefix.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
-import tk.mybatis.mapper.annotation.KeySql;
 import top.maplefix.annotation.Excel;
-import top.maplefix.component.UuIdGenId;
 
-import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
@@ -21,10 +18,8 @@ public class Role extends BaseEntity implements Serializable {
     /**
      * 主键id
      */
-    @Id
-    @KeySql(genId = UuIdGenId.class)
-    @Excel(name = "编号")
-    private String roleId;
+    @Excel(name = "主键")
+    private Long id;
     /**
      * 角色名称
      */
@@ -38,7 +33,7 @@ public class Role extends BaseEntity implements Serializable {
      * 角色描述
      */
     @Excel(name = "角色描述")
-    private String description;
+    private String remark;
     /**
      * 角色类型(0:系统角色,1:自定义角色)
      */
@@ -53,7 +48,7 @@ public class Role extends BaseEntity implements Serializable {
      * 排序号
      */
     @Excel(name = "排序")
-    private Integer seq;
+    private Integer roleSort;
 
     /**
      * 用户是否存在此角色标识 默认不存在
@@ -63,18 +58,18 @@ public class Role extends BaseEntity implements Serializable {
     /**
      * 菜单组
      */
-    private String[] menuIds;
+    private Long[] menuIds;
 
 
-    public Role(String roleId) {
-        this.roleId = roleId;
+    public Role(Long roleId) {
+        this.id = roleId;
     }
 
-    public static boolean isAdmin(String roleId) {
-        return "admin".equals(roleId);
+    public static boolean isAdmin(Long roleId) {
+        return roleId != null && 1L == roleId;
     }
 
     public boolean isAdmin() {
-        return isAdmin(this.roleId);
+        return isAdmin(this.id);
     }
 }

@@ -3,11 +3,8 @@ package top.maplefix.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import tk.mybatis.mapper.annotation.KeySql;
-import top.maplefix.component.UuIdGenId;
+import top.maplefix.annotation.Excel;
 
-import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -25,9 +22,8 @@ public class Comment extends BaseEntity implements Serializable {
     /**
      * 主键
      */
-    @Id
-    @KeySql(genId = UuIdGenId.class)
-    private String commentId;
+    @Excel(name = "主键")
+    private Long id;
     /**
      * 昵称
      */
@@ -58,7 +54,7 @@ public class Comment extends BaseEntity implements Serializable {
     /**
      * 父评论的id
      */
-    private String parentId;
+    private Long parentId;
     /**
      * QQ号
      */
@@ -72,7 +68,7 @@ public class Comment extends BaseEntity implements Serializable {
     /**
      * 页面id
      */
-    private String pageId;
+    private Long pageId;
     /**
      * 页面url
      */

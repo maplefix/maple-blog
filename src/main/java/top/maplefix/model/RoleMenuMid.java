@@ -2,10 +2,7 @@ package top.maplefix.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
-import tk.mybatis.mapper.annotation.KeySql;
-import top.maplefix.component.UuIdGenId;
 
-import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
@@ -18,17 +15,11 @@ import java.io.Serializable;
 public class RoleMenuMid extends BaseEntity implements Serializable {
 
     /**
-     * 主键
-     */
-    @Id
-    @KeySql(genId = UuIdGenId.class)
-    private String rmmId;
-    /**
      * 角色id
      */
-    private String roleId;
+    private Long roleId;
     /**
      * 菜单id
      */
-    private String menuId;
+    private Long menuId;
 }

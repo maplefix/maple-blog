@@ -5,11 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
-import tk.mybatis.mapper.annotation.KeySql;
 import top.maplefix.annotation.Excel;
-import top.maplefix.component.UuIdGenId;
 
-import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import java.io.Serializable;
 
@@ -26,10 +23,8 @@ public class Link extends BaseEntity implements Serializable {
     /**
      * 友链表主键
      */
-    @Id
-    @KeySql(genId = UuIdGenId.class)
-    @Excel(name = "编号")
-    private String linkId;
+    @Excel(name = "主键")
+    private Long id;
     /**
      * 友链名称
      */
@@ -71,6 +66,11 @@ public class Link extends BaseEntity implements Serializable {
      */
     @Excel(name = "是否显示",readConverterExp = "1=显示,0=不显示")
     private Integer display;
+    /**
+     * 权重
+     */
+    @Excel(name = "权重")
+    private Integer  weight;
     /**
      * 排序值
      */

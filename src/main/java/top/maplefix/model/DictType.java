@@ -3,10 +3,8 @@ package top.maplefix.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import tk.mybatis.mapper.annotation.KeySql;
-import top.maplefix.component.UuIdGenId;
+import top.maplefix.annotation.Excel;
 
-import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
@@ -21,9 +19,8 @@ public class DictType extends BaseEntity implements Serializable {
     /**
      * 主键
      */
-    @Id
-    @KeySql(genId = UuIdGenId.class)
-    private String dataTypeId;
+    @Excel(name = "主键")
+    private Long id;
     /**
      * 字典名
      */
@@ -36,4 +33,8 @@ public class DictType extends BaseEntity implements Serializable {
      * 状态（0停用，1正常）
      */
     private Integer status;
+    /**
+     * 备注
+     */
+    private String remark;
 }

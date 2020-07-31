@@ -3,11 +3,8 @@ package top.maplefix.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import tk.mybatis.mapper.annotation.KeySql;
 import top.maplefix.annotation.Excel;
-import top.maplefix.component.UuIdGenId;
 
-import javax.persistence.Id;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -25,10 +22,8 @@ public class Blog extends BaseEntity implements Serializable {
     /**
      * 主键
      */
-    @Id
-    @KeySql(genId = UuIdGenId.class)
-    @Excel(name = "编号")
-    private String blogId;
+    @Excel(name = "主键")
+    private Long id;
     /**
      * 博客标题
      */

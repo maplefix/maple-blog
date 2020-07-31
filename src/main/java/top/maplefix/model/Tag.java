@@ -3,11 +3,8 @@ package top.maplefix.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import tk.mybatis.mapper.annotation.KeySql;
 import top.maplefix.annotation.Excel;
-import top.maplefix.component.UuIdGenId;
 
-import javax.persistence.Id;
 import javax.persistence.Transient;
 import java.io.Serializable;
 
@@ -24,10 +21,8 @@ public class Tag extends BaseEntity implements Serializable {
     /**
      * 标签表主键
      */
-    @Id
-    @KeySql(genId = UuIdGenId.class)
-    @Excel(name = "编号")
-    public String tagId;
+    @Excel(name = "主键")
+    private Long id;
     /**
      * 标签名
      */
@@ -38,12 +33,6 @@ public class Tag extends BaseEntity implements Serializable {
      */
     @Excel(name = "标签轮廓颜色")
     public String color;
-
-    /**
-     * 标签类型，1博客标签，2读书标签
-     */
-    @Excel(name = "标签类型")
-    public Integer type;
     /**
      * 备注
      */
@@ -57,9 +46,8 @@ public class Tag extends BaseEntity implements Serializable {
     @Transient
     public Integer count;
 
-    public Tag(String tagName, String color, Integer type) {
+    public Tag(String tagName, String color) {
         this.color = color;
         this.tagName = tagName;
-        this.type = type;
     }
 }

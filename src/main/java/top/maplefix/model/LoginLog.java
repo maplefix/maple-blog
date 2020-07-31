@@ -1,13 +1,9 @@
 package top.maplefix.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Builder;
 import lombok.Data;
-import tk.mybatis.mapper.annotation.KeySql;
 import top.maplefix.annotation.Excel;
-import top.maplefix.component.UuIdGenId;
 
-import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
@@ -17,16 +13,13 @@ import java.io.Serializable;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Builder
 public class LoginLog extends BaseEntity implements Serializable {
 
     /**
      * 主键id
      */
-    @Id
-    @KeySql(genId = UuIdGenId.class)
     @Excel(name = "编号")
-    private String loginLogId;
+    private Long id;
     /**
      * 登录名
      */

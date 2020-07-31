@@ -2,11 +2,8 @@ package top.maplefix.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
-import tk.mybatis.mapper.annotation.KeySql;
 import top.maplefix.annotation.Excel;
-import top.maplefix.component.UuIdGenId;
 
-import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +19,8 @@ public class Menu extends BaseEntity implements Serializable {
     /**
      * 主键ID(每4位进行编号,父子关系采用拼接,例如00010001)
      */
-    @Id
-    @KeySql(genId = UuIdGenId.class)
-    @Excel(name = "编号")
-    private String menuId;
+    @Excel(name = "主键")
+    private Long id;
     /**
      * 菜单名称
      */
@@ -35,7 +30,7 @@ public class Menu extends BaseEntity implements Serializable {
      * 父菜单ID
      */
     @Excel(name = "父菜单ID")
-    private String parentId;
+    private Long parentId;
     /**
      * 组件地址
      */
@@ -46,20 +41,16 @@ public class Menu extends BaseEntity implements Serializable {
      */
     @Excel(name = "路由地址")
     private String path;
-    /**
-     * 菜单描述信息
-     */
-    @Excel(name = "菜单描述")
-    private String description;
+
     /**
      * 是否为外链(1是,0否)
      */
     @Excel(name = "是否为外链",readConverterExp = "1=是外链,0=不是外链")
     private Integer isFrame;
     /**
-     * 菜单类型（0目录 1菜单 2按钮）
+     * 菜单类型（M目录 C菜单 F按钮）
      */
-    @Excel(name = "菜单类型",readConverterExp = "0=目录,1=菜单,2=按钮")
+    @Excel(name = "菜单类型",readConverterExp = "M=目录,C=菜单,F=按钮")
     private Integer menuType;
     /**
      *  菜单状态(1显示,0隐藏)

@@ -2,11 +2,8 @@ package top.maplefix.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
-import tk.mybatis.mapper.annotation.KeySql;
 import top.maplefix.annotation.Excel;
-import top.maplefix.component.UuIdGenId;
 
-import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.List;
@@ -24,10 +21,8 @@ public class Category implements Serializable {
     /**
      * 分类主键
      */
-    @Id
-    @KeySql(genId = UuIdGenId.class)
-    @Excel(name = "编号")
-    private String categoryId;
+    @Excel(name = "主键")
+    private Long id;
     /**
      * 分类名称
      */
@@ -49,11 +44,6 @@ public class Category implements Serializable {
      */
     @Excel(name = "描述")
     private String description;
-
-    /**
-     * 分类的类型
-     */
-    private Integer type;
 
     private List<Blog> blogList;
 }

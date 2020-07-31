@@ -4,11 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import tk.mybatis.mapper.annotation.KeySql;
 import top.maplefix.annotation.Excel;
-import top.maplefix.component.UuIdGenId;
 
-import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.List;
 
@@ -23,18 +20,15 @@ import java.util.List;
 @NoArgsConstructor
 public class SysUser extends BaseEntity implements Serializable {
 
-    public static final String ADMIN = "f0e38fd7bcee4c248a0908258d6947d7";
 
-    public SysUser(String id) {
-        this.userId = id;
+    public SysUser(Long id) {
+        this.id = id;
     }
     /**
      * 用户表主键
      */
-    @Id
-    @KeySql(genId = UuIdGenId.class)
-    @Excel(name = "编号")
-    private String userId;
+    @Excel(name = "主键")
+    private Long id;
     /**
      * 用户名
      */
@@ -104,13 +98,13 @@ public class SysUser extends BaseEntity implements Serializable {
     /**
      * 角色组
      */
-    private String[] roleIds;
+    private Long[] roleIds;
 
     public boolean isAdmin() {
-        return isAdmin(this.userId);
+        return isAdmin(this.id);
     }
 
-    public static boolean isAdmin(String userId) {
-        return ADMIN.equals(userId);
+    public static boolean isAdmin(Long userId) {
+        return userId != null && 1L == userId;
     }
 }

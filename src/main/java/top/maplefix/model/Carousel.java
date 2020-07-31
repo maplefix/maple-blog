@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
+import top.maplefix.annotation.Excel;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -22,7 +23,8 @@ import java.io.Serializable;
 public class Carousel extends BaseEntity implements Serializable {
 
     @NotNull(message = "主键不能为空")
-    private String  carouselId;
+    @Excel(name = "主键")
+    private Long id;
 
     @NotNull(message = "标题不能为空")
     private String title;

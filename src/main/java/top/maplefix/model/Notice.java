@@ -3,10 +3,7 @@ package top.maplefix.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import tk.mybatis.mapper.annotation.KeySql;
-import top.maplefix.component.UuIdGenId;
 
-import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
@@ -22,9 +19,7 @@ public class Notice extends BaseEntity implements Serializable {
     /**
      * 公告ID
      */
-    @Id
-    @KeySql(genId = UuIdGenId.class)
-    private String noticeId;
+    private Long id;
 
     /**
      * 公告标题

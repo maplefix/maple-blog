@@ -2,10 +2,7 @@ package top.maplefix.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import tk.mybatis.mapper.annotation.KeySql;
-import top.maplefix.component.UuIdGenId;
 
-import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
@@ -17,9 +14,10 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class LocalStorage extends BaseEntity implements Serializable {
 
-    @Id
-    @KeySql(genId = UuIdGenId.class)
-    private String  fileId;
+    /**
+     * 主键
+     */
+    private Long id;
     /**
      * 文件真实名称
      */

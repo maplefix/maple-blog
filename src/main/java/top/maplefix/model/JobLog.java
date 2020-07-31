@@ -2,11 +2,8 @@ package top.maplefix.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
-import tk.mybatis.mapper.annotation.KeySql;
 import top.maplefix.annotation.Excel;
-import top.maplefix.component.UuIdGenId;
 
-import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
@@ -21,10 +18,8 @@ public class JobLog extends BaseEntity implements Serializable {
     /**
      * 主键
      */
-    @Id
-    @KeySql(genId = UuIdGenId.class)
-    @Excel(name = "编号")
-    private String jobLogId;
+    @Excel(name = "主键")
+    private Long id;
     /**
      *  任务名
      */

@@ -2,7 +2,6 @@ package top.maplefix.model;
 
 import lombok.Data;
 
-import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
@@ -12,8 +11,10 @@ import java.io.Serializable;
  */
 @Data
 public class QiNiuContent extends BaseEntity implements Serializable {
-    @Id
-    private String fileId;
+    /**
+     * 主键
+     */
+    private Long id;
     /**
      * 文件名
      */
