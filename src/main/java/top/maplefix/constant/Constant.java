@@ -18,7 +18,7 @@ public class Constant {
     /**
      * 验证码过期时间(单位为分钟)
      */
-    public static final Integer CAPTCHA_EXPIRATION = 2;
+    public static final Integer CAPTCHA_EXPIRATION = 5;
 
     /**
      * token
