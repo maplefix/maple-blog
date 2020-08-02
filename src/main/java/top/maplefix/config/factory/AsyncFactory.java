@@ -46,18 +46,18 @@ public class AsyncFactory {
         return new TimerTask() {
             @Override
             public void run() {
-                String address = AddressUtils.getRealAddressByIp(ip);
+                String address = AddressUtils.getCityInfoByIp(ip);
                 String os = userAgent.getOperatingSystem().getName();
                 String browser = userAgent.getBrowser().getName();
-                LoginLog loginLog = LoginLog.builder()
-                        .loginName(username)
-                        .ip(ip)
-                        .browser(browser)
-                        .os(os)
-                        .loginMsg(message)
-                        .location(address)
-                        .status(status)
-                        .build();
+                LoginLog loginLog = new LoginLog();
+                loginLog.setLoginName(username);
+                loginLog.setIp(ip);
+                loginLog.setBrowser(browser);
+                loginLog.setOs(os);
+                loginLog.setLoginMsg(message.length()<=2000?message:message.substring(2000));
+                loginLog.setLocation(address);
+                loginLog.setStatus(status);
+                loginLog.setCreateDate(DateUtils.getTime());
                 log.info("insert login log {}", loginLog);
                 SpringUtils.getBean(LoginLogService.class).insertLoginLog(loginLog);
             }
