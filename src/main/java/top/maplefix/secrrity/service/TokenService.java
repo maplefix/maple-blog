@@ -56,6 +56,9 @@ public class TokenService {
     @Autowired
     private RedisCacheService redisCacheService;
 
+    public TokenService() {
+    }
+
     /**
      * 获取用户身份信息
      *
@@ -69,7 +72,8 @@ public class TokenService {
             // 解析对应的权限以及用户信息
             String uuid = (String) claims.get(Constant.LOGIN_USER_KEY);
             String userKey = getTokenKey(uuid);
-            return redisCacheService.getCacheObject(userKey);
+            Object cacheObject = redisCacheService.getCacheObject(userKey);
+            return (LoginUser)cacheObject;
         }
         return null;
     }
@@ -92,7 +96,7 @@ public class TokenService {
      */
     public String createToken(LoginUser loginUser) {
         String token = UUID.randomUUID().toString();
-        loginUser.setUserToken(token);
+        loginUser.setToken(token);
         setUserAgent(loginUser);
         refreshToken(loginUser);
 
@@ -110,8 +114,8 @@ public class TokenService {
         long expireTime = loginUser.getExpireTime();
         long currentTime = System.currentTimeMillis();
         if (expireTime - currentTime <= MILLIS_MINUTE_TEN) {
-            String token = loginUser.getUserToken();
-            loginUser.setUserToken(token);
+            String token = loginUser.getToken();
+            loginUser.setToken(token);
             refreshToken(loginUser);
         }
     }
@@ -125,7 +129,7 @@ public class TokenService {
         loginUser.setLoginTime(System.currentTimeMillis());
         loginUser.setExpireTime(loginUser.getLoginTime() + expireTime * MILLIS_MINUTE);
         // 根据uuid将OnlineUser缓存
-        String userKey = getTokenKey(loginUser.getUserToken());
+        String userKey = getTokenKey(loginUser.getToken());
         redisCacheService.setCacheObject(userKey, loginUser, expireTime, TimeUnit.MINUTES);
     }
 
@@ -138,7 +142,7 @@ public class TokenService {
         UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
         String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
         loginUser.setIp(ip);
-        loginUser.setLocation(AddressUtils.getRealAddressByIp(ip));
+        loginUser.setLocation(AddressUtils.getCityInfoByIp(ip));
         loginUser.setBrowser(userAgent.getBrowser().getName());
         loginUser.setOs(userAgent.getOperatingSystem().getName());
     }

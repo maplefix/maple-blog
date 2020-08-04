@@ -35,7 +35,7 @@ public class SysPermissionService {
         if (sysUser.isAdmin()) {
             roles.add("admin");
         } else {
-            roles.addAll(roleService.selectRolePermissionByUserId(sysUser.getUserId()));
+            roles.addAll(roleService.selectRolePermissionByUserId(sysUser.getId()));
         }
         return roles;
     }
@@ -52,7 +52,7 @@ public class SysPermissionService {
         if (sysUser.isAdmin()) {
             roles.add("*:*:*");
         } else {
-            roles.addAll(menuService.selectMenuPermsByUserId(sysUser.getUserId()));
+            roles.addAll(menuService.selectMenuPermsByUserId(sysUser.getId()));
         }
         return roles;
     }

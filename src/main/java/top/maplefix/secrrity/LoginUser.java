@@ -4,12 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import top.maplefix.model.Role;
 import top.maplefix.model.SysUser;
 
-import java.io.Serializable;
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -18,12 +15,13 @@ import java.util.Set;
  * @date 2020/1/14 17:25
  */
 @Data
-public class LoginUser implements Serializable, UserDetails {
+public class LoginUser implements UserDetails {
 
     /**
-     * 用户登陆code
+     * token
      */
-    private String userToken;
+    private String token;
+
     /**
      * login time
      */
@@ -53,33 +51,27 @@ public class LoginUser implements Serializable, UserDetails {
      * operating system
      */
     private String os;
+
     /**
-     * 登陆用户
-     */
-    private SysUser user;
-    /**
-     * 角色集合
-     */
-    private List<Role> role;
-    /**
-     * 权限集合
+     * Permission list
      */
     private Set<String> permissions;
 
-    public LoginUser(SysUser user){
-        this.user = user;
+    /**
+     * User information
+     */
+    private SysUser user;
+
+
+    public LoginUser() {
     }
 
-    public LoginUser(SysUser user, Set<String> permissions){
+    public LoginUser(SysUser user, Set<String> permissions) {
         this.user = user;
         this.permissions = permissions;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
+    @JsonIgnore
     @Override
     public String getPassword() {
         return user.getPassword();
@@ -124,5 +116,10 @@ public class LoginUser implements Serializable, UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
     }
 }
