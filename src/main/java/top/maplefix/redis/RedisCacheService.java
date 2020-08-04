@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
  * @description redis操作
  * @date 2020/1/22 17:29
  */
+@SuppressWarnings(value = {"unchecked", "rawtypes"})
 @Component
 public class RedisCacheService {
 

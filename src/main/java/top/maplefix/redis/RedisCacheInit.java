@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.stereotype.Component;
 import top.maplefix.config.QiNiuConfig;
 
 /**
@@ -12,7 +11,7 @@ import top.maplefix.config.QiNiuConfig;
  * @description redis初始化加载信息
  * @date 2020/1/18 14:37
  */
-@Component
+//@Component
 @Slf4j
 public class RedisCacheInit implements CommandLineRunner {
     @Autowired

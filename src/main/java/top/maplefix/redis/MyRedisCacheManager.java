@@ -31,33 +31,35 @@ import java.util.concurrent.Callable;
 @Slf4j
 public class MyRedisCacheManager extends RedisCacheManager implements ApplicationContextAware, InitializingBean {
 
+    private ApplicationContext applicationContext;
+
+    private Map<String, RedisCacheConfiguration> initialCacheConfiguration = new LinkedHashMap<>();
 
     /**
-     * 上下文对象
+     * key serializer
      */
-    private ApplicationContext applicationContext;
-    /**
-     * 初始化redis缓存配置
-     */
-    private Map<String, RedisCacheConfiguration> initialCacheConfiguration = new LinkedHashMap<>();
-    /**
-     *  key serializer
-     */
-    public static final StringRedisSerializer STRING_REDIS_SERIALIZER = new StringRedisSerializer();
+    public static final StringRedisSerializer STRING_SERIALIZER = new StringRedisSerializer();
+
     /**
      * value serializer
+     * <pre>
+     *     使用 FastJsonRedisSerializer 会报错：java.lang.ClassCastException
+     *     FastJsonRedisSerializer<Object> fastSerializer = new FastJsonRedisSerializer<>(Object.class);
+     * </pre>
      */
-    public static final GenericFastJsonRedisSerializer FAST_JSON_REDIS_SERIALIZER = new GenericFastJsonRedisSerializer();
+
+    public static final GenericFastJsonRedisSerializer FASTJSON_SERIALIZER = new GenericFastJsonRedisSerializer();
+
     /**
      * key serializer pair
      */
-    public static final RedisSerializationContext.SerializationPair<String> STRING_PAIR =
-            RedisSerializationContext.SerializationPair.fromSerializer(STRING_REDIS_SERIALIZER);
+    public static final RedisSerializationContext.SerializationPair<String> STRING_PAIR = RedisSerializationContext
+            .SerializationPair.fromSerializer(STRING_SERIALIZER);
     /**
      * value serializer pair
      */
-    public static final RedisSerializationContext.SerializationPair<Object> FAST_JSON_PAIR=
-            RedisSerializationContext.SerializationPair.fromSerializer(FAST_JSON_REDIS_SERIALIZER);
+    public static final RedisSerializationContext.SerializationPair<Object> FASTJSON_PAIR = RedisSerializationContext
+            .SerializationPair.fromSerializer(FASTJSON_SERIALIZER);
 
     public MyRedisCacheManager(RedisCacheWriter cacheWriter, RedisCacheConfiguration defaultCacheConfiguration) {
         super(cacheWriter, defaultCacheConfiguration);
@@ -155,7 +157,7 @@ public class MyRedisCacheManager extends RedisCacheManager implements Applicatio
                         .entryTtl(duration)
                         .disableCachingNullValues()
                         .serializeKeysWith(STRING_PAIR)
-                        .serializeValuesWith(FAST_JSON_PAIR);
+                        .serializeValuesWith(FASTJSON_PAIR);
                 initialCacheConfiguration.put(cacheName, config);
             } else {
                 log.warn("{} use default expiration.", cacheName);
@@ -267,4 +269,5 @@ public class MyRedisCacheManager extends RedisCacheManager implements Applicatio
             }
         }
     }
+
 }
