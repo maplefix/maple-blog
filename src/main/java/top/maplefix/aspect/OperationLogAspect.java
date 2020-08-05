@@ -29,7 +29,6 @@ import top.maplefix.utils.SpringUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
-import java.text.MessageFormat;
 import java.util.Map;
 
 /**
@@ -111,7 +110,7 @@ public class OperationLogAspect {
             String className = joinPoint.getTarget().getClass().getName();
             // get method name
             String methodName = joinPoint.getSignature().getName();
-            operateLog.setMethod(MessageFormat.format("{}.{}()", className, methodName));
+            operateLog.setMethod(top.maplefix.utils.StringUtils.format("{}.{}()", className, methodName));
             // get request method
             operateLog.setMethod(ServletUtils.getRequest().getMethod());
             // set method args

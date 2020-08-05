@@ -22,14 +22,14 @@ public class MenuConstant {
     /**
      * 目录
      */
-    public static final int CONTENTS = 0;
+    public static final String CONTENTS = "M";
     /**
      * 菜单
      */
-    public static final int MENU = 1;
+    public static final String MENU = "C";
     /**
      * 按钮
      */
-    public static final int BUTTON = 2;
+    public static final String BUTTON = "F";
 
 }
