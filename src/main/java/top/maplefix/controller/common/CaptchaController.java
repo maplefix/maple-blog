@@ -1,9 +1,8 @@
-package top.maplefix.controller.oms;
+package top.maplefix.controller.common;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.maplefix.common.BaseResult;
 import top.maplefix.constant.Constant;
@@ -23,7 +22,6 @@ import java.util.concurrent.TimeUnit;
  * @date : 2020/1/24 19:42
  */
 @RestController
-@RequestMapping("/captcha")
 @Slf4j
 public class CaptchaController {
 

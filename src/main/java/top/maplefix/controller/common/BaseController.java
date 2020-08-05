@@ -1,4 +1,4 @@
-package top.maplefix.controller;
+package top.maplefix.controller.common;
 
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.page.PageMethod;
