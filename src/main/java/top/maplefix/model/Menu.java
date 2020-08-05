@@ -51,7 +51,7 @@ public class Menu extends BaseEntity implements Serializable {
      * 菜单类型（M目录 C菜单 F按钮）
      */
     @Excel(name = "菜单类型",readConverterExp = "M=目录,C=菜单,F=按钮")
-    private Integer menuType;
+    private String  menuType;
     /**
      *  菜单状态(1显示,0隐藏)
      */

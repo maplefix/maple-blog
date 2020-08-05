@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import top.maplefix.annotation.VLog;
 import top.maplefix.common.BaseResult;
-import top.maplefix.controller.BaseController;
+import top.maplefix.controller.common.BaseController;
 import top.maplefix.model.Blog;
 import top.maplefix.model.Comment;
 import top.maplefix.model.Link;
-import top.maplefix.service.BlogFrontService;
+import top.maplefix.service.FrontService;
 import top.maplefix.utils.HttpUtils;
 import top.maplefix.utils.StringUtils;
 import top.maplefix.vo.BlogQuery;
@@ -30,12 +30,12 @@ import java.util.Map;
  * @date : 2020/3/12 22:26
  */
 @RestController
-@RequestMapping("/p")
+@RequestMapping("/f")
 @Slf4j
-public class BlogFrontController extends BaseController {
+public class FrontController extends BaseController {
 
     @Autowired
-    private BlogFrontService frontService;
+    private FrontService frontService;
 
     private static final String QQ_QUERY_URL = "https://r.qzone.qq.com/fcg-bin/cgi_get_portrait.fcg";
 
@@ -53,7 +53,7 @@ public class BlogFrontController extends BaseController {
 
     @PutMapping("/link/{id}")
     @VLog(module = "友链跳转")
-    public BaseResult linkRedirect(@PathVariable String  id) {
+    public BaseResult linkRedirect(@PathVariable Long  id) {
         return BaseResult.success(frontService.incrementLinkClick(id));
     }
 
@@ -170,32 +170,32 @@ public class BlogFrontController extends BaseController {
      * @return
      */
     @GetMapping("/comment/{id}")
-    public BaseResult commentBlog(@PathVariable String id) {
+    public BaseResult commentBlog(@PathVariable Long id) {
         List<Comment> commentList = frontService.selectCommentListByPageId(id);
         return BaseResult.success(commentList);
     }
 
     @PutMapping("/comment/good/{id}")
     @VLog(module = "点赞评论")
-    public BaseResult goodComment(@PathVariable String id) {
+    public BaseResult goodComment(@PathVariable Long id) {
         return toResult(frontService.incrementCommentGood(id));
     }
 
     @PutMapping("/comment/bad/{id}")
     @VLog(module = "踩评论")
-    public BaseResult badComment(@PathVariable String id) {
+    public BaseResult badComment(@PathVariable Long id) {
         return toResult(frontService.incrementCommentBad(id));
     }
 
     @PutMapping("/blog/like/{id}")
     @VLog(module = "点赞博客", pageId = "#id")
-    public BaseResult likeBlog(@PathVariable String id) {
+    public BaseResult likeBlog(@PathVariable Long id) {
         return BaseResult.success(frontService.incrementBlogLike(id));
     }
 
     @GetMapping("/blog/{id}")
     @VLog(module = "查看博客", pageId = "#id")
-    public BaseResult blogDetail(@PathVariable String id) {
+    public BaseResult blogDetail(@PathVariable Long id) {
         Blog blog = frontService.selectBlogDetailById(id);
         frontService.incrementBlogClick(id);
         return BaseResult.success(blog);

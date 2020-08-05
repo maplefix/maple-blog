@@ -2,6 +2,7 @@ package top.maplefix.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import top.maplefix.annotation.Excel;
 
 import java.io.Serializable;
@@ -12,6 +13,7 @@ import java.io.Serializable;
  * @date 2020/1/15 15:55
  */
 @Data
+@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Role extends BaseEntity implements Serializable {
 
@@ -28,17 +30,14 @@ public class Role extends BaseEntity implements Serializable {
     /**
      * 角色权限字符串
      */
+    @Excel(name = "角色权限字符串")
     private String roleKey;
     /**
      * 角色描述
      */
     @Excel(name = "角色描述")
     private String remark;
-    /**
-     * 角色类型(0:系统角色,1:自定义角色)
-     */
-    @Excel(name = "角色类型",readConverterExp = "1=自定义角色,0=系统角色")
-    private Integer roleType;
+
     /**
      * 角色类型(0:系统角色,1:自定义角色)
      */
@@ -65,7 +64,7 @@ public class Role extends BaseEntity implements Serializable {
         this.id = roleId;
     }
 
-    public static boolean isAdmin(Long roleId) {
+    private static boolean isAdmin(Long roleId) {
         return roleId != null && 1L == roleId;
     }
 

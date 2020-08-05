@@ -16,8 +16,8 @@ import java.util.List;
  * @date : 2020/1/15 15:09
  */
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SysUser extends BaseEntity implements Serializable {
 
 
@@ -104,7 +104,7 @@ public class SysUser extends BaseEntity implements Serializable {
         return isAdmin(this.id);
     }
 
-    public static boolean isAdmin(Long userId) {
+    private static boolean isAdmin(Long userId) {
         return userId != null && 1L == userId;
     }
 }

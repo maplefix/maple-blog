@@ -59,7 +59,7 @@ public class DictData extends BaseEntity implements Serializable {
      * 排序号
      */
     @Excel(name = "排序号")
-    private Integer seq;
+    private Integer dictSort;
     /**
      * 状态（0正常 1停用）
      */
