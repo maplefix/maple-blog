@@ -28,7 +28,8 @@ public class BaseResult extends HashMap<String,Object> {
      */
     public static final String DATA = "data";
 
-    public BaseResult(){}
+    public BaseResult(){
+    }
 
     /**
      * 初始化一个BaseResult对象,无data对象
@@ -67,11 +68,11 @@ public class BaseResult extends HashMap<String,Object> {
     /**
      * 返回成功消息
      *
-     * @param msg 返回内容
+     * @param data 返回内容
      * @return 成功消息
      */
-    public static BaseResult success(String msg) {
-        return BaseResult.success(msg, null);
+    public static BaseResult success(Object data) {
+        return BaseResult.success(Constant.SUCCESS_MSG, data);
     }
     /**
      * 返回成功消息
@@ -79,8 +80,8 @@ public class BaseResult extends HashMap<String,Object> {
      * @param msg 返回内容
      * @return 成功消息
      */
-    public static BaseResult success(Object msg) {
-        return BaseResult.success(Constant.SUCCESS_MSG, null);
+    public static BaseResult success(String msg) {
+        return BaseResult.success(msg, null);
     }
 
     /**
@@ -116,17 +117,7 @@ public class BaseResult extends HashMap<String,Object> {
      * @return 警告消息
      */
     public static BaseResult error(String msg,Object data) {
-        return BaseResult.error(ResultCode.INTERNAL_SERVER_ERROR,msg,data);
-    }
-    /**
-     * 返回错误消息
-     *
-     * @param msg  返回内容
-     * @param data 数据对象
-     * @return 警告消息
-     */
-    public static BaseResult error(int code,String msg, Object data) {
-        return new BaseResult(code, msg, data);
+        return new BaseResult(ResultCode.INTERNAL_SERVER_ERROR,msg,data);
     }
 
     /**
