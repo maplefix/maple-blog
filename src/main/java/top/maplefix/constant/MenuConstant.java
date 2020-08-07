@@ -10,7 +10,7 @@ public class MenuConstant {
     /**
      * 顶级菜单id
      */
-    public static final String TOP_ID = "0000";
+    public static final int TOP_ID = 0;
     /**
      * 是外链
      */

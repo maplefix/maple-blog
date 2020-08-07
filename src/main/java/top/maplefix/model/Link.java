@@ -74,7 +74,7 @@ public class Link extends BaseEntity implements Serializable {
     /**
      * 排序值
      */
-    @Excel(name = "排序值")
-    private String  seq;
+    @Excel(name = "是否在panel显示")
+    private Integer  support;
 
 }

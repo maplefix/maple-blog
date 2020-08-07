@@ -56,7 +56,7 @@ public class Menu extends BaseEntity implements Serializable {
      *  菜单状态(1显示,0隐藏)
      */
     @Excel(name = "菜单状态",readConverterExp = "0=隐藏,1=显示")
-    private Integer status;
+    private Integer visible;
     /**
      * 权限标识
      */
@@ -76,7 +76,7 @@ public class Menu extends BaseEntity implements Serializable {
      * 序号
      */
     @Excel(name = "序号")
-    private Integer seq;
+    private String orderNum;
     /**
      * 子菜单
      */
