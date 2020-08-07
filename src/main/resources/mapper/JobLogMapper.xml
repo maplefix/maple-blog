@@ -3,7 +3,7 @@
 <mapper namespace="top.maplefix.mapper.JobLogMapper">
 
     <resultMap type="top.maplefix.model.JobLog" id="JobLogMap">
-        <result property="jobLogId" column="job_log_id"/>
+        <id property="id" column="id"/>
         <result property="jobName" column="job_name"/>
         <result property="beanName" column="bean_name"/>
         <result property="methodName" column="method_name"/>
@@ -18,7 +18,6 @@
 
     <insert id="insertJobLog">
         insert into t_job_log(
-        <if test="jobLogId != null and jobLogId != ''">job_log_id,</if>
         <if test="jobName != null and jobName != ''">job_name,</if>
         <if test="beanName != null and beanName != ''">bean_name,</if>
         <if test="methodName != null and methodName != ''">method_name,</if>
@@ -30,7 +29,6 @@
         <if test="result != null and result != ''">result,</if>
         <if test="createDate != null and createDate != ''">create_date</if>
         )values(
-        <if test="jobLogId != null and jobLogId != ''">#{jobLogId},</if>
         <if test="jobName != null and jobName != ''">#{jobName},</if>
         <if test="beanName != null and beanName != ''">#{beanName},</if>
         <if test="methodName != null and methodName != ''">#{methodName},</if>
@@ -47,7 +45,7 @@
 
     <delete id="deleteJobLogByIds">
         delete from t_job_log
-        where job_log_id in
+        where id in
         <foreach collection="ids" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>
@@ -61,7 +59,7 @@
 
     <!--通过实体作为筛选条件查询-->
     <select id="selectJobLogList" resultMap="JobLogMap">
-        select job_logid,
+        select id,
         job_name,
         bean_name,
         method_name,
@@ -110,6 +108,6 @@
         create_date,
         update_date
         from t_job_log
-        where job_log_id = #{id}
+        where id = #{id}
     </select>
 </mapper>

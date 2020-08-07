@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.maplefix.mapper.VisitLogMapper">
     <resultMap type="top.maplefix.model.VisitLog" id="VisitLogResult">
-        <id property="visitLogId" column="visit_log_id"/>
+        <id property="id" column="id"/>
         <result property="ip" column="ip"/>
         <result property="location" column="location"/>
         <result property="browser" column="browser"/>
@@ -18,7 +18,6 @@
 
     <insert id="insertVisitLog" parameterType="top.maplefix.model.VisitLog">
         insert into t_visit_log(
-        <if test="visitLogId!=null and visitLogId !=''">visit_log_id,</if>
         <if test="ip!=null and ip!=''">ip,</if>
         <if test="location!=null and location!=''">location,</if>
         <if test="browser!=null and browser!=''">browser,</if>
@@ -31,7 +30,6 @@
         <if test="module!=null and module!=''">module,</if>
         <if test="createDate!=null and createDate!=''">create_date</if>
         )values (
-        <if test="ip!=null and ip!=''">#{ip},</if>
         <if test="location!=null and location!=''">#{location},</if>
         <if test="browser!=null and browser!=''">#{browser},</if>
         <if test="os!=null and os!=''">#{os},</if>
@@ -46,7 +44,7 @@
     </insert>
 
     <select id="selectVisitLogList" parameterType="top.maplefix.model.VisitLog" resultMap="VisitLogResult">
-        select visit_log_id,
+        select id,
         ip,
         location,
         browser,
@@ -78,7 +76,7 @@
 
     <delete id="deleteVisitLogByIds">
         delete from t_visit_log
-        where visit_log_id in
+        where id in
         <foreach collection="ids" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>
@@ -101,7 +99,7 @@
             <if test="status != null ">status = #{status},</if>
             <if test="module != null ">module = #{module}</if>
         </trim>
-        where visit_log_id = #{id}
+        where id = #{id}
     </update>
 
 </mapper>
