@@ -1,4 +1,4 @@
-package top.maplefix.controller.oms;
+package top.maplefix.controller.home;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.maplefix.common.BaseResult;
-import top.maplefix.controller.BaseController;
+import top.maplefix.controller.common.BaseController;
 import top.maplefix.service.DashboardService;
 import top.maplefix.vo.LineChartData;
 import top.maplefix.vo.page.TableDataInfo;
@@ -98,5 +98,10 @@ public class DashboardController extends BaseController {
         startPage();
         List<String> visitLogList = dashboardService.getTaskLogStringList();
         return getDataTable(visitLogList);
+    }
+
+    @GetMapping("access")
+    public BaseResult getAccessData() {
+        return BaseResult.success(dashboardService.getAccessData());
     }
 }
