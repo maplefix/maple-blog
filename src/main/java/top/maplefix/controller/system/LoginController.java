@@ -1,4 +1,4 @@
-package top.maplefix.controller.oms;
+package top.maplefix.controller.system;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,7 +91,7 @@ public class LoginController {
         LoginUser loginUser = tokenService.getLoginUser(request);
         // 用户信息
         SysUser user = loginUser.getUser();
-        List<Menu> menus = menuService.selectMenuTreeByUserId(user.getUserId());
+        List<Menu> menus = menuService.selectMenuTreeByUserId(user.getId());
         return BaseResult.success(menuService.buildMenus(menus));
     }
 }
