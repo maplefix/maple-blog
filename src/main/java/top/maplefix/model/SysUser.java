@@ -52,8 +52,8 @@ public class SysUser extends BaseEntity implements Serializable {
     /**
      * 性别
      */
-    @Excel(name = "性别",readConverterExp = "0=女,1=男")
-    private String gender;
+    @Excel(name = "性别",readConverterExp = "1=女,0=男")
+    private String sex;
     /**
      * 头像相对路径
      */

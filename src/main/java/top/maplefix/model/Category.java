@@ -2,9 +2,10 @@ package top.maplefix.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import top.maplefix.annotation.Excel;
 
-import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -14,9 +15,9 @@ import java.util.List;
  * @date : 2020/1/15 14:39
  */
 @Data
+@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Table(name = "t_category")
-public class Category implements Serializable {
+public class Category extends BaseEntity implements Serializable {
 
     /**
      * 分类主键
@@ -27,18 +28,13 @@ public class Category implements Serializable {
      * 分类名称
      */
     @Excel(name = "分类名称")
-    private String categoryName;
+    private String title;
 
     /**
-     * 创建时间
+     * 是否推荐
      */
-    @Excel(name = "创建时间")
-    private String createDate;
-    /**
-     * 更新时间
-     */
-    @Excel(name = "更新时间")
-    private String updateDate;
+    @NotNull(message = "推荐设置不能为空")
+    private Boolean support;
     /**
      * 描述信息
      */

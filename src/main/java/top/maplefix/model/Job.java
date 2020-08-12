@@ -40,7 +40,7 @@ public class Job extends BaseEntity implements Serializable {
      * 参数
      */
     @Excel(name = "参数")
-    private String param;
+    private String methodParams;
     /**
      * cron表达式
      */

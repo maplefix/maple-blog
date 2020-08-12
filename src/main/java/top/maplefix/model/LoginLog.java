@@ -24,7 +24,7 @@ public class LoginLog extends BaseEntity implements Serializable {
      * 登录名
      */
     @Excel(name = "登录名")
-    private String loginName;
+    private String userName;
     /**
      * 登录IP
      */

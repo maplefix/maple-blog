@@ -27,7 +27,7 @@ public class Tag extends BaseEntity implements Serializable {
      * 标签名
      */
     @Excel(name = "标签名")
-    public String tagName;
+    public String title;
     /**
      * 创建时间
      */
@@ -46,8 +46,8 @@ public class Tag extends BaseEntity implements Serializable {
     @Transient
     public Integer count;
 
-    public Tag(String tagName, String color) {
+    public Tag(String title, String color) {
         this.color = color;
-        this.tagName = tagName;
+        this.title = title;
     }
 }

@@ -34,7 +34,11 @@ public class OperateLog extends BaseEntity implements Serializable {
      * 业务类型（0其它 1新增 2修改 3删除）
      */
     @Excel(name = "业务类型")
-    private String function;
+    private String businessType;
+    /**
+     * 业务类型数组
+     */
+    private Integer[] businessTypes;
     /**
      * 方法名
      */
@@ -55,6 +59,11 @@ public class OperateLog extends BaseEntity implements Serializable {
      */
     @Excel(name = "操作地区")
     private String location;
+    /**
+     * 请求参数
+     */
+    @Excel(name = "请求参数")
+    private String param;
     /**
      * 操作浏览器
      */
@@ -77,11 +86,7 @@ public class OperateLog extends BaseEntity implements Serializable {
      */
     @Excel(name = "请求返回值")
     private String result;
-    /**
-     * 请求参数
-     */
-    @Excel(name = "请求参数")
-    private String param;
+
     /**
      * 请求状态(1:成功,0:失败)
      */
