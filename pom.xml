@@ -35,7 +35,7 @@
         <kaptcha.version>2.3.2</kaptcha.version>
         <jsoup.version>1.11.3</jsoup.version>
         <poi.version>4.1.0</poi.version>
-        <oshi.version>3.9.1</oshi.version>
+        <oshi.version>4.1.1</oshi.version>
         <nekthtml.version>1.9.22</nekthtml.version>
         <qiniu.version>[7.2.0, 7.2.99]</qiniu.version>
         <google.guava.version>28.1-jre</google.guava.version>
@@ -47,6 +47,7 @@
         <bootstart.swagger.ui.version>1.9.6</bootstart.swagger.ui.version>
         <ip2region.version>1.7.2</ip2region.version>
         <httpclient.version>4.5.10</httpclient.version>
+        <jna.version>5.5.0</jna.version>
     </properties>
 
     <dependencies>
@@ -140,7 +141,7 @@
             <version>${swagger2.version}</version>
         </dependency>
         <!--swagger2ui-->
-        <dependency>
+        <!--<dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
             <exclusions>
@@ -150,7 +151,7 @@
                 </exclusion>
             </exclusions>
             <version>${swagger.ui.version}</version>
-        </dependency>
+        </dependency>-->
         <!--swagger models-->
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
@@ -162,6 +163,20 @@
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>swagger-bootstrap-ui</artifactId>
             <version>${bootstart.swagger.ui.version}</version>
+        </dependency>
+
+
+        <!--防止进入swagger页面报类型转换错误，排除2.9.2中的引用，手动增加1.5.21版本-->
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>1.5.21</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-models</artifactId>
+            <version>1.5.21</version>
         </dependency>
 
         <!--连接池，redis依赖-->
@@ -270,11 +285,13 @@
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
+            <version>${jna.version}</version>
         </dependency>
 
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna-platform</artifactId>
+            <version>${jna.version}</version>
         </dependency>
 
         <!-- HTML解析器 -->
@@ -359,6 +376,9 @@
                     <include>**/*.yml</include>
                     <include>**/*.properties</include>
                     <include>**/*.xml</include>
+                    <include>**/*.db</include>
+                    <include>**/*.sql</include>
+                    <include>**.txt</include>
                 </includes>
                 <filtering>false</filtering>
             </resource>
@@ -368,6 +388,9 @@
                     <include>**/*.yml</include>
                     <include>**/*.properties</include>
                     <include>**/*.xml</include>
+                    <include>**/*.db</include>
+                    <include>**/*.sql</include>
+                    <include>**.txt</include>
                 </includes>
                 <filtering>false</filtering>
             </resource>
