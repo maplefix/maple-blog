@@ -5,24 +5,23 @@
 <mapper namespace="top.maplefix.mapper.BlacklistMapper">
 
     <resultMap type="top.maplefix.model.Blacklist" id="SysBlacklistResult">
-        <id property="blacklistId" column="blacklist_id"/>
+        <id property="id" column="id"/>
         <result property="ip" column="ip"/>
         <result property="description" column="description"/>
         <result property="interceptCount" column="intercept_count"/>
-        <result property="lastAccessDate" column="last_access_time"/>
+        <result property="lastAccessDate" column="last_access_date"/>
         <result property="lastAccessUrl" column="last_access_url"/>
         <result property="createDate" column="create_date"/>
         <result property="updateDate" column="update_date"/>
     </resultMap>
 
     <insert id="insertBlacklist" parameterType="top.maplefix.model.LoginLog">
-		insert into t_blacklist (blacklist_id,ip, description, intercept_count, last_access_url, last_access_date,create_date)
-		values (#{blacklistId},#{ip}, #{description}, #{interceptCount}, #{lastAccessUrl}, #{lastAccessDate}, #{createDate})
+		insert into t_blacklist (ip, description, intercept_count, last_access_url, last_access_date,create_date)
+		values (#{ip}, #{description}, #{interceptCount}, #{lastAccessUrl}, #{lastAccessDate}, #{createDate})
 	</insert>
 
     <insert id="insertBlacklistRecord">
-        update t_blacklist set interceptCount+=1,last_access_url=${lastAccessUrl} ,last_access_date=${lastAccessDate}
-        where blacklist_id=${id}
+        update blacklist set interceptCount+=1,last_access_url=${lastAccessUrl} ,last_access_time=sysdate() where id=${id}
     </insert>
 
     <update id="updateBlacklist">
@@ -32,12 +31,12 @@
             <if test="description != null and description != ''">description = #{description},</if>
             <if test="updateDate != null and updateDate != ''">update_date = #{updateDate} </if>
         </set>
-        where blacklist_id = #{id}
+        where id = #{id}
     </update>
 
     <select id="selectBlacklistList" parameterType="top.maplefix.model.Blacklist"
             resultMap="SysBlacklistResult" resultType="top.maplefix.model.Blacklist">
-        select blacklist_id,
+        select id,
         ip,
         description,
         intercept_count,
@@ -62,7 +61,7 @@
         </where>
     </select>
     <select id="selectBlacklistById" resultType="top.maplefix.model.Blacklist">
-         select blacklist_id,
+         select id,
          ip,
          description,
          intercept_count,
@@ -70,12 +69,12 @@
          last_access_date,
          create_date,
          update_date
-        from t_blacklist
-         where blacklist_id = ${id}
+         from t_blacklist
+         where id = ${id}
     </select>
 
     <delete id="deleteBlacklistByIds" parameterType="String">
-        delete from  t_blacklist where blacklist_id in
+        delete from  t_blacklist where id in
         <foreach collection="ids" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>

@@ -3,9 +3,9 @@
 <mapper namespace="top.maplefix.mapper.OperateLogMapper">
 
     <resultMap type="top.maplefix.model.OperateLog" id="SysOperateLogResult">
-        <id property="operateLogId" column="operate_log_id"/>
+        <id property="id" column="id"/>
         <result property="module" column="module"/>
-        <result property="function" column="function"/>
+        <result property="businessType" column="business_type"/>
         <result property="method" column="method"/>
         <result property="requestMethod" column="request_method"/>
         <result property="operateName" column="operate_name"/>
@@ -23,9 +23,9 @@
     </resultMap>
 
     <sql id="selectOperateLogVo">
-        select operate_log_id,
+        select id,
                module,
-               function,
+               business_type,
                method,
                request_method,
                cost,
@@ -40,14 +40,14 @@
                status,
                exception_msg,
                create_date,
-                update_date
+               update_date
         from t_operate_log
     </sql>
 
     <insert id="insertOperateLog" parameterType="top.maplefix.model.OperateLog">
-        insert into t_operate_log(operate_log_id,module, function, method, request_method, operate_name, url, ip,
+        insert into t_operate_log(module, business_type, method, request_method, operate_name, url, ip,
                 location, os,browser, param, result, status, exception_msg, create_date, cost)
-        values (#{operateLogId}, #{module},#{function}, #{method}, #{requestMethod}, #{operateName}, #{url}, #{ip},
+        values ( #{module},#{businessType}, #{method}, #{requestMethod}, #{operateName}, #{url}, #{ip},
                 #{location}, #{os},#{browser},#{param}, #{result}, #{status}, #{exceptionMsg}, #{createDate}, #{cost})
     </insert>
 
@@ -57,13 +57,13 @@
             <if test="module != null and module != ''">
                 AND module like concat('%', #{module}, '%')
             </if>
-            <if test="function != null">
-                AND function = #{function}
+            <if test="businessType != null">
+                AND business_type = #{businessType}
             </if>
-            <if test="function != null and function.length > 0">
-                AND function in
-                <foreach collection="function" item="businessType" open="(" separator="," close=")">
-                    #{function}
+            <if test="businessTypes != null and businessTypes.length > 0">
+                AND business_type in
+                <foreach collection="businessTypes" item="businessType" open="(" separator="," close=")">
+                    #{businessType}
                 </foreach>
             </if>
             <if test="status != null">
@@ -82,7 +82,7 @@
     </select>
 
     <delete id="deleteOperateLogByIds">
-        delete from t_operate_log where operate_log_id in
+        delete from t_operate_log where id in
         <foreach collection="ids" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>
@@ -90,7 +90,7 @@
 
     <select id="selectOperateLogById" resultMap="SysOperateLogResult">
         <include refid="selectOperateLogVo"/>
-        where operate_log_id = #{id}
+        where id = #{id}
     </select>
 
     <update id="cleanOperateLog">
@@ -100,7 +100,7 @@
         update t_operate_log
         <trim prefix="SET" suffixOverrides=",">
             <if test="module != null ">module = #{module},</if>
-            <if test="function != null  and function != ''">function = #{function},</if>
+            <if test="businessType != null  and businessType != ''">business_type = #{businessType},</if>
             <if test="method != null  and method != ''">method = #{method},</if>
             <if test="requestMethod != null  and requestMethod != ''">request_method = #{requestMethod},</if>
             <if test="cost != null ">cost = #{cost},</if>
@@ -116,7 +116,7 @@
             <if test="exceptionMsg != null and exceptionMsg !=''">exception_msg = #{exceptionMsg},</if>
             <if test="updateDate != null and updateDate !=''">update_date = #{updateDate}</if>
         </trim>
-        where operate_log_id = #{id}
+        where id = #{id}
     </update>
 
 </mapper>

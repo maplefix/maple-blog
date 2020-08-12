@@ -2,12 +2,14 @@ package top.maplefix;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.github.xiaoymin.swaggerbootstrapui.annotations.EnableSwaggerBootstrapUI;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import tk.mybatis.spring.annotation.MapperScan;
 import top.maplefix.utils.SpringUtils;
 
@@ -21,6 +23,8 @@ import top.maplefix.utils.SpringUtils;
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @MapperScan( basePackages = {"top.maplefix.mapper"})
 @EnableAspectJAutoProxy(exposeProxy = true)
+@EnableSwaggerBootstrapUI
+@EnableSwagger2
 public class MapleBlogApplication {
     /**
      * 解决bean转换时null值报错

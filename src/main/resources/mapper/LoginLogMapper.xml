@@ -4,7 +4,7 @@
 
     <resultMap type="top.maplefix.model.LoginLog" id="SysLoginLogResult">
         <id property="id" column="id"/>
-        <result property="loginName" column="login_name"/>
+        <result property="userName" column="user_name"/>
         <result property="status" column="status"/>
         <result property="ip" column="ip"/>
         <result property="location" column="location"/>
@@ -16,13 +16,13 @@
     </resultMap>
 
     <insert id="insertLoginLog" parameterType="top.maplefix.model.LoginLog">
-        insert into t_login_log (login_name, status, ip, location, browser, os, login_msg, create_date)
-        values (#{loginName}, #{status}, #{ip}, #{location}, #{browser}, #{os}, #{loginMsg}, #{createDate})
+        insert into t_login_log (user_name, status, ip, location, browser, os, login_msg, create_date)
+        values (#{userName}, #{status}, #{ip}, #{location}, #{browser}, #{os}, #{loginMsg}, #{createDate})
     </insert>
 
     <select id="selectLoginLogList" parameterType="top.maplefix.model.LoginLog" resultMap="SysLoginLogResult">
         select id,
-        login_name,
+        user_name,
         ip,
         location,
         browser,
@@ -39,8 +39,8 @@
             <if test="status != null ">
                 AND status = #{status}
             </if>
-            <if test="loginName != null and loginName != ''">
-                AND login_name like concat('%', #{loginName}, '%')
+            <if test="userName != null and userName != ''">
+                AND user_name like concat('%', #{userName}, '%')
             </if>
             <if test="params.beginDate != null and params.beginDate != ''"><!-- 开始时间检索 -->
                 and date_format(create_date,'%y%m%d') &gt;= date_format(#{params.beginDate},'%y%m%d')
@@ -66,7 +66,7 @@
     <update id="updateLoginLog">
         update t_login_log
         <trim prefix="SET" suffixOverrides=",">
-            <if test="loginName != null and loginName != ''">login_name = #{loginName},</if>
+            <if test="userName != null and userName != ''">user_name = #{userName},</if>
             <if test="status != null">status = #{status},</if>
             <if test="ip != null  and ip != ''">ip = #{ip},</if>
             <if test="location != null  and location != ''">location = #{location},</if>

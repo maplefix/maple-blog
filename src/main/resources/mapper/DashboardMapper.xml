@@ -10,34 +10,19 @@
         select count(*)
         from t_blog
     </select>
-    <select id="getBookCount" resultType="java.lang.Long">
-        select count(*)
-        from t_book
-    </select>
-    <select id="getNoteCount" resultType="java.lang.Long">
-        select count(*)
-        from t_note
-    </select>
+
     <select id="getVisitorCountByCreateDate" resultType="java.lang.Long">
         select count(*)
         from t_visit_log
         where date(create_date) = #{date}
     </select>
-    <select id="getNoteCountByCreateDate" resultType="java.lang.Long">
-        select count(*)
-        from t_note
-        where date(create_date) = #{date}
-    </select>
+
     <select id="getBlogCountByCreateDate" resultType="java.lang.Long">
         select count(*)
         from t_blog
         where date(create_date) = #{date}
     </select>
-    <select id="getBookCountByCreateDate" resultType="java.lang.Long">
-        select count(*)
-        from t_book
-        where date(create_date) = #{date}
-    </select>
+
     <select id="getSpiderData" resultType="java.util.Map">
         select spider as 'name', count(spider) as 'value'
         from t_visit_log
@@ -47,7 +32,7 @@
         limit 20
     </select>
     <select id="getVisitLog" resultType="top.maplefix.model.VisitLog">
-        select visit_log_id,
+        select id,
                ip,
                page_id,
                location,
@@ -60,17 +45,17 @@
                module,
                spider,
                create_date,
-update_date
+                update_date
         from t_visit_log
     </select>
-    <select id="getBlogNameByPageId" resultType="java.lang.String">
+    <select id="getBlogNameByPageId" resultType="java.lang.Long">
         select title
         from t_blog
         where blog_id = #{pageId}
     </select>
     <select id="getLoginLogList" resultType="top.maplefix.model.LoginLog">
-        select login_log_id,
-               login_name,
+        select id,
+               user_name,
                ip,
                location,
                browser,
@@ -78,31 +63,30 @@ update_date
                status,
                login_msg,
                create_date,
-update_date
+               update_date
         from t_login_log
     </select>
     <select id="getOperateLogList" resultType="top.maplefix.model.OperateLog">
-        select operate_log_id,
+        select id,
                module,
-               function,
+               business_type,
                method,
                request_method,
-               operator_type,
                operate_name,
                url,
                ip,
                location,
-               params,
+               param,
                result,
                status,
                exception_msg,
                cost,
                create_date,
-update_date
+               update_date
         from t_operate_log
     </select>
     <select id="getJobLogList" resultType="top.maplefix.model.JobLog">
-        select job_log_id,
+        select id,
                job_name,
                bean_name,
                method_name,
@@ -113,9 +97,13 @@ update_date
                status,
                cost,
                create_date,
-update_date
+                update_date
         from t_job_log
     </select>
-
+    <select id="getAccessData" resultType="top.maplefix.vo.home.KeyValue">
+        select entry_url as 'key', count(*) as 'value'
+        from t_visit_log
+        group by entry_url
+    </select>
 
 </mapper>
