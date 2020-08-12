@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import top.maplefix.annotation.Excel;
-import top.maplefix.utils.StringUtils;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -18,6 +17,11 @@ import java.util.Map;
  */
 @Data
 public class BaseEntity implements Serializable {
+
+    /**
+     * 搜索值
+     */
+    private String searchValue;
 
     /**
      * 创建时间
@@ -37,11 +41,11 @@ public class BaseEntity implements Serializable {
     @JsonIgnore
     private String params;
 
-    public Map<String,Object> getParams(){
-        if(StringUtils.isEmpty(params)){
-            return new HashMap<>(16);
-        }else {
-            return JSON.parseObject(params,Map.class);
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> getParams() {
+        if (params == null) {
+            return new HashMap<>();
         }
+        return JSON.parseObject(params, Map.class);
     }
 }
