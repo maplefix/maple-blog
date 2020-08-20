@@ -15,13 +15,16 @@ import java.util.concurrent.Executors;
 /**
  * @author : Maple
  * @description : websocket配置
+ *  配置WebSocket消息代理端点，即stomp服务端
+ *  为了连接安全，setAllowedOrigins设置的允许连接的源地址
+ *  如果在非这个配置的地址下发起连接会报403
+ *  进一步还可以使用addInterceptors设置拦截器，来做相关的鉴权操作
  * @date : 2020/1/18 16:35
  */
 @Configuration
 @EnableWebSocketMessageBroker
 @Slf4j
 public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
-
     @Autowired
     SimpMessagingTemplate messagingTemplate;
 
