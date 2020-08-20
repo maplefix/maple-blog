@@ -14,7 +14,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.HandlerMapping;
-import org.thymeleaf.util.StringUtils;
 import top.maplefix.annotation.OLog;
 import top.maplefix.config.factory.AsyncFactory;
 import top.maplefix.config.factory.AsyncManager;
@@ -22,9 +21,7 @@ import top.maplefix.constant.Constant;
 import top.maplefix.model.OperateLog;
 import top.maplefix.secrrity.LoginUser;
 import top.maplefix.secrrity.service.TokenService;
-import top.maplefix.utils.IpUtils;
-import top.maplefix.utils.ServletUtils;
-import top.maplefix.utils.SpringUtils;
+import top.maplefix.utils.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -101,18 +98,21 @@ public class OperationLogAspect {
             operateLog.setResult(JSON.toJSONString(jsonResult));
             operateLog.setCost(cost);
             operateLog.setUrl(ServletUtils.getRequest().getRequestURI());
-
+            operateLog.setCreateDate(DateUtils.getTime());
+            if (loginUser != null) {
+                operateLog.setOperateName(loginUser.getUsername());
+            }
             if (e != null) {
                 operateLog.setStatus(Constant.FAILED);
-                operateLog.setExceptionMsg(StringUtils.substring(e.getMessage(), 0, 2000));
+                operateLog.setExceptionMsg(top.maplefix.utils.StringUtils.substring(e.getMessage(), 0, 2000));
             }
             // get the class name
             String className = joinPoint.getTarget().getClass().getName();
             // get method name
             String methodName = joinPoint.getSignature().getName();
-            operateLog.setMethod(top.maplefix.utils.StringUtils.format("{}.{}()", className, methodName));
+            operateLog.setMethod(StringUtils.format("{}.{}()", className, methodName));
             // get request method
-            operateLog.setMethod(ServletUtils.getRequest().getMethod());
+            operateLog.setRequestMethod(ServletUtils.getRequest().getMethod());
             // set method args
             getControllerMethodDescription(joinPoint, controllerLog, operateLog);
             // save log
@@ -131,7 +131,7 @@ public class OperationLogAspect {
      */
     private void getControllerMethodDescription(JoinPoint joinPoint, OLog log, OperateLog operateLog) {
         // set businessType
-        operateLog.setFunction(log.businessType().getValue());
+        operateLog.setBusinessType(log.businessType().getValue());
         // set title
         operateLog.setModule(log.module());
         // save request data if saveRequestData is true
@@ -150,13 +150,13 @@ public class OperationLogAspect {
      * @param operateLog operate log
      */
     private void setRequestValue(JoinPoint joinPoint, OperateLog operateLog) {
-        String requestMethod = operateLog.getMethod();
+        String requestMethod = operateLog.getRequestMethod();
         if (HttpMethod.PUT.matches(requestMethod) || HttpMethod.POST.matches(requestMethod)) {
             String params = argsArrayToString(joinPoint.getArgs());
-            operateLog.setParams(StringUtils.substring(params, 0, 2000));
+            operateLog.setParams(top.maplefix.utils.StringUtils.substring(params,0,2000));
         } else {
             Map<?, ?> paramsMap = (Map<?, ?>) ServletUtils.getRequest().getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
-            operateLog.setParams(StringUtils.substring(paramsMap.toString(), 0, 2000));
+            operateLog.setParams(top.maplefix.utils.StringUtils.substring(paramsMap.toString(), 0, 2000));
         }
     }
 
