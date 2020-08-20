@@ -40,14 +40,14 @@ public class ExecutionJob extends QuartzJobBean {
         quartzJobLog.setJobName(job.getJobName());
         quartzJobLog.setBeanName(job.getBeanName());
         quartzJobLog.setMethodName(job.getMethodName());
-        quartzJobLog.setParams(job.getParam());
+        quartzJobLog.setParams(job.getMethodParams());
         quartzJobLog.setCronExpression(job.getCronExpression());
 
         long startTime = System.currentTimeMillis();
         try {
             // 执行任务
             log.info("任务准备执行，任务名称：{}", job.getJobName());
-            QuartzRunnable task = new QuartzRunnable(job.getBeanName(), job.getMethodName(), job.getParam());
+            QuartzRunnable task = new QuartzRunnable(job.getBeanName(), job.getMethodName(), job.getMethodParams());
             Future<Object> future = threadPoolTaskExecutor.submit(task);
             Object result = future.get();
             log.info("任务返回值:{}", result);

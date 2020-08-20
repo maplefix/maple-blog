@@ -50,7 +50,7 @@ public class ReplayEmail implements Serializable {
     public Map<String, Object> toMap() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         Map<String, Object> map = new HashMap<>(16);
-        map.put("createTime", simpleDateFormat.format(createDate));
+        map.put("createDate", simpleDateFormat.format(createDate));
         map.put("title", title);
         map.put("replyName", replyName);
         map.put("originContent", originContent);
