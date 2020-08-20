@@ -49,7 +49,7 @@ public class SwaggerConfig {
                 // 扫描所有有注解的api，用这种方式更灵活
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
                 // 扫描指定包中的swagger注解
-                //.apis(RequestHandlerSelectors.basePackage("com.dimple.project.tool.swagger"))
+                .apis(RequestHandlerSelectors.basePackage("top.maplefix.controller"))
                 // 扫描所有 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
                 .build()

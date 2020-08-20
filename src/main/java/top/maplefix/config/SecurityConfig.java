@@ -78,6 +78,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //设置访问已经上传的文件访问允许匿名
                 .antMatchers("/file/**").anonymous()
                 .antMatchers("/swagger-ui.html").anonymous()
+                .antMatchers("/doc.html").anonymous()
                 .antMatchers("/swagger-resources/**").anonymous()
                 .antMatchers("/webjars/**").anonymous()
                 .antMatchers("/*/api-docs").anonymous()
