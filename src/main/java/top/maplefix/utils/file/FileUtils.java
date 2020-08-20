@@ -10,6 +10,7 @@ import top.maplefix.utils.StringUtils;
 import top.maplefix.utils.UuidUtils;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Date;
 
@@ -110,7 +111,7 @@ public class FileUtils {
         String resultSize = "";
         if (size / GB >= 1) {
             //如果当前Byte的值大于等于1GB
-            resultSize = DF.format(size / (float) GB + "GB");
+            resultSize = DF.format(new BigDecimal(size / (float) GB)) + "GB";
         } else if (size / MB >= 1) {
             //如果当前Byte的值大于等于1MB
             resultSize = DF.format(size / (float) MB) + "MB";

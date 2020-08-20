@@ -39,7 +39,7 @@ public class PageSupport {
         PageModel pageModel = new PageModel();
         pageModel.setPageNum(ServletUtils.getParameterToInt(PAGE_NUM));
         pageModel.setPageSize(ServletUtils.getParameterToInt(PAGE_SIZE));
-        pageModel.setOrderByColumn(StringUtils.isEmpty(ServletUtils.getParameter(ORDER_BY_COLUMN)) ? "createTime" : ServletUtils.getParameter(ORDER_BY_COLUMN));
+        pageModel.setOrderByColumn(StringUtils.isEmpty(ServletUtils.getParameter(ORDER_BY_COLUMN)) ? "createDate" : ServletUtils.getParameter(ORDER_BY_COLUMN));
         pageModel.setIsAsc(StringUtils.isEmpty(ServletUtils.getParameter(IS_ASC)) ? "desc" : ServletUtils.getParameter(IS_ASC));
         return pageModel;
     }

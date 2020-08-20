@@ -50,7 +50,7 @@ public class AsyncFactory {
                 String os = userAgent.getOperatingSystem().getName();
                 String browser = userAgent.getBrowser().getName();
                 LoginLog loginLog = new LoginLog();
-                loginLog.setLoginName(username);
+                loginLog.setUserName(username);
                 loginLog.setIp(ip);
                 loginLog.setBrowser(browser);
                 loginLog.setOs(os);
