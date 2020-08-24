@@ -48,7 +48,7 @@
         </where>
     </select>
 
-    <select id="selectRolePermissionByUserId" parameterType="java.lang.String" resultMap="SysRoleResult">
+    <select id="selectRolePermissionByUserId" parameterType="java.lang.Long" resultMap="SysRoleResult">
         <include refid="selectRoleVo"/>
         WHERE ur.user_id = #{userId}
     </select>
@@ -57,15 +57,15 @@
         <include refid="selectRoleVo"/>
     </select>
 
-    <select id="selectRoleListByUserId" parameterType="java.lang.String" resultType="Integer">
-		select r.role_id
+    <select id="selectRoleListByUserId" parameterType="java.lang.Long" resultType="Integer">
+		select r.id
         from t_role r
 	    left join t_user_role_mid ur on ur.role_id = r.id
         left join t_user u on u.id = ur.user_id
 	    where u.id = #{id}
 	</select>
 
-    <select id="selectRoleById" parameterType="java.lang.String" resultMap="SysRoleResult">
+    <select id="selectRoleById" parameterType="java.lang.Long" resultMap="SysRoleResult">
         <include refid="selectRoleVo"/>
         where r.id = #{id}
     </select>
@@ -85,7 +85,7 @@
         where r.role_key=#{roleKey}
     </select>
 
-    <insert id="insertRole" parameterType="top.maplefix.model.Role" >
+    <insert id="insertRole" parameterType="top.maplefix.model.Role" useGeneratedKeys="true" keyProperty="id">
         insert into t_role(
         <if test="roleName != null and roleName != ''">role_name,</if>
         <if test="roleKey != null and roleKey != ''">role_key,</if>

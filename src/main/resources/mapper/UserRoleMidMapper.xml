@@ -9,7 +9,7 @@
         <result property="roleId" column="role_id"/>
     </resultMap>
 
-    <delete id="deleteUserRoleByUserId" parameterType="java.lang.String">
+    <delete id="deleteUserRoleByUserId" parameterType="java.lang.Long">
 		delete from t_user_role_mid where user_id=#{userId}
 	</delete>
 
@@ -17,7 +17,7 @@
 	    select count(1) from t_user_role_mid where role_id=#{roleId}  
 	</select>
 
-    <delete id="deleteUserRole" parameterType="java.lang.String">
+    <delete id="deleteUserRole" parameterType="java.lang.Long">
         delete from t_user_role_mid where user_id in
         <foreach collection="array" item="userId" open="(" separator="," close=")">
             #{userId}

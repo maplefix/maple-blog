@@ -11,7 +11,7 @@
 	    select count(1) from t_role_menu_mid where menu_id = #{menuId}
 	</select>
 
-    <delete id="deleteRoleMenuByRoleId" parameterType="java.lang.String">
+    <delete id="deleteRoleMenuByRoleId" parameterType="java.lang.Long">
 		delete from t_role_menu_mid where role_id=#{roleId}
 	</delete>
 
