@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public SysUser selectUserById(String userId) {
+    public SysUser selectUserById(Long userId) {
         return userMapper.selectUserById(userId);
     }
 
@@ -80,9 +80,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String checkPhoneUnique(SysUser user) {
-        String userId = StringUtils.isNull(user.getUserId()) ? SysUser.ADMIN : user.getUserId();
+        Long userId = StringUtils.isNull(user.getId()) ? -1L : user.getId();
         SysUser info = userMapper.checkPhoneUnique(user.getPhone());
-        if (StringUtils.isNotNull(info) && info.getUserId().equals(userId) ) {
+        if (StringUtils.isNotNull(info) && info.getId().equals(userId) ) {
             return UserConstant.NOT_UNIQUE;
         }
         return UserConstant.UNIQUE;
@@ -90,9 +90,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String checkEmailUnique(SysUser user) {
-        String userId = StringUtils.isNull(user.getUserId()) ? SysUser.ADMIN : user.getUserId();
+        Long userId = StringUtils.isNull(user.getId()) ? -1L : user.getId();;
         SysUser info = userMapper.checkEmailUnique(user.getEmail());
-        if (StringUtils.isNotNull(info) && info.getUserId().equals(userId) ) {
+        if (StringUtils.isNotNull(info) && info.getId().equals(userId) ) {
             return UserConstant.NOT_UNIQUE;
         }
         return UserConstant.UNIQUE;
@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void checkUserAllowed(SysUser user) {
-        if (StringUtils.isNotNull(user.getUserId()) && user.isAdmin()) {
+        if (StringUtils.isNotNull(user.getId()) && user.isAdmin()) {
             throw new CustomException("不允许操作超级管理员用户");
         }
     }
@@ -118,7 +118,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public int updateUser(SysUser user) {
-        String userId = user.getUserId();
+        Long userId = user.getId();
         // 删除用户与角色关联
         userRoleMapper.deleteUserRoleByUserId(userId);
         // 新增用户与角色管理
@@ -135,10 +135,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int updateUserProfile(SysUser user) {
-        user.setUserId(SecurityUtils.getLoginUser().getUser().getUserId());
+        user.setId(SecurityUtils.getLoginUser().getUser().getId());
         int result = userMapper.updateUser(user);
         //更新redis缓存
-        refreshTokenClaims(user.getUserId());
+        refreshTokenClaims(user.getId());
         return result;
     }
 
@@ -147,7 +147,7 @@ public class UserServiceImpl implements UserService {
      *
      * @param id sys_user id
      */
-    private void refreshTokenClaims(String id) {
+    private void refreshTokenClaims(Long id) {
         //更新redis缓存
         LoginUser loginUser = SecurityUtils.getLoginUser();
         loginUser.setUser(userMapper.selectUserById(id));
@@ -166,13 +166,13 @@ public class UserServiceImpl implements UserService {
     }
 
     public void insertUserRole(SysUser user) {
-        String[] roles = user.getRoleIds();
+        Long[] roles = user.getRoleIds();
         if (StringUtils.isNotNull(roles)) {
             // 新增用户与角色管理
             List<UserRoleMid> list = new ArrayList<>();
-            for (String roleId : roles) {
+            for (Long roleId : roles) {
                 UserRoleMid ur = new UserRoleMid();
-                ur.setUserId(user.getUserId());
+                ur.setUserId(user.getId());
                 ur.setRoleId(roleId);
                 list.add(ur);
             }
@@ -186,8 +186,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public int deleteUserByIds(String ids) {
-        String[] userIds = ConvertUtils.toStrArray(ids);
-        for (String userId : userIds) {
+        Long[] userIds = ConvertUtils.toLongArray(ids);
+        for (Long userId : userIds) {
             checkUserAllowed(new SysUser(userId));
             // 删除用户与角色关联
             userRoleMapper.deleteUserRoleByUserId(userId);

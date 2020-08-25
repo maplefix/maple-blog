@@ -1,4 +1,4 @@
-package top.maplefix.controller.oms;
+package top.maplefix.controller.system;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import top.maplefix.annotation.OLog;
 import top.maplefix.common.BaseResult;
 import top.maplefix.constant.UserConstant;
-import top.maplefix.controller.BaseController;
+import top.maplefix.controller.common.BaseController;
 import top.maplefix.enums.BusinessType;
 import top.maplefix.model.Role;
 import top.maplefix.service.RoleService;
@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2020/3/16 13:50
  */
 @RestController
-@RequestMapping("/role")
+@RequestMapping("/system/role")
 @Slf4j
 public class RoleController extends BaseController {
     
@@ -42,7 +42,7 @@ public class RoleController extends BaseController {
      */
     @PreAuthorize("@permissionService.hasPermission('system:role:query')")
     @GetMapping(value = "/{id}")
-    public BaseResult getInfo(@PathVariable String id) {
+    public BaseResult getInfo(@PathVariable Long id) {
         return BaseResult.success(roleService.selectRoleById(id));
     }
 

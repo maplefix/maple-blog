@@ -1,4 +1,4 @@
-package top.maplefix.controller.oms;
+package top.maplefix.controller.system;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import top.maplefix.annotation.OLog;
 import top.maplefix.common.BaseResult;
 import top.maplefix.constant.UserConstant;
-import top.maplefix.controller.BaseController;
+import top.maplefix.controller.common.BaseController;
 import top.maplefix.enums.BusinessType;
 import top.maplefix.model.Menu;
 import top.maplefix.service.MenuService;
@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2020/3/16 13:51
  */
 @RestController
-@RequestMapping("/menu")
+@RequestMapping("/system/menu")
 @Slf4j
 public class MenuController extends BaseController {
     
@@ -35,8 +35,7 @@ public class MenuController extends BaseController {
     @PreAuthorize("@permissionService.hasPermission('system:menu:list')")
     @GetMapping("/list")
     public BaseResult list(Menu menu) {
-        List<Menu> menus = menuService.selectMenuList(menu);
-        return BaseResult.success(menuService.buildMenuTree(menus));
+        return BaseResult.success(menuService.selectMenuList(menu));
     }
 
     /**
@@ -44,7 +43,7 @@ public class MenuController extends BaseController {
      */
     @PreAuthorize("@permissionService.hasPermission('system:menu:query')")
     @GetMapping(value = "/{id}")
-    public BaseResult getInfo(@PathVariable String  id) {
+    public BaseResult getInfo(@PathVariable Long  id) {
         return BaseResult.success(menuService.selectMenuById(id));
     }
 
@@ -64,8 +63,12 @@ public class MenuController extends BaseController {
     @PreAuthorize("@permissionService.hasPermission('system:menu:query')")
     @GetMapping(value = "/roleMenuTreeselect/{roleId}")
     @ResponseBody
-    public BaseResult roleMenuTreeselect(@PathVariable("roleId") String  roleId) {
-        return BaseResult.success(menuService.selectMenuListByRoleId(roleId));
+    public BaseResult roleMenuTreeselect(@PathVariable Long  roleId) {
+        List<Menu> menus = menuService.selectMenuList(new Menu());
+        BaseResult baseResult = BaseResult.success();
+        baseResult.put("checkedKeys", menuService.selectMenuListByRoleId(roleId));
+        baseResult.put("menus", menuService.buildMenuTreeSelect(menus));
+        return baseResult;
     }
 
     /**
@@ -102,7 +105,7 @@ public class MenuController extends BaseController {
     @PreAuthorize("@permissionService.hasPermission('system:menu:remove')")
     @OLog(module = "菜单管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{id}")
-    public BaseResult remove(@PathVariable("id") String  id) {
+    public BaseResult remove(@PathVariable("id") Long id) {
         if (menuService.hasChildByMenuId(id)) {
             return BaseResult.error("存在子菜单,不允许删除");
         }

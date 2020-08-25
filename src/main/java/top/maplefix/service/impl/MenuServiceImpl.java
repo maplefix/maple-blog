@@ -3,7 +3,6 @@ package top.maplefix.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.maplefix.constant.Constant;
-import top.maplefix.constant.MenuConstant;
 import top.maplefix.mapper.MenuMapper;
 import top.maplefix.mapper.RoleMenuMidMapper;
 import top.maplefix.model.Menu;
@@ -24,7 +23,6 @@ import java.util.stream.Collectors;
  */
 @Service
 public class MenuServiceImpl implements MenuService {
-
     public static final String PREMISSION_STRING = "perms[\"{0}\"]";
 
     @Autowired
@@ -39,7 +37,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public Set<String> selectMenuPermsByUserId(String userId) {
+    public Set<String> selectMenuPermsByUserId(Long userId) {
         List<String> perms = menuMapper.selectMenuPermsByUserId(userId);
         Set<String> permsSet = new HashSet<>();
         for (String perm : perms) {
@@ -51,18 +49,18 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public List<Menu> selectMenuTreeByUserId(String userId) {
+    public List<Menu> selectMenuTreeByUserId(Long userId) {
         List<Menu> menus;
         if (SecurityUtils.isAdmin(userId)) {
             menus = menuMapper.selectMenuTreeAll();
         } else {
             menus = menuMapper.selectMenuTreeByUserId(userId);
         }
-        return getChildPerms(menus, MenuConstant.TOP_ID);
+        return getChildPerms(menus, 0);
     }
 
     @Override
-    public List<Integer> selectMenuListByRoleId(String roleId) {
+    public List<Integer> selectMenuListByRoleId(Long roleId) {
         return menuMapper.selectMenuListByRoleId(roleId);
     }
 
@@ -77,7 +75,7 @@ public class MenuServiceImpl implements MenuService {
             router.setMeta(new MetaVo(menu.getMenuName(), menu.getIcon()));
             router.setName(menu.getMenuName());
             List<Menu> cMenus = menu.getChildren();
-            if (!cMenus.isEmpty() && MenuConstant.MENU == menu.getMenuType()) {
+            if (!cMenus.isEmpty() && "M".equals(menu.getMenuType())) {
                 router.setAlwaysShow(true);
                 router.setRedirect("noRedirect");
                 router.setChildren(buildMenus(cMenus));
@@ -87,42 +85,48 @@ public class MenuServiceImpl implements MenuService {
         return routers;
     }
 
-    @Override
-    public List<Menu> buildMenuTree(List<Menu> menus) {
-        List<Menu> returnList = new ArrayList<>();
-        for (Iterator<Menu> iterator = menus.iterator(); iterator.hasNext(); ) {
-            Menu t = iterator.next();
-            // 根据传入的某个父节点ID,遍历该父节点的所有子节点
-            if (MenuConstant.TOP_ID.equals(t.getParentId())) {
-                recursionFn(menus, t);
-                returnList.add(t);
-            }
-        }
-        if (returnList.isEmpty()) {
-            returnList = menus;
-        }
-        return returnList;
-    }
 
     @Override
     public List<TreeSelect> buildMenuTreeSelect(List<Menu> menus) {
-        List<Menu> menuTrees = buildMenuTree(menus);
-        return menuTrees.stream().map(TreeSelect::new).collect(Collectors.toList());
+        List<Menu> menuList = buildMenuTree(menus);
+        return menuList.stream().map(TreeSelect::new).collect(Collectors.toList());
     }
 
     @Override
-    public Menu selectMenuById(String menuId) {
+    public List<Menu> buildMenuTree(List<Menu> menus) {
+        if (menus.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return menus.stream()
+                .filter(e -> e.getParentId() == 0)
+                .peek(parent -> parent.setChildren(getChildrenMenu(menus, parent.getId())))
+                .collect(Collectors.toList());
+    }
+
+    private List<Menu> getChildrenMenu(List<Menu> menus, Long id) {
+        List<Menu> children = menus.stream().filter(e -> e.getParentId().equals(id)).collect(Collectors.toList());
+        if (children.isEmpty()) {
+            return new ArrayList<>();
+        }
+        for (Menu menu : children) {
+            menu.setChildren(getChildrenMenu(menus, menu.getId()));
+        }
+        return children;
+    }
+
+    @Override
+    public Menu selectMenuById(Long menuId) {
         return menuMapper.selectMenuById(menuId);
     }
 
     @Override
-    public boolean hasChildByMenuId(String menuId) {
+    public boolean hasChildByMenuId(Long menuId) {
         int result = menuMapper.hasChildByMenuId(menuId);
         return result > 0;
     }
 
     @Override
-    public boolean checkMenuExistRole(String menuId) {
+    public boolean checkMenuExistRole(Long menuId) {
         int result = roleMenuMapper.checkMenuExistRole(menuId);
         return result > 0;
     }
@@ -138,16 +142,15 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public int deleteMenuById(String menuId) {
-        String loginUsername = SecurityUtils.getUsername();
-        return menuMapper.deleteMenuById(menuId, loginUsername);
+    public int deleteMenuById(Long menuId) {
+        return menuMapper.deleteMenuById(menuId);
     }
 
     @Override
     public String checkMenuNameUnique(Menu menu) {
-        String menuId = menu.getMenuId();
+        Long menuId = StringUtils.isNull(menu.getId()) ? -1L : menu.getId();
         Menu info = menuMapper.checkMenuNameUnique(menu.getMenuName(), menu.getParentId());
-        if (StringUtils.isNotNull(info) && !info.getMenuId().equals(menuId)) {
+        if (StringUtils.isNotNull(info) && info.getId().longValue() != menuId.longValue()) {
             return Constant.NOT_UNIQUE;
         }
         return Constant.UNIQUE;
@@ -162,8 +165,7 @@ public class MenuServiceImpl implements MenuService {
     public String getRouterPath(Menu menu) {
         String routerPath = menu.getPath();
         // 非外链并且是一级目录
-        if (MenuConstant.TOP_ID.equals(menu.getParentId())
-                && MenuConstant.IS_FRAME == menu.getIsFrame()) {
+        if (0 == menu.getParentId() && "1".equals(menu.getIsFrame())) {
             routerPath = "/" + menu.getPath();
         }
         return routerPath;
@@ -176,12 +178,12 @@ public class MenuServiceImpl implements MenuService {
      * @param parentId 传入的父节点ID
      * @return String
      */
-    public List<Menu> getChildPerms(List<Menu> list, String parentId) {
+    public List<Menu> getChildPerms(List<Menu> list, int parentId) {
         List<Menu> returnList = new ArrayList<>();
         for (Iterator<Menu> iterator = list.iterator(); iterator.hasNext(); ) {
             Menu t = iterator.next();
             // 一、根据传入的某个父节点ID,遍历该父节点的所有子节点
-            if (t.getParentId().equals(parentId)) {
+            if (t.getParentId() == parentId) {
                 recursionFn(list, t);
                 returnList.add(t);
             }
@@ -216,8 +218,10 @@ public class MenuServiceImpl implements MenuService {
      */
     private List<Menu> getChildList(List<Menu> list, Menu t) {
         List<Menu> tlist = new ArrayList<>();
-        for (Menu n : list) {
-            if (n.getParentId().equals(t.getMenuId())) {
+        Iterator<Menu> it = list.iterator();
+        while (it.hasNext()) {
+            Menu n = it.next();
+            if (n.getParentId().longValue() == t.getId().longValue()) {
                 tlist.add(n);
             }
         }
@@ -231,3 +235,4 @@ public class MenuServiceImpl implements MenuService {
         return getChildList(list, t).isEmpty();
     }
 }
+

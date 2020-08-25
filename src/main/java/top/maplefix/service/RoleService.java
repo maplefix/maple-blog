@@ -26,7 +26,7 @@ public interface RoleService {
      * @param userId 用户ID
      * @return 权限列表
      */
-    Set<String> selectRolePermissionByUserId(String userId);
+    Set<String> selectRolePermissionByUserId(Long userId);
 
     /**
      * 查询所有角色
@@ -41,7 +41,7 @@ public interface RoleService {
      * @param userId 用户ID
      * @return 选中角色ID列表
      */
-    List<Integer> selectRoleListByUserId(String userId);
+    List<Integer> selectRoleListByUserId(Long userId);
 
     /**
      * 通过角色ID查询角色
@@ -49,7 +49,7 @@ public interface RoleService {
      * @param roleId 角色ID
      * @return 角色对象信息
      */
-    Role selectRoleById(String roleId);
+    Role selectRoleById(Long roleId);
 
     /**
      * 校验角色名称是否唯一

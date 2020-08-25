@@ -1,15 +1,13 @@
-package top.maplefix.controller.oms;
+package top.maplefix.controller.system;
 
-import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import top.maplefix.annotation.OLog;
 import top.maplefix.common.BaseResult;
 import top.maplefix.constant.UserConstant;
-import top.maplefix.controller.BaseController;
+import top.maplefix.controller.common.BaseController;
 import top.maplefix.enums.BusinessType;
 import top.maplefix.model.SysUser;
 import top.maplefix.service.RoleService;
@@ -25,8 +23,8 @@ import java.util.List;
  * @description : 后端登录授权操作
  * @date : 20220/1/27 14:43
  */
-@Controller
-@RequestMapping("/user")
+@RestController
+@RequestMapping("/system/user")
 @Slf4j
 public class UserController extends BaseController {
 
@@ -52,9 +50,8 @@ public class UserController extends BaseController {
      */
     @PreAuthorize("@permissionService.hasPermission('system:user:query')")
     @GetMapping(value = "/{id}")
-    public BaseResult getInfo(@PathVariable String  id) {
+    public BaseResult getInfo(@PathVariable Long  id) {
         BaseResult baseResult = BaseResult.success(userService.selectUserById(id));
-        JSONObject data = new JSONObject();
         baseResult.put("roleIds", roleService.selectRoleListByUserId(id));
         return baseResult;
     }
