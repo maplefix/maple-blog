@@ -17,7 +17,7 @@ public interface RoleMenuMidMapper extends Mapper<RoleMenuMid> {
      * @param menuId 菜单ID
      * @return 结果
      */
-    int checkMenuExistRole(String menuId);
+    int checkMenuExistRole(Long menuId);
 
     /**
      * 通过角色ID删除角色和菜单关联
@@ -25,7 +25,7 @@ public interface RoleMenuMidMapper extends Mapper<RoleMenuMid> {
      * @param roleId 角色ID
      * @return 结果
      */
-    int deleteRoleMenuByRoleId(String roleId);
+    int deleteRoleMenuByRoleId(Long roleId);
 
     /**
      * 批量新增角色菜单信息

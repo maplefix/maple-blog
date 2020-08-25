@@ -34,7 +34,7 @@ public interface MenuMapper extends Mapper<Menu> {
      * @param userId 用户ID
      * @return 权限列表
      */
-    List<String> selectMenuPermsByUserId(String userId);
+    List<String> selectMenuPermsByUserId(Long userId);
 
     /**
      * 根据用户ID查询菜单
@@ -49,7 +49,7 @@ public interface MenuMapper extends Mapper<Menu> {
      * @param userId 用户ID
      * @return 菜单列表
      */
-    List<Menu> selectMenuTreeByUserId(String userId);
+    List<Menu> selectMenuTreeByUserId(Long userId);
 
     /**
      * 根据角色ID查询菜单树信息
@@ -57,7 +57,7 @@ public interface MenuMapper extends Mapper<Menu> {
      * @param roleId 角色ID
      * @return 选中菜单列表
      */
-    List<Integer> selectMenuListByRoleId(String roleId);
+    List<Integer> selectMenuListByRoleId(Long roleId);
 
     /**
      * 根据菜单ID查询信息
@@ -65,7 +65,7 @@ public interface MenuMapper extends Mapper<Menu> {
      * @param menuId 菜单ID
      * @return 菜单信息
      */
-    Menu selectMenuById(String menuId);
+    Menu selectMenuById(Long menuId);
 
     /**
      * 是否存在菜单子节点
@@ -73,7 +73,7 @@ public interface MenuMapper extends Mapper<Menu> {
      * @param menuId 菜单ID
      * @return 结果
      */
-    int hasChildByMenuId(String menuId);
+    int hasChildByMenuId(Long menuId);
 
     /**
      * 新增菜单信息
@@ -97,7 +97,7 @@ public interface MenuMapper extends Mapper<Menu> {
      * @param menuId 菜单ID
      * @return 结果
      */
-    int deleteMenuById(@Param("menuId") String menuId, @Param("loginUsername") String loginUsername);
+    int deleteMenuById(@Param("menuId") Long menuId);
 
     /**
      * 校验菜单名称是否唯一
@@ -106,5 +106,5 @@ public interface MenuMapper extends Mapper<Menu> {
      * @param parentId 父菜单ID
      * @return 结果
      */
-    Menu checkMenuNameUnique(@Param("menuName") String menuName, @Param("parentId") String parentId);
+    Menu checkMenuNameUnique(@Param("menuName") String menuName, @Param("parentId") Long parentId);
 }

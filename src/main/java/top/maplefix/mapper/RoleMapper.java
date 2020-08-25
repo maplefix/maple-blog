@@ -27,7 +27,7 @@ public interface RoleMapper extends Mapper<Role> {
      * @param userId 用户ID
      * @return 角色列表
      */
-    List<Role> selectRolePermissionByUserId(String userId);
+    List<Role> selectRolePermissionByUserId(Long userId);
 
     /**
      * 查询所有角色
@@ -42,7 +42,7 @@ public interface RoleMapper extends Mapper<Role> {
      * @param userId 用户ID
      * @return 选中角色ID列表
      */
-    List<Integer> selectRoleListByUserId(String userId);
+    List<Integer> selectRoleListByUserId(Long userId);
 
     /**
      * 通过角色ID查询角色
@@ -50,7 +50,7 @@ public interface RoleMapper extends Mapper<Role> {
      * @param roleId 角色ID
      * @return 角色对象信息
      */
-    Role selectRoleById(String roleId);
+    Role selectRoleById(Long roleId);
 
     /**
      * 根据用户ID查询角色
@@ -98,5 +98,5 @@ public interface RoleMapper extends Mapper<Role> {
      * @param ids 角色ID
      * @return 结果
      */
-    int deleteRoleByIds(@Param("ids") String[] ids, @Param("username") String username);
+    int deleteRoleByIds(@Param("ids") Long[] ids);
 }

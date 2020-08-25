@@ -18,7 +18,7 @@ public interface UserRoleMidMapper extends Mapper<top.maplefix.model.UserRoleMid
      * @param userId 用户ID
      * @return 结果
      */
-    int deleteUserRoleByUserId(String userId);
+    int deleteUserRoleByUserId(Long userId);
 
     /**
      * 批量删除用户和角色关联
@@ -26,7 +26,7 @@ public interface UserRoleMidMapper extends Mapper<top.maplefix.model.UserRoleMid
      * @param ids 需要删除的数据ID
      * @return 结果
      */
-    int deleteUserRole(String[] ids);
+    int deleteUserRole(Long[] ids);
 
     /**
      * 通过角色ID查询角色使用数量
@@ -34,7 +34,7 @@ public interface UserRoleMidMapper extends Mapper<top.maplefix.model.UserRoleMid
      * @param roleId 角色ID
      * @return 结果
      */
-    int countUserRoleByRoleId(String roleId);
+    int countUserRoleByRoleId(Long roleId);
 
     /**
      * 批量新增用户角色信息
@@ -59,5 +59,5 @@ public interface UserRoleMidMapper extends Mapper<top.maplefix.model.UserRoleMid
      * @param userIds 需要删除的用户数据ID
      * @return 结果
      */
-    int deleteUserRoleInfos(@Param("roleId") String roleId, @Param("userIds") String[] userIds);
+    int deleteUserRoleInfos(@Param("roleId") Long roleId, @Param("userIds") Long[] userIds);
 }

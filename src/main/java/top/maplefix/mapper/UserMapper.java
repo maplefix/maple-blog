@@ -35,7 +35,7 @@ public interface UserMapper extends Mapper<SysUser> {
      * @param userId 用户ID
      * @return 用户对象信息
      */
-    SysUser selectUserById(String userId);
+    SysUser selectUserById(Long userId);
 
     /**
      * 新增用户信息
@@ -68,7 +68,7 @@ public interface UserMapper extends Mapper<SysUser> {
      * @param ids 用户ID
      * @return 结果
      */
-    int deleteUserByIds(@Param("ids") String[] ids, @Param("loginUsername") String loginUsername);
+    int deleteUserByIds(@Param("ids") Long[] ids, @Param("loginUsername") String loginUsername);
 
     /**
      * 校验用户名称是否唯一
