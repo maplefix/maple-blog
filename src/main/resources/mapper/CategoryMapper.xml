@@ -5,30 +5,27 @@
 <mapper namespace="top.maplefix.mapper.CategoryMapper">
 
     <resultMap type="top.maplefix.model.Category" id="CategoryResult">
-        <result property="categoryId" column="category_id"/>
-        <result property="categoryName" column="category_name"/>
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
         <result property="description" column="description"/>
+        <result property="support" column="support"/>
         <result property="createDate" column="create_date"/>
         <result property="updateDate" column="update_date"/>
-        <result property="type" column="type"/>
     </resultMap>
 
 
     <select id="selectCategoryList" parameterType="top.maplefix.model.Category"
             resultMap="CategoryResult">
-        select category_id,
-        category_name,
-        type,
+        select id,
+        title,
         description,
+        support,
         create_date,
         update_date
         from t_category
         <where>
-            <if test="type != null">
-                AND type =#{type}
-            </if>
-            <if test="categoryName != null and categoryName != ''">
-                AND category_name like concat('%', #{categoryName}, '%')
+            <if test="title != null and title != ''">
+                AND title like concat('%', #{title}, '%')
             </if>
             <if test="params.beginDate != null and params.beginDate != ''"><!-- 开始时间检索 -->
                 and date_format(create_date,'%y%m%d') &gt;= date_format(#{params.beginDate},'%y%m%d')
@@ -40,38 +37,38 @@
     </select>
 
     <select id="selectCategoryById" resultMap="CategoryResult">
-        select category_id,
-        category_name,
-        type,
+        select id,
+        title,
         description,
+        support,
         create_date,
         update_date
         from t_category
-        where category_id = #{id}
+        where id = #{id}
     </select>
 
     <select id="selectSupportBlogCategoryList" resultType="top.maplefix.model.Category">
-        select category_id,
-        category_name,
-        type,
+        select id,
+        title,
         description,
+        support,
         create_date,
         update_date
         from t_category
     </select>
 
-    <insert id="insertCategory" parameterType="top.maplefix.model.Category" >
+    <insert id="insertCategory" parameterType="top.maplefix.model.Category" useGeneratedKeys="true" keyProperty="id">
         insert into t_category
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="categoryName != null  and categoryName != ''">category_name,</if>
-            <if test="type != null">type,</if>
+            <if test="title != null  and title != ''">title,</if>
             <if test="description != null  and description != ''">description,</if>
+            <if test="support != null ">support,</if>
             <if test="createDate != null  and createDate != ''">create_date</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="categoryName != null  and categoryName != ''">#{categoryName},</if>
-            <if test="type != null">#{type},</if>
+            <if test="title != null  and title != ''">#{title},</if>
             <if test="description != null  and description != ''">#{description},</if>
+            <if test="support != null ">#{support},</if>
             <if test="createDate != null  and createDate != ''">#{createDate}</if>
         </trim>
     </insert>
@@ -79,21 +76,22 @@
     <update id="updateCategory" parameterType="top.maplefix.model.Category">
         update t_category
         <set>
-            <if test="categoryName != null  and categoryName != ''">category_name = #{categoryName},</if>
+            <if test="title != null  and title != ''">title = #{title},</if>
             <if test="description != null  and description != ''">description = #{description},</if>
+            <if test="support != null ">support = #{support},</if>
             <if test="updateDate != null  and updateDate != ''">update_date = #{updateDate}</if>
         </set>
-        where category_id = #{id}
+        where id = #{id}
     </update>
 
     <delete id="deleteCategoryById">
         delete from  t_category
-        where category_id = #{id}
+        where id = #{id}
     </delete>
 
     <delete id="deleteCategoryByIds">
         delete from  t_category
-        where category_id in
+        where id in
         <foreach item="id" collection="ids" open="(" separator="," close=")">
             #{id}
         </foreach>
