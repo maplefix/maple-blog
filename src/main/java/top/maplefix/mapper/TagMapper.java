@@ -29,7 +29,7 @@ public interface TagMapper extends Mapper<Tag>{
      * @param id tag的id
      * @return Tag
      */
-    Tag selectTagById(String id);
+    Tag selectTagById(Long id);
 
     /**
      * 新增Tag
@@ -51,10 +51,9 @@ public interface TagMapper extends Mapper<Tag>{
      * 根据Id批量删除Tag
      *
      * @param ids      id
-     * @param username 操作者账号
      * @return
      */
-    int deleteTagByIds(@Param("ids") String[] ids, @Param("username") String username);
+    int deleteTagByIds(@Param("ids") Long[] ids);
 
     /**
      * 删除TagMapping关联
@@ -86,5 +85,5 @@ public interface TagMapper extends Mapper<Tag>{
      * @param id   对应类型的id
      * @return Tag list
      */
-    List<Tag> selectTagListByType(@Param("id") String id);
+    List<Tag> selectTagListByType(@Param("id") Long id);
 }

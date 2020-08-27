@@ -3,8 +3,8 @@
 <mapper namespace="top.maplefix.mapper.TagMapper">
 
     <resultMap type="top.maplefix.model.Tag" id="TagResult">
-        <result property="tagId" column="tag_id"/>
-        <result property="tagName" column="tag_name"/>
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
         <result property="color" column="color"/>
         <result property="count" column="count"/>
         <result property="createDate" column="create_date"/>
@@ -12,20 +12,18 @@
     </resultMap>
 
     <select id="selectTagList" parameterType="top.maplefix.model.Tag" resultMap="TagResult">
-        select t.tag_id,
-        t.tag_name,
+        select t.id,
+        t.title,
         t.color,
         t.create_date,
         t.update_date,
-        count(tm.bt_id) as count
+        count(tm.id) as count
         from t_tag t left join t_blog_tag_mid tm
-        on t.tag_id=tm.tag_id
+        on t.id=tm.tag_id
         <where>
-            <if test="type != null">
-                AND t.type =#{type}
-            </if>
-            <if test="tagName != null and tagName != ''">
-                AND t.tag_name like concat('%', #{tagName}, '%')
+            1=1
+            <if test="title != null and title != ''">
+                AND t.title like concat('%', #{title}, '%')
             </if>
             <if test="params.beginDate != null and params.beginDate != ''"><!-- 开始时间检索 -->
                 and date_format(t.create_date,'%y%m%d') &gt;= date_format(#{params.beginDate},'%y%m%d')
@@ -33,91 +31,82 @@
             <if test="params.endDate != null and params.endDate != ''"><!-- 结束时间检索 -->
                 and date_format(t.create_date,'%y%m%d') &lt;= date_format(#{params.endDate},'%y%m%d')
             </if>
-            group by t.tag_id
+            group by t.id
         </where>
     </select>
 
     <select id="selectTagById" resultMap="TagResult">
-        select t.tag_id,
-        t.tag_name,
+        select t.id,
+        t.title,
         t.color,
-        count(tm.bt_id) as count
+        count(tm.id) as count
         from t_tag t
         left join t_blog_tag_mid tm
-        on t.tag_id=tm.tag_id
-        where t.tag_id = #{id}
+        on t.id=tm.tag_id
+        where t.id = #{id}
     </select>
 
     <select id="selectTagByTitle" resultType="top.maplefix.model.Tag">
-        select t.tag_id,
-        t.tag_name,
-        t.color,
-        type
+        select t.id,
+        t.title,
+        t.color
         from t_tag
         where title = #{title}
-          and type = #{type}
     </select>
 
     <select id="selectTagListByType" resultType="top.maplefix.model.Tag">
         select t.id,
         color,
         title,
-        type,
         create_date,
         update_date
         from t_tag t
-        left join t_blog_tag_mid tm on t.tag_id=tm.tag_id
-        where t.type=#{type}
-        <if test="type == 1">and tm.blog_id=#{id}</if>
-        <if test="type ==2">and tm.book_id=#{id}</if>
+        left join t_blog_tag_mid tm on t.id=tm.tag_id
+        where tm.id=#{id}
     </select>
 
 
-    <insert id="insertTag" parameterType="top.maplefix.model.Tag" useGeneratedKeys="true"
-            keyProperty="id">
+    <insert id="insertTag" parameterType="top.maplefix.model.Tag" useGeneratedKeys="true" keyProperty="id">
         insert into t_tag
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="tagId != null  and tagId != ''">tag_id,</if>
-            <if test="tagName != null  and tagName != ''">tag_name,</if>
+            <if test="title != null  and title != ''">title,</if>
             <if test="color != null  and color != ''">color,</if>
-            <if test="type != null">type,</if>
-            <if test="createDate != null  and createDate != ''">create_date</if>
+            <if test="createDate != null  and createDate != ''">create_date,</if>
+            <if test="remark != null  and remark != ''">remark</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="tagId != null  and tagId != ''">#{tagId},</if>
-            <if test="tagName != null  and tagName != ''">#{tagName},</if>
+            <if test="title != null  and title != ''">#{title},</if>
             <if test="color != null  and color != ''">#{color},</if>
-            <if test="type != null">#{type},</if>
-            <if test="createDate != null  and createDate != ''">#{createDate}</if>
+            <if test="createDate != null  and createDate != ''">#{createDate},</if>
+            <if test="remark != null  and remark != ''">#{remark}</if>
         </trim>
     </insert>
     <insert id="insertTagMid">
         insert into t_blog_tag_mid
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="blogId != null">blog_id,</if>
-            <if test="tagId != null">tag_id,</if>
-            <if test="bookId != null">book_id,</if>
+            <if test="tagId != null">tag_id</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="blogId != null">#{blogId},</if>
-            <if test="tagId != null">#{tagId},</if>
-            <if test="bookId != null">#{bookId},</if>
+            <if test="tagId != null">#{tagId}</if>
         </trim>
     </insert>
 
     <update id="updateTag" parameterType="top.maplefix.model.Tag">
         update t_tag
         <set>
-            <if test="tagName != null  and tagName != ''">tag_name = #{tagName},</if>
+            <if test="title != null  and title != ''">title = #{title},</if>
             <if test="color != null  and color != ''">color = #{color},</if>
-            <if test="updateDate != null  and updateDate != ''">update_date = #{updateDate}</if>
+            <if test="updateDate != null  and updateDate != ''">update_date = #{updateDate},</if>
+            <if test="remark != null  and remark != ''">remark = #{remark}</if>
         </set>
-        where tag_id = #{id}
+        where id = #{id}
     </update>
 
 
     <delete id="deleteTagByIds">
-        delete from t_tag where tag_id in
+        delete from t_tag where id in
         <foreach item="id" collection="ids" open="(" separator="," close=")">
             #{id}
         </foreach>
@@ -126,7 +115,7 @@
     <delete id="deleteTagMid">
         delete from t_blog_tag_mid
         <choose>
-            <when test="blogId==null and tagId==null and bookId==null">
+            <when test="blogId==null and tagId==null">
                 where 1=2
             </when>
             <otherwise>
@@ -138,9 +127,6 @@
         </if>
         <if test="tagId != null">
             AND tag_id =#{tagId}
-        </if>
-        <if test="bookId != null">
-            AND book_id =#{bookId}
         </if>
     </delete>
 
