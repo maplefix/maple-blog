@@ -24,6 +24,7 @@ import top.maplefix.secrrity.handle.LogoutSuccessHandlerImpl;
  */
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Autowired
     UserDetailsService userDetailsService;
     @Autowired
@@ -57,7 +58,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
+        httpSecurity.cors()
+                .and()
                 // CRSF禁用，因为不使用session
                 .csrf().disable()
                 // 认证失败处理类
@@ -67,7 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 过滤请求
                 .authorizeRequests()
                 // 对于登录login 验证码captchaImage 允许匿名访问
-                .antMatchers("/login", "/captchaImage", "/websocket/**").anonymous()
+                .antMatchers("/login", "/captchaImage","/favicon.ico", "/websocket/**").anonymous()
                 .antMatchers(
                         HttpMethod.GET,
                         "/*.html",
@@ -79,10 +81,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/file/**").anonymous()
                 .antMatchers("/swagger-ui.html").anonymous()
                 .antMatchers("/doc.html").anonymous()
+                .antMatchers("/websocket/**").anonymous()
                 .antMatchers("/swagger-resources/**").anonymous()
                 .antMatchers("/webjars/**").anonymous()
                 .antMatchers("/*/api-docs").anonymous()
                 .antMatchers("/druid/**").anonymous()
+                .antMatchers("/favicon.ico").anonymous()
                 //前台
                 .antMatchers("/f/**").permitAll()
                 // 除上面外的所有请求全部需要鉴权认证

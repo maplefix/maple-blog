@@ -1,17 +1,19 @@
 package top.maplefix.config.websocket;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * @author : Maple
  * @description : 日志message
  * @date : 2020/1/18 16:35
  */
-@Data
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
-@NoArgsConstructor
 public class LoggerMessage {
     private String body;
     private String timestamp;

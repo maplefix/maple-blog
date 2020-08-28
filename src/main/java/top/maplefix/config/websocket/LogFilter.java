@@ -16,6 +16,7 @@ import java.util.Date;
  */
 @Service
 public class LogFilter extends Filter<ILoggingEvent> {
+
     @Override
     public FilterReply decide(ILoggingEvent event) {
         StringBuilder exception = new StringBuilder();
@@ -35,6 +36,7 @@ public class LogFilter extends Filter<ILoggingEvent> {
                 exception.toString(),
                 ""
         );
+        System.out.println("pushLogger=============：" + loggerMessage);
         LoggerQueue.getInstance().push(loggerMessage);
         return FilterReply.ACCEPT;
     }
