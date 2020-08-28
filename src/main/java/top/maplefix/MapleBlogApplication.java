@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import tk.mybatis.spring.annotation.MapperScan;
 import top.maplefix.utils.SpringUtils;
@@ -25,6 +26,7 @@ import top.maplefix.utils.SpringUtils;
 @EnableAspectJAutoProxy(exposeProxy = true)
 @EnableSwaggerBootstrapUI
 @EnableSwagger2
+@EnableScheduling
 public class MapleBlogApplication {
     /**
      * 解决bean转换时null值报错
