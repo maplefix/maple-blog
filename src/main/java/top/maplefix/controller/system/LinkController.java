@@ -1,13 +1,12 @@
-package top.maplefix.controller.oms;
+package top.maplefix.controller.system;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.maplefix.annotation.OLog;
 import top.maplefix.common.BaseResult;
-import top.maplefix.controller.BaseController;
+import top.maplefix.controller.common.BaseController;
 import top.maplefix.enums.BusinessType;
 import top.maplefix.model.Link;
 import top.maplefix.service.LinkService;
@@ -22,15 +21,15 @@ import java.util.List;
  * @description : 友链数据接口
  * @date : 2020/1/28 2:53
  */
-@Controller
-@RequestMapping("/link")
+@RestController
+@RequestMapping("/system/link")
 @Slf4j
 public class LinkController extends BaseController {
 
     @Resource
     private LinkService linkService;
 
-    @PreAuthorize("@permissionService.hasPermission('blog:link:list')")
+    @PreAuthorize("@permissionService.hasPermission('system:link:list')")
     @GetMapping("/list")
     public TableDataInfo list(Link link) {
         startPage();
@@ -38,13 +37,13 @@ public class LinkController extends BaseController {
         return getDataTable(list);
     }
 
-    @PreAuthorize("@permissionService.hasPermission('blog:link:query')")
+    @PreAuthorize("@permissionService.hasPermission('system:link:query')")
     @GetMapping(value = "/{id}")
-    public BaseResult getInfo(@PathVariable String  id) {
+    public BaseResult getInfo(@PathVariable Long  id) {
         return BaseResult.success(linkService.selectLinkById(id));
     }
 
-    @PreAuthorize("@permissionService.hasPermission('blog:link:add')")
+    @PreAuthorize("@permissionService.hasPermission('system:link:add')")
     @OLog(module = "友链管理", businessType = BusinessType.INSERT)
     @PostMapping()
     public BaseResult add(@RequestBody @Validated Link link) {
@@ -52,7 +51,7 @@ public class LinkController extends BaseController {
         return toResult(linkService.insertLink(link));
     }
 
-    @PreAuthorize("@permissionService.hasPermission('blog:link:edit')")
+    @PreAuthorize("@permissionService.hasPermission('system:link:edit')")
     @OLog(module = "友链管理", businessType = BusinessType.UPDATE)
     @PutMapping()
     public BaseResult edit(@RequestBody Link link) {
@@ -60,14 +59,14 @@ public class LinkController extends BaseController {
         return toResult(linkService.updateLink(link));
     }
 
-    @PreAuthorize("@permissionService.hasPermission('blog:link:edit')")
+    @PreAuthorize("@permissionService.hasPermission('system:link:edit')")
     @OLog(module = "友链管理", businessType = BusinessType.UPDATE)
     @PutMapping("/pass/{id}/{pass}")
-    public BaseResult handlePass(@PathVariable String id, @PathVariable Boolean pass) {
+    public BaseResult handlePass(@PathVariable Long id, @PathVariable Boolean pass) {
         return toResult(linkService.handleLinkPass(id, pass));
     }
 
-    @PreAuthorize("@permissionService.hasPermission('blog:link:remove')")
+    @PreAuthorize("@permissionService.hasPermission('system:link:remove')")
     @OLog(module = "友链管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public BaseResult delete(@PathVariable String ids) {

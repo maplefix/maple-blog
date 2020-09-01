@@ -17,7 +17,7 @@ public interface LinkService {
      * @param id 友链ID
      * @return 友链
      */
-    Link selectLinkById(String id);
+    Link selectLinkById(Long id);
 
     /**
      * 查询友链列表
@@ -57,7 +57,7 @@ public interface LinkService {
      * @param id 友链ID
      * @return 结果
      */
-    int deleteLinkById(String id);
+    int deleteLinkById(Long id);
 
     /**
      * 处理友链申请
@@ -66,5 +66,5 @@ public interface LinkService {
      * @param pass
      * @return 结果
      */
-    int handleLinkPass(String id, Boolean pass);
+    int handleLinkPass(Long id, Boolean pass);
 }

@@ -1,4 +1,4 @@
-package top.maplefix.controller.oms;
+package top.maplefix.controller.monitor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import top.maplefix.annotation.OLog;
 import top.maplefix.common.BaseResult;
 import top.maplefix.constant.Constant;
-import top.maplefix.controller.BaseController;
+import top.maplefix.controller.common.BaseController;
 import top.maplefix.enums.BusinessType;
 import top.maplefix.redis.RedisCacheService;
 import top.maplefix.secrrity.LoginUser;
@@ -26,7 +26,7 @@ import java.util.List;
  * @date 2020/3/20 10:32
  */
 @RestController
-@RequestMapping("/online")
+@RequestMapping("/monitor/online")
 public class UserOnlineController extends BaseController {
 
     @Autowired
@@ -36,18 +36,18 @@ public class UserOnlineController extends BaseController {
 
     @PreAuthorize("@permissionService.hasPermission('monitor:online:list')")
     @GetMapping("/list")
-    public TableDataInfo list(String ip, String userName) {
+    public TableDataInfo list(String ipAddr, String userName) {
         Collection<String> keys = redisCacheService.keys(Constant.LOGIN_TOKEN_KEY + "*");
         List<UserOnline> userOnlineList = new ArrayList<>();
         for (String key : keys) {
             LoginUser user = redisCacheService.getCacheObject(key);
-            if (StringUtils.isNotEmpty(ip) && StringUtils.isNotEmpty(userName)) {
-                if (StringUtils.equals(ip, user.getIp()) && StringUtils.equals(userName, user.getUsername())) {
-                    userOnlineList.add(userOnlineService.selectOnlineByInfo(ip, userName, user));
+            if (StringUtils.isNotEmpty(ipAddr) && StringUtils.isNotEmpty(userName)) {
+                if (StringUtils.equals(ipAddr, user.getIp()) && StringUtils.equals(userName, user.getUsername())) {
+                    userOnlineList.add(userOnlineService.selectOnlineByInfo(ipAddr, userName, user));
                 }
-            } else if (StringUtils.isNotEmpty(ip)) {
-                if (StringUtils.equals(ip, user.getIp())) {
-                    userOnlineList.add(userOnlineService.selectOnlineByIpAddr(ip, user));
+            } else if (StringUtils.isNotEmpty(ipAddr)) {
+                if (StringUtils.equals(ipAddr, user.getIp())) {
+                    userOnlineList.add(userOnlineService.selectOnlineByIpAddr(ipAddr, user));
                 }
             } else if (StringUtils.isNotEmpty(userName) && StringUtils.isNotNull(user.getUser())) {
                 if (StringUtils.equals(userName, user.getUsername())) {

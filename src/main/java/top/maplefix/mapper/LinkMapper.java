@@ -19,7 +19,7 @@ public interface LinkMapper extends Mapper<Link>{
      * @param id 友链ID
      * @return 友链
      */
-    Link selectLinkById(String id);
+    Link selectLinkById(Long id);
 
     /**
      * 查询友链列表
@@ -51,7 +51,7 @@ public interface LinkMapper extends Mapper<Link>{
      * @param id 友链ID
      * @return 结果
      */
-    int deleteLinkById(@Param("id") String id);
+    int deleteLinkById(@Param("id") Long id);
 
     /**
      * 批量删除友链
@@ -59,5 +59,5 @@ public interface LinkMapper extends Mapper<Link>{
      * @param ids 需要删除的数据ID
      * @return 结果
      */
-    int deleteLinkByIds(@Param("ids") String[] ids);
+    int deleteLinkByIds(@Param("ids") Long[] ids);
 }

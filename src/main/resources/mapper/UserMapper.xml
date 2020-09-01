@@ -91,11 +91,11 @@
 	</select>
 
     <select id="checkPhoneUnique" parameterType="String" resultMap="SysUserResult">
-		select user_id, phone from t_user where phone = #{phone}
+		select id, phone from t_user where phone = #{phone}
 	</select>
 
     <select id="checkEmailUnique" parameterType="String" resultMap="SysUserResult">
-		select user_id, email from t_user where email = #{email}
+		select id, email from t_user where email = #{email}
 	</select>
 
     <insert id="insertUser" parameterType="top.maplefix.model.SysUser" useGeneratedKeys="true" keyProperty="id">

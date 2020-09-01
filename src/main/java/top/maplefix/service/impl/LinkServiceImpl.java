@@ -24,7 +24,7 @@ public class LinkServiceImpl implements LinkService {
     private LinkMapper linkMapper;
 
     @Override
-    public Link selectLinkById(String id) {
+    public Link selectLinkById(Long id) {
         return linkMapper.selectLinkById(id);
     }
 
@@ -45,16 +45,16 @@ public class LinkServiceImpl implements LinkService {
 
     @Override
     public int deleteLinkByIds(String ids) {
-        return linkMapper.deleteLinkByIds(ConvertUtils.toStrArray(ids));
+        return linkMapper.deleteLinkByIds(ConvertUtils.toLongArray(ids));
     }
 
     @Override
-    public int deleteLinkById(String id) {
+    public int deleteLinkById(Long id) {
         return linkMapper.deleteLinkById(id);
     }
 
     @Override
-    public int handleLinkPass(String id, Boolean pass) {
+    public int handleLinkPass(Long id, Boolean pass) {
         Link link = selectLinkById(id);
         if (Objects.isNull(link)) {
             throw new CustomException("友链不存在");
