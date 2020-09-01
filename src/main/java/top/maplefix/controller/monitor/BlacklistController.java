@@ -1,4 +1,4 @@
-package top.maplefix.controller.oms;
+package top.maplefix.controller.monitor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.maplefix.annotation.OLog;
 import top.maplefix.common.BaseResult;
-import top.maplefix.controller.BaseController;
+import top.maplefix.controller.common.BaseController;
 import top.maplefix.enums.BusinessType;
 import top.maplefix.model.Blacklist;
 import top.maplefix.service.BlacklistService;
@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2020/3/18 15:08
  */
 @RestController
-@RequestMapping("/blacklist")
+@RequestMapping("/monitor/blacklist")
 @Slf4j
 public class BlacklistController extends BaseController {
     

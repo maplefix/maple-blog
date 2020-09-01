@@ -1,22 +1,24 @@
-package top.maplefix.controller.oms;
+package top.maplefix.controller.monitor;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import top.maplefix.common.BaseResult;
-import top.maplefix.controller.BaseController;
-import top.maplefix.vo.server.Server;
+import top.maplefix.controller.common.BaseController;
+import top.maplefix.service.ServerService;
 
 /**
  * @author : Maple
  * @description : 服务器监控相关信息
  * @date : 2020/2/15 16:20
  */
-@Controller
-@RequestMapping("/api/admin/server")
+@RestController
+@RequestMapping("/monitor/server")
 public class ServerController extends BaseController {
-
+    @Autowired
+    private ServerService serverService;
     /**
      * 服务器相关信息
      * @return
@@ -25,8 +27,6 @@ public class ServerController extends BaseController {
     @PreAuthorize("@permissionService.hasPermission('monitor:server:list')")
     @GetMapping()
     public BaseResult getInfo() throws Exception {
-        Server server = new Server();
-        server.copyTo();
-        return BaseResult.success(server);
+        return BaseResult.success(serverService.getServers());
     }
 }

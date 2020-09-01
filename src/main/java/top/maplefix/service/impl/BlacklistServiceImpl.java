@@ -6,7 +6,6 @@ import top.maplefix.mapper.BlacklistMapper;
 import top.maplefix.model.Blacklist;
 import top.maplefix.service.BlacklistService;
 import top.maplefix.utils.ConvertUtils;
-import top.maplefix.utils.SecurityUtils;
 
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class BlacklistServiceImpl implements BlacklistService {
 
     @Override
     public int deleteBlacklistByIds(String ids) {
-        return blacklistMapper.deleteBlacklistByIds(ConvertUtils.toStrArray(ids), SecurityUtils.getUsername());
+        return blacklistMapper.deleteBlacklistByIds(ConvertUtils.toStrArray(ids));
     }
 
     @Override

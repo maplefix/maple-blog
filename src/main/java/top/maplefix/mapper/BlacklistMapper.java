@@ -33,7 +33,7 @@ public interface BlacklistMapper extends Mapper<Blacklist> {
      * @param ids 需要删除的数据
      * @return 结果
      */
-    int deleteBlacklistByIds(@Param("ids") String[] ids, @Param("deleteBy") String deleteBy);
+    int deleteBlacklistByIds(@Param("ids") String[] ids);
 
     /**
      * 更新黑名单
