@@ -1,4 +1,4 @@
-package top.maplefix.controller.oms;
+package top.maplefix.controller.monitor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2020/3/20 10:43
  */
 @RestController
-@RequestMapping("/redis")
+@RequestMapping("/monitor/redis")
 public class RedisController {
 
     @Autowired
