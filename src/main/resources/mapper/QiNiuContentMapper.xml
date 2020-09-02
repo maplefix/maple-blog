@@ -3,7 +3,7 @@
 <mapper namespace="top.maplefix.mapper.QiNiuContentMapper">
 
     <resultMap type="top.maplefix.model.QiNiuContent" id="QiNiuContentMap">
-        <result property="fileId" column="file_id"/>
+        <id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="bucket" column="bucket"/>
         <result property="size" column="size"/>
@@ -15,7 +15,6 @@
     </resultMap>
     <insert id="insertContent" useGeneratedKeys="true" keyProperty="id">
         insert into t_qiniu_content(
-        <if test="fileId != null and fileId != ''">file_id,</if>
         <if test="name != null and name != ''">name,</if>
         <if test="bucket != null and bucket != ''">bucket,</if>
         <if test="size != null and size != ''">size,</if>
@@ -24,7 +23,6 @@
         <if test="type != null and type != ''">type,</if>
         <if test="createDate != null and createDate != ''">create_date</if>
         )values(
-        <if test="fileId != null and fileId != ''">#{fileId},</if>
         <if test="name != null and name != ''">#{name},</if>
         <if test="bucket != null and bucket != ''">#{bucket},</if>
         <if test="size != null and size != ''">#{size},</if>
@@ -37,7 +35,7 @@
 
     <!--查询单个-->
     <select id="selectContentById" resultMap="QiNiuContentMap">
-        select file_id,
+        select id,
         name,
         bucket,
         size,
@@ -47,12 +45,12 @@
         create_date,
         update_date
         from t_qiniu_content
-        where file_id = #{id}
+        where id = #{id}
     </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="selectContentList" resultMap="QiNiuContentMap">
-        select file_id,
+        select id,
         name,
         bucket,
         size,
@@ -84,7 +82,7 @@
         </where>
     </select>
     <select id="selectContentByIds" resultType="top.maplefix.model.QiNiuContent">
-        select file_id,
+        select id,
         name,
         bucket,
         size,
@@ -94,7 +92,7 @@
         create_date,
         update_date
         from t_qiniu_content
-        where file_id in
+        where id in
         <foreach item="id" collection="ids" open="(" separator="," close=")">
             #{id}
         </foreach>
@@ -102,7 +100,7 @@
 
     <!--通过主键删除-->
     <delete id="deleteContentByIds">
-        delete from t_qiniu_content where file_id in
+        delete from t_qiniu_content where id in
         <foreach item="id" collection="ids" open="(" separator="," close=")">
             #{id}
         </foreach>

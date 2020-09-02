@@ -18,6 +18,7 @@ import top.maplefix.constant.ConfigKey;
 import top.maplefix.exception.CustomException;
 import top.maplefix.mapper.QiNiuContentMapper;
 import top.maplefix.model.Config;
+import top.maplefix.model.QiNiuContent;
 import top.maplefix.service.ConfigService;
 import top.maplefix.service.QiNiuService;
 import top.maplefix.utils.ConvertUtils;
@@ -27,7 +28,6 @@ import top.maplefix.utils.StringUtils;
 import top.maplefix.utils.file.FileUtils;
 import top.maplefix.utils.file.QiNiuUtils;
 import top.maplefix.vo.QiNiuConfig;
-import top.maplefix.vo.QiNiuContent;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -155,8 +155,8 @@ public class QiNiuServiceImpl implements QiNiuService {
         //去掉后七位
         String realTimeStr = time.substring(0, time.length() - 7);
         try {
-            Long createTime = Long.valueOf(realTimeStr);
-            return new Date(createTime);
+            Long createDate = Long.valueOf(realTimeStr);
+            return new Date(createDate);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return new Date();
@@ -169,7 +169,7 @@ public class QiNiuServiceImpl implements QiNiuService {
         if (!qiNiuConfig.check()) {
             throw new CustomException("七牛云配置信息不完整,请先填写七牛云配置信息");
         }
-        String[] idArray = ConvertUtils.toStrArray(ids);
+        Long[] idArray = ConvertUtils.toLongArray(ids);
         //查询
         List<QiNiuContent> qiNiuContentList = qiNiuContentMapper.selectContentByIds(idArray);
 
@@ -192,7 +192,7 @@ public class QiNiuServiceImpl implements QiNiuService {
     }
 
     @Override
-    public String getDownloadUrl(String id) {
+    public String getDownloadUrl(Long id) {
         QiNiuConfig qiNiuConfig = getQiNiuConfig();
         if (!qiNiuConfig.check()) {
             throw new CustomException("七牛云配置信息不完整,请先填写七牛云配置信息");

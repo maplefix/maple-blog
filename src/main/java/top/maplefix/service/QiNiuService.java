@@ -1,8 +1,8 @@
 package top.maplefix.service;
 
 import org.springframework.web.multipart.MultipartFile;
+import top.maplefix.model.QiNiuContent;
 import top.maplefix.vo.QiNiuConfig;
-import top.maplefix.vo.QiNiuContent;
 
 import java.util.List;
 
@@ -55,7 +55,7 @@ public interface QiNiuService {
      * @param id 文件id
      * @return 下载地址
      */
-    String getDownloadUrl(String id);
+    String getDownloadUrl(Long id);
 
     /**
      * 获取七牛云文件集合

@@ -1,4 +1,4 @@
-package top.maplefix.controller.oms;
+package top.maplefix.controller.tool;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import top.maplefix.annotation.OLog;
 import top.maplefix.common.BaseResult;
-import top.maplefix.controller.BaseController;
+import top.maplefix.controller.common.BaseController;
 import top.maplefix.enums.BusinessType;
+import top.maplefix.model.QiNiuContent;
 import top.maplefix.service.QiNiuService;
 import top.maplefix.utils.StringUtils;
 import top.maplefix.vo.QiNiuConfig;
-import top.maplefix.vo.QiNiuContent;
 import top.maplefix.vo.page.TableDataInfo;
 
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2020/3/20 11:01
  */
 @RestController
-@RequestMapping("/qiNiu")
+@RequestMapping("/tool/qiNiu")
 public class QiNiuController extends BaseController {
 
     @Autowired
@@ -79,7 +79,7 @@ public class QiNiuController extends BaseController {
     @GetMapping("/download/{id}")
     @PreAuthorize("@permissionService.hasPermission('tool:qiNiu:download')")
     @OLog(module = "七牛云存储", businessType = BusinessType.DOWNLOAD)
-    public BaseResult download(@PathVariable String  id) {
+    public BaseResult download(@PathVariable Long  id) {
         return BaseResult.success(qiNiuService.getDownloadUrl(id));
     }
 }

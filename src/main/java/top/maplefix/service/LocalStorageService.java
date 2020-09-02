@@ -43,5 +43,5 @@ public interface LocalStorageService {
      * @param id id
      * @return 受影响的行数
      */
-    int deleteLocalStorage(String  id);
+    int deleteLocalStorage(Long  id);
 }

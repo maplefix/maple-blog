@@ -3,7 +3,7 @@
 <mapper namespace="top.maplefix.mapper.LocalStorageMapper">
 
     <resultMap type="top.maplefix.model.LocalStorage" id="LocalStorageMap">
-        <result property="fileId" column="file_id"/>
+        <id property="id" column="id"/>
         <result property="realName" column="real_name"/>
         <result property="name" column="name"/>
         <result property="suffix" column="suffix"/>
@@ -16,7 +16,6 @@
 
     <insert id="insertLocalStorage">
         insert into t_local_storage(
-        <if test="fileId != null and fileId != ''">file_id,</if>
         <if test="realName != null and realName != ''">real_name,</if>
         <if test="name != null and name != ''">name,</if>
         <if test="suffix != null and suffix != ''">suffix,</if>
@@ -25,7 +24,6 @@
         <if test="size != null and size != ''">size,</if>
         <if test="createDate != null and createDate != ''">create_date</if>
         )values(
-        <if test="fileId != null and fileId != ''">#{fileId},</if>
         <if test="realName != null and realName != ''">#{realName},</if>
         <if test="name != null and name != ''">#{name},</if>
         <if test="suffix != null and suffix != ''">#{suffix},</if>
@@ -46,12 +44,12 @@
                 update_date = #{updateDate}
             </if>
         </set>
-        where file_id = #{id}
+        where id = #{id}
     </update>
 
     <!--通过实体作为筛选条件查询-->
     <select id="selectLocalStorageList" resultMap="LocalStorageMap">
-        select file_id,
+        select id,
         real_name,
         name,
         suffix,
@@ -80,7 +78,7 @@
         </where>
     </select>
     <select id="selectLocalStorageById" resultMap="LocalStorageMap">
-        select file_id,
+        select id,
         real_name,
         name,
         suffix,
@@ -90,13 +88,13 @@
         create_date,
         update_date
         from t_local_storage
-        where file_id=#{id}
+        where id=#{id}
     </select>
 
     <!--通过主键删除-->
     <delete id="deleteLocalStorageById">
       delete from t_local_storage
-      where file_id=#{id}
+      where id=#{id}
     </delete>
 
 </mapper>

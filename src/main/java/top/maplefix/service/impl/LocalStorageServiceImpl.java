@@ -61,7 +61,7 @@ public class LocalStorageServiceImpl implements LocalStorageService {
     }
 
     @Override
-    public int deleteLocalStorage(String  id) {
+    public int deleteLocalStorage(Long  id) {
         LocalStorage localStorage = localStorageMapper.selectLocalStorageById(id);
         if (Objects.isNull(localStorage)) {
             throw new CustomException("文件不存在");
