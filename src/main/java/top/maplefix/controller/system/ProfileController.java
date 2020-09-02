@@ -1,10 +1,10 @@
-package top.maplefix.controller.oms;
+package top.maplefix.controller.system;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import top.maplefix.annotation.OLog;
 import top.maplefix.common.BaseResult;
-import top.maplefix.controller.BaseController;
+import top.maplefix.controller.common.BaseController;
 import top.maplefix.enums.BusinessType;
 import top.maplefix.model.SysUser;
 import top.maplefix.secrrity.LoginUser;
@@ -19,7 +19,7 @@ import top.maplefix.utils.ServletUtils;
  * @date 2020/4/16 11:10
  */
 @RestController
-@RequestMapping("/user/profile")
+@RequestMapping("/system/user/profile")
 public class ProfileController extends BaseController {
     
     @Autowired
