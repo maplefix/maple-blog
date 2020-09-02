@@ -53,7 +53,7 @@ public class LoginLogServiceImpl implements LoginLogService {
      */
     @Override
     public int deleteLoginLogByIds(String ids) {
-        return loginLogMapper.deleteLoginLogByIds(ConvertUtils.toStrArray(ids));
+        return loginLogMapper.deleteLoginLogByIds(ConvertUtils.toLongArray(ids));
     }
 
     /**

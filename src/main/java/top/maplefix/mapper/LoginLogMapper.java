@@ -34,7 +34,7 @@ public interface LoginLogMapper extends Mapper<LoginLog>{
      * @param ids 需要删除的数据
      * @return 结果
      */
-    int deleteLoginLogByIds(@Param("ids") String[] ids);
+    int deleteLoginLogByIds(@Param("ids") Long[] ids);
 
     /**
      * f
