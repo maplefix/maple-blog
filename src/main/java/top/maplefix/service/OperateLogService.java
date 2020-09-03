@@ -40,7 +40,7 @@ public interface OperateLogService {
      * @param operId 操作ID
      * @return 操作日志对象
      */
-    OperateLog selectOperateLogById(String operId);
+    OperateLog selectOperateLogById(Long operId);
 
     /**
      * 清空操作日志

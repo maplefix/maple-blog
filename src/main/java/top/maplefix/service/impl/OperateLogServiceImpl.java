@@ -49,7 +49,7 @@ public class OperateLogServiceImpl implements OperateLogService {
      */
     @Override
     public int deleteOperateLogByIds(String ids) {
-        return operateLogMapper.deleteOperateLogByIds(ConvertUtils.toStrArray(ids));
+        return operateLogMapper.deleteOperateLogByIds(ConvertUtils.toLongArray(ids));
     }
 
     /**
@@ -59,7 +59,7 @@ public class OperateLogServiceImpl implements OperateLogService {
      * @return 操作日志对象
      */
     @Override
-    public OperateLog selectOperateLogById(String id) {
+    public OperateLog selectOperateLogById(Long id) {
         return operateLogMapper.selectOperateLogById(id);
     }
 

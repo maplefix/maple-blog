@@ -34,7 +34,7 @@ public interface OperateLogMapper extends Mapper<OperateLog>{
      * @param ids      需要删除的数据
      * @return 结果
      */
-    int deleteOperateLogByIds(@Param("ids") String[] ids);
+    int deleteOperateLogByIds(@Param("ids") Long[] ids);
 
     /**
      * 查询操作日志详细
@@ -42,7 +42,7 @@ public interface OperateLogMapper extends Mapper<OperateLog>{
      * @param id 操作ID
      * @return 操作日志对象
      */
-    OperateLog selectOperateLogById(@Param("id")String id);
+    OperateLog selectOperateLogById(@Param("id")Long id);
 
     /**
      * 清空操作日志
