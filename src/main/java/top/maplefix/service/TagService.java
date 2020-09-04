@@ -34,7 +34,7 @@ public interface TagService {
      * @param id id
      * @return tag实体
      */
-    Tag selectTagById(String  id);
+    Tag selectTagById(Long  id);
 
     /**
      * 更新Tag
@@ -64,10 +64,9 @@ public interface TagService {
      * 根据Tag的title 和 type搜索Tag
      *
      * @param title Tag的title
-     * @param type  Tag的类型
      * @return Tag
      */
-    Tag selectTagByTitle(String title, Integer type);
+    Tag selectTagByTitle(String title);
 
     /**
      * 新增Tag Mapping映射关系
@@ -80,18 +79,16 @@ public interface TagService {
     /**
      * 更新TagMapping
      *
-     * @param type         type
      * @param id           id
      * @param tagTitleList list
      */
-    void updateTagMid(Integer type, String id, List<String> tagTitleList);
+    void updateTagMid(Long id, List<String> tagTitleList);
 
     /**
      * 根据Tag的type和Id获取该Id下的所有Tag
      *
-     * @param type Type
      * @param id   id
      * @return Tag list
      */
-    List<Tag> selectTagListByTypeAndId(Integer type, String  id);
+    List<Tag> selectTagListByBlogId(Long  id);
 }

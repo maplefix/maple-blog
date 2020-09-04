@@ -3,13 +3,12 @@ package top.maplefix.service.impl;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import top.maplefix.enums.TagType;
 import top.maplefix.mapper.TagMapper;
 import top.maplefix.model.BlogTagMid;
 import top.maplefix.model.Tag;
 import top.maplefix.service.TagService;
 import top.maplefix.utils.ConvertUtils;
-import top.maplefix.utils.SecurityUtils;
+import top.maplefix.utils.DateUtils;
 import top.maplefix.utils.StringUtils;
 
 import java.util.List;
@@ -33,11 +32,12 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public int insertTag(Tag tag) {
+        tag.setCreateDate(DateUtils.getTime());
         return tagMapper.insertTag(tag);
     }
 
     @Override
-    public Tag selectTagById(String id) {
+    public Tag selectTagById(Long id) {
         return tagMapper.selectTagById(id);
     }
 
@@ -48,7 +48,7 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public int deleteTagByIds(String ids) {
-        return tagMapper.deleteTagByIds(ConvertUtils.toStrArray(ids), SecurityUtils.getUsername());
+        return tagMapper.deleteTagByIds(ConvertUtils.toLongArray(ids));
     }
 
     @Override
@@ -57,8 +57,8 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public Tag selectTagByTitle(String title, Integer type) {
-        return tagMapper.selectTagByTitle(title, type);
+    public Tag selectTagByTitle(String title) {
+        return tagMapper.selectTagByTitle(title);
     }
 
     @Override
@@ -67,25 +67,22 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public void updateTagMid(Integer type, String id, List<String> tagTitleList) {
+    public void updateTagMid(Long id, List<String> tagTitleList) {
         //删除该Id下的所有关联
-        BlogTagMid tagMapping = BlogTagMid.builder()
-                .blogId(TagType.BLOG.getType().equals(type) ? id : null)
-                .bookId(TagType.BOOK.getType().equals(type) ? id : null)
-                .build();
+        BlogTagMid tagMapping = BlogTagMid.builder().build();
         deleteTagMid(tagMapping);
 
         if (ObjectUtils.isNotEmpty(tagTitleList)) {
             for (String title : tagTitleList) {
                 //搜索所有的tag
-                Tag tag = selectTagByTitle(title.trim(), TagType.BLOG.getType());
+                Tag tag = selectTagByTitle(title.trim());
                 if (tag != null) {
-                    tagMapping.setTagId(tag.getTagId());
+                    tagMapping.setTagId(tag.getId());
                     insertTagMid(tagMapping);
                 } else {
-                    Tag temp = new Tag(title.trim(), StringUtils.format("rgba({}, {}, {}, {})", getRandomNum(255), getRandomNum(255), getRandomNum(255), 1), TagType.BLOG.getType());
+                    Tag temp = new Tag(title.trim(), StringUtils.format("rgba({}, {}, {}, {})", getRandomNum(255), getRandomNum(255), getRandomNum(255), 1));
                     insertTag(temp);
-                    tagMapping.setTagId(temp.getTagId());
+                    tagMapping.setTagId(temp.getId());
                     insertTagMid(tagMapping);
                 }
             }
@@ -93,8 +90,8 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public List<Tag> selectTagListByTypeAndId(Integer type, String  id) {
-        return tagMapper.selectTagListByType(type, id);
+    public List<Tag> selectTagListByBlogId(Long id) {
+        return tagMapper.selectTagListByType(id);
     }
 
     /**

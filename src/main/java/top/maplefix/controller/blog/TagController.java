@@ -59,7 +59,7 @@ public class TagController extends BaseController {
      */
     @PreAuthorize("@permissionService.hasPermission('blog:tag:query')")
     @GetMapping(value = "/{id}")
-    public BaseResult getInfo(@PathVariable String id) {
+    public BaseResult getInfo(@PathVariable Long id) {
         return BaseResult.success(tagService.selectTagById(id));
     }
 
