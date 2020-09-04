@@ -28,7 +28,7 @@ public class VisitLogServiceImpl implements VisitLogService {
 
     @Override
     public int deleteVisitLogByIds(String ids) {
-        return visitLogMapper.deleteVisitLogByIds(ConvertUtils.toStrArray(ids));
+        return visitLogMapper.deleteVisitLogByIds(ConvertUtils.toLongArray(ids));
     }
 
     @Override

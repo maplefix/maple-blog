@@ -1,11 +1,10 @@
-package top.maplefix.controller.oms;
+package top.maplefix.controller.log;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import top.maplefix.common.BaseResult;
-import top.maplefix.controller.BaseController;
+import top.maplefix.controller.common.BaseController;
 import top.maplefix.model.VisitLog;
 import top.maplefix.service.VisitLogService;
 import top.maplefix.vo.page.TableDataInfo;
@@ -18,8 +17,7 @@ import java.util.List;
  * @date : 2020/2/20 21:38
  */
 @RestController
-@RequestMapping("/visitLog")
-@Slf4j
+@RequestMapping("/log/visitLog")
 public class VisitLogController extends BaseController {
 
     @Autowired

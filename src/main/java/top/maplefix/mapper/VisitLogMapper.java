@@ -34,7 +34,7 @@ public interface VisitLogMapper extends Mapper<VisitLog> {
      * @param ids 需要删除的数据
      * @return 结果
      */
-    int deleteVisitLogByIds(@Param("ids") String[] ids);
+    int deleteVisitLogByIds(@Param("ids") Long[] ids);
 
     /**
      * f
