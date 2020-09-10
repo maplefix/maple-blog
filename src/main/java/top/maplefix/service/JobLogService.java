@@ -45,5 +45,5 @@ public interface JobLogService {
      * @param id id
      * @return quartzLog
      */
-    JobLog selectJobLogById(String id);
+    JobLog selectJobLogById(Long id);
 }

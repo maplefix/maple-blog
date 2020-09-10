@@ -7,7 +7,6 @@ import top.maplefix.mapper.JobLogMapper;
 import top.maplefix.model.JobLog;
 import top.maplefix.service.JobLogService;
 import top.maplefix.utils.ConvertUtils;
-import top.maplefix.utils.SecurityUtils;
 
 import java.util.List;
 
@@ -35,8 +34,7 @@ public class JobLogServiceImpl implements JobLogService {
 
     @Override
     public int deleteJobLogByIds(String ids) {
-        String username = SecurityUtils.getUsername();
-        return jobLogMapper.deleteJobLogByIds(ConvertUtils.toStrArray(ids), username);
+        return jobLogMapper.deleteJobLogByIds(ConvertUtils.toLongArray(ids));
     }
 
     @Override
@@ -45,7 +43,7 @@ public class JobLogServiceImpl implements JobLogService {
     }
 
     @Override
-    public JobLog selectJobLogById(String id) {
+    public JobLog selectJobLogById(Long id) {
         return jobLogMapper.selectJobLogById(id);
     }
 }
