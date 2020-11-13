@@ -49,7 +49,7 @@ public class CommentController extends BaseController {
      */
     @PreAuthorize("@permissionService.hasPermission('blog:comment:query')")
     @GetMapping(value = "/{id}")
-    public BaseResult getInfo(@PathVariable String id) {
+    public BaseResult getInfo(@PathVariable Long id) {
         return BaseResult.success(commentService.selectCommentById(id));
     }
 
@@ -86,10 +86,10 @@ public class CommentController extends BaseController {
     @PreAuthorize("@permissionService.hasPermission('blog:comment:edit')")
     @OLog(module = "评论管理", businessType = BusinessType.UPDATE)
     @PutMapping("/{id}/display/{display}")
-    public BaseResult edit(@PathVariable String id, @PathVariable Boolean display) {
+    public BaseResult edit(@PathVariable Long id, @PathVariable Boolean display) {
         Comment comment = new Comment();
         comment.setDisplay(display? Constant.DISPLAY:Constant.HIDE);
-        comment.setCommentId(id);
+        comment.setId(id);
         return toResult(commentService.updateComment(comment));
     }
 

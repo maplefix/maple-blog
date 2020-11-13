@@ -33,7 +33,7 @@ public interface JobMapper {
      * @param jobId id
      * @return Job
      */
-    Job selectJobById(String jobId);
+    Job selectJobById(Long jobId);
 
     /**
      * 根据Id删除Job
@@ -41,7 +41,7 @@ public interface JobMapper {
      * @param jobId id
      * @return 受影响的行数
      */
-    int deleteJobById(@Param("jobId") String jobId, @Param("username") String username);
+    int deleteJobById(@Param("jobId") Long jobId);
 
     /**
      * 查询Job list

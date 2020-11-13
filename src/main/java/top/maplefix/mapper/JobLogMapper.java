@@ -32,10 +32,9 @@ public interface JobLogMapper {
      * 根据id删除数据
      *
      * @param ids      id数组
-     * @param username 操作者
      * @return 受影响的行数
      */
-    int deleteJobLogByIds(@Param("ids") String[] ids, @Param("username") String username);
+    int deleteJobLogByIds(@Param("ids") Long[] ids);
 
     /**
      * 清空日志
@@ -49,5 +48,5 @@ public interface JobLogMapper {
      * @param id id
      * @return quartzLog
      */
-    JobLog selectJobLogById(String id);
+    JobLog selectJobLogById(Long id);
 }

@@ -59,7 +59,7 @@ public class CategoryController extends BaseController {
      */
     @PreAuthorize("@permissionService.hasPermission('blog:category:query')")
     @GetMapping(value = "/{id}")
-    public BaseResult getInfo(@PathVariable String id) {
+    public BaseResult getInfo(@PathVariable Long id) {
         return BaseResult.success(categoryService.selectCategoryById(id));
     }
     /**

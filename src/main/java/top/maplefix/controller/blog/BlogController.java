@@ -1,6 +1,6 @@
 package top.maplefix.controller.blog;
 
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import top.maplefix.annotation.OLog;
@@ -11,7 +11,6 @@ import top.maplefix.model.Blog;
 import top.maplefix.service.BlogService;
 import top.maplefix.vo.page.TableDataInfo;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -21,10 +20,9 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/blog/blog")
-@Slf4j
 public class BlogController extends BaseController {
 
-    @Resource
+    @Autowired
     private BlogService blogService;
 
     /**
@@ -116,7 +114,7 @@ public class BlogController extends BaseController {
      */
     @PreAuthorize("@permissionService.hasPermission('blog:blog:query')")
     @GetMapping("/{id}")
-    public BaseResult getInfo(@PathVariable String id) {
+    public BaseResult getInfo(@PathVariable Long id) {
         return BaseResult.success(blogService.selectBlogById(id));
     }
     /**
@@ -127,7 +125,7 @@ public class BlogController extends BaseController {
     @PreAuthorize("@permissionService.hasPermission('blog:blog:remove')")
     @OLog(module = "博客管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{id}")
-    public BaseResult remove(@PathVariable("id") String id) {
+    public BaseResult remove(@PathVariable("id") Long id) {
         return toResult(blogService.deleteBlogById(id));
     }
     /**
