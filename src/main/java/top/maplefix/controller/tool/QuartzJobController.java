@@ -18,8 +18,8 @@ import java.util.List;
  * @date 2020/3/20 11:04
  */
 @RestController
-@RequestMapping("/tool/job")
-public class JobController extends BaseController {
+@RequestMapping("/tool/quartz")
+public class QuartzJobController extends BaseController {
     
     @Autowired
     private JobService jobService;

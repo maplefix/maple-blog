@@ -39,7 +39,7 @@ public class JobLog extends BaseEntity implements Serializable {
      * 参数
      */
     @Excel(name = "参数")
-    private String param;
+    private String methodParams;
     /**
      * cron表达式
      */
@@ -49,17 +49,17 @@ public class JobLog extends BaseEntity implements Serializable {
      * 异常信息
      */
     @Excel(name = "异常信息")
-    private String exceptionMsg;
+    private String exception;
     /**
      * 运行结果
      */
     @Excel(name = "运行结果")
     private String result;
     /**
-     * 运行状态
+     * 运行状态,true为允许，false暂停
      */
-    @Excel(name = "运行状态",readConverterExp = "1=运行,2=暂停")
-    private Integer status;
+    @Excel(name = "运行状态",readConverterExp = "1=运行,0=暂停")
+    private Boolean status;
     /**
      * 耗时
      */

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import top.maplefix.annotation.Excel;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -25,16 +26,19 @@ public class Job extends BaseEntity implements Serializable {
      * 任务名称
      */
     @Excel(name = "任务名称")
+    @NotNull(message = "任务名不能为空")
     private String jobName;
     /**
      * bean名称
      */
     @Excel(name = "bean名称")
+    @NotNull(message = "Bean名不能为空")
     private String beanName;
     /**
      * 方法名称
      */
     @Excel(name = "方法名称")
+    @NotNull(message = "方法名不能为空")
     private String methodName;
     /**
      * 参数
@@ -45,12 +49,13 @@ public class Job extends BaseEntity implements Serializable {
      * cron表达式
      */
     @Excel(name = "cron表达式")
+    @NotNull(message = "corn表达式不能为空")
     private String cronExpression;
     /**
-     * 任务状态
+     * 任务状态,false表示暂停,true表示运行
      */
-    @Excel(name = "任务状态",readConverterExp = "1=运行,2=暂停")
-    private Integer status;
+    @Excel(name = "任务状态",readConverterExp = "1=运行,0=暂停")
+    private Boolean status;
     /**
      * 备注信息
      */

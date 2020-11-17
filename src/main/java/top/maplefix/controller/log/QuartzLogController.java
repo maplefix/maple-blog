@@ -17,8 +17,8 @@ import java.util.List;
  * @date 2020/3/18 15:47
  */
 @RestController
-@RequestMapping("/log/jobLog")
-public class JobLogController extends BaseController {
+@RequestMapping("/log/quartzLog")
+public class QuartzLogController extends BaseController {
     
     @Autowired
     private JobLogService jobLogService;
