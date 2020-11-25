@@ -19,7 +19,7 @@ public interface BlogService {
      * @param id 博客ID
      * @return 博客
      */
-    Blog selectBlogById(String id);
+    Blog selectBlogById(Long id);
 
     /**
      * 查询博客列表
@@ -59,7 +59,7 @@ public interface BlogService {
      * @param id 博客ID
      * @return 结果
      */
-    int deleteBlogById(String id);
+    int deleteBlogById(Long id);
 
     /**
      * 获取blog的标签
@@ -83,7 +83,7 @@ public interface BlogService {
      * @param id id
      * @return blog
      */
-    Blog selectBlogDetailById(String id);
+    Blog selectBlogDetailById(Long id);
 
     /**
      * 增加blog的like数量
@@ -91,7 +91,7 @@ public interface BlogService {
      * @param id blog id
      * @return 受影响的行数
      */
-    int incrementBlogLike(String id);
+    int incrementBlogLike(Long id);
 
     /**
      * 获取blog对应的comment
@@ -99,6 +99,6 @@ public interface BlogService {
      * @param id id
      * @return list
      */
-    List<Comment> selectBlogCommentListByBlogId(String id);
+    List<Comment> selectBlogCommentListByBlogId(Long id);
 }
 

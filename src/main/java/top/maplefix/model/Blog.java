@@ -39,6 +39,7 @@ public class Blog extends BaseEntity implements Serializable {
      */
     @NotNull(message = "摘要不能为空")
     @Length(min = 10, max = 250, message = "摘要长度为{min}~{max}个字符")
+
     @Excel(name = "摘要")
     private String summary;
     /**
@@ -66,26 +67,27 @@ public class Blog extends BaseEntity implements Serializable {
     /**
      * 博文状态，1表示已经发表，2表示在草稿箱，3表示在垃圾箱
      */
-    @Excel(name = "状态" ,readConverterExp = "1=已发布,2=草稿箱,3=垃圾箱")
+    @Excel(name = "状态" ,readConverterExp = "1=已发布,0=草稿箱")
     @NotNull(message = "状态设置不能为空")
-    private Integer status;
+    private Boolean status;
+
     /**
      * 评论标识(1:允许,0:不允许)
      */
     @Excel(name = "是否允许评论",readConverterExp = "1=允许,0=不允许")
     @NotNull(message = "评论设置不能为空")
-    private Integer comment;
+    private Boolean comment;
     /**
      * 是否推荐(置顶)，1表示推荐，0表示不推荐
      */
     @Excel(name = "是否推荐",readConverterExp = "1=推荐,0=普通")
     @NotNull(message = "推荐设置不能为空")
-    private Integer support;
+    private Boolean support;
     /**
      * 权重
      */
     @Excel(name = "权重")
-    private Integer weight;
+    private Long weight;
     /**
      * 分类
      */
@@ -94,12 +96,12 @@ public class Blog extends BaseEntity implements Serializable {
      * 点赞数
      */
     @Excel(name = "点赞数")
-    private Integer like;
+    private Long like;
     /**
      * 点击量
      */
     @Excel(name = "点击数")
-    private Integer click;
+    private Long click;
 
     /**
      * 原创标识(1:原创,0:转载)

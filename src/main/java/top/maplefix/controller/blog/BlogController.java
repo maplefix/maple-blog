@@ -119,14 +119,14 @@ public class BlogController extends BaseController {
     }
     /**
      * 删除博客
-     * @param id 博客id
+     * @param ids 博客id
      * @return BaseResult
      */
     @PreAuthorize("@permissionService.hasPermission('blog:blog:remove')")
     @OLog(module = "博客管理", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{id}")
-    public BaseResult remove(@PathVariable("id") Long id) {
-        return toResult(blogService.deleteBlogById(id));
+    @DeleteMapping("/{ids}")
+    public BaseResult remove(@PathVariable String ids) {
+        return toResult(blogService.deleteBlogByIds(ids));
     }
     /**
      * 查询博客标签集合

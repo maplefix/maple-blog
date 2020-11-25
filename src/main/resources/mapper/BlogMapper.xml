@@ -202,6 +202,7 @@
             <if test="comment != null ">comment,</if>
             <if test="support != null ">support,</if>
             <if test="weight != null ">weight,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
             <if test="createDate != null  and createDate != ''">create_date</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -250,13 +251,15 @@
     </update>
 
     <delete id="deleteBlogById">
-        delete from  t_blog where id = #{id}
+        delete from  t_blog where id = #{id};
+        ALTER TABLE t_blog AUTO_INCREMENT = 1;
     </delete>
 
     <delete id="deleteBlogByIds">
         delete from t_blog where id in
         <foreach item="id" collection="ids" open="(" separator="," close=")">
             #{id}
-        </foreach>
+        </foreach>;
+        ALTER TABLE t_blog AUTO_INCREMENT = 1;
     </delete>
 </mapper>

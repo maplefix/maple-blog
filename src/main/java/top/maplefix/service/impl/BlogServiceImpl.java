@@ -6,7 +6,6 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.maplefix.constant.CacheConstants;
-import top.maplefix.enums.TagType;
 import top.maplefix.mapper.BlogMapper;
 import top.maplefix.mapper.CommentMapper;
 import top.maplefix.model.Blog;
@@ -15,6 +14,7 @@ import top.maplefix.model.Tag;
 import top.maplefix.service.BlogService;
 import top.maplefix.service.TagService;
 import top.maplefix.utils.ConvertUtils;
+import top.maplefix.utils.DateUtils;
 import top.maplefix.utils.SecurityUtils;
 import top.maplefix.vo.BlogQuery;
 
@@ -41,7 +41,7 @@ public class BlogServiceImpl implements BlogService {
     private CommentMapper commentMapper;
 
     @Override
-    public Blog selectBlogById(String id) {
+    public Blog selectBlogById(Long id) {
         Blog blog = blogMapper.selectBlogById(id);
         blog.setTagTitleList(getTagTitleListByBlogId(id));
         return blog;
@@ -53,12 +53,9 @@ public class BlogServiceImpl implements BlogService {
         if (blogList.isEmpty()) {
             return blogList;
         }
-        List<String> blogIdList = blogList.stream().map(Blog::getBlogId).collect(Collectors.toList());
         //设置comment信息
-        List<Comment> commentList = commentMapper.selectCommentListByPageIds(blogIdList);
         for (Blog temp : blogList) {
-            temp.setCommentList(commentList.stream().filter(e -> e.getPageId().equals(temp.getBlogId())).collect(Collectors.toList()));
-            temp.setTagTitleList(getTagTitleListByBlogId(temp.getBlogId()));
+            temp.setTagTitleList(getTagTitleListByBlogId(temp.getId()));
         }
         return blogList;
     }
@@ -69,9 +66,9 @@ public class BlogServiceImpl implements BlogService {
      * @param blogId blog的id
      * @return title集合
      */
-    private List<String> getTagTitleListByBlogId(String blogId) {
-        List<Tag> tagList = tagService.selectTagListByTypeAndId(TagType.BLOG.getType(), blogId);
-        return tagList.stream().map(Tag::getTagName).collect(Collectors.toList());
+    private List<String> getTagTitleListByBlogId(Long blogId) {
+        List<Tag> tagList = tagService.selectTagListByBlogId(blogId);
+        return tagList.stream().map(Tag::getTitle).collect(Collectors.toList());
     }
 
     @Override
@@ -79,8 +76,9 @@ public class BlogServiceImpl implements BlogService {
     @CacheEvict(value = CacheConstants.CACHE_NAME_FRONT, key = "'BlogList'")
     public int insertBlog(Blog blog) {
         blog.setCreateBy(SecurityUtils.getUsername());
+        blog.setCreateDate(DateUtils.getTime());
         int count = blogMapper.insertBlog(blog);
-        tagService.updateTagMid(TagType.BLOG.getType(), blog.getBlogId(), blog.getTagTitleList());
+        tagService.updateTagMid(blog.getId(), blog.getTagTitleList());
         return count;
     }
 
@@ -90,7 +88,7 @@ public class BlogServiceImpl implements BlogService {
     public int updateBlog(Blog blog) {
         blog.setUpdateBy(SecurityUtils.getUsername());
         int count = blogMapper.updateBlog(blog);
-        tagService.updateTagMid(TagType.BLOG.getType(), blog.getBlogId(), blog.getTagTitleList());
+        tagService.updateTagMid(blog.getId(), blog.getTagTitleList());
         return count;
     }
 
@@ -102,8 +100,7 @@ public class BlogServiceImpl implements BlogService {
     })
     @CacheEvict(value = CacheConstants.CACHE_NAME_FRONT, key = "'BlogList'")
     public int deleteBlogByIds(String ids) {
-        String username = SecurityUtils.getUsername();
-        return blogMapper.deleteBlogByIds(ConvertUtils.toStrArray(ids), username);
+        return blogMapper.deleteBlogByIds(ConvertUtils.toLongArray(ids));
     }
 
     @Override
@@ -113,33 +110,32 @@ public class BlogServiceImpl implements BlogService {
             @CacheEvict(value = CacheConstants.CACHE_NAME_FRONT, key = "'SupportList'"),
             @CacheEvict(value = CacheConstants.CACHE_NAME_FRONT, key = "'BlogItem_'+#id")
     })
-    public int deleteBlogById(String id) {
-        String username = SecurityUtils.getUsername();
-        return blogMapper.deleteBlogById(id, username);
+    public int deleteBlogById(Long id) {
+        return blogMapper.deleteBlogById(id);
     }
 
     @Override
     @CacheEvict(value = CacheConstants.CACHE_NAME_FRONT, key = "'BlogList'")
     public List<String> selectBlogTagList(String query) {
         Tag tag = new Tag();
-        tag.setTagName(query);
+        tag.setTitle(query);
         List<Tag> tagList = tagService.selectTagList(tag);
-        return tagList.stream().map(Tag::getTagName).collect(Collectors.toList());
+        return tagList.stream().map(Tag::getTitle).collect(Collectors.toList());
     }
 
     @Override
     public List<Blog> selectBlogList(BlogQuery blogQuery) {
         List<Blog> blogList = blogMapper.selectBlogListQuery(blogQuery);
         for (Blog blog : blogList) {
-            blog.setTagList(tagService.selectTagListByTypeAndId(TagType.BLOG.getType(), blog.getBlogId()));
+            blog.setTagList(tagService.selectTagListByBlogId(blog.getId()));
         }
         return blogList;
     }
 
     @Override
-    public Blog selectBlogDetailById(String id) {
+    public Blog selectBlogDetailById(Long id) {
         Blog blog = blogMapper.selectBlogByIdQuery(id);
-        blog.setTagList(tagService.selectTagListByTypeAndId(TagType.BLOG.getType(), id));
+        blog.setTagList(tagService.selectTagListByBlogId(id));
         //获取commentList
         blog.setCommentList(commentMapper.selectCommentListByPageId(id));
         //设置点击数量+1
@@ -153,7 +149,7 @@ public class BlogServiceImpl implements BlogService {
      * @param id id
      * @return 评论列表
      */
-    private List<Comment> getCommentListByPageId(String id) {
+    private List<Comment> getCommentListByPageId(Long id) {
         List<Comment> commentList = commentMapper.selectCommentListByPageId(id);
         for (Comment comment : commentList) {
             if (comment.getParentId() != null) {
@@ -164,12 +160,12 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public int incrementBlogLike(String id) {
+    public int incrementBlogLike(Long id) {
         return blogMapper.incrementBlogLike(id);
     }
 
     @Override
-    public List<Comment> selectBlogCommentListByBlogId(String id) {
+    public List<Comment> selectBlogCommentListByBlogId(Long id) {
         return getCommentListByPageId(id);
     }
 

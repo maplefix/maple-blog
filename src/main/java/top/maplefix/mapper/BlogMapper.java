@@ -20,7 +20,7 @@ public interface BlogMapper extends Mapper<Blog>{
      * @param id 博客ID
      * @return 博客
      */
-    Blog selectBlogById(String id);
+    Blog selectBlogById(Long id);
 
     /**
      * 查询博客列表
@@ -52,7 +52,7 @@ public interface BlogMapper extends Mapper<Blog>{
      * @param id 博客ID
      * @return 结果
      */
-    int deleteBlogById(@Param("id") String id, @Param("username") String username);
+    int deleteBlogById(@Param("id") Long id);
 
     /**
      * 批量删除博客
@@ -60,7 +60,7 @@ public interface BlogMapper extends Mapper<Blog>{
      * @param ids 需要删除的数据ID
      * @return 结果
      */
-    int deleteBlogByIds(@Param("ids") String[] ids, @Param("username") String username);
+    int deleteBlogByIds(@Param("ids") Long[] ids);
 
     /**
      * 前台查询blog
@@ -76,14 +76,14 @@ public interface BlogMapper extends Mapper<Blog>{
      * @param id id
      * @return 受影响的行数
      */
-    int incrementBlogLike(String id);
+    int incrementBlogLike(Long id);
 
     /**
      * 增加blog的click数量
      *
      * @param id id
      */
-    void incrementBlogClick(String id);
+    void incrementBlogClick(Long id);
 
     /**
      * 查询博客
@@ -91,7 +91,7 @@ public interface BlogMapper extends Mapper<Blog>{
      * @param id 博客ID
      * @return 博客
      */
-    Blog selectBlogByIdQuery(String id);
+    Blog selectBlogByIdQuery(Long id);
 
     /**
      * 根据categoryId获取所有的blog
@@ -99,5 +99,5 @@ public interface BlogMapper extends Mapper<Blog>{
      * @param ids category ids
      * @return blog list
      */
-    List<Blog> selectBlogListByCategoryIds(@Param("ids") List<String> ids);
+    List<Blog> selectBlogListByCategoryIds(@Param("ids") List<Long> ids);
 }
