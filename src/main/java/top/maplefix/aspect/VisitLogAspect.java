@@ -78,7 +78,7 @@ public class VisitLogAspect {
             visitLog.setUrl(ServletUtils.getRequest().getRequestURI());
             if (e != null) {
                 visitLog.setStatus(Constant.FAILED);
-                visitLog.setExceptionMsg(StringUtils.substring(e.getMessage(), 0, 2000));
+                visitLog.setErrorMsg(e.getMessage());
             } else {
                 visitLog.setStatus(Constant.SUCCESS);
             }
@@ -123,7 +123,7 @@ public class VisitLogAspect {
      * @param joinPoint 切入点
      * @return PageId
      */
-    private String getPageId(VLog vLog, JoinPoint joinPoint) throws NoSuchMethodException {
+    private Long getPageId(VLog vLog, JoinPoint joinPoint) throws NoSuchMethodException {
         String pageIdStr = vLog.pageId();
         if (StringUtils.isEmpty(pageIdStr)) {
             return null;
@@ -149,7 +149,7 @@ public class VisitLogAspect {
             return null;
         }
         try {
-            return (String) value;
+            return (Long) value;
         } catch (Exception e) {
             log.error("get pageId error for parameters {}", value);
             return null;

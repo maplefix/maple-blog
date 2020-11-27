@@ -104,7 +104,7 @@ public class OperationLogAspect {
             }
             if (e != null) {
                 operateLog.setStatus(Constant.FAILED);
-                operateLog.setExceptionMsg(top.maplefix.utils.StringUtils.substring(e.getMessage(), 0, 2000));
+                operateLog.setErrorMsg(e.getMessage());
             }
             // get the class name
             String className = joinPoint.getTarget().getClass().getName();
@@ -153,10 +153,10 @@ public class OperationLogAspect {
         String requestMethod = operateLog.getRequestMethod();
         if (HttpMethod.PUT.matches(requestMethod) || HttpMethod.POST.matches(requestMethod)) {
             String params = argsArrayToString(joinPoint.getArgs());
-            operateLog.setParams(top.maplefix.utils.StringUtils.substring(params,0,2000));
+            operateLog.setParam(params);
         } else {
             Map<?, ?> paramsMap = (Map<?, ?>) ServletUtils.getRequest().getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
-            operateLog.setParams(top.maplefix.utils.StringUtils.substring(paramsMap.toString(), 0, 2000));
+            operateLog.setParam(paramsMap.toString());
         }
     }
 
