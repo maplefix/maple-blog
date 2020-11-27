@@ -1,4 +1,4 @@
-package top.maplefix.controller.oms;
+package top.maplefix.controller.system;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import top.maplefix.annotation.OLog;
 import top.maplefix.common.BaseResult;
 import top.maplefix.constant.Constant;
-import top.maplefix.controller.BaseController;
+import top.maplefix.controller.common.BaseController;
 import top.maplefix.enums.BusinessType;
 import top.maplefix.model.Carousel;
 import top.maplefix.service.CarouselService;
@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2020/3/18 14:10
  */
 @RestController
-@RequestMapping("/carousel")
+@RequestMapping("/system/carousel")
 @Slf4j
 public class CarouselController extends BaseController {
     
@@ -39,7 +39,7 @@ public class CarouselController extends BaseController {
 
     @PreAuthorize("@permissionService.hasPermission('system:carousel:query')")
     @GetMapping(value = "/{id}")
-    public BaseResult getInfo(@PathVariable String id) {
+    public BaseResult getInfo(@PathVariable Long id) {
         return BaseResult.success(carouselService.selectCarouselById(id));
     }
 
@@ -60,27 +60,27 @@ public class CarouselController extends BaseController {
     @PreAuthorize("@permissionService.hasPermission('system:carousel:edit')")
     @OLog(module = "轮播图管理", businessType = BusinessType.UPDATE)
     @PutMapping("/{id}/display/{display}")
-    public BaseResult changeDisplay(@PathVariable String id, @PathVariable Boolean display) {
+    public BaseResult changeDisplay(@PathVariable Long id, @PathVariable Boolean display) {
         Carousel carousel = new Carousel();
         carousel.setDisplay(Constant.DISPLAY);
-        carousel.setCarouselId(id);
+        carousel.setId(id);
         return toResult(carouselService.updateCarousel(carousel));
     }
 
     @PreAuthorize("@permissionService.hasPermission('system:carousel:edit')")
     @OLog(module = "轮播图管理", businessType = BusinessType.UPDATE)
     @PutMapping("/{id}/target/{target}")
-    public BaseResult changeTarget(@PathVariable String id, @PathVariable Boolean target) {
+    public BaseResult changeTarget(@PathVariable Long id, @PathVariable Boolean target) {
         Carousel carousel = new Carousel();
         carousel.setTarget(Constant.TRUE);
-        carousel.setCarouselId(id);
+        carousel.setId(id);
         return toResult(carouselService.updateCarousel(carousel));
     }
 
     @PreAuthorize("@permissionService.hasPermission('system:carousel:remove')")
     @OLog(module = "轮播图管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{id}")
-    public BaseResult remove(@PathVariable String id) {
+    public BaseResult remove(@PathVariable Long id) {
         return toResult(carouselService.deleteCarouselById(id));
     }
 }

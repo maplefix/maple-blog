@@ -1,6 +1,7 @@
 package top.maplefix.controller.system;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import top.maplefix.controller.common.BaseController;
 import top.maplefix.enums.BusinessType;
 import top.maplefix.model.Config;
 import top.maplefix.service.ConfigService;
+import top.maplefix.utils.StringUtils;
 import top.maplefix.vo.AboutSetting;
 import top.maplefix.vo.EmailSetting;
 import top.maplefix.vo.SiteSetting;
@@ -52,9 +54,11 @@ public class SettingController extends BaseController {
     @PreAuthorize("@permissionService.hasPermission('system:setting:siteSetting:query')")
     public BaseResult siteSetting() {
         Config config = configService.selectConfigByKey(ConfigKey.CONFIG_KEY_SITE_SETTING);
+        System.out.println(config.getConfigValue());
         //convert to site setting
-        if (config != null) {
-            SiteSetting siteSetting = (SiteSetting) JSON.parse(config.getConfigValue());
+        if (null != config && StringUtils.isNotEmpty(config.getConfigValue())) {
+            JSONObject parse = JSONObject.parseObject(config.getConfigValue());
+            SiteSetting siteSetting = parse.toJavaObject(SiteSetting.class);
             return BaseResult.success(siteSetting);
         }
         return BaseResult.success(new SiteSetting());

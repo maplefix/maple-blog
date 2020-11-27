@@ -1,11 +1,11 @@
-package top.maplefix.controller.oms;
+package top.maplefix.controller.system;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import top.maplefix.annotation.OLog;
 import top.maplefix.common.BaseResult;
 import top.maplefix.constant.Constant;
-import top.maplefix.controller.BaseController;
+import top.maplefix.controller.common.BaseController;
 import top.maplefix.enums.BusinessType;
 import top.maplefix.model.DictType;
 import top.maplefix.service.DictTypeService;
@@ -42,7 +42,7 @@ public class DictTypeController extends BaseController {
      */
     @PreAuthorize("@permissionService.hasPermission('system:dict:query')")
     @GetMapping(value = "/{id}")
-    public BaseResult getInfo(@PathVariable String id) {
+    public BaseResult getInfo(@PathVariable Long id) {
         return BaseResult.success(dictTypeService.selectDictTypeById(id));
     }
 
@@ -80,7 +80,7 @@ public class DictTypeController extends BaseController {
     @PreAuthorize("@permissionService.hasPermission('system:dict:remove')")
     @OLog(module = "字典类型", businessType = BusinessType.DELETE)
     @DeleteMapping("/{id}")
-    public BaseResult remove(@PathVariable String id) {
+    public BaseResult remove(@PathVariable Long id) {
         return toResult(dictTypeService.deleteDictTypeById(id));
     }
 }

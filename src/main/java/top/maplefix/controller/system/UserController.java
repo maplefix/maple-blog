@@ -70,7 +70,6 @@ public class UserController extends BaseController {
         } else if (UserConstant.NOT_UNIQUE.equals(userService.checkEmailUnique(user))) {
             return BaseResult.error("新增用户'" + user.getUserName() + "'失败，邮箱账号已存在");
         }
-        user.setCreateDate(DateUtils.getTime());
         user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
         return toResult(userService.insertUser(user));
     }
@@ -123,7 +122,6 @@ public class UserController extends BaseController {
     @PutMapping("/changeStatus")
     public BaseResult changeStatus(@RequestBody SysUser user) {
         userService.checkUserAllowed(user);
-        user.setUpdateDate(DateUtils.getTime());
         return toResult(userService.updateUserStatus(user));
     }
 

@@ -1,11 +1,11 @@
-package top.maplefix.controller.oms;
+package top.maplefix.controller.system;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import top.maplefix.annotation.OLog;
 import top.maplefix.common.BaseResult;
-import top.maplefix.controller.BaseController;
+import top.maplefix.controller.common.BaseController;
 import top.maplefix.enums.BusinessType;
 import top.maplefix.model.Notice;
 import top.maplefix.service.NoticeService;
@@ -42,7 +42,7 @@ public class NoticeController extends BaseController {
      */
     @PreAuthorize("@permissionService.hasPermission('system:notice:query')")
     @GetMapping(value = "/{id}")
-    public BaseResult getInfo(@PathVariable String id) {
+    public BaseResult getInfo(@PathVariable Long id) {
         return BaseResult.success(noticeService.selectNoticeById(id));
     }
 

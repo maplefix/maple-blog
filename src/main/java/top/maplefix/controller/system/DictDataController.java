@@ -1,10 +1,10 @@
-package top.maplefix.controller.oms;
+package top.maplefix.controller.system;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import top.maplefix.annotation.OLog;
 import top.maplefix.common.BaseResult;
-import top.maplefix.controller.BaseController;
+import top.maplefix.controller.common.BaseController;
 import top.maplefix.enums.BusinessType;
 import top.maplefix.model.DictData;
 import top.maplefix.service.DictDataService;
@@ -41,7 +41,7 @@ public class DictDataController extends BaseController {
      */
     @PreAuthorize("@permissionService.hasPermission('system:dict:query')")
     @GetMapping(value = "/{dictCode}")
-    public BaseResult getInfo(@PathVariable String dictCode) {
+    public BaseResult getInfo(@PathVariable Long dictCode) {
         return BaseResult.success(dictDataService.selectDictDataById(dictCode));
     }
 
@@ -82,7 +82,7 @@ public class DictDataController extends BaseController {
     @PreAuthorize("@permissionService.hasPermission('system:dict:remove')")
     @OLog(module = "字典类型", businessType = BusinessType.DELETE)
     @DeleteMapping("/{dictCode}")
-    public BaseResult remove(@PathVariable String dictCode) {
+    public BaseResult remove(@PathVariable Long dictCode) {
         return toResult(dictDataService.deleteDictDataById(dictCode));
     }
 }
