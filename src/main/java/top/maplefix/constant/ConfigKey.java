@@ -25,4 +25,8 @@ public interface ConfigKey {
      * email setting
      */
     String CONFIG_KEY_EMAIL_SETTING = "emailSetting";
+    /**
+     * email setting
+     */
+    String CONFIG_KEY_FONT_MENU = "fontMenu";
 }

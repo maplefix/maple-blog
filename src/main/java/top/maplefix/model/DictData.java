@@ -61,7 +61,7 @@ public class DictData extends BaseEntity implements Serializable {
     @Excel(name = "排序号")
     private Integer dictSort;
     /**
-     * 状态（0正常 1停用）
+     * 状态（1正常 0停用）
      */
     @Excel(name = "字典状态")
     private String status;

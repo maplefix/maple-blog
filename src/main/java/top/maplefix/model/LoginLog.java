@@ -49,10 +49,10 @@ public class LoginLog extends BaseEntity implements Serializable {
      * 登录状态（1:成功,0:失败）
      */
     @Excel(name = "登录状态",readConverterExp = "0=失败,1=成功")
-    private Integer status;
+    private Boolean status;
     /**
      * 登录描述
      */
     @Excel(name = "登录描述")
-    private String loginMsg;
+    private String msg;
 }

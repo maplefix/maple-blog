@@ -1,9 +1,9 @@
 package top.maplefix.vo;
 
 import lombok.Data;
+import top.maplefix.utils.DateUtils;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,9 +48,8 @@ public class ReplayEmail implements Serializable {
     private String headerImg;
 
     public Map<String, Object> toMap() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         Map<String, Object> map = new HashMap<>(16);
-        map.put("createDate", simpleDateFormat.format(createDate));
+        map.put("createDate", DateUtils.parseDate(createDate));
         map.put("title", title);
         map.put("replyName", replyName);
         map.put("originContent", originContent);

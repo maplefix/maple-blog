@@ -30,9 +30,9 @@ public class DictType extends BaseEntity implements Serializable {
      */
     private String dictType;
     /**
-     * 状态（0停用，1正常）
+     * 状态（1停用，0正常）
      */
-    private Integer status;
+    private String status;
     /**
      * 备注
      */

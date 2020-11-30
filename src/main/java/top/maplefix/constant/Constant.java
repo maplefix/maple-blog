@@ -64,20 +64,20 @@ public class Constant {
     /**
      * common constant for success
      */
-    public static final int SUCCESS = 1;
+    public static final Boolean SUCCESS = true;
     /**
      * common constant for failed
      */
-    public static final int FAILED = 0;
+    public static final Boolean FAILED = false;
 
     /**
      * 显示
      */
-    public static final int DISPLAY = 1;
+    public static final Boolean DISPLAY = true;
     /**
      * 隐藏
      */
-    public static final int HIDE = 0;
+    public static final Boolean HIDE = false;
 
     /**
      * UTF-8 字符集
@@ -110,11 +110,11 @@ public class Constant {
     /**
      * Integer true
      */
-    public static final Integer  TRUE = 1;
+    public static final Boolean  TRUE = true;
     /**
      * Integer false
      */
-    public static final Integer FALSE = 0;
+    public static final Boolean FALSE = false;
 
     /**
      * 校验返回结果码

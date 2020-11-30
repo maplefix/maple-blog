@@ -50,9 +50,9 @@ public class SysUser extends BaseEntity implements Serializable {
     @Excel(name = "电话")
     private String phone;
     /**
-     * 性别
+     * 性别 0男 1女 2未知
      */
-    @Excel(name = "性别",readConverterExp = "1=女,0=男")
+    @Excel(name = "性别",readConverterExp = "1=女,0=男,2=未知")
     private String sex;
     /**
      * 头像相对路径
@@ -73,7 +73,7 @@ public class SysUser extends BaseEntity implements Serializable {
      * 帐号状态(0停用,1正常)
      */
     @Excel(name = "用户状态", readConverterExp = "0=停用,1=正常")
-    private Integer status;
+    private String status;
     /**
      * 最后登录IP
      */

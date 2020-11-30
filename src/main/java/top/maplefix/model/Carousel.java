@@ -22,7 +22,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class Carousel extends BaseEntity implements Serializable {
 
-    @NotNull(message = "主键不能为空")
     @Excel(name = "主键")
     private Long id;
 
@@ -51,15 +50,12 @@ public class Carousel extends BaseEntity implements Serializable {
      * 是否显示,1是0否
      */
     @NotNull(message = "显示配置不能为空")
-    private Integer display;
+    private Boolean display;
     /**
      * 是否当前窗口打开,1是0否
      */
     @NotNull(message = "target配置不能为空")
-    private Integer target;
-
-    @NotNull(message = "URL不能为空")
-    private String targetUrl;
+    private Boolean target;
 
 }
 

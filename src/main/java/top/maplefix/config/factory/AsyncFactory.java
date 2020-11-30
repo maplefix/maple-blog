@@ -37,12 +37,6 @@ public class AsyncFactory {
                                            final Object... args) {
         final UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
         final String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
-        int status;
-        if(statusStr){
-            status = 1;
-        }else {
-            status = 0;
-        }
         return new TimerTask() {
             @Override
             public void run() {
@@ -54,9 +48,9 @@ public class AsyncFactory {
                 loginLog.setIp(ip);
                 loginLog.setBrowser(browser);
                 loginLog.setOs(os);
-                loginLog.setLoginMsg(message.length()<=2000?message:message.substring(2000));
+                loginLog.setMsg(message);
                 loginLog.setLocation(address);
-                loginLog.setStatus(status);
+                loginLog.setStatus(statusStr);
                 loginLog.setCreateDate(DateUtils.getTime());
                 log.info("insert login log {}", loginLog);
                 SpringUtils.getBean(LoginLogService.class).insertLoginLog(loginLog);
@@ -95,7 +89,8 @@ public class AsyncFactory {
                 visitLog.setOs(userAgent.getOperatingSystem().getName());
                 visitLog.setSpider(spider);
                 visitLog.setBrowser(userAgent.getBrowser().getName());
-                visitLog.setLocation(AddressUtils.getRealAddressByIp(visitLog.getIp()));
+                //visitLog.setLocation(AddressUtils.getRealAddressByIp(visitLog.getIp()));
+                visitLog.setLocation(AddressUtils.getCityInfoByIp(visitLog.getIp()));
                 SpringUtils.getBean(VisitLogService.class).insertVisitLog(visitLog);
             }
         };

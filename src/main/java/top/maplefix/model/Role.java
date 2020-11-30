@@ -39,15 +39,15 @@ public class Role extends BaseEntity implements Serializable {
     private String remark;
 
     /**
-     * 角色类型(0:系统角色,1:自定义角色)
+     * 角色状态
      */
-    @Excel(name = "角色状态",readConverterExp = "1=正常,0=停用")
-    private Integer status;
+    @Excel(name = "角色状态",readConverterExp = "0=正常,1=停用")
+    private String status;
     /**
      * 排序号
      */
     @Excel(name = "排序")
-    private Integer roleSort;
+    private String roleSort;
 
     /**
      * 用户是否存在此角色标识 默认不存在

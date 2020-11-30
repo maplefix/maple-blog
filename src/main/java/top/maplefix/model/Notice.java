@@ -43,5 +43,5 @@ public class Notice extends BaseEntity implements Serializable {
     /**
      * 公告状态（1正常 0关闭）
      */
-    private Integer status;
+    private String status;
 }

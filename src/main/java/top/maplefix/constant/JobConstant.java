@@ -10,9 +10,9 @@ public class JobConstant {
     /**
      * 运行
      */
-    public static final int NORMAL = 1;
+    public static final Boolean NORMAL = true;
     /**
      * 暂停
      */
-    public static final int PAUSE = 2;
+    public static final Boolean PAUSE = false;
 }

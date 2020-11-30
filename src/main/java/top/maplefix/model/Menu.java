@@ -46,7 +46,7 @@ public class Menu extends BaseEntity implements Serializable {
      * 是否为外链(1是,0否)
      */
     @Excel(name = "是否为外链",readConverterExp = "1=是外链,0=不是外链")
-    private Integer isFrame;
+    private String isFrame;
     /**
      * 菜单类型（M目录 C菜单 F按钮）
      */
@@ -56,7 +56,7 @@ public class Menu extends BaseEntity implements Serializable {
      *  菜单状态(1显示,0隐藏)
      */
     @Excel(name = "菜单状态",readConverterExp = "0=隐藏,1=显示")
-    private Integer visible;
+    private String visible;
     /**
      * 权限标识
      */

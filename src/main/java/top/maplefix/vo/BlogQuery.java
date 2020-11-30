@@ -22,9 +22,9 @@ public class BlogQuery implements Serializable {
     /**
      * 查询开始时间
      */
-    private String beginTime;
+    private String beginDate;
     /**
      * 查询结束时间
      */
-    private String endTime;
+    private String endDate;
 }

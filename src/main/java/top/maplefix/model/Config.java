@@ -3,6 +3,7 @@ package top.maplefix.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
@@ -16,15 +17,24 @@ public class Config extends BaseEntity implements Serializable {
     /**
      * 主键
      */
+    @Id
     private Long id;
 
     /**
-     * 参数键名
+     * 参数名称
+     */
+    private String configName;
+    /**
+     * 是否系统内置，1是 0否
+     */
+    private String configType;
+    /**
+     * 参数key
      */
     private String configKey;
 
     /**
-     * 参数键值
+     * 参数value
      */
     private String configValue;
     /**

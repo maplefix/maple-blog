@@ -76,7 +76,7 @@ public class Comment extends BaseEntity implements Serializable {
     /**
      * 是否显示，1显示，0不显示
      */
-    private Integer display;
+    private Boolean display;
     /**
      * 点赞
      */
@@ -98,7 +98,7 @@ public class Comment extends BaseEntity implements Serializable {
     /**
      * 是否接收回复邮件，1是，0否
      */
-    private String reply;
+    private Boolean reply;
     /**
      * 回复的id
      */
@@ -106,7 +106,7 @@ public class Comment extends BaseEntity implements Serializable {
     /**
      * 是否管理员回复，1是，0否
      */
-    private Integer adminReply;
+    private Boolean adminReply;
 
     private Comment parentComment;
     /**

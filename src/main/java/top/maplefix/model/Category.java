@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import top.maplefix.annotation.Excel;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -33,7 +32,7 @@ public class Category extends BaseEntity implements Serializable {
     /**
      * 是否推荐
      */
-    @NotNull(message = "推荐设置不能为空")
+    //@NotNull(message = "推荐设置不能为空")
     private Boolean support;
     /**
      * 描述信息

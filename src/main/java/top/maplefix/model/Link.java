@@ -60,21 +60,21 @@ public class Link extends BaseEntity implements Serializable {
      * 是否显示(1:显示,0:不显示)
      */
     @Excel(name = "审核状态",readConverterExp = "1=通过,0=不通过")
-    private Integer status;
+    private Boolean status;
     /**
      * 是否显示(1:显示,0:不显示)
      */
     @Excel(name = "是否显示",readConverterExp = "1=显示,0=不显示")
-    private Integer display;
+    private Boolean display;
     /**
      * 权重
      */
     @Excel(name = "权重")
     private Integer  weight;
     /**
-     * 排序值
+     * 是否在panel显示
      */
     @Excel(name = "是否在panel显示")
-    private Integer  support;
+    private Boolean  support;
 
 }

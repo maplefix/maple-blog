@@ -88,15 +88,15 @@ public class OperateLog extends BaseEntity implements Serializable {
     private String result;
 
     /**
-     * 请求状态(1:成功,0:失败)
+     * 请求状态(true:成功,false:失败)
      */
     @Excel(name = "请求状态",readConverterExp = "0=失败,1=成功")
-    private Integer status;
+    private Boolean status;
     /**
      * 错误信息
      */
     @Excel(name = "错误信息")
-    private String exceptionMsg;
+    private String errorMsg;
 
     /**
      * 耗时

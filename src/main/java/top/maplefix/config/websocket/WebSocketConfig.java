@@ -64,14 +64,12 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                             if (messagingTemplate != null)
                                 messagingTemplate.convertAndSend("/topic/pullLogger", loggerMessage);
                         }
-                    }
-                    catch (Exception e){
+                    } catch (Exception e){
                         e.printStackTrace();
                     }
                 }
             }
         };
-        executorService.submit(runnable);
         executorService.submit(runnable);
     }
 
