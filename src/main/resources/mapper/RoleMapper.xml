@@ -33,7 +33,7 @@
             <if test="roleName != null and roleName != ''">
                 AND r.role_name like concat('%', #{roleName}, '%')
             </if>
-            <if test="status != null">
+            <if test="status != null and status != ''">
                 AND r.status = #{status}
             </if>
             <if test="roleKey != null and roleKey != ''">
@@ -121,6 +121,7 @@
         delete from  t_role  where id in
         <foreach collection="ids" item="id" open="(" separator="," close=")">
             #{id}
-        </foreach>
+        </foreach>;
+        ALTER TABLE t_role AUTO_INCREMENT = 1;
     </delete>
 </mapper>

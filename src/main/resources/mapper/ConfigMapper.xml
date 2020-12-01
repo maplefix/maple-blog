@@ -3,7 +3,9 @@
 <mapper namespace="top.maplefix.mapper.ConfigMapper">
 
     <resultMap type="top.maplefix.model.Config" id="SysConfigResult">
-        <id property="configId" column="config_id"/>
+        <id property="id" column="id"/>
+        <result property="configName" column="config_name"/>
+        <result property="configType" column="config_type"/>
         <result property="configKey" column="config_key"/>
         <result property="configValue" column="config_value"/>
         <result property="createDate" column="create_date"/>
@@ -11,15 +13,21 @@
     </resultMap>
 
     <sql id="selectConfigVo">
-        select config_id, config_key, config_value, create_date, update_date,remark
+        select id, config_name,config_type,config_key, config_value, create_date, update_date,remark
 		from t_config
     </sql>
 
     <!-- 查询条件 -->
     <sql id="sqlwhereSearch">
         <where>
-            <if test="configId !=null">
-                and config_id = #{id}
+            <if test="id !=null">
+                and id = #{id}
+            </if>
+            <if test="configType !=null and configType != ''">
+                and config_type = #{configType}
+            </if>
+            <if test="configName !=null and configName != ''">
+                and config_name = #{configName}
             </if>
             <if test="configKey !=null and configKey != ''">
                 and config_key = #{configKey}
@@ -36,6 +44,12 @@
             resultMap="SysConfigResult">
         <include refid="selectConfigVo"/>
         <where>
+            <if test="configName !=null and configName != ''">
+                AND config_name like concat('%', #{configName}, '%')
+            </if>
+            <if test="configType !=null and configType != ''">
+                and config_type = #{configType}
+            </if>
             <if test="configKey != null and configKey != ''">
                 AND config_key like concat('%', #{configKey}, '%')
             </if>
@@ -55,13 +69,15 @@
 
     <insert id="insertConfig" parameterType="top.maplefix.model.Config">
         insert into t_config (
-        <if test="configId != null and configId != '' ">config_id,</if>
+        <if test="configName != null and configName != '' ">config_name,</if>
+        <if test="configType != null and configType != '' ">config_type,</if>
         <if test="configKey != null and configKey != '' ">config_key,</if>
         <if test="configValue != null and configValue != '' ">config_value,</if>
         <if test="createDate != null and createDate != ''">create_date,</if>
         <if test="remark != null and remark != ''">remark</if>
         )values(
-        <if test="configId != null and configId != ''">#{configId},</if>
+        <if test="configName != null and configName != ''">#{configName},</if>
+        <if test="configType != null and configType != ''">#{configType},</if>
         <if test="configKey != null and configKey != ''">#{configKey},</if>
         <if test="configValue != null and configValue != ''">#{configValue},</if>
         <if test="createDate != null and createDate != ''">#{createDate},</if>
@@ -72,16 +88,20 @@
     <update id="updateConfig" parameterType="top.maplefix.model.Config">
         update t_config
         <set>
+            <if test="configName != null and configName != ''">config_name = #{configName},</if>
+            <if test="configType != null and configType != ''">config_type = #{configType},</if>
             <if test="configKey != null and configKey != ''">config_key = #{configKey},</if>
             <if test="configValue != null and configValue != ''">config_value = #{configValue},</if>
             <if test="updateDate != null and updateDate != ''">update_date = #{updateDate},</if>
             <if test="remark != null">remark = #{remark}</if>
         </set>
-        where config_id = #{id}
+        where id = #{id}
     </update>
     <update id="updateConfigByConfigKey">
         update t_config
         <set>
+            <if test="configName != null and configName != ''">config_name = #{configName},</if>
+            <if test="configType != null and configType != ''">config_type = #{configType},</if>
             <if test="configValue != null and configValue != ''">config_value = #{configValue},</if>
             <if test="updateDate != null and updateDate != ''">update_date = #{updateDate},</if>
             <if test="remark != null">remark = #{remark}</if>
@@ -90,7 +110,8 @@
     </update>
 
     <delete id="deleteConfigById">
-        delete from t_config where config_id = #{id}
+        delete from t_config where id = #{id};
+        ALTER TABLE t_config AUTO_INCREMENT = 1;
     </delete>
 
 </mapper>

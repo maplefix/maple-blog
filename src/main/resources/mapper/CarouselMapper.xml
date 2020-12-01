@@ -3,7 +3,7 @@
 <mapper namespace="top.maplefix.mapper.CarouselMapper">
 
     <resultMap type="top.maplefix.model.Carousel" id="SysCarouselMap">
-        <result property="carouselId" column="carousel_id"/>
+        <id property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="url" column="url"/>
         <result property="description" column="description"/>
@@ -17,7 +17,7 @@
 
     <!--查询单个-->
     <select id="selectCarouselById" resultMap="SysCarouselMap">
-        select carousel_id,
+        select id,
         description,
         click,
         header_img,
@@ -28,12 +28,12 @@
         title,
         url
         from t_carousel
-        where carousel_id = #{id}
+        where id = #{id}
     </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="selectCarouselList" resultMap="SysCarouselMap">
-        select carousel_id,
+        select id,
         title,
         description,
         click,
@@ -44,7 +44,7 @@
         update_date,
         url
         from t_carousel
-        where delete_time is null
+        where 1=1
         <if test="description != null and description != ''">
             and description = #{description}
         </if>
@@ -55,17 +55,16 @@
             and target = #{target}
         </if>
         <if test="params.beginDate != null and params.beginDate != ''"><!-- 开始时间检索 -->
-            and date_format(create_date,'%y%m%d') &gt;= date_format(#{params.beginDate},'%y%m%d')
-        </if>
-        <if test="params.endDate != null and params.endDate != ''"><!-- 结束时间检索 -->
-            and date_format(create_date,'%y%m%d') &lt;= date_format(#{params.endDate},'%y%m%d')
-        </if>
+                and date_format(create_date,'%y%m%d') &gt;= date_format(#{params.beginDate},'%y%m%d')
+            </if>
+            <if test="params.endDate != null and params.endDate != ''"><!-- 结束时间检索 -->
+                and date_format(create_date,'%y%m%d') &lt;= date_format(#{params.endDate},'%y%m%d')
+            </if>
     </select>
 
     <!--新增所有列-->
-    <insert id="insertCarousel">
+    <insert id="insertCarousel" useGeneratedKeys="true" keyProperty="id">
         insert into t_carousel (
-        <if test="carouselId != null and carouselId != '' ">carousel_id,</if>
         <if test="description != null and description != '' ">description,</if>
         <if test="headerImg != null and headerImg != '' ">header_img,</if>
         <if test="display != null">display,</if>
@@ -74,7 +73,6 @@
         <if test="title != null and title != ''">title,</if>
         <if test="createDate != null and createDate != ''">create_date</if>
         )values(
-        <if test="carouselId != null and carouselId != ''">#{carouselId},</if>
         <if test="description != null and description != ''">#{description},</if>
         <if test="headerImg != null and headerImg != ''">#{headerImg},</if>
         <if test="display != null and display != ''">#{display},</if>
@@ -111,12 +109,13 @@
                 update_date = #{updateDate},
             </if>
         </set>
-        where updateDate = #{id}
+        where id = #{id}
     </update>
 
     <!--通过主键删除-->
     <delete id="deleteCarouselById">
-        delete from t_carousel where carousel_id = #{id}
+        delete from t_carousel where id = #{id};
+        ALTER TABLE t_carousel AUTO_INCREMENT = 1;
     </delete>
 
 </mapper>

@@ -31,7 +31,8 @@
         ifnull(perms,'') as perms,
         icon,
         create_date,
-        update_date
+        update_date,
+        remark
         from t_menu
     </sql>
 
@@ -64,7 +65,7 @@
         m.update_date
         from t_menu m
 		where m.menu_type in ("M", "C")
-		and m.visible = 1
+		and m.visible = 0
 		order by m.parent_id, m.order_num
 	</select>
 
@@ -89,12 +90,12 @@
         left join t_user u on ur.user_id = u.id
 		where u.id = #{id}
 		and m.menu_type in ('M', 'C')
-		and m.visible = 1
-		AND ro.status = 1
+		and m.visible = 0
+		AND ro.status = 0
 		order by m.parent_id, m.order_num
 	</select>
 
-    <select id="selectMenuListByRoleId" parameterType="java.lang.String" resultType="Integer">
+    <select id="selectMenuListByRoleId" parameterType="java.lang.Long" resultType="Integer">
 		select m.id,
 		m.parent_id
 		from t_menu m
@@ -190,7 +191,8 @@
     </insert>
 
     <delete id="deleteMenuById">
-	    delete from t_menu where id = #{menuId}
+	    delete from t_menu where id = #{menuId};
+        ALTER TABLE t_menu AUTO_INCREMENT = 1;
 	</delete>
 
 </mapper>

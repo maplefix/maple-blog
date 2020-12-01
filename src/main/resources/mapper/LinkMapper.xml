@@ -35,28 +35,31 @@
 
     <select id="selectLinkList" resultMap="linkResult">
         <include refid="selectLinkVo"/>
-        <if test="linkName != null and linkName != ''">
-            AND link_name like concat('%', #{linkName}, '%')
-        </if>
-        <if test="email != null and email != ''">
-            AND email like concat('%', #{email}, '%')
-        </if>
-        <if test="display != null and display != ''">
-            AND display =#{display}
-        </if>
-        <if test="status != null ">
-            AND status =#{status}
-        </if>
-        <if test="params.beginDate != null and params.beginDate != ''"><!-- 开始时间检索 -->
-                and date_format(create_date,'%y%m%d') &gt;= date_format(#{params.beginDate},'%y%m%d')
+        <where>
+            <if test="linkName != null and linkName != ''">
+                AND link_name like concat('%', #{linkName}, '%')
+            </if>
+            <if test="email != null and email != ''">
+                AND email like concat('%', #{email}, '%')
+            </if>
+            <if test="display != null and display != ''">
+                AND display =#{display}
+            </if>
+            <if test="status != null and status != ''">
+                AND status =#{status}
+            </if>
+            <if test="params.beginDate != null and params.beginDate != ''"><!-- 开始时间检索 -->
+                    and date_format(create_date,'%y%m%d') &gt;= date_format(#{params.beginDate},'%y%m%d')
             </if>
             <if test="params.endDate != null and params.endDate != ''"><!-- 结束时间检索 -->
                 and date_format(create_date,'%y%m%d') &lt;= date_format(#{params.endDate},'%y%m%d')
             </if>
+        </where>
     </select>
 
     <select id="selectLinkById" parameterType="java.lang.Long" resultMap="linkResult">
         <include refid="selectLinkVo"/>
+        where 1=1
         and id = #{id}
     </select>
 
@@ -106,14 +109,16 @@
     </update>
 
     <delete id="deleteLinkById">
-        delete from t_link where id = #{id}
+        delete from t_link where id = #{id};
+        ALTER TABLE t_link AUTO_INCREMENT = 1;
     </delete>
 
     <delete id="deleteLinkByIds">
         delete from t_link where id in
         <foreach item="id" collection="ids" open="(" separator="," close=")">
             #{id}
-        </foreach>
+        </foreach>;
+        ALTER TABLE t_link AUTO_INCREMENT = 1;
     </delete>
 
 </mapper>

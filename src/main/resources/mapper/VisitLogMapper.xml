@@ -11,7 +11,7 @@
         <result property="spider" column="spider"/>
         <result property="url" column="url"/>
         <result property="module" column="module"/>
-        <result property="exceptionMsg" column="exception_msg"/>
+        <result property="errorMsg" column="error_msg"/>
         <result property="createDate" column="create_date"/>
         <result property="updateDate" column="update_date"/>
     </resultMap>
@@ -24,21 +24,24 @@
         <if test="os!=null and os!=''">os,</if>
         <if test="url!=null and url!=''">url,</if>
         <if test="pageId !=null">page_id,</if>
-        <if test="exceptionMsg!=null and exceptionMsg!=''">exception_msg,</if>
+        <if test="errorMsg!=null and errorMsg!=''">error_msg,</if>
         <if test="spider!=null and spider!=''">spider,</if>
         <if test="status!=null and status!=''">status,</if>
         <if test="module!=null and module!=''">module,</if>
+        <if test="entryUrl!=null and entryUrl!=''">entry_url,</if>
         <if test="createDate!=null and createDate!=''">create_date</if>
         )values (
+        <if test="ip!=null and ip!=''">#{ip},</if>
         <if test="location!=null and location!=''">#{location},</if>
         <if test="browser!=null and browser!=''">#{browser},</if>
         <if test="os!=null and os!=''">#{os},</if>
         <if test="url!=null and url!=''">#{url},</if>
         <if test="pageId!=null ">#{pageId},</if>
-        <if test="exceptionMsg!=null and exceptionMsg!=''">#{exceptionMsg},</if>
+        <if test="errorMsg!=null and errorMsg!=''">#{errorMsg},</if>
         <if test="spider!=null and spider!=''">#{spider},</if>
         <if test="status!=null and status!=''">#{status},</if>
         <if test="module!=null and module!=''">#{module},</if>
+        <if test="entryUrl!=null and entryUrl!=''">#{entryUrl},</if>
         <if test="createDate!=null and createDate!=''">#{createDate}</if>
         )
     </insert>
@@ -51,7 +54,7 @@
         os,
         module,
         status,
-        exception_msg,
+        error_msg,
         spider,
         url,
         create_date,
@@ -79,7 +82,8 @@
         where id in
         <foreach collection="ids" item="id" open="(" separator="," close=")">
             #{id}
-        </foreach>
+        </foreach>;
+        ALTER TABLE t_visit_log AUTO_INCREMENT = 1;
     </delete>
 
     <update id="cleanVisitLog">
@@ -94,7 +98,7 @@
             <if test="browser != null  and browser != ''">browser = #{browser},</if>
             <if test="os != null  and os != ''">os = #{os},</if>
             <if test="pageId != null  and pageId != ''">page_id = #{pageId},</if>
-            <if test="exceptionMsg != null  and exceptionMsg != ''">exception_msg = #{exceptionMsg},</if>
+            <if test="errorMsg != null  and errorMsg != ''">error_msg = #{errorMsg},</if>
             <if test="spider != null  and spider != ''">spider = #{spider},</if>
             <if test="status != null ">status = #{status},</if>
             <if test="module != null ">module = #{module}</if>

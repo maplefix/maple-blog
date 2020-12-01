@@ -3,7 +3,7 @@
 <mapper namespace="top.maplefix.mapper.CommentMapper">
 
     <resultMap type="top.maplefix.model.Comment" id="CommentMap">
-        <result property="commentId" column="comment_id"/>
+        <id property="id" column="id"/>
         <result property="email" column="email"/>
         <result property="ip" column="ip"/>
         <result property="location" column="location"/>
@@ -27,7 +27,7 @@
 
     <!--查询单个-->
     <select id="selectCommentById" resultMap="CommentMap">
-      select comment_id,
+      select id,
         email,
         ip,
         location,
@@ -46,12 +46,12 @@
         create_date,
         update_date
         from t_comment
-        where comment_id = #{id}
+        where id = #{id}
     </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="selectCommentList" resultMap="CommentMap">
-        select comment_id,
+        select id,
         email,
         ip,
         location,
@@ -96,9 +96,8 @@
     </select>
 
     <!--新增所有列-->
-    <insert id="insertComment" >
+    <insert id="insertComment" useGeneratedKeys="true" keyProperty="id">
         insert into t_comment(
-        <if test="commentId != null and commentId != ''">comment_id,</if>
         <if test="email != null and email != ''">email,</if>
         <if test="ip != null and ip != ''">ip,</if>
         <if test="location != null and location != ''">location,</if>
@@ -118,7 +117,6 @@
         <if test="adminReply != null ">admin_reply,</if>
         <if test="createDate != null and createDate != ''">create_date</if>
         )values(
-        <if test="commentId != null and commentId != ''">#{commentId},</if>
         <if test="email != null and email != ''">#{email},</if>
         <if test="ip != null and ip != ''">#{ip},</if>
         <if test="location != null and location != ''">#{location},</if>
@@ -193,27 +191,28 @@
                 update_date = #{updateDate}
             </if>
         </set>
-        where comment_id = #{id}
+        where id = #{id}
     </update>
 
     <update id="incrementCommentGood">
-        update t_comment set good=good+1 where comment_id=#{id}
+        update t_comment set good=good+1 where id=#{id}
     </update>
 
     <update id="incrementCommentBad">
-        update t_comment set bad=bad+1 where comment_id=#{id}
+        update t_comment set bad=bad+1 where id=#{id}
     </update>
 
     <!--通过主键删除-->
     <delete id="deleteCommentById">
-        delete from t_comment where comment_id in
+        delete from t_comment where id in
         <foreach item="id" collection="ids" open="(" separator="," close=")">
             #{id}
-        </foreach>
+        </foreach>;
+        ALTER TABLE t_comment AUTO_INCREMENT = 1;
     </delete>
 
     <select id="selectCommentListByPageIds" resultMap="CommentMap">
-        select comment_id,
+        select id,
         email,
         ip,
         location,
@@ -239,7 +238,7 @@
     </select>
 
     <select id="selectCommentListByPageId" resultMap="CommentMap">
-        select comment_id,
+        select id,
         email,
         ip,
         location,

@@ -94,7 +94,8 @@
     <!--通过主键删除-->
     <delete id="deleteLocalStorageById">
       delete from t_local_storage
-      where id=#{id}
+      where id=#{id};
+      ALTER TABLE t_local_storage AUTO_INCREMENT = 1;
     </delete>
 
 </mapper>

@@ -40,15 +40,15 @@
                os,
                entry_url,
                url,
-               exception_msg,
+               error_msg,
                status,
                module,
                spider,
                create_date,
-                update_date
+               update_date
         from t_visit_log
     </select>
-    <select id="getBlogNameByPageId" resultType="java.lang.Long">
+    <select id="getBlogNameByPageId" resultType="java.lang.String">
         select title
         from t_blog
         where blog_id = #{pageId}
@@ -61,7 +61,7 @@
                browser,
                os,
                status,
-               login_msg,
+               msg,
                create_date,
                update_date
         from t_login_log
@@ -79,7 +79,7 @@
                param,
                result,
                status,
-               exception_msg,
+               error_msg,
                cost,
                create_date,
                update_date
@@ -92,12 +92,11 @@
                method_name,
                method_params,
                cron_expression,
-               exception_exception,
+               exception,
                result,
                status,
                cost,
-               create_date,
-                update_date
+               create_date
         from t_job_log
     </select>
     <select id="getAccessData" resultType="top.maplefix.vo.home.KeyValue">

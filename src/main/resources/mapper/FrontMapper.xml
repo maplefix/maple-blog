@@ -17,11 +17,11 @@
         <if test="location != null and location != ''">location,</if>
         <if test="os != null and os != ''">os,</if>
         <if test="browser != null and browser != ''">browser,</if>
-        <if test="parentId != null">parent_id,</if>
+        <if test="parentId != null and parentId != ''">parent_id,</if>
         <if test="qqNum != null and qqNum != ''">qq_num,</if>
         <if test="nickName != null and nickName != ''">nick_name,</if>
         <if test="avatar != null and avatar != ''">avatar,</if>
-        <if test="pageId != null">page_id,</if>
+        <if test="pageId != null and pageId != ''">page_id,</if>
         <if test="url != null and url != ''">url,</if>
         <if test="display != null and display != ''">display,</if>
         <if test="content != null and content != ''">content,</if>
@@ -29,18 +29,18 @@
         <if test="replyId != null ">reply_id,</if>
         <if test="reply != null ">reply,</if>
         <if test="adminReply != null ">admin_reply,</if>
-        create_date
+        <if test="createDate != null and createDate != ''">create_date</if>
         )values(
         <if test="email != null and email != ''">#{email},</if>
         <if test="ip != null and ip != ''">#{ip},</if>
         <if test="location != null and location != ''">#{location},</if>
         <if test="os != null and os != ''">#{os},</if>
         <if test="browser != null and browser != ''">#{browser},</if>
-        <if test="parentId != null">#{parentId},</if>
+        <if test="parentId != null and parentId != ''">#{parentId},</if>
         <if test="qqNum != null and qqNum != ''">#{qqNum},</if>
         <if test="nickName != null and nickName != ''">#{nickName},</if>
         <if test="avatar != null and avatar != ''">#{avatar},</if>
-        <if test="pageId != null">#{pageId},</if>
+        <if test="pageId != null and pageId != ''">#{pageId},</if>
         <if test="url != null and url != ''">#{url},</if>
         <if test="display != null and display != ''">#{display},</if>
         <if test="content != null and content != ''">#{content},</if>
@@ -83,7 +83,7 @@
     </update>
     <!--查询显示友链-->
     <select id="selectLinkList" resultType="top.maplefix.model.Link">
-        select id, link_name, url, description, avatar
+        select id, link_name, url, description, header_img
         from t_link
         where  display = 1
         and status = 1
@@ -107,7 +107,7 @@
                count(c.id) as comment_count
         from t_blog b
         left join t_comment c on b.id = c.page_id
-        where b.is_recommend = 1
+        where b.support = 1
         and b.status = 1
         group by b.id
         order by b.create_date, b.weight desc
@@ -147,9 +147,8 @@
                url,
                display,
                target,
-               target_url,
                create_date,
-                update_date
+               update_date
         from t_carousel
     </select>
     <!--查询通知公告列表-->
@@ -183,8 +182,8 @@
         <result property="summary" column="summary"/>
         <result property="headerImg" column="header_img"/>
         <result property="content" column="html_content"/>
-        <result property="isComment" column="comment"/>
-        <result property="isRecommend" column="is_recommend"/>
+        <result property="comment" column="comment"/>
+        <result property="support" column="support"/>
         <result property="createDate" column="create_date"/>
         <result property="updateDate" column="update_date"/>
         <collection property="tagTitleList" ofType="string" select="selectTagByBlogId" column="id">
@@ -223,12 +222,12 @@
         b.weight,
         b.header_img,
         b.status,
-        b.is_recommend,
+        b.support,
         b.like,
         b.click,
         b.comment,
         b.create_date,
-        b.update_time,
+        b.update_date,
         count(c.id) as comment_count
         from t_blog b left join t_comment c
         on b.id=c.page_id
@@ -237,7 +236,7 @@
                 AND b.category_id =#{categoryId}
             </if>
             <if test="support != null ">
-                AND b.is_recommend = #{isRecommend}
+                AND b.support = #{support}
             </if>
             <if test="beginDate != null "><!-- 开始时间检索 -->
                 and date_format( b.create_date,'%y%m%d') &gt;= date_format(#{beginDate},'%y%m%d')
@@ -250,7 +249,7 @@
     </select>
     <!--根据类型和id查询标签列表-->
     <select id="selectTagListByTypeAndId" resultType="top.maplefix.model.Tag">
-        select t.id, color, title,type, create_date,
+        select t.id, color, title, create_date,
         update_date
         from t_tag t
         left join t_blog_tag_mid tm on t.id = tm.tag_id

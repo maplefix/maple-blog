@@ -10,14 +10,14 @@
         <result property="location" column="location"/>
         <result property="browser" column="browser"/>
         <result property="os" column="os"/>
-        <result property="loginMsg" column="login_msg"/>
+        <result property="msg" column="msg"/>
         <result property="createDate" column="create_date"/>
         <result property="updateDate" column="update_date"/>
     </resultMap>
 
     <insert id="insertLoginLog" parameterType="top.maplefix.model.LoginLog">
-        insert into t_login_log (user_name, status, ip, location, browser, os, login_msg, create_date)
-        values (#{userName}, #{status}, #{ip}, #{location}, #{browser}, #{os}, #{loginMsg}, #{createDate})
+        insert into t_login_log (user_name, status, ip, location, browser, os, msg, create_date)
+        values (#{userName}, #{status}, #{ip}, #{location}, #{browser}, #{os}, #{msg}, #{createDate})
     </insert>
 
     <select id="selectLoginLogList" parameterType="top.maplefix.model.LoginLog" resultMap="SysLoginLogResult">
@@ -28,7 +28,7 @@
         browser,
         os,
         status,
-        login_msg,
+        msg,
         create_date,
         update_date
         from t_login_log
@@ -56,7 +56,8 @@
         where id in
         <foreach collection="ids" item="id" open="(" separator="," close=")">
             #{id}
-        </foreach>
+        </foreach>;
+        ALTER TABLE t_login_log AUTO_INCREMENT = 1;
     </delete>
 
     <update id="cleanLoginLog">
@@ -72,7 +73,7 @@
             <if test="location != null  and location != ''">location = #{location},</if>
             <if test="browser != null ">browser = #{browser},</if>
             <if test="os != null  and os != ''">os = #{os},</if>
-            <if test="loginMsg != null  and loginMsg != ''">login_msg = #{loginMsg},</if>
+            <if test="msg != null  and msg != ''">msg = #{msg},</if>
             <if test="updateDate != null  and updateDate != ''">update_date = #{updateDate}</if>
         </trim>
         where id = #{id}

@@ -3,7 +3,7 @@
 <mapper namespace="top.maplefix.mapper.NoticeMapper">
 
     <resultMap type="top.maplefix.model.Notice" id="SysNoticeResult">
-        <result property="noticeId" column="notice_id"/>
+        <id property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="type" column="type"/>
         <result property="content" column="content"/>
@@ -14,7 +14,7 @@
     </resultMap>
 
     <sql id="selectNoticeVo">
-        select notice_id,
+        select id,
         title,
         type,
         content,
@@ -25,9 +25,9 @@
 		from t_notice
     </sql>
 
-    <select id="selectNoticeById" parameterType="java.lang.String" resultMap="SysNoticeResult">
+    <select id="selectNoticeById" parameterType="java.lang.Long" resultMap="SysNoticeResult">
         <include refid="selectNoticeVo"/>
-        where notice_id = #{id}
+        where id = #{id}
     </select>
 
     <select id="selectNoticeList" parameterType="top.maplefix.model.Notice"
@@ -45,7 +45,6 @@
 
     <insert id="insertNotice" parameterType="top.maplefix.model.Notice">
         insert into t_notice (
-        <if test="noticeId != null and noticeId != '' ">notice_id,</if>
         <if test="title != null and title != '' ">title,</if>
         <if test="type != null and type != '' ">type,</if>
         <if test="content != null and content != '' ">content,</if>
@@ -53,7 +52,6 @@
         <if test="status != null and status != '' ">status,</if>
         <if test="createDate != null and createDate != ''">create_date</if>
         )values(
-        <if test="noticeId != null and noticeId != ''">#{noticeId},</if>
         <if test="title != null and title != ''">#{title},</if>
         <if test="type != null and type != ''">#{type},</if>
         <if test="content != null and content != ''">#{content},</if>
@@ -70,17 +68,18 @@
             <if test="type != null and type != ''">type = #{type},</if>
             <if test="content != null and htmlContent!=''">content = #{content},</if>
             <if test="htmlContent != null and htmlContent!=''">html_content = #{htmlContent},</if>
-            <if test="status != null">status = #{status},</if>
+            <if test="status != null and status != ''">status = #{status},</if>
             <if test="updateDate != null and updateDate != ''">update_date = #{updateDate}</if>
         </set>
-        where notice_id = #{id}
+        where id = #{id}
     </update>
 
     <delete id="deleteNoticeByIds">
-        delete from t_notice where notice_id in
+        delete from t_notice where id in
         <foreach collection="ids" item="id" open="(" separator="," close=")">
             #{id}
-        </foreach>
+        </foreach>;
+        ALTER TABLE t_notice AUTO_INCREMENT = 1;
     </delete>
 
 </mapper>

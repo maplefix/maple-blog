@@ -18,7 +18,7 @@
         <result property="cost" column="cost"/>
         <result property="result" column="result"/>
         <result property="status" column="status"/>
-        <result property="exceptionMsg" column="exception_msg"/>
+        <result property="errorMsg" column="error_msg"/>
         <result property="createDate" column="create_date"/>
     </resultMap>
 
@@ -38,7 +38,7 @@
                param,
                result,
                status,
-               exception_msg,
+               error_msg,
                create_date,
                update_date
         from t_operate_log
@@ -46,9 +46,9 @@
 
     <insert id="insertOperateLog" parameterType="top.maplefix.model.OperateLog">
         insert into t_operate_log(module, business_type, method, request_method, operate_name, url, ip,
-                location, os,browser, param, result, status, exception_msg, create_date, cost)
+                location, os,browser, param, result, status, error_msg, create_date, cost)
         values ( #{module},#{businessType}, #{method}, #{requestMethod}, #{operateName}, #{url}, #{ip},
-                #{location}, #{os},#{browser},#{param}, #{result}, #{status}, #{exceptionMsg}, #{createDate}, #{cost})
+                #{location}, #{os},#{browser},#{param}, #{result}, #{status}, #{errorMsg}, #{createDate}, #{cost})
     </insert>
 
     <select id="selectOperateLogList" parameterType="top.maplefix.model.OperateLog" resultMap="SysOperateLogResult">
@@ -57,7 +57,7 @@
             <if test="module != null and module != ''">
                 AND module like concat('%', #{module}, '%')
             </if>
-            <if test="businessType != null">
+            <if test="businessType != null and businessType != ''">
                 AND business_type = #{businessType}
             </if>
             <if test="businessTypes != null and businessTypes.length > 0">
@@ -66,7 +66,7 @@
                     #{businessType}
                 </foreach>
             </if>
-            <if test="status != null">
+            <if test="status != null and status !=''">
                 AND status = #{status}
             </if>
             <if test="operateName != null and operateName != ''">
@@ -85,7 +85,8 @@
         delete from t_operate_log where id in
         <foreach collection="ids" item="id" open="(" separator="," close=")">
             #{id}
-        </foreach>
+        </foreach>;
+        ALTER TABLE t_operate_log AUTO_INCREMENT = 1;
     </delete>
 
     <select id="selectOperateLogById" resultMap="SysOperateLogResult">
@@ -113,7 +114,7 @@
             <if test="param != null and param !=''">param = #{param},</if>
             <if test="result != null and result !=''">result = #{result},</if>
             <if test="status != null ">status = #{status},</if>
-            <if test="exceptionMsg != null and exceptionMsg !=''">exception_msg = #{exceptionMsg},</if>
+            <if test="errorMsg != null and errorMsg !=''">error_msg = #{errorMsg},</if>
             <if test="updateDate != null and updateDate !=''">update_date = #{updateDate}</if>
         </trim>
         where id = #{id}

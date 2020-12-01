@@ -3,8 +3,8 @@
 <mapper namespace="top.maplefix.mapper.DictDataMapper">
 
     <resultMap type="top.maplefix.model.DictData" id="SysDictDataResult">
-        <id property="dictDataId" column="dict_data_id"/>
-        <result property="seq" column="seq"/>
+        <id property="dictCode" column="dict_code"/>
+        <result property="dictSort" column="dict_sort"/>
         <result property="dictLabel" column="dict_label"/>
         <result property="dictValue" column="dict_value"/>
         <result property="dictType" column="dict_type"/>
@@ -18,7 +18,7 @@
     </resultMap>
 
     <sql id="selectDictDataVo">
-        select dict_data_id, seq, dict_label, dict_value, dict_type, css_class, list_class, is_default, status,
+        select dict_code, dict_sort, dict_label, dict_value, dict_type, css_class, list_class, is_default, status,
         create_date, update_date, remark
 		from t_dict_data
     </sql>
@@ -27,6 +27,7 @@
             resultMap="SysDictDataResult">
         <include refid="selectDictDataVo"/>
         <where>
+            1=1
             <if test="dictType != null and dictType != ''">
                 AND dict_type = #{dictType}
             </if>
@@ -42,9 +43,9 @@
     <select id="selectDictDataByType" parameterType="top.maplefix.model.DictData"
             resultMap="SysDictDataResult">
         <include refid="selectDictDataVo"/>
-        where status = 1
+        where status = 0
         and dict_type = #{dictType}
-        order by seq asc
+        order by dict_sort asc
     </select>
 
     <select id="selectDictLabel" resultType="String">
@@ -56,7 +57,7 @@
 
     <select id="selectDictDataById" parameterType="Long" resultMap="SysDictDataResult">
         <include refid="selectDictDataVo"/>
-        where dict_data_id = #{dictDataId}
+        where dict_code = #{dictCode}
     </select>
 
     <select id="countDictDataByType" resultType="Integer">
@@ -67,13 +68,14 @@
 
     <delete id="deleteDictDataById">
  		delete from t_dict_data
- 		where dict_data_id = #{dictDataId}
+ 		where dict_code = #{dictCode};
+        ALTER TABLE t_dict_data AUTO_INCREMENT = 1;
  	</delete>
 
     <update id="updateDictData" parameterType="top.maplefix.model.DictData">
         update t_dict_data
         <set>
-            <if test="seq != null and seq != ''">seq = #{seq},</if>
+            <if test="dictSort != null">dict_sort = #{dictSort},</if>
             <if test="dictLabel != null and dictLabel != ''">dict_label = #{dictLabel},</if>
             <if test="dictValue != null and dictValue != ''">dict_value = #{dictValue},</if>
             <if test="dictType != null and dictType != ''">dict_type = #{dictType},</if>
@@ -84,7 +86,7 @@
             <if test="remark != null">remark = #{remark},</if>
             <if test="updateDate != null and updateDate != ''">update_date = #{updateDate}</if>
         </set>
-        where dict_data_id = #{dictDataId}
+        where dict_code = #{dictCode}
     </update>
 
     <update id="updateDictDataType" parameterType="String">
@@ -95,8 +97,7 @@
 
     <insert id="insertDictData" parameterType="top.maplefix.model.DictData">
         insert into t_dict_data(
-        <if test="dictDataId != null and dictDataId != ''">dict_data_id,</if>
-        <if test="seq != null and seq != ''">seq,</if>
+        <if test="dictSort != null">dict_sort,</if>
         <if test="dictLabel != null and dictLabel != ''">dict_label,</if>
         <if test="dictValue != null and dictValue != ''">dict_value,</if>
         <if test="dictType != null and dictType != ''">dict_type,</if>
@@ -107,8 +108,7 @@
         <if test="remark != null and remark != ''">remark,</if>
         <if test="createDate != null and createDate != ''">create_date</if>
         )values(
-        <if test="dictDataId != null and dictDataId != ''">#{dictDataId},</if>
-        <if test="seq != null and seq != ''">#{seq},</if>
+        <if test="dictSort != null">#{dictSort},</if>
         <if test="dictLabel != null and dictLabel != ''">#{dictLabel},</if>
         <if test="dictValue != null and dictValue != ''">#{dictValue},</if>
         <if test="dictType != null and dictType != ''">#{dictType},</if>

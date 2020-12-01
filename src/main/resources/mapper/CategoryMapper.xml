@@ -86,7 +86,8 @@
 
     <delete id="deleteCategoryById">
         delete from  t_category
-        where id = #{id}
+        where id = #{id};
+        ALTER TABLE t_category AUTO_INCREMENT = 1;
     </delete>
 
     <delete id="deleteCategoryByIds">
@@ -94,7 +95,8 @@
         where id in
         <foreach item="id" collection="ids" open="(" separator="," close=")">
             #{id}
-        </foreach>
+        </foreach>;
+        ALTER TABLE t_category AUTO_INCREMENT = 1;
     </delete>
 
 </mapper>

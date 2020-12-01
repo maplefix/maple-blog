@@ -50,8 +50,8 @@
         select t.id,
         t.title,
         t.color
-        from t_tag
-        where title = #{title}
+        from t_tag t
+        where t.title = #{title}
     </select>
 
     <select id="selectTagListByType" resultType="top.maplefix.model.Tag">
@@ -109,7 +109,8 @@
         delete from t_tag where id in
         <foreach item="id" collection="ids" open="(" separator="," close=")">
             #{id}
-        </foreach>
+        </foreach>;
+        ALTER TABLE t_tag AUTO_INCREMENT = 1;
     </delete>
 
     <delete id="deleteTagMid">

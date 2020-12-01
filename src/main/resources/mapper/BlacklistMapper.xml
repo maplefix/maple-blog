@@ -77,7 +77,8 @@
         delete from  t_blacklist where id in
         <foreach collection="ids" item="id" open="(" separator="," close=")">
             #{id}
-        </foreach>
+        </foreach>;
+        ALTER TABLE t_blacklist AUTO_INCREMENT = 1;
     </delete>
 
 </mapper>
