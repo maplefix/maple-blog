@@ -25,7 +25,7 @@ public class QuartzJobController extends BaseController {
     private JobService jobService;
 
     @GetMapping("/list")
-    @PreAuthorize("@permissionService.hasPermission('tool:job:list')")
+    @PreAuthorize("@permissionService.hasPermission('tool:quartz:list')")
     public TableDataInfo list(Job job) {
         startPage();
         List<Job> jobList = jobService.selectJobList(job);
@@ -33,39 +33,39 @@ public class QuartzJobController extends BaseController {
     }
 
     @PostMapping()
-    @PreAuthorize("@permissionService.hasPermission('tool:job:add')")
+    @PreAuthorize("@permissionService.hasPermission('tool:quartz:add')")
     public BaseResult add(@Validated @RequestBody Job job) {
         return toResult(jobService.insertJob(job));
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("@permissionService.hasPermission('tool:job:query')")
-    public BaseResult add(@PathVariable String id) {
+    @PreAuthorize("@permissionService.hasPermission('tool:quartz:query')")
+    public BaseResult add(@PathVariable Long id) {
         return BaseResult.success(jobService.selectJobById(id));
     }
 
     @PutMapping()
-    @PreAuthorize("@permissionService.hasPermission('tool:job:edit')")
+    @PreAuthorize("@permissionService.hasPermission('tool:quartz:edit')")
     public BaseResult edit(@RequestBody Job job) {
         return toResult(jobService.updateJob(job));
     }
 
     @DeleteMapping("{id}")
-    @PreAuthorize("@permissionService.hasPermission('tool:job:remove')")
-    public BaseResult delete(@PathVariable String id) {
+    @PreAuthorize("@permissionService.hasPermission('tool:quartz:remove')")
+    public BaseResult delete(@PathVariable Long id) {
         return toResult(jobService.deleteJob(id));
     }
 
     @PutMapping("/exe/{id}")
-    @PreAuthorize("@permissionService.hasPermission('tool:job:exec')")
-    public BaseResult execute(@PathVariable String id) {
+    @PreAuthorize("@permissionService.hasPermission('tool:quartz:exec')")
+    public BaseResult execute(@PathVariable Long id) {
         jobService.executeJobById(id);
         return BaseResult.success();
     }
 
     @PutMapping("/status/{id}")
-    @PreAuthorize("@permissionService.hasPermission('tool:job:changeStatus')")
-    public BaseResult updateJobStatus(@PathVariable String id) {
+    @PreAuthorize("@permissionService.hasPermission('tool:quartz:changeStatus')")
+    public BaseResult updateJobStatus(@PathVariable Long id) {
         return toResult(jobService.updateJobStatus(id));
     }
 }

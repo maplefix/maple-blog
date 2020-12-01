@@ -32,7 +32,7 @@ public class QuartzLogController extends BaseController {
     }
 
     @PreAuthorize("@permissionService.hasPermission('monitor:jobLog:query')")
-    @GetMapping()
+    @GetMapping("/{id}")
     public BaseResult query(@PathVariable Long id) {
         return BaseResult.success(jobLogService.selectJobLogById(id));
     }

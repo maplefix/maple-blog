@@ -12,6 +12,7 @@ import top.maplefix.model.Job;
 import top.maplefix.model.JobLog;
 import top.maplefix.service.JobLogService;
 import top.maplefix.service.JobService;
+import top.maplefix.utils.DateUtils;
 import top.maplefix.utils.SpringUtils;
 
 import java.io.PrintWriter;
@@ -40,7 +41,7 @@ public class ExecutionJob extends QuartzJobBean {
         quartzJobLog.setJobName(job.getJobName());
         quartzJobLog.setBeanName(job.getBeanName());
         quartzJobLog.setMethodName(job.getMethodName());
-        quartzJobLog.setParams(job.getMethodParams());
+        quartzJobLog.setMethodParams(job.getMethodParams());
         quartzJobLog.setCronExpression(job.getCronExpression());
 
         long startTime = System.currentTimeMillis();
@@ -62,12 +63,13 @@ public class ExecutionJob extends QuartzJobBean {
             long times = System.currentTimeMillis() - startTime;
             quartzJobLog.setCost(times);
             quartzJobLog.setStatus(Constant.FAILED);
-            quartzJobLog.setExceptionMsg(getStackTrace(e));
+            quartzJobLog.setException(getStackTrace(e));
             //设置为暂停状态
             job.setStatus(JobConstant.PAUSE);
             //更新状态
             quartzJobService.updateJob(job);
         } finally {
+            quartzJobLog.setCreateDate(DateUtils.getTime());
             quartzJobLogService.insertJobLog(quartzJobLog);
         }
     }

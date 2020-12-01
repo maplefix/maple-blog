@@ -30,25 +30,25 @@ public interface JobService {
     /**
      * 根据id删除Job
      *
-     * @param jobId id
+     * @param id id
      * @return 受影响的行数
      */
-    int deleteJob(String jobId);
+    int deleteJob(Long id);
 
     /**
      * 执行Job
      *
-     * @param jobId jobId
+     * @param id id
      */
-    void executeJobById(String jobId);
+    void executeJobById(Long id);
 
     /**
      * 更新Job的状态(暂停,运行)
      *
-     * @param jobId job的id
+     * @param id job的id
      * @return 受影响的行数
      */
-    int updateJobStatus(String jobId);
+    int updateJobStatus(Long id);
 
     /**
      * 获取Job list
@@ -61,10 +61,10 @@ public interface JobService {
     /**
      * 根据id查询Job
      *
-     * @param jobId jobId
+     * @param id id
      * @return job
      */
-    Job selectJobById(String jobId);
+    Job selectJobById(Long id);
 
     /**
      * 获取运行状态为true的job
