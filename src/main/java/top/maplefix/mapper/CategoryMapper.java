@@ -20,7 +20,7 @@ public interface CategoryMapper extends Mapper<Category>{
      * @param id 分类ID
      * @return 分类
      */
-    Category selectCategoryById(String id);
+    Category selectCategoryById(Long id);
 
     /**
      * 查询分类列表
@@ -52,7 +52,7 @@ public interface CategoryMapper extends Mapper<Category>{
      * @param id 分类ID
      * @return 结果
      */
-    int deleteCategoryById(@Param("id") String id);
+    int deleteCategoryById(@Param("id") Long id);
 
     /**
      * 批量删除分类
@@ -60,7 +60,7 @@ public interface CategoryMapper extends Mapper<Category>{
      * @param ids 需要删除的数据ID
      * @return 结果
      */
-    int deleteCategoryByIds(@Param("ids") String[] ids);
+    int deleteCategoryByIds(@Param("ids") Long[] ids);
 
     /**
      * 获取所有的Blog Category support的分类

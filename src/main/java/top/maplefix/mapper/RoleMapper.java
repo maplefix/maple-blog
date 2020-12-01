@@ -1,6 +1,6 @@
 package top.maplefix.mapper;
 
-import org.springframework.data.repository.query.Param;
+import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 import top.maplefix.model.Role;
 

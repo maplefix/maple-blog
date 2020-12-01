@@ -7,7 +7,7 @@ import top.maplefix.vo.BlogQuery;
 import java.util.List;
 
 /**
- * @author wangjg
+ * @author Maple
  * @description 前端mapper
  * @date 2020/2/5 18:00
  */
@@ -55,7 +55,7 @@ public interface FrontMapper {
      *
      * @return tag list
      */
-    List<Category> selectTagList();
+    List<Tag> selectTagList();
 
     /**
      * carousel list
@@ -111,11 +111,15 @@ public interface FrontMapper {
 
     List<Blog> selectBlogList(BlogQuery blogQuery);
 
-    List<Category> selectTagListByTypeAndId(@Param("type") Integer type, @Param("id") String id);
+    List<Tag> selectTagListByTypeAndId(@Param("id") Long id);
 
-    int incrementLinkClick(Integer id);
+    int incrementLinkClick(Long id);
 
-    Dict selectAbout();
+    DictData selectAbout();
 
-    Comment selectCommentById(Long id);
+    Comment selectCommentById(Long  id);
+
+    List<Link> selectSupportLinkList();
+
+    String selectBlogTitleById(Long  id);
 }

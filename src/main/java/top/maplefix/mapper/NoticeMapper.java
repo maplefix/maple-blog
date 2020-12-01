@@ -1,6 +1,6 @@
 package top.maplefix.mapper;
 
-import org.springframework.data.repository.query.Param;
+import org.apache.ibatis.annotations.Param;
 import top.maplefix.model.Notice;
 
 import java.util.List;
@@ -17,7 +17,7 @@ public interface NoticeMapper {
      * @param noticeId 公告ID
      * @return 公告信息
      */
-    Notice selectNoticeById(String noticeId);
+    Notice selectNoticeById(Long noticeId);
 
     /**
      * 查询公告列表
@@ -49,5 +49,5 @@ public interface NoticeMapper {
      * @param ids 公告ID
      * @return 结果
      */
-    int deleteNoticeByIds(@Param("ids") String [] ids);
+    int deleteNoticeByIds(@Param("ids") String[] ids);
 }

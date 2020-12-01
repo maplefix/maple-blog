@@ -40,10 +40,9 @@ public interface VisitLogMapper extends Mapper<VisitLog> {
      * f
      * 清空访问日志
      *
-     * @param username 操作者
      * @return 结果
      */
-    int cleanVisitLog(String username);
+    int cleanVisitLog();
 
     /**
      * update visitLog

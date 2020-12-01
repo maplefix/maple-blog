@@ -30,18 +30,18 @@ public interface JobMapper {
     /**
      * 根据Id查询Job
      *
-     * @param jobId id
+     * @param id id
      * @return Job
      */
-    Job selectJobById(Long jobId);
+    Job selectJobById(Long id);
 
     /**
      * 根据Id删除Job
      *
-     * @param jobId id
+     * @param id id
      * @return 受影响的行数
      */
-    int deleteJobById(@Param("jobId") Long jobId);
+    int deleteJobById(@Param("id") Long id);
 
     /**
      * 查询Job list

@@ -19,7 +19,7 @@ public interface CommentMapper extends Mapper<Comment> {
      * @param commentId 主键
      * @return 实例对象
      */
-    Comment selectCommentById(String commentId);
+    Comment selectCommentById(Long commentId);
 
     /**
      * 通过实体作为筛选条件查询
@@ -49,10 +49,9 @@ public interface CommentMapper extends Mapper<Comment> {
      * 通过主键删除数据
      *
      * @param ids       主键
-     * @param username
      * @return 影响行数
      */
-    int deleteCommentById(@Param("ids") String[] ids, @Param("username") String username);
+    int deleteCommentById(@Param("ids") String[] ids);
 
     /**
      * 评论点赞
@@ -60,7 +59,7 @@ public interface CommentMapper extends Mapper<Comment> {
      * @param commentId
      * @return 受影响的行数
      */
-    int incrementCommentGood(String commentId);
+    int incrementCommentGood(Long commentId);
 
     /**
      * 评论踩
@@ -68,7 +67,7 @@ public interface CommentMapper extends Mapper<Comment> {
      * @param commentId
      * @return 受影响的行数
      */
-    int incrementCommentBad(String commentId);
+    int incrementCommentBad(Long commentId);
 
     /**
      * 获取博客对应的评论的Map
@@ -84,5 +83,5 @@ public interface CommentMapper extends Mapper<Comment> {
      * @param commentId pageId
      * @return comment list
      */
-    List<Comment> selectCommentListByPageId(String commentId);
+    List<Comment> selectCommentListByPageId(Long commentId);
 }

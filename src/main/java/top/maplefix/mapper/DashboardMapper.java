@@ -5,6 +5,7 @@ import top.maplefix.model.JobLog;
 import top.maplefix.model.LoginLog;
 import top.maplefix.model.OperateLog;
 import top.maplefix.model.VisitLog;
+import top.maplefix.vo.home.KeyValue;
 
 import java.util.List;
 import java.util.Map;
@@ -30,19 +31,6 @@ public interface DashboardMapper{
      */
     Long getBlogCount();
 
-    /**
-     * 获取图书数量
-     *
-     * @return 图书数量
-     */
-    Long getBookCount();
-
-    /**
-     * 获取笔记数量
-     *
-     * @return 笔记数量
-     */
-    Long getNoteCount();
 
     /**
      * 根据创建时间获取访问日志
@@ -52,29 +40,15 @@ public interface DashboardMapper{
      */
     Long getVisitorCountByCreateDate(@Param("date") String date);
 
-    /**
-     * get note count by createTime
-     *
-     * @param day current day string. eg:2019-08-08
-     * @return count
-     */
-    Long getNoteCountByCreateDate(String day);
 
     /**
-     * get blog count by createTime
+     * get blog count by createDate
      *
      * @param day current day string. eg:2019-08-08
      * @return count
      */
     Long getBlogCountByCreateDate(String day);
 
-    /**
-     * get book count by createTime
-     *
-     * @param day current day string. eg:2019-08-08
-     * @return count
-     */
-    Long getBookCountByCreateDate(String day);
 
     List<Map<String, Long>> getSpiderData();
 
@@ -91,7 +65,7 @@ public interface DashboardMapper{
      * @param pageId blog的id
      * @return blog的title
      */
-    String getBlogNameByPageId(String pageId);
+    String getBlogNameByPageId(Long pageId);
 
     /**
      * 获取登录日志
@@ -113,4 +87,10 @@ public interface DashboardMapper{
      * @return 任务日志
      */
     List<JobLog> getJobLogList();
+
+    /**
+     * 获取图表的访问数据
+     * @return
+     */
+    List<KeyValue> getAccessData();
 }

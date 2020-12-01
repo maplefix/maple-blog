@@ -68,7 +68,7 @@ public interface UserMapper extends Mapper<SysUser> {
      * @param ids 用户ID
      * @return 结果
      */
-    int deleteUserByIds(@Param("ids") Long[] ids, @Param("loginUsername") String loginUsername);
+    int deleteUserByIds(@Param("ids") Long[] ids);
 
     /**
      * 校验用户名称是否唯一

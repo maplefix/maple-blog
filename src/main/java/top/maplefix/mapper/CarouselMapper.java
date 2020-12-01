@@ -19,7 +19,7 @@ public interface CarouselMapper extends Mapper<Carousel> {
      * @param id 主键
      * @return 实例对象
      */
-    Carousel selectCarouselById(String id);
+    Carousel selectCarouselById(Long id);
 
     /**
      * 通过实体作为筛选条件查询
@@ -51,5 +51,5 @@ public interface CarouselMapper extends Mapper<Carousel> {
      * @param id 主键
      * @return 影响行数
      */
-    int deleteCarouselById(@Param("id") String id);
+    int deleteCarouselById(@Param("id") Long id);
 }
