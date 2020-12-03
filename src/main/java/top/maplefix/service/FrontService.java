@@ -10,7 +10,7 @@ import java.util.List;
  * @description 博客前端service接口
  * @date 2020/3/13 9:56
  */
-public interface BlogFrontService {
+public interface FrontService {
 
     /**
      * 查询所有友链列表
@@ -73,35 +73,35 @@ public interface BlogFrontService {
      * @param id 页面id
      * @return 影响行数
      */
-    List<Comment> selectCommentListByPageId(String  id);
+    List<Comment> selectCommentListByPageId(Long  id);
 
     /**
      *增长点赞评论
      * @param id 页面id
      * @return 影响行数
      */
-    int incrementCommentGood(String id);
+    int incrementCommentGood(Long id);
 
     /**
      * 增长踩评论
      * @param id 页面id
      * @return 影响行数
      */
-    int incrementCommentBad(String id);
+    int incrementCommentBad(Long id);
 
     /**
      * 增长博客喜欢
      * @param id 页面id
      * @return 影响行数
      */
-    int incrementBlogLike(String id);
+    int incrementBlogLike(Long id);
 
     /**
      * 根据博客id获取博客详情
      * @param id 博客id
      * @return blog
      */
-    Blog selectBlogDetailById(String  id);
+    Blog selectBlogDetailById(Long  id);
 
     /**
      * 条件查询博客列表
@@ -114,14 +114,14 @@ public interface BlogFrontService {
      * @param id id
      * @return
      */
-    int incrementLinkClick(String id);
+    int incrementLinkClick(Long id);
     /**
      * 更新博客点击次数
      *
      * @param id blog id
      * @return update count
      */
-    int incrementBlogClick(String  id);
+    int incrementBlogClick(Long  id);
     /**
      * 从字段表查询关于我信息
      * @return
