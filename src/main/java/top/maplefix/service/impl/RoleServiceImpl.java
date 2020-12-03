@@ -67,7 +67,7 @@ public class RoleServiceImpl implements RoleService {
     public String checkRoleNameUnique(Role role) {
         Long  roleId = role.getId();
         Role info = roleMapper.checkRoleNameUnique(role.getRoleName());
-        if (StringUtils.isNotNull(info) && info.getId().equals(roleId)) {
+        if (StringUtils.isNotNull(info) && !info.getId().equals(roleId)) {
             return Constant.NOT_UNIQUE;
         }
         return Constant.UNIQUE;
@@ -77,7 +77,7 @@ public class RoleServiceImpl implements RoleService {
     public String checkRoleKeyUnique(Role role) {
         Long  roleId = role.getId();
         Role info = roleMapper.checkRoleKeyUnique(role.getRoleKey());
-        if (StringUtils.isNotNull(info) && info.getId().equals(roleId)) {
+        if (StringUtils.isNotNull(info) && !info.getId().equals(roleId)) {
             return Constant.NOT_UNIQUE;
         }
         return Constant.UNIQUE;

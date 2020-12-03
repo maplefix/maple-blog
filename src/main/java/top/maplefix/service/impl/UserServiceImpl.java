@@ -15,6 +15,7 @@ import top.maplefix.secrrity.LoginUser;
 import top.maplefix.secrrity.service.TokenService;
 import top.maplefix.service.UserService;
 import top.maplefix.utils.ConvertUtils;
+import top.maplefix.utils.DateUtils;
 import top.maplefix.utils.SecurityUtils;
 import top.maplefix.utils.StringUtils;
 
@@ -82,7 +83,7 @@ public class UserServiceImpl implements UserService {
     public String checkPhoneUnique(SysUser user) {
         Long userId = StringUtils.isNull(user.getId()) ? -1L : user.getId();
         SysUser info = userMapper.checkPhoneUnique(user.getPhone());
-        if (StringUtils.isNotNull(info) && info.getId().equals(userId) ) {
+        if (StringUtils.isNotNull(info) && !info.getId().equals(userId) ) {
             return UserConstant.NOT_UNIQUE;
         }
         return UserConstant.UNIQUE;
@@ -92,7 +93,7 @@ public class UserServiceImpl implements UserService {
     public String checkEmailUnique(SysUser user) {
         Long userId = StringUtils.isNull(user.getId()) ? -1L : user.getId();;
         SysUser info = userMapper.checkEmailUnique(user.getEmail());
-        if (StringUtils.isNotNull(info) && info.getId().equals(userId) ) {
+        if (StringUtils.isNotNull(info) && !info.getId().equals(userId) ) {
             return UserConstant.NOT_UNIQUE;
         }
         return UserConstant.UNIQUE;
@@ -108,6 +109,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public int insertUser(SysUser user) {
+        user.setCreateDate(DateUtils.getTime());
         // 新增用户信息
         int rows = userMapper.insertUser(user);
         // 新增用户与角色管理
@@ -129,6 +131,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int updateUserStatus(SysUser user) {
+        user.setUpdateDate(DateUtils.getTime());
         return userMapper.updateUser(user);
     }
 
@@ -192,8 +195,7 @@ public class UserServiceImpl implements UserService {
             // 删除用户与角色关联
             userRoleMapper.deleteUserRoleByUserId(userId);
         }
-        String loginUsername = SecurityUtils.getUsername();
-        return userMapper.deleteUserByIds(userIds, loginUsername);
+        return userMapper.deleteUserByIds(userIds);
     }
 }
 
