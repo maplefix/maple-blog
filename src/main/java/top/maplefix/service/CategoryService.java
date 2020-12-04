@@ -16,7 +16,7 @@ public interface CategoryService {
      * @param id 分类ID
      * @return 分类
      */
-    Category selectCategoryById(String id);
+    Category selectCategoryById(Long id);
 
     /**
      * 查询分类列表
@@ -56,7 +56,7 @@ public interface CategoryService {
      * @param id 分类ID
      * @return 结果
      */
-    int deleteCategoryById(String id);
+    int deleteCategoryById(Long id);
 
     /**
      * 获取support的分类

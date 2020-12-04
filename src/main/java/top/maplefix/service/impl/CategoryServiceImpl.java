@@ -29,20 +29,20 @@ public class CategoryServiceImpl implements CategoryService {
     private BlogMapper blogMapper;
 
     @Override
-    public Category selectCategoryById(String id) {
+    public Category selectCategoryById(Long id) {
         return categoryMapper.selectCategoryById(id);
     }
 
     @Override
     public List<Category> selectCategoryList(Category bgCategory) {
         List<Category> categoryList = categoryMapper.selectCategoryList(bgCategory);
-        List<String> categoryIds = categoryList.stream().map(Category::getCategoryId).collect(Collectors.toList());
+        List<Long> categoryIds = categoryList.stream().map(Category::getId).collect(Collectors.toList());
         if (ObjectUtils.isEmpty(categoryIds)) {
             return categoryList;
         }
         List<Blog> blogList = blogMapper.selectBlogListByCategoryIds(categoryIds);
         for (Category category : categoryList) {
-            List<Blog> collect = blogList.stream().filter(e -> category.getCategoryId().equals(e.getCategoryId())).collect(Collectors.toList());
+            List<Blog> collect = blogList.stream().filter(e -> category.getId().equals(e.getCategoryId())).collect(Collectors.toList());
             category.setBlogList(collect);
         }
         return categoryList;
@@ -50,6 +50,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public int insertCategory(Category bgCategory) {
+        bgCategory.setCreateDate(DateUtils.getTime());
         return categoryMapper.insertCategory(bgCategory);
     }
 
@@ -62,11 +63,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public int deleteCategoryByIds(String ids) {
-        return categoryMapper.deleteCategoryByIds(ConvertUtils.toStrArray(ids));
+        return categoryMapper.deleteCategoryByIds(ConvertUtils.toLongArray(ids));
     }
 
     @Override
-    public int deleteCategoryById(String id) {
+    public int deleteCategoryById(Long id) {
         return categoryMapper.deleteCategoryById(id);
     }
 

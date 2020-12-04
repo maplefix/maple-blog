@@ -24,7 +24,7 @@ public interface CommentService {
      * @param id id
      * @return comment对象
      */
-    Comment selectCommentById(String id);
+    Comment selectCommentById(Long id);
 
     /**
      * 插入comment
@@ -56,7 +56,7 @@ public interface CommentService {
      * @param id 评论的id
      * @return 受影响的行数
      */
-    int incrementCommentGood(String id);
+    int incrementCommentGood(Long id);
 
     /**
      * 评论踩
@@ -64,7 +64,7 @@ public interface CommentService {
      * @param id comment id
      * @return 受影响的行数
      */
-    int incrementCommentBad(String id);
+    int incrementCommentBad(Long id);
 
     /**
      * 根据PageId获取所有的评论
@@ -72,5 +72,5 @@ public interface CommentService {
      * @param id pageId
      * @return comment list
      */
-    List<Comment> selectCommentListByPageId(String id);
+    List<Comment> selectCommentListByPageId(Long id);
 }

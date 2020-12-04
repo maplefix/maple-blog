@@ -41,18 +41,19 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Comment selectCommentById(String id) {
+    public Comment selectCommentById(Long id) {
         return commentMapper.selectCommentById(id);
     }
 
     @Override
     public int insertComment(Comment comment) {
-        comment.setAdminReply(SecurityUtils.isAdmin()?1:0);
+        comment.setAdminReply(SecurityUtils.isAdmin());
         final UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
         comment.setOs(userAgent.getOperatingSystem().getName());
         comment.setBrowser(userAgent.getBrowser().getName());
         comment.setIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
         comment.setLocation(AddressUtils.getRealAddressByIp(comment.getIp()));
+        comment.setCreateDate(DateUtils.getTime());
         return commentMapper.insertComment(comment);
     }
 
@@ -63,29 +64,28 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public int deleteCommentByIds(String ids) {
-        String username = SecurityUtils.getUsername();
-        return commentMapper.deleteCommentById(ConvertUtils.toStrArray(ids), username);
+        return commentMapper.deleteCommentById(ConvertUtils.toStrArray(ids));
     }
 
     @Override
-    public int incrementCommentGood(String id) {
+    public int incrementCommentGood(Long id) {
         return commentMapper.incrementCommentGood(id);
     }
 
     @Override
-    public int incrementCommentBad(String id) {
+    public int incrementCommentBad(Long id) {
         return commentMapper.incrementCommentBad(id);
     }
 
     @Override
-    public List<Comment> selectCommentListByPageId(String id) {
+    public List<Comment> selectCommentListByPageId(Long id) {
         //查询获取所有的comment
         List<Comment> commentList = commentMapper.selectCommentListByPageId(id);
         List<Comment> result = commentList.stream().filter(e -> e.getParentId() == null).collect(Collectors.toList());
         //CommentId和NickName的映射Map
-        Map<String, String> commentIdAndNickNameMap = commentList.stream().collect(Collectors.toMap(Comment::getCommentId, Comment::getNickName));
+        Map<Long, String> commentIdAndNickNameMap = commentList.stream().collect(Collectors.toMap(Comment::getId, Comment::getNickName));
         for (Comment comment : result) {
-            String commentId = comment.getCommentId();
+            Long commentId = comment.getId();
             comment.setSubCommentList(commentList.stream().filter(e -> commentId.equals(e.getParentId())).collect(Collectors.toList()));
             //设置replyNickName
             if (ObjectUtils.isNotEmpty(comment.getSubCommentList())) {
