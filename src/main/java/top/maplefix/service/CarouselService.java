@@ -17,7 +17,7 @@ public interface CarouselService {
      * @param id 主键
      * @return 实例对象
      */
-    Carousel selectCarouselById(String id);
+    Carousel selectCarouselById(Long id);
 
     /**
      * 查询轮播图列表
@@ -49,5 +49,5 @@ public interface CarouselService {
      * @param id 主键
      * @return 受影响行数
      */
-    int deleteCarouselById(String id);
+    int deleteCarouselById(Long id);
 }

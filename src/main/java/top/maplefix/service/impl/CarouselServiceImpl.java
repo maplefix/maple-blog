@@ -21,7 +21,7 @@ public class CarouselServiceImpl implements CarouselService {
     CarouselMapper carouselMapper;
 
     @Override
-    public Carousel selectCarouselById(String id) {
+    public Carousel selectCarouselById(Long id) {
         return carouselMapper.selectCarouselById(id);
     }
 
@@ -43,7 +43,7 @@ public class CarouselServiceImpl implements CarouselService {
     }
 
     @Override
-    public int deleteCarouselById(String id) {
+    public int deleteCarouselById(Long id) {
         return carouselMapper.deleteCarouselById(id);
     }
 }

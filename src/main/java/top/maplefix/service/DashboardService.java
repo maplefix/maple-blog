@@ -1,6 +1,7 @@
 package top.maplefix.service;
 
 import top.maplefix.vo.LineChartData;
+import top.maplefix.vo.home.AccessDataResult;
 
 import java.util.List;
 import java.util.Map;
@@ -61,4 +62,11 @@ public interface DashboardService {
      * @return taskLog
      */
     List<String> getTaskLogStringList();
+
+    /**
+     * get access data for chart
+     *
+     * @return access data
+     */
+    AccessDataResult getAccessData();
 }

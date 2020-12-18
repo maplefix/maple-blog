@@ -17,7 +17,7 @@ public interface ConfigService {
      * @param configId 参数配置ID
      * @return 参数配置信息
      */
-    Config selectConfigById(String configId);
+    Config selectConfigById(Long configId);
 
     /**
      * 根据键名查询参数配置信息
@@ -65,7 +65,7 @@ public interface ConfigService {
      * @param configId 需要删除的数据ID
      * @return 结果
      */
-    int deleteConfigById(String configId);
+    int deleteConfigById(Long configId);
 
     /**
      * 校验参数键名是否唯一
