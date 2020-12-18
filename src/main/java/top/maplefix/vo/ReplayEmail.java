@@ -31,6 +31,10 @@ public class ReplayEmail implements Serializable {
      */
     private String name;
     /**
+     * origin name
+     */
+    private String originName;
+    /**
      * origin content
      */
     private String originContent;
@@ -49,10 +53,11 @@ public class ReplayEmail implements Serializable {
 
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>(16);
-        map.put("createDate", DateUtils.parseDate(createDate));
+        map.put("createDate", createDate);
         map.put("title", title);
         map.put("replyName", replyName);
         map.put("originContent", originContent);
+        map.put("originName", originName);
         map.put("replyContent", replyContent);
         map.put("url", url);
         return map;

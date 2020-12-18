@@ -51,7 +51,7 @@ public interface CommentMapper extends Mapper<Comment> {
      * @param ids       主键
      * @return 影响行数
      */
-    int deleteCommentById(@Param("ids") String[] ids);
+    int deleteCommentById(@Param("ids") Long[] ids);
 
     /**
      * 评论点赞

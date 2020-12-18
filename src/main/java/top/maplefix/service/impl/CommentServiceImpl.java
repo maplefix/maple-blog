@@ -64,7 +64,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public int deleteCommentByIds(String ids) {
-        return commentMapper.deleteCommentById(ConvertUtils.toStrArray(ids));
+        return commentMapper.deleteCommentById(ConvertUtils.toLongArray(ids));
     }
 
     @Override
