@@ -374,13 +374,8 @@
             <resource>
                 <directory>src/main/java</directory>
                 <includes>
-                    <include>**/*.yml</include>
-                    <include>**/*.properties</include>
                     <include>**/*.xml</include>
-                    <include>**/*.db</include>
                     <include>**/*.sql</include>
-                    <include>**/*.html</include>
-                    <include>**.txt</include>
                 </includes>
                 <filtering>false</filtering>
             </resource>
