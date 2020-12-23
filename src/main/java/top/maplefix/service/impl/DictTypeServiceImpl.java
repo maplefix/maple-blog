@@ -36,7 +36,7 @@ public class DictTypeServiceImpl implements DictTypeService {
     }
 
     @Override
-    public DictType selectDictTypeById(String dictId) {
+    public DictType selectDictTypeById(Long dictId) {
         return dictTypeMapper.selectDictTypeById(dictId);
     }
 
@@ -46,7 +46,7 @@ public class DictTypeServiceImpl implements DictTypeService {
     }
 
     @Override
-    public int deleteDictTypeById(String dictId) {
+    public int deleteDictTypeById(Long dictId) {
         return dictTypeMapper.deleteDictTypeById(dictId);
     }
 
@@ -58,16 +58,16 @@ public class DictTypeServiceImpl implements DictTypeService {
     @Override
     @Transactional
     public int updateDictType(DictType dictType) {
-        DictType oldDict = dictTypeMapper.selectDictTypeById(dictType.getDataTypeId());
+        DictType oldDict = dictTypeMapper.selectDictTypeById(dictType.getId());
         dictDataMapper.updateDictDataType(oldDict.getDictType(), dictType.getDictType());
         return dictTypeMapper.updateDictType(dictType);
     }
 
     @Override
     public String checkDictTypeUnique(DictType dict) {
-        String dictId = StringUtils.isNull(dict.getDataTypeId()) ? "" : dict.getDataTypeId();
+        Long dictId = StringUtils.isNull(dict.getId()) ? -1L : dict.getId();
         DictType dictType = dictTypeMapper.checkDictTypeUnique(dict.getDictType());
-        if (StringUtils.isNotNull(dictType) && !dictType.getDataTypeId().equals(dictId)) {
+        if (StringUtils.isNotNull(dictType) && dictType.getId().longValue() != dictId.longValue()) {
             return Constant.NOT_UNIQUE;
         }
         return Constant.UNIQUE;

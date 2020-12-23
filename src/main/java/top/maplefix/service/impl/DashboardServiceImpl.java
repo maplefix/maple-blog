@@ -46,7 +46,7 @@ public class DashboardServiceImpl implements DashboardService {
     @Autowired
     private LinkService linkService;
 
-    private static final String INTERNAL_KEY = "bianxiaofeng.com";
+    private static final String INTERNAL_KEY = "maplefix.top";
 
     @Override
     public Map<String, Long> getPanelGroupData() {
@@ -73,7 +73,7 @@ public class DashboardServiceImpl implements DashboardService {
             default:
                 lineChartData = new LineChartData();
         }
-        log.info("get line chart data \n{}", lineChartData);
+        //log.info("get line chart data \n{}", lineChartData);
         return lineChartData;
     }
 

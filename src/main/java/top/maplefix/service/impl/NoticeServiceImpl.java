@@ -21,7 +21,7 @@ public class NoticeServiceImpl implements NoticeService {
     private NoticeMapper noticeMapper;
 
     @Override
-    public Notice selectNoticeById(String  noticeId) {
+    public Notice selectNoticeById(Long  noticeId) {
         return noticeMapper.selectNoticeById(noticeId);
     }
 

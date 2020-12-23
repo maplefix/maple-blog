@@ -67,6 +67,7 @@
         good,
         bad,
         content,
+        html_content,
         create_date,
         update_date
         from t_comment

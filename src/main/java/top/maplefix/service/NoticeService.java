@@ -17,7 +17,7 @@ public interface NoticeService {
      * @param noticeId 公告ID
      * @return 公告信息
      */
-    Notice selectNoticeById(String noticeId);
+    Notice selectNoticeById(Long noticeId);
 
     /**
      * 查询公告列表

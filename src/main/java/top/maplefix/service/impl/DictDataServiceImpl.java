@@ -36,12 +36,12 @@ public class DictDataServiceImpl implements DictDataService {
     }
 
     @Override
-    public DictData selectDictDataById(String dictCode) {
+    public DictData selectDictDataById(Long dictCode) {
         return dictDataMapper.selectDictDataById(dictCode);
     }
 
     @Override
-    public int deleteDictDataById(String dictCode) {
+    public int deleteDictDataById(Long dictCode) {
         return dictDataMapper.deleteDictDataById(dictCode);
     }
 

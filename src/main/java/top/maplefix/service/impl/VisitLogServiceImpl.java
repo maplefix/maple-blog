@@ -6,6 +6,7 @@ import top.maplefix.mapper.VisitLogMapper;
 import top.maplefix.model.VisitLog;
 import top.maplefix.service.VisitLogService;
 import top.maplefix.utils.ConvertUtils;
+import top.maplefix.utils.DateUtils;
 import top.maplefix.utils.SecurityUtils;
 
 import java.util.List;
@@ -33,12 +34,12 @@ public class VisitLogServiceImpl implements VisitLogService {
 
     @Override
     public void cleanVisitLog() {
-        String username = SecurityUtils.getUsername();
-        visitLogMapper.cleanVisitLog(username);
+        visitLogMapper.cleanVisitLog();
     }
 
     @Override
     public int insertVisitLog(VisitLog visitLog) {
+        visitLog.setCreateDate(DateUtils.getTime());
         return visitLogMapper.insertVisitLog(visitLog);
     }
 

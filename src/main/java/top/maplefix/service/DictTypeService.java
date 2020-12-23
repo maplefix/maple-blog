@@ -32,7 +32,7 @@ public interface DictTypeService {
      * @param dictId 字典类型ID
      * @return 字典类型
      */
-    DictType selectDictTypeById(String dictId);
+    DictType selectDictTypeById(Long dictId);
 
     /**
      * 根据字典类型查询信息
@@ -48,7 +48,7 @@ public interface DictTypeService {
      * @param dictId 字典ID
      * @return 结果
      */
-    int deleteDictTypeById(String dictId);
+    int deleteDictTypeById(Long dictId);
 
     /**
      * 新增保存字典类型信息

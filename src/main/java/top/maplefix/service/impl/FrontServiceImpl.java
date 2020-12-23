@@ -106,8 +106,10 @@ public class FrontServiceImpl implements FrontService {
             if (tempComment.getReply().equals(Constant.SUCCESS)) {
                 ReplayEmail replayEmail = new ReplayEmail();
                 replayEmail.setCreateDate(tempComment.getCreateDate());
-                replayEmail.setOriginContent(tempComment.getHtmlContent());
-                replayEmail.setReplyContent(comment.getHtmlContent());
+                replayEmail.setOriginContent(tempComment.getContent());
+                replayEmail.setOriginName(tempComment.getNickName());
+                replayEmail.setReplyContent(comment.getContent());
+                replayEmail.setReplyName(comment.getNickName());
                 replayEmail.setUrl(comment.getUrl());
                 replayEmail.setTitle(title);
                 AsyncManager.me().execute(AsyncFactory.sendReplyEmail(comment.getUrl(), comment.getHtmlContent(), comment.getNickName(), tempComment.getEmail(), replayEmail));

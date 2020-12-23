@@ -93,7 +93,7 @@
     <select id="selectCategoryList" resultType="top.maplefix.model.Category">
         select id, title
         from t_category
-        order by create_date, support desc
+        order by create_date desc, support desc
     </select>
     <!--查询推荐博客-->
     <select id="selectSupportBlogList" resultType="top.maplefix.model.Blog">
@@ -229,8 +229,8 @@
         b.create_date,
         b.update_date,
         count(c.id) as comment_count
-        from t_blog b left join t_comment c
-        on b.id=c.page_id
+        from t_blog b
+        left join t_comment c on b.id=c.page_id
         <where>
             <if test="categoryId != null">
                 AND b.category_id =#{categoryId}
@@ -279,6 +279,7 @@
                good,
                bad,
                content,
+               html_content,
                create_date,
                reply
         from t_comment

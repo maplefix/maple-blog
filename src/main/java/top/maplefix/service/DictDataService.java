@@ -42,7 +42,7 @@ public interface DictDataService {
      * @param dictCode 字典数据ID
      * @return 字典数据
      */
-    DictData selectDictDataById(String dictCode);
+    DictData selectDictDataById(Long dictCode);
 
     /**
      * 通过字典ID删除字典数据信息
@@ -50,7 +50,7 @@ public interface DictDataService {
      * @param dictCode 字典数据ID
      * @return 结果
      */
-    int deleteDictDataById(String dictCode);
+    int deleteDictDataById(Long dictCode);
 
     /**
      * 新增保存字典数据信息
