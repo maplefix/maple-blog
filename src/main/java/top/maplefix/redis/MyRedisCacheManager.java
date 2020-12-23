@@ -150,7 +150,7 @@ public class MyRedisCacheManager extends RedisCacheManager implements Applicatio
                     duration = Duration.ofSeconds(expire);
                     break;
             }
-            log.info("cacheName: {}, expire: {},duration: {}", cacheName, expire, duration);
+            log.debug("cacheName: {}, expire: {},duration: {}", cacheName, expire, duration);
             if (expire >= 0) {
                 // cache config
                 RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
@@ -174,7 +174,7 @@ public class MyRedisCacheManager extends RedisCacheManager implements Applicatio
 
         @Override
         public String getName() {
-            log.info("get cache by name: {}", cache.getName());
+            log.debug("get cache by name: {}", cache.getName());
             try {
                 return cache.getName();
             } catch (Exception e) {
@@ -185,7 +185,7 @@ public class MyRedisCacheManager extends RedisCacheManager implements Applicatio
 
         @Override
         public Object getNativeCache() {
-            log.info("get native cache : {}", cache.getNativeCache());
+            log.debug("get native cache : {}", cache.getNativeCache());
             try {
                 return cache.getNativeCache();
             } catch (Exception e) {
@@ -196,7 +196,7 @@ public class MyRedisCacheManager extends RedisCacheManager implements Applicatio
 
         @Override
         public ValueWrapper get(Object o) {
-            log.info("get cache by key : {}", o);
+            log.debug("get cache by key : {}", o);
             try {
                 return cache.get(o);
             } catch (Exception e) {
@@ -207,7 +207,7 @@ public class MyRedisCacheManager extends RedisCacheManager implements Applicatio
 
         @Override
         public <T> T get(Object o, Class<T> aClass) {
-            log.info("get cache by key and class: {}, clazz: {}", o, aClass);
+            log.debug("get cache by key and class: {}, clazz: {}", o, aClass);
             try {
                 return cache.get(o, aClass);
             } catch (Exception e) {
@@ -219,7 +219,7 @@ public class MyRedisCacheManager extends RedisCacheManager implements Applicatio
 
         @Override
         public <T> T get(Object o, Callable<T> callable) {
-            log.info("get cache by key {} and callable", o);
+            log.debug("get cache by key {} and callable", o);
             try {
                 return cache.get(o, callable);
             } catch (Exception e) {
@@ -230,7 +230,7 @@ public class MyRedisCacheManager extends RedisCacheManager implements Applicatio
 
         @Override
         public void put(Object o, Object o1) {
-            log.info("put cache key: {}, value: {}", o, o1);
+            log.debug("put cache key: {}, value: {}", o, o1);
             try {
                 cache.put(o, o1);
             } catch (Exception e) {
@@ -240,7 +240,7 @@ public class MyRedisCacheManager extends RedisCacheManager implements Applicatio
 
         @Override
         public ValueWrapper putIfAbsent(Object o, Object o1) {
-            log.info("putIfAbsent key {} value {}", o, o1);
+            log.debug("putIfAbsent key {} value {}", o, o1);
             try {
                 return cache.putIfAbsent(o, o1);
             } catch (Exception e) {
@@ -251,7 +251,7 @@ public class MyRedisCacheManager extends RedisCacheManager implements Applicatio
 
         @Override
         public void evict(Object o) {
-            log.info("evict by key: {}", o);
+            log.debug("evict by key: {}", o);
             try {
                 cache.evict(o);
             } catch (Exception e) {

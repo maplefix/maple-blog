@@ -52,7 +52,7 @@ public class AsyncFactory {
                 loginLog.setLocation(address);
                 loginLog.setStatus(statusStr);
                 loginLog.setCreateDate(DateUtils.getTime());
-                log.info("insert login log {}", loginLog);
+                //log.info("insert login log {}", loginLog);
                 SpringUtils.getBean(LoginLogService.class).insertLoginLog(loginLog);
             }
         };
@@ -91,6 +91,7 @@ public class AsyncFactory {
                 visitLog.setBrowser(userAgent.getBrowser().getName());
                 //visitLog.setLocation(AddressUtils.getRealAddressByIp(visitLog.getIp()));
                 visitLog.setLocation(AddressUtils.getCityInfoByIp(visitLog.getIp()));
+                //log.info("insert visit log {}", loginLog);
                 SpringUtils.getBean(VisitLogService.class).insertVisitLog(visitLog);
             }
         };
