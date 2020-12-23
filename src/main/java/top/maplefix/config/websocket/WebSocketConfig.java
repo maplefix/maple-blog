@@ -1,5 +1,6 @@
 package top.maplefix.config.websocket;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -10,8 +11,7 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
 import javax.annotation.PostConstruct;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 /**
  * @author : Maple
@@ -43,8 +43,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         // 客户端在订阅或发布消息到目的路径前，要连接该端点
         // setAllowedOrigins允许所有域连接，否则浏览器可能报403错误
         registry.addEndpoint("/websocket")
-                .setAllowedOrigins("*")//表示允许连接的域名
-                .withSockJS();//表示支持以SockJS方式连接服务器
+                //表示允许连接的域名
+                .setAllowedOrigins("*")
+                //表示支持以SockJS方式连接服务器
+                .withSockJS();
     }
 
     /**
@@ -52,17 +54,20 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
      */
     @PostConstruct
     public void pushLogger() {
-        ExecutorService executorService = Executors.newFixedThreadPool(4);
+        //ExecutorService executorService = Executors.newFixedThreadPool(4);
+        ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("thread-call-runner-%d").build();
+        ExecutorService executorService = new ThreadPoolExecutor(4,4,0L,TimeUnit.MILLISECONDS,new LinkedBlockingQueue<Runnable>(),namedThreadFactory);
         Runnable runnable = new Runnable(){
             @Override
             public void run(){
                 while (true) {
                     try {
                         LoggerMessage loggerMessage = LoggerQueue.getInstance().poll();
-                        log.info("推送日志内容为：" + loggerMessage);
+                        //log.info("推送日志内容为：" + loggerMessage);
                         if (loggerMessage != null){
-                            if (messagingTemplate != null)
+                            if (messagingTemplate != null) {
                                 messagingTemplate.convertAndSend("/topic/pullLogger", loggerMessage);
+                            }
                         }
                     } catch (Exception e){
                         e.printStackTrace();

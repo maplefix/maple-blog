@@ -4,6 +4,7 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.classic.spi.IThrowableProxy;
 import ch.qos.logback.core.filter.Filter;
 import ch.qos.logback.core.spi.FilterReply;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
@@ -36,7 +37,7 @@ public class LogFilter extends Filter<ILoggingEvent> {
                 exception.toString(),
                 ""
         );
-        System.out.println("pushLogger=============：" + loggerMessage);
+        //System.out.println("pushLogger=============：" + loggerMessage);
         LoggerQueue.getInstance().push(loggerMessage);
         return FilterReply.ACCEPT;
     }

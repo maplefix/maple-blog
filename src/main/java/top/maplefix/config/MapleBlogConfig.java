@@ -27,6 +27,14 @@ public class MapleBlogConfig {
      * 上传路径
      */
     private static String profile;
+    /**
+     * 日志存放路径
+     */
+    private String logPath;
+    /**
+     * 是否获取id地址开关
+     */
+    private static boolean addressEnabled;
 
     public String getName() {
         return name;
@@ -58,5 +66,21 @@ public class MapleBlogConfig {
 
     public void setProfile(String profile) {
         MapleBlogConfig.profile = profile;
+    }
+
+    public  String getLogPath() {
+        return logPath;
+    }
+
+    public void setLogPath(String logPath) {
+        this.logPath = logPath;
+    }
+
+    public static boolean isAddressEnabled() {
+        return addressEnabled;
+    }
+
+    public void setAddressEnabled(boolean addressEnabled) {
+        MapleBlogConfig.addressEnabled = addressEnabled;
     }
 }
