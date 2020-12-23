@@ -6,6 +6,7 @@ import com.github.xiaoymin.swaggerbootstrapui.annotations.EnableSwaggerBootstrap
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -23,6 +24,7 @@ import top.maplefix.utils.SpringUtils;
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @MapperScan( basePackages = {"top.maplefix.mapper"})
+@ServletComponentScan(basePackages  = {"top.maplefix.filter"})
 @EnableAspectJAutoProxy(exposeProxy = true)
 @EnableSwaggerBootstrapUI
 @EnableSwagger2

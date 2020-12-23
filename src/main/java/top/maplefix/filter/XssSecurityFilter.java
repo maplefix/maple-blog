@@ -32,7 +32,7 @@ import java.io.IOException;
  * @description : xss过滤器(OncePerRequestFilter)
  * @date : 2020/2/2 16:01
  */
-@Component
+//@Component
 @Slf4j
 public class XssSecurityFilter extends OncePerRequestFilter {
 

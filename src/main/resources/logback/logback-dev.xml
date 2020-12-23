@@ -1,30 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <!-- 日志存放路径,.logback.xml加载早于application.yml，所以用$直接读取方式发布到日志，需要使用springProperty来引导 -->
-    <!--<property name="log.path" value="${maple.logPath}"/>-->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+
+    <!-- 日志存放路径,.logback.xml加载早于application.yml，所以用$直接读取方式发布到日志，需要使用springProperty来引导 -->    ​
     <springProperty scope="context" name="log.path" source="maple.logPath"/>
     <!-- 日志输出格式 -->
-    <property name="log.pattern" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n"/>
-
-    <!-- 控制台输出 -->
-    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    <property name="log.pattern" value="%d{HH:mm:ss.SSS} [%thread] %-5level [%X{traceId}] %logger{36} - [%method,%line] - %msg%n"/>
+    <!-- 定义IP转义字符-->
+    <conversionRule name="ip" conversionWord="ip" converterClass="top.maplefix.common.IpConvert"/>
+    <!--ip和主机转义字符-->
+    <define name="HostName" class="top.maplefix.common.IpPropertyDefiner" />
+    <!-- 输出到控制台的日志 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <!-- Minimum logging level to be presented in the console logs -->
+            <level>DEBUG</level>
+        </filter>
         <encoder>
             <pattern>${log.pattern}</pattern>
+            <charset>utf8</charset>
         </encoder>
+
+        <!--此日志appender是为开发使用，只配置最底级别，控制台输出的日志级别是大于或等于此级别的日志信息-->
+        <filter class="top.maplefix.config.websocket.LogFilter"/>
     </appender>
 
-    <!-- 系统日志输出 -->
-    <appender name="file_info" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log.path}/sys-info.log</file>
-        <!-- 循环政策：基于时间创建日志文件 -->
+    <!-- 定义输出日志到文件，并且按照日期，每日输出一个文件  -->
+    <appender name="LOGFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/${HostName}.log</file>
+        <!-- 追加方式记录日志 -->
+        <append>true</append>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- 日志文件名格式 -->
-            <fileNamePattern>${log.path}/sys-info.%d{yyyy-MM-dd}.log</fileNamePattern>
-            <!-- 日志最大的历史 60天 -->
-            <maxHistory>60</maxHistory>
+            <fileNamePattern>${log.path}/${HostName}.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+            <!-- 日志最大的历史 30天 -->
+            <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
             <pattern>${log.pattern}</pattern>
+            <charset>utf8</charset>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <!-- 过滤的级别 -->
@@ -36,70 +50,30 @@
         </filter>
     </appender>
 
-    <appender name="file_error" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log.path}/sys-error.log</file>
-        <!-- 循环政策：基于时间创建日志文件 -->
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- 日志文件名格式 -->
-            <fileNamePattern>${log.path}/sys-error.%d{yyyy-MM-dd}.log</fileNamePattern>
-            <!-- 日志最大的历史 60天 -->
-            <maxHistory>60</maxHistory>
-        </rollingPolicy>
-        <encoder>
-            <pattern>${log.pattern}</pattern>
-        </encoder>
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <!-- 过滤的级别 -->
-            <level>ERROR</level>
-            <!-- 匹配时的操作：接收（记录） -->
-            <onMatch>ACCEPT</onMatch>
-            <!-- 不匹配时的操作：拒绝（不记录） -->
-            <onMismatch>DENY</onMismatch>
-        </filter>
-    </appender>
-
-    <!-- 用户访问日志输出  -->
-    <appender name="sys-user" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log.path}/sys-user.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- 按天回滚 daily -->
-            <fileNamePattern>${log.path}/sys-user.%d{yyyy-MM-dd}.log</fileNamePattern>
-            <!-- 日志最大的历史 60天 -->
-            <maxHistory>60</maxHistory>
-        </rollingPolicy>
-        <encoder>
-            <pattern>${log.pattern}</pattern>
-        </encoder>
-    </appender>
-
-    <!-- 系统模块日志级别控制  -->
-    <logger name="top.maplefix" level="info"/>
-    <!-- Spring日志级别控制  -->
-    <logger name="org.springframework" level="warn"/>
-
-    <root level="info">
-        <appender-ref ref="console"/>
-    </root>
-
-    <!--系统操作日志-->
-    <root level="info">
-        <appender-ref ref="file_info"/>
-        <appender-ref ref="file_error"/>
-    </root>
-
-    <!--系统用户操作日志-->
-    <logger name="sys-user" level="info">
-        <appender-ref ref="sys-user"/>
-    </logger>
-
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <!--encoder 默认配置为PatternLayoutEncoder-->
         <encoder>
-            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <pattern>${log.pattern}</pattern>
             <!--<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level -&#45;&#45; [%thread] %logger Line:%-3L - %msg%n</pattern>-->
             <charset>UTF-8</charset>
         </encoder>
         <!--此日志appender是为开发使用，只配置最底级别，控制台输出的日志级别是大于或等于此级别的日志信息-->
-        <filter class="top.maplefix.config.websocket.LogFilter"></filter>
+        <filter class="top.maplefix.config.websocket.LogFilter"/>
     </appender>
+    ​<!-- 输出到socket -->
+    <!--<appender name="socket" class="io.springboot.log.logback.SocketOutputStreamAppender">
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+    </appender>-->
+
+    <root level="INFO">
+        <!--<appender-ref ref="STDOUT" />-->
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="LOGFILE"/>
+    </root>
+
+    <!--打印SQL语句及耗时-->
+    <!--<logger name="top.maplefix.mapper" level="DEBUG"/>-->
+    <logger name="top.maplefix.interceptor.PerformanceInterceptor" level="DEBUG" />
 </configuration>
