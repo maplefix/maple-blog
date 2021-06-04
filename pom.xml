@@ -46,7 +46,7 @@
         <swagger.models.version>2.1.1</swagger.models.version>
         <bootstart.swagger.ui.version>1.9.6</bootstart.swagger.ui.version>
         <ip2region.version>1.7.2</ip2region.version>
-        <httpclient.version>4.5.10</httpclient.version>
+        <httpclient.version>4.5.13</httpclient.version>
         <jna.version>5.5.0</jna.version>
     </properties>
 
